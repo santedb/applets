@@ -18,13 +18,13 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             }
         }
         else {
-            $scope.notificationTemplate = new notificationTemplate({
+            $scope.notificationTemplate = {
                 $type: "NotificationTemplate",
                 id: SanteDB.application.newGuid(),
                 tags: [],
                 parameters: [{}],
                 contents: [{}]
-            })
+            }
         }
     }
 
@@ -49,10 +49,10 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             // Update
             var notificationTemplate = null;
             if ($stateParams.id) {
-                notificationTemplate = await SanteDB.resources.notificationTemplate.updateAsync($stateParams.id, $scope.notificationTemplate);
+                notificationTemplate = await SanteDB.resources.notificationTemplate.updateAsync($stateParams.id, $scope.notificationTemplate, upstream = true);
             }
             else {
-                notificationTemplate = await SanteDB.resources.notificationTemplate.insertAsync($scope.notificationTemplate);
+                notificationTemplate = await SanteDB.resources.notificationTemplate.insertAsync($scope.notificationTemplate, upstream = true);
             }
             toastr.success(SanteDB.locale.getString("ui.admin.notificationTemplate.save.success"));
 
