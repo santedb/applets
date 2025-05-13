@@ -31,16 +31,30 @@
                             required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
                     </div>
                 </div>
+                <!-- Mnemonic -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.mnemonic' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64"
+                            ng-model="notificationInstance.mnemonic" name="notificationInstanceMnemonic"
+                            required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                    </div>
+                </div>
                 <!-- Entity Type -->
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.entityType' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search name="notificationInstanceEntityType" required="required" type="'Concept'"
-                            ng-model="notificationInstance.entityType" search-field="'mnemonic'" 
-                            key="'id'" filter="{ 'conceptSet' : [ '62C5FDE0-A3AA-45DF-94E9-242F4451644A', '4E6DA567-0094-4F23-8555-11DA499593AF'], '_upstream': true }">
-                        </entity-search>
+                        <concept-select 
+                            name="notificationInstanceEntityType"
+                            concept-set="'EntityClass'"
+                            required="required"
+                            ng-model="notificationInstance.entityType" 
+                            key="'id'"  
+                        />
                     </div>
                 </div>
                 <!-- Description -->
@@ -59,7 +73,7 @@
                         {{'ui.admin.notifications.instance.template' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.notificationTemplate"
+                        <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.template"
                         search-field="'name'"  filter="{ 'obsoletionTime' : 'null', '_upstream': true }" name="template" key="'id'">
                         </entity-search>
                     </div>
@@ -90,10 +104,10 @@
                             </label>
                             <div class="col-sm-12 col-md-6">
                                 <hdsi-expression class="form-control"
-                                    focal-type="notificationInstance.parameter[$index]"
+                                    focal-type="notificationInstance.parameters[$index]"
                                     name="expr{{p.id}}when"
                                     simple-input="true"
-                                    ng-model="notificationInstance.parameter[$index]"
+                                    ng-model="notificationInstance.parameters[$index].expression"
                                     aria-placeholder="Expression" 
                                 />
                             </div>

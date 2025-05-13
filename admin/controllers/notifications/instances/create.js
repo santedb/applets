@@ -1,29 +1,29 @@
 angular.module('santedb').controller('NewNotificationController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
     async function initializeView() {
-        $scope.notificationInstance = new notificationInstance({
-            id: SanteDB.application.newGuid(),
-            notificationTemplate: null,
+        console.log("initialize view")
+        $scope.notificationInstance = {
+            $type: 'NotificationInstance',
+            state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
+            template: null,
             parameters: [],
-        })
+        }
     }
     
     $scope.saveNotificationInstance = async function(notificationInstanceForm, event) {
-        console.log($scope.notificationInstance);
         if (notificationInstanceForm.$invalid) return;
 
+        console.log($scope.notificationInstance)
 
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
             SanteDB.display.buttonWait("#cancelNotificationInstanceButton", true);
 
-            var notificationInstance = null;
-
-            notificationInstance = await SanteDB.resources.notificationInstance.insertAsync($scope.notificationInstance);
+            await SanteDB.resources.notificationInstance.insertAsync($scope.notificationInstance, true);
             
             toastr.success(SanteDB.locale.getString("ui.admin.notification.instance.save.success"));
             
-            $state.go("santedb-admin.notifications.Instances.index");
+            $state.go("santedb-admin.notifications.instances.index");
         }
         catch (e) {
             $rootScope.errorHandler(e);
@@ -40,10 +40,13 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
     initializeView()
 
-    $scope.$watch("notificationInstance.notificationTemplate", async function(n, o) {
-        if(n != o) {
-            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.notificationTemplate, null, null, true);
-            $scope.notificationInstance.parameters = template.parameters
+    $scope.$watch("notificationInstance.template", async function(n, o) {
+        if(n != o && n) {
+            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true)
+
+            $timeout(() => {
+                $scope.notificationInstance.parameters = template.parameters           
+            })
         }
     })
 }]);
