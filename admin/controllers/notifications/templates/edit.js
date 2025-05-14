@@ -1,4 +1,5 @@
 /// <reference path="../../../../core/js/santedb.js"/>
+/// <reference path="../../cdss/codeEditor.js"/>
 
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
@@ -26,6 +27,21 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
                 contents: [{}]
             }
         }
+
+        // initialize CDSS editors
+        editors = []
+
+        var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync("abfc7ee8-1322-11f0-afa5-9f82d72aea23", null, null, true);
+        $timeout(() => {
+            $scope.cdssLibrary = libraryDefinition;
+            $scope.notificationTemplate.contents.forEach((template, index) => {
+                var editorId = "cdssEditor" + index
+                editors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, "abfc7ee8-1322-11f0-afa5-9f82d72aea23");
+                editors[index].validateEditor(true);
+            });
+        });
+
+
     }
 
     // Save notification template
@@ -38,6 +54,8 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         } else if (event == "saveDraftTemplateButton") {
             $scope.notificationTemplate.status = "0AC6638B-4E72-466A-A20F-1ADB3B8F2139"
         }
+
+
 
         // convert list of tags into a single string
         var tagList = $scope.notificationTemplate.tags.join(',')
@@ -70,6 +88,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
+    $scope.cdssLibrary = {}
 
     if ($stateParams.id) {
         $scope.isLoading = true;
