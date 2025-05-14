@@ -48,6 +48,8 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
         $state.go("santedb-admin.notifications.templates.create")
     }
 
+    $scope.cdssLibrary = {}
+
     initializeView()
 
     $scope.$watch("notificationInstance.template", async function(n, o) {
