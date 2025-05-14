@@ -29,19 +29,15 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         // initialize CDSS editors
-        editors = []
-
-        var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync("abfc7ee8-1322-11f0-afa5-9f82d72aea23", null, null, true);
+        var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
         $timeout(() => {
-            $scope.cdssLibrary = libraryDefinition;
-            $scope.notificationTemplate.contents.forEach((template, index) => {
-                var editorId = "cdssEditor" + index
-                editors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, "abfc7ee8-1322-11f0-afa5-9f82d72aea23");
-                editors[index].validateEditor(true);
-            });
+            $scope.cdssLibrary = libraryDefinition.resource[0].library;
         });
 
-
+        $scope.notificationTemplate.contents.forEach((template, index) => {
+            var editorId = "cdssEditor" + index
+            _editor = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
+            _editor.validateEditor(true);
     }
 
     // Save notification template
