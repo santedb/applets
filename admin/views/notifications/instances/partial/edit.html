@@ -73,9 +73,16 @@
                         {{'ui.admin.notifications.instance.template' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.template"
-                        search-field="'name'"  filter="{ 'obsoletionTime' : 'null', '_upstream': 'true' }" key="'id'">
-                        </entity-search>
+                        <entity-search 
+                            type="'NotificationTemplate'" 
+                            ng-model="notificationInstance.template" 
+                            owner-form="notificationInstanceForm"
+                            search-field="'name'"  
+                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" 
+                            is-required="true" 
+                            name="template" 
+                            key="'id'" 
+                        />
                     </div>
                 </div>
                 <div>
@@ -124,8 +131,9 @@
                         data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <textarea autocomplete="__away" ng-model="notificationInstance.filter" name="notificationInstanceFilter"
-                            required="required" class="form-control" />
+                        <!-- <textarea autocomplete="__away" ng-model="notificationInstance.filter" name="notificationInstanceFilter"
+                            required="required" class="form-control" /> -->
+                        <div id="cdssEditor" style="min-height: 300px;"></div>
                     </div>
                 </div>
                 <!-- Trigger -->
