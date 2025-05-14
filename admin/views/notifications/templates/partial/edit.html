@@ -167,8 +167,8 @@
                                         {{ 'ui.admin.notifications.templates.templateBody' | i18n }}
                                     </label>
                                     <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" ng-model="template.text"
-                                            name="template[{{$index}}].text" class="form-control" />
+                                        <!-- <input autocomplete="__away" type="text" ng-model="template.text"
+                                            name="template[{{$index}}].text" class="form-control" /> -->
                                         <div id="cdssEditor{{$index}}" style="min-height: 300px;">
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
                         <div class="card-header">
                             <h2 class="mb-0">
                                 <button type="button" class="collapse-indicator btn btn-link p-0"
-                                    ng-click="notificationTemplate.contents.push(newTemplate); newTemplate = {}">
+                                    ng-click="addNewTemplate()">
                                     <i class="fa fa-plus-circle"></i> {{
                                     'ui.admin.notifications.templates.addTemplate' | i18n }}
                                 </button>

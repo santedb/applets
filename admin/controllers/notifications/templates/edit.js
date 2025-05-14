@@ -29,6 +29,8 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         // initialize CDSS editors
+        $scope.cdssEditors = []
+
         var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
         $timeout(() => {
             $scope.cdssLibrary = libraryDefinition.resource[0].library;
@@ -36,8 +38,8 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
 
         $scope.notificationTemplate.contents.forEach((template, index) => {
             var editorId = "cdssEditor" + index
-            _editor = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
-            _editor.validateEditor(true);
+            $scope.cdssEditors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
+        });
     }
 
     // Save notification template
@@ -51,7 +53,10 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             $scope.notificationTemplate.status = "0AC6638B-4E72-466A-A20F-1ADB3B8F2139"
         }
 
-
+        //retrieve contents body values from all CDSS editors
+        $scope.cdssEditors.forEach((editor, index) => {
+            $scope.notificationTemplate.contents[index].text = document.getElementById("cdssEditor" + index).innerText;
+        });
 
         // convert list of tags into a single string
         var tagList = $scope.notificationTemplate.tags.join(',')
@@ -81,6 +86,17 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
     }
 
+    function addNewTemplate() {
+        $scope.notificationTemplate.contents.push($scope.newTemplate);
+        $scope.newTemplate = {}
+
+        var editorId = "cdssEditor" + $scope.cdssEditors.length
+        $scope.cdssEditors.push(new CdssAceEditor(editorId, "", $scope.cdssLibrary.id, $scope.cdssLibrary.uuid));
+
+        console.log($scope.cdssEditors)
+    }
+
+    $scope.addNewTemplate = addNewTemplate
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
