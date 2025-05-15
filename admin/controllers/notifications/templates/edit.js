@@ -55,7 +55,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
 
         //retrieve contents body values from all CDSS editors
         $scope.cdssEditors.forEach((editor, index) => {
-            $scope.notificationTemplate.contents[index].text = document.getElementById("cdssEditor" + index).innerText;
+            $scope.notificationTemplate.contents[index].text = editor.getValue()
         });
 
         // convert list of tags into a single string
