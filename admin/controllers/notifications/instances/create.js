@@ -9,7 +9,7 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
             state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
             filter: '',
             template: null,
-            parameters: [],
+            instanceParameter: [],
         }
 
         const libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
@@ -25,9 +25,17 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
         $scope.notificationInstance.filter = document.getElementById("cdssEditor").innerText;
 
+        console.log($scope.notificationInstance)
+
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
             SanteDB.display.buttonWait("#cancelNotificationInstanceButton", true);
+
+            $scope.notificationInstance.instanceParameter.forEach(parameter => {
+                parameter.$type = "NotificationInstanceParameter";
+                parameter.templateParameter = parameter.id
+                parameter.id = null;
+            });
 
             await SanteDB.resources.notificationInstance.insertAsync($scope.notificationInstance, true);
             
@@ -57,7 +65,7 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
             const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true)
 
             $timeout(() => {
-                $scope.notificationInstance.parameters = template.parameters           
+                $scope.notificationInstance.instanceParameter = template.parameters     
             })
         }
     })

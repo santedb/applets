@@ -7,9 +7,9 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         if (id !== undefined) {
             try {
                 const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, "full", null, true, null);
-                console.log(notificationInstance)
                 setTimeout(() => {
-                    $scope.notificationInstance = notificationInstance
+                    $scope.notificationInstance = notificationInstance;
+                    $scope.originalTemplate = notificationInstance.template;
                 })
             } catch (e) {
                 $rootScope.errorHandler(e);
@@ -22,7 +22,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                 state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
                 filter: '',
                 template: null,
-                parameters: [],
+                instanceParameter: [],
             }
         }
 
@@ -42,6 +42,14 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
             SanteDB.display.buttonWait("#cancelNotificationInstanceButton", true);
+
+            $scope.notificationInstance.instanceParameter.forEach(parameter => {
+                if(parameter.$type == "NotificationTemplateParameter") {
+                    parameter.$type = "NotificationInstanceParameter";
+                    parameter.templateParameter = parameter.id
+                    parameter.id = null;
+                }
+            });
 
             await SanteDB.resources.notificationInstance.updateAsync($stateParams.id, $scope.notificationInstance, true);
             
@@ -73,12 +81,19 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.$watch("notificationInstance.template", async function(n, o) {
         if(n != o && n) {
-            console.log('here')
-            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.id, null, null, true)
+            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true);
 
-            $timeout(() => {
-                $scope.notificationInstance.parameters = template.parameters           
-            })
+            if(template.id == $scope.originalTemplate) {
+                for(i = 0; i < $scope.notificationInstance.instanceParameter.length; i++) {
+                    let templateParameter = template.parameters.find(p => p.id == $scope.notificationInstance.instanceParameter[i].templateParameter);
+                    if(templateParameter != undefined) {
+                        $scope.notificationInstance.instanceParameter[i].name = templateParameter.name;
+                        $scope.notificationInstance.instanceParameter[i].description = templateParameter.description;
+                    }
+                }
+            } else {
+                $scope.notificationInstance.instanceParameter = template.parameters;
+            }
         }
     })
 }]);

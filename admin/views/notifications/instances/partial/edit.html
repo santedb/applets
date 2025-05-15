@@ -103,7 +103,7 @@
                 <div class="collapse show" id="notificationParameters">
                     <div class="card-body container">
                         <!-- Parameter Name -->
-                        <div class="form-group row" ng-repeat="p in notificationInstance.parameters track by $index">
+                        <div class="form-group row" ng-repeat="p in notificationInstance.instanceParameter track by $index">
                             <label class="control-label col-sm-12 col-md-6">
                                 {{ p.name }}
                                 <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
@@ -111,10 +111,10 @@
                             </label>
                             <div class="col-sm-12 col-md-6">
                                 <hdsi-expression class="form-control"
-                                    focal-type="notificationInstance.parameters[$index]"
+                                    focal-type="notificationInstance.instanceParameter[$index]"
                                     name="expr{{p.id}}when"
                                     simple-input="true"
-                                    ng-model="notificationInstance.parameters[$index].expression"
+                                    ng-model="notificationInstance.instanceParameter[$index].expression"
                                     aria-placeholder="Expression" 
                                 />
                             </div>
@@ -131,8 +131,6 @@
                         data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <!-- <textarea autocomplete="__away" ng-model="notificationInstance.filter" name="notificationInstanceFilter"
-                            required="required" class="form-control" /> -->
                         <div id="cdssEditor" style="min-height: 300px;"></div>
                     </div>
                 </div>
