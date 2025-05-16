@@ -16,8 +16,8 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <form class="form" ng-submit="saveNotificationInstance(notificationInstanceForm)"
-    name="notificationInstanceForm" novalidate="novalidate" autocomplete="off">
+    <form class="form" ng-submit="saveNotificationInstance(notificationInstanceForm)" name="notificationInstanceForm"
+        novalidate="novalidate" autocomplete="off">
         <div class="card">
             <div class="container mt-2 mb-2">
                 <!-- Name -->
@@ -26,9 +26,9 @@
                         {{'ui.admin.notifications.instance.name' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" type="text" maxlength="64"
-                            ng-model="notificationInstance.name" name="notificationInstanceName"
-                            required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.name"
+                            name="notificationInstanceName" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
                     </div>
                 </div>
                 <!-- Mnemonic -->
@@ -37,9 +37,9 @@
                         {{'ui.admin.notifications.instance.mnemonic' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <input autocomplete="__away" type="text" maxlength="64"
-                            ng-model="notificationInstance.mnemonic" name="notificationInstanceMnemonic"
-                            required="required" class="form-control" pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.mnemonic"
+                            name="notificationInstanceMnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
                     </div>
                 </div>
                 <!-- Entity Type -->
@@ -48,13 +48,9 @@
                         {{'ui.admin.notifications.instance.entityType' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <concept-select 
-                            name="notificationInstanceEntityType"
-                            concept-set="'EntityClass'"
-                            required="required"
-                            ng-model="notificationInstance.entityType" 
-                            key="'id'"  
-                        />
+                        <concept-select name="notificationInstanceEntityType" concept-set="'EntityClass'"
+                            required="required" ng-model="notificationInstance.entityType" key="'id'"
+                            ng-change="retrieveEntityLabel()" />
                     </div>
                 </div>
                 <!-- Description -->
@@ -63,8 +59,8 @@
                         {{'ui.admin.notifications.instance.description' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <textarea autocomplete="__away" ng-model="notificationInstance.description" name="notificationInstanceDescription"
-                            required="required" class="form-control" />
+                        <textarea autocomplete="__away" ng-model="notificationInstance.description"
+                            name="notificationInstanceDescription" required="required" class="form-control" />
                     </div>
                 </div>
                 <!-- Template -->
@@ -73,20 +69,15 @@
                         {{'ui.admin.notifications.instance.template' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search 
-                            type="'NotificationTemplate'" 
-                            ng-model="notificationInstance.template" 
-                            owner-form="notificationInstanceForm"
-                            search-field="'name'"  
-                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" 
-                            is-required="true" 
-                            name="template" 
-                            key="'id'" 
-                        />
+                        <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.template"
+                            owner-form="notificationInstanceForm" search-field="'name'"
+                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" is-required="true" name="template"
+                            key="'id'" />
                     </div>
                 </div>
                 <div>
-                    <button ng-click="goToNewTemplate()" class="btn btn-primary float-right" >{{ 'ui.admin.notifications.instance.newTemplate' | i18n }}</button>
+                    <button ng-click="goToNewTemplate()" class="btn btn-primary float-right">{{
+                        'ui.admin.notifications.instance.newTemplate' | i18n }}</button>
                 </div>
             </div>
             <!-- Parameters -->
@@ -103,20 +94,20 @@
                 <div class="collapse show" id="notificationParameters">
                     <div class="card-body container">
                         <!-- Parameter Name -->
-                        <div class="form-group row" ng-repeat="p in notificationInstance.instanceParameter track by $index">
+                        <div class="form-group row"
+                            ng-repeat="p in notificationInstance.instanceParameter track by $index">
                             <label class="control-label col-sm-12 col-md-6">
                                 {{ p.name }}
-                                <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
-                                data-title="Parameter Info" data-content="{{p.description}}"></i>
+                                <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
+                                    data-trigger="focus" data-title="Parameter Info"
+                                    data-content="{{p.description}}"></i>
                             </label>
                             <div class="col-sm-12 col-md-6">
                                 <hdsi-expression class="form-control"
-                                    focal-type="notificationInstance.instanceParameter[$index]"
-                                    name="expr{{p.id}}when"
+                                    focal-type="notificationInstance.instanceParameter[$index]" name="expr{{p.id}}when"
                                     simple-input="true"
                                     ng-model="notificationInstance.instanceParameter[$index].expression"
-                                    aria-placeholder="Expression" 
-                                />
+                                    aria-placeholder="Expression" />
                             </div>
                         </div>
                     </div>
@@ -127,8 +118,8 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.filter' | i18n}}
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
-                        data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
+                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <div id="cdssEditor" style="min-height: 300px;"></div>
@@ -138,15 +129,12 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.trigger' | i18n}}
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
-                        data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
+                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <hdsi-expression class="form-control"
-                            focal-type="scopedObject.target[0].resource"
-                            name="expr{{flt._id}}when"
-                            simple-input="true"
-                            ng-model="notificationInstance.trigger"
+                        <hdsi-expression class="form-control" focal-type="scopedObject.target[0].resource"
+                            name="expr{{flt._id}}when" simple-input="true" ng-model="notificationInstance.trigger"
                             aria-placeholder="Expression" />
                     </div>
                 </div>
@@ -154,25 +142,22 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.target' | i18n}}
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover" data-trigger="focus"
-                        data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
+                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <hdsi-expression class="form-control"
-                            focal-type="scopedObject.target[0].resource"
-                            name="expr{{flt._id}}when"
-                            simple-input="true"
-                            ng-model="notificationInstance.target"
+                        <hdsi-expression class="form-control" focal-type="scopedObject.target[0].resource"
+                            name="expr{{flt._id}}when" simple-input="true" ng-model="notificationInstance.target"
                             aria-placeholder="Expression" />
                     </div>
                 </div>
             </div>
         </div>
         <!-- Bottom Action Buttons -->
-         <div class="container">
+        <div class="container">
             <div class="float-right btn-group mt-2">
-                <button type="button" ng-disabled="notificationInstanceForm.$invalid" class="btn btn-success"
-                    id="testNotificationInstanceButton">
+                <button type="button" ng-disabled="notificationInstanceForm.$invalid" data-toggle="modal"
+                    data-target="#testNotificationDialog" class="btn btn-success" id="testNotificationInstanceButton">
                     {{ 'ui.admin.notifications.instance.test' | i18n }}
                 </button>
                 <button type="button" ng-disabled="notificationInstanceForm.$invalid" class="btn btn-danger"
@@ -184,6 +169,65 @@
                     {{ 'ui.action.save' | i18n }}
                 </button>
             </div>
-         </div>
+        </div>
     </form>
+
+    <div class="modal" id="testNotificationDialog" tabindex="-1" role="dialog"
+        aria-labelledby="testNotificationDialogTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testNotificationDialogTitle">
+                        <i class="fa fa-solid fa-screwdriver-wrench"></i> {{ 'ui.admin.notifications.instance.test' |
+                        i18n
+                        }}
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"
+                        ng-click="selectedEntityId=null">
+                        <span aria-hidden="true">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{entityTypeLabel}}
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <entity-search type="entityTypeMnemonic" ng-model="selectedEntityId" search-field="'id'"
+                                    filter="{ 'obsoletionTime' : 'null', '_upstream': true }" name="selectedEntityId"
+                                    key="'id'" />
+                            </div>
+                        </div>
+                        <div>
+                            {{entityTypeLabel}} <br />
+                            {{selectedEntityId}} <br />
+                            {{entityTypeMnemonic}} <br />
+                        </div>
+                        <div class="container">
+                            <div class="float-right btn-group mt-2">
+                                <button type="button" class="btn btn-info" id="validateCriteriaButton"
+                                    ng-click="validateCriteria()">
+                                    {{ 'ui.admin.notifications.instance.validateCriteria' | i18n }}
+                                </button>
+                                <button type="button" class="btn btn-success" id="sendNotificationButton"
+                                    ng-click="sendNotification()">
+                                    {{ 'ui.admin.notifications.instance.sendNotification' | i18n }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="output"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#testNotificationDialog" ng-click="selectedEntityId=null">
+                        {{ 'ui.action.ok' | i18n }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

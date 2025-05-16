@@ -16,11 +16,11 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
         $timeout(() => {
             $scope.cdssLibrary = libraryDefinition.resource[0].library;
         });
-        
+
         $scope.cdssEditor = new CdssAceEditor("cdssEditor", $scope.notificationInstance.filter, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
     }
-    
-    $scope.saveNotificationInstance = async function(notificationInstanceForm, event) {
+
+    $scope.saveNotificationInstance = async function (notificationInstanceForm, event) {
         if (notificationInstanceForm.$invalid) return;
 
         $scope.notificationInstance.filter = document.getElementById("cdssEditor").innerText;
@@ -38,9 +38,9 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
             });
 
             await SanteDB.resources.notificationInstance.insertAsync($scope.notificationInstance, true);
-            
+
             toastr.success(SanteDB.locale.getString("ui.admin.notification.instance.save.success"));
-            
+
             $state.go("santedb-admin.notifications.instances.index");
         }
         catch (e) {
@@ -52,21 +52,40 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
         }
     }
 
-    $scope.goToNewTemplate = async function() {
+    $scope.goToNewTemplate = async function () {
         $state.go("santedb-admin.notifications.templates.create")
     }
 
     $scope.cdssLibrary = {}
+    $scope.entityTypeLabel = ""
+    $scope.entityTypeMnemonic = ""
+    $scope.selectedEntityId = null;
 
     initializeView()
 
-    $scope.$watch("notificationInstance.template", async function(n, o) {
-        if(n != o && n) {
+    $scope.$watch("notificationInstance.template", async function (n, o) {
+        if (n != o && n) {
             const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true)
 
             $timeout(() => {
-                $scope.notificationInstance.instanceParameter = template.parameters     
+                $scope.notificationInstance.instanceParameter = template.parameters
             })
         }
     })
+
+    $scope.retrieveEntityLabel = async function () {
+        const entityLabel = await SanteDB.resources.concept.getAsync($scope.notificationInstance.entityType, null, null, true)
+        $timeout(() => {
+            $scope.entityTypeLabel = entityLabel.name.en[0]
+            $scope.entityTypeMnemonic = entityLabel.mnemonic
+        })
+    }
+
+    $scope.validateCriteria = function () {
+        console.log("validate criteria")
+    }
+
+    $scope.sendNotification = function () {
+        console.log("send notification")
+    }
 }]);
