@@ -29,8 +29,6 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         // initialize CDSS editors
-        $scope.cdssEditors = []
-
         var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
         $timeout(() => {
             $scope.cdssLibrary = libraryDefinition.resource[0].library;
@@ -40,6 +38,8 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             var editorId = "cdssEditor" + index
             $scope.cdssEditors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
         });
+
+        console.log($scope.cdssEditors)
     }
 
     // Save notification template
@@ -55,8 +55,13 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
 
         //retrieve contents body values from all CDSS editors
         $scope.cdssEditors.forEach((editor, index) => {
+            console.log(editor.getValue())
             $scope.notificationTemplate.contents[index].text = editor.getValue()
+            console.log(index)
+            console.log($scope.notificationTemplate.contents[index])
         });
+
+        console.log($scope.notificationTemplate.contents)
 
         // convert list of tags into a single string
         var tagList = $scope.notificationTemplate.tags.join(',')
@@ -86,21 +91,18 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
     }
 
-    function addNewTemplate() {
-        $scope.notificationTemplate.contents.push($scope.newTemplate);
-        $scope.newTemplate = {}
-
+    $rootScope.$watch("$scope.notificationTemplate.contents", function (n, o) {
         var editorId = "cdssEditor" + $scope.cdssEditors.length
         $scope.cdssEditors.push(new CdssAceEditor(editorId, "", $scope.cdssLibrary.id, $scope.cdssLibrary.uuid));
 
         console.log($scope.cdssEditors)
-    }
+    });
 
-    $scope.addNewTemplate = addNewTemplate
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
     $scope.cdssLibrary = {}
+    $scope.cdssEditors = []
 
     if ($stateParams.id) {
         $scope.isLoading = true;

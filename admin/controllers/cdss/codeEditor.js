@@ -56,7 +56,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     var _basicTypes = Object.keys(SanteDB.resources).filter(o => SanteDB.resources[o] instanceof ResourceWrapper).map(o => { return { name: SanteDB.resources[o].getResource(), type: "Resource" } });
 
     // Require
-    var LanguageTools = ace.require("ace/ext/language_tools");
+    // var LanguageTools = ace.require("ace/ext/language_tools");
     var Range = ace.require("ace/range").Range;
     var { HoverTooltip } = ace.require("ace/tooltip");
     var { TokenIterator } = ace.require("ace/token_iterator");
