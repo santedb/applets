@@ -566,7 +566,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
             enableLiveAutocompletion: true
         });
         _completor = new _cdssCompletor();
-        LanguageTools.setCompleters([_completor]);
+        // LanguageTools.setCompleters([_completor]);
         // LanguageTools.addCompleter(_completor);
         _addTestKeyboardShortcut();
         _addGotoKeyboardShortcut();

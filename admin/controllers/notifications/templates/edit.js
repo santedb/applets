@@ -91,12 +91,15 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
     }
 
-    $rootScope.$watch("$scope.notificationTemplate.contents", function (n, o) {
-        var editorId = "cdssEditor" + $scope.cdssEditors.length
-        $scope.cdssEditors.push(new CdssAceEditor(editorId, "", $scope.cdssLibrary.id, $scope.cdssLibrary.uuid));
+    $scope.addNewTemplate = function () {
+        $scope.notificationTemplate.contents.push($scope.newTemplate);
+        $scope.newTemplate = {}
 
-        console.log($scope.cdssEditors)
-    });
+        setTimeout(() => {
+            var editorId = "cdssEditor" + $scope.cdssEditors.length
+            $scope.cdssEditors.push(new CdssAceEditor(editorId, "", $scope.cdssLibrary.id, $scope.cdssLibrary.uuid));
+        }, 1000)
+    }
 
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
