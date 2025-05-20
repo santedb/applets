@@ -1,5 +1,5 @@
 /// <reference path="../../../../core/js/santedb.js"/>
-/// <reference path="../../cdss/codeEditor.js"/>
+/// <reference path="../viewEditor.js"/>
 
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
@@ -29,17 +29,42 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         // initialize CDSS editors
-        var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
-        $timeout(() => {
-            $scope.cdssLibrary = libraryDefinition.resource[0].library;
-        });
+        $scope.createEditor();
+        // var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
+        // $timeout(() => {
+        //     $scope.cdssLibrary = libraryDefinition.resource[0].library;
+        // });
 
-        $scope.notificationTemplate.contents.forEach((template, index) => {
-            var editorId = "cdssEditor" + index
-            $scope.cdssEditors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
-        });
+        // $scope.notificationTemplate.contents.forEach((template, index) => {
+        //     var editorId = "cdssEditor" + index
+        //     $scope.cdssEditors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
+        // });
 
-        console.log($scope.cdssEditors)
+        // console.log($scope.cdssEditors)
+    }
+
+    $scope._editor = null;
+
+    $scope.createEditor = function () {
+        if (!$scope._editor) {
+            var _needRefresh = false;
+            $scope._editor = new ViewAceEditor("cdssEditor0", "test", "div");
+            $scope._editor.onChange(() => {
+                _needRefresh = true;
+                $scope.panel.editForm.$setDirty();
+            });
+            validateInterval = setInterval(() => {
+                if (_needRefresh) {
+                    _needRefresh = false;
+                    updatePreview();
+                }
+            }, 5000);
+            $scope.$on('$destroy', function (s) {
+                clearInterval(validateInterval);
+            });
+            updatePreview();
+            $scope._editor.onSave(() => $scope.panel.editForm.$setPristine());
+        }
     }
 
     // Save notification template
@@ -57,7 +82,6 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         $scope.cdssEditors.forEach((editor, index) => {
             console.log(editor.getValue())
             $scope.notificationTemplate.contents[index].text = editor.getValue()
-            console.log(index)
             console.log($scope.notificationTemplate.contents[index])
         });
 
