@@ -1,5 +1,5 @@
 /// <reference path="../../../../core/js/santedb.js"/>
-/// <reference path="../../cdss/codeEditor.js"/>
+/// <reference path="../viewEditor.js"/>
 
 angular.module('santedb').controller('NewNotificationController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
@@ -12,12 +12,30 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
             instanceParameter: [],
         }
 
-        const libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
-        $timeout(() => {
-            $scope.cdssLibrary = libraryDefinition.resource[0].library;
-        });
+        $scope.createEditor();
+    }
 
-        $scope.cdssEditor = new CdssAceEditor("cdssEditor", $scope.notificationInstance.filter, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
+    $scope.templateDefinitions = { views: [{ type: "div", content: "" }] }
+    $scope._editor = null;
+
+    $scope.createEditor = function () {
+        if (!$scope._editor) {
+            var _needRefresh = false;
+            $scope._editor = new ViewAceEditor("cdssEditor", $scope.templateDefinitions, "div");
+            $scope._editor.onChange(() => {
+                _needRefresh = true;
+                $scope.notificationInstanceForm.$setDirty();
+            });
+            validateInterval = setInterval(() => {
+                if (_needRefresh) {
+                    _needRefresh = false;
+                }
+            }, 5000);
+            $scope.$on('$destroy', function (s) {
+                clearInterval(validateInterval);
+            });
+            $scope._editor.onSave(() => $scope.notificationInstanceForm.$setPristine());
+        }
     }
 
     $scope.saveNotificationInstance = async function (notificationInstanceForm, event) {
