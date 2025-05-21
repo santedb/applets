@@ -1028,7 +1028,8 @@
     <string name="ui.admin.notifications.templates.defaultTemplate">Default Template</string>
 
     <!-- Notification Instance Form -->
-    <string name="ui.admin.notifications.instance.name">Name</string>
+    <string name="ui.admin.notifications.instance.name">Name</string> 
+    <string name="ui.admin.notifications.instance.mnemonic">Mnemonic</string> 
     <string name="ui.admin.notifications.instance.entityType">Entity Type</string>
     <string name="ui.admin.notifications.instance.description">Description</string>
     <string name="ui.admin.notifications.instance.template">Template</string>

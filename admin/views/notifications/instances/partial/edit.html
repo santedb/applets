@@ -81,7 +81,7 @@
                 </div>
             </div>
             <!-- Parameters -->
-            <div class="accordion mb-2" id="parametersAccordion">
+            <div class="card accordion mb-2" id="parametersAccordion">
                 <div class="card-header">
                     <h2 class="mb-0">
                         <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
@@ -96,13 +96,13 @@
                         <!-- Parameter Name -->
                         <div class="form-group row"
                             ng-repeat="p in notificationInstance.instanceParameter track by $index">
-                            <label class="control-label col-sm-12 col-md-6">
+                            <label class="control-label col-sm-12 col-md-3">
                                 {{ p.name }}
                                 <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
                                     data-trigger="focus" data-title="Parameter Info"
                                     data-content="{{p.description}}"></i>
                             </label>
-                            <div class="col-sm-12 col-md-6">
+                            <div class="col-sm-12 col-md-9">
                                 <hdsi-expression class="form-control"
                                     focal-type="notificationInstance.instanceParameter[$index]" name="expr{{p.id}}when"
                                     simple-input="true"
