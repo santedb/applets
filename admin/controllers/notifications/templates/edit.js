@@ -43,27 +43,26 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         // console.log($scope.cdssEditors)
     }
 
+    $scope.templateDefinitions = { views: [{ type: "div", content: "" }] }
     $scope._editor = null;
 
     $scope.createEditor = function () {
         if (!$scope._editor) {
             var _needRefresh = false;
-            $scope._editor = new ViewAceEditor("cdssEditor0", "test", "div");
+            $scope._editor = new ViewAceEditor("cdssEditor0", $scope.templateDefinitions, "div");
             $scope._editor.onChange(() => {
                 _needRefresh = true;
-                $scope.panel.editForm.$setDirty();
+                $scope.createNotificationTemplateForm.$setDirty();
             });
             validateInterval = setInterval(() => {
                 if (_needRefresh) {
                     _needRefresh = false;
-                    updatePreview();
                 }
             }, 5000);
             $scope.$on('$destroy', function (s) {
                 clearInterval(validateInterval);
             });
-            updatePreview();
-            $scope._editor.onSave(() => $scope.panel.editForm.$setPristine());
+            $scope._editor.onSave(() => $scope.createNotificationTemplateForm.$setPristine());
         }
     }
 
@@ -79,11 +78,14 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         //retrieve contents body values from all CDSS editors
-        $scope.cdssEditors.forEach((editor, index) => {
-            console.log(editor.getValue())
-            $scope.notificationTemplate.contents[index].text = editor.getValue()
-            console.log($scope.notificationTemplate.contents[index])
-        });
+        // $scope.cdssEditors.forEach((editor, index) => {
+        //     console.log(editor.getValue())
+        //     $scope.notificationTemplate.contents[index].text = editor.getValue()
+        //     console.log($scope.notificationTemplate.contents[index])
+        // });
+
+        $scope.notificationTemplate.contents[0].text = $scope._editor.getValue()
+        console.log($scope._editor.getValue())
 
         console.log($scope.notificationTemplate.contents)
 

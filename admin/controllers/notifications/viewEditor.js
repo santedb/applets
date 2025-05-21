@@ -176,29 +176,13 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
                 return [];
             }
         }
-
-        this.getCompletions = async function (editor, session, pos, prefix, callback) {
-            var completions = await getSchemaCompleteData(session, pos.row, pos.column);
-            callback(null, 
-                completions.map((c) => {
-                    return {
-                        value: c.name, 
-                        caption: c.name,
-                        scope: 1,
-                        docHTML: `<strong><i class="fas fa-fw fa-${c.attribute ? "at" : c.enum ? "hashtag" : "code"} text-secondary"></i> ${c.name}</strong> (${c.type}) - <span class="text-secondary">${c.collection ? "(0..*)" : "1..1" }</span> <p>${c.documentation || "No Documentation"}</p>`,
-                        meta: c.type,
-                        snippet: c.namespace ? `${c.name} xmlns="${c.namespace}"` : null
-                    }
-                })
-            )
-        }
     }
 
     function _initializeEditor(controlName, templateDefinition) {
         // Initialize the editor
         _editor = ace.edit(controlName, {
             theme: "ace/theme/sqlserver",
-            mode: view.contentType == "div" ? "ace/mode/html" : "ace/mode/xml",
+            mode: "ace/mode/html",
             wrap: true,
             maxLines: window.innerHeight / 27,
             minLines: 20,
@@ -214,57 +198,7 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
                 _changeHandler(_editor.getValue());
             }
         });
-        _completor = view.contentType == "div" ? new _htmlCompletor() : new _svdCompletor();
-        LanguageTools.setCompleters([_completor]);
-        _addSaveKeyboardShortcut();
         _addHelpTooltip();
-    }
-
-
-    // TODO: Add a callback to a model validator
-    function _addSaveKeyboardShortcut() {
-        _editor.commands.addCommand({
-            name: 'save',
-            bindKey: { win: 'Ctrl-S', mac: "Cmd-S" },
-            exec: async function (editor) {
-                try {
-                    await SanteDB.resources.dataTemplateDefinition.checkoutAsync(templateDefinition.id, true);
-
-                    _editor.getSession().clearAnnotations();
-
-                    _editor.setReadOnly(true);
-                    view.content = _editor.getValue();
-                    await SanteDB.resources.dataTemplateDefinition.updateAsync(templateDefinition.id, templateDefinition);
-                    _editorDirty = false;
-                    toastr.success(SanteDB.locale.getString("ui.emr.admin.templates.save.success"));
-                    _saveHandlers.forEach(o => o());
-                }
-                catch (e) {
-                    var root = e.getRootCause();
-                    if (root.$type == "XmlException") {
-                        var exception = _exceptionExtract.exec(root.message);
-                        _editor.getSession().setAnnotations([
-                            {
-                                row: exception[1],
-                                column: exception[2],
-                                text: root.message,
-                                type: "error"
-                            }
-                        ]);
-                        toastr.error(root.message);
-                    }
-                    else if (e.message) {
-                        alert(e.message);
-                    }
-                    else {
-                        alert(e);
-                    }
-                }
-                finally {
-                    _editor.setReadOnly(false);
-                }
-            }
-        })
     }
 
     function _addHelpTooltip() {
