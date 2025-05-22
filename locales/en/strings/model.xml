@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -537,12 +537,16 @@
   <string name="ui.model.act.reasonConcept.other">Other Reason</string>
   <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
+  <string name="ui.model.act.actTime.date">Date Performed</string>
   <string name="ui.model.act.startTime">Started</string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another act</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends performing this action based on the inputs provided on another input</string>
+  <string name="ui.model.act.relationship.Fulfills">Fulfills</string>
+  <string name="ui.model.act.relationship.Fulfills.target.startTime">Scheduled Start</string>
+  <string name="ui.model.act.relationship.Fulfills.target.actTime">Scheduled Date</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
@@ -1004,4 +1008,9 @@
     <string name="ui.model.notification.updatedTime">Last Update</string>
     <string name="ui.model.notification.obsoletionTime">Deleted</string>
 
+    <!-- Substance Administrations -->
+     <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
+     <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+     <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
+     <string name="ui.model.substanceAdministration.site">Administration Site</string>
 </resources>

@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -38,7 +38,7 @@
                                 <i class="fa fa-times"></i>
                                 <span class="d-none d-lg-inline">{{ 'ui.action.cancel' | i18n }}</span>
                             </button>
-                            <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
+                            <button class="btn btn-sm btn-info" type="button" ng-click="setView(panel, 'Edit')"
                                 id="pnl{{panel.id}}Edit"
                                 ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">

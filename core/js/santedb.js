@@ -1,7 +1,7 @@
 ﻿/// <reference path="./santedb-model.js"/>
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -2916,6 +2916,7 @@ function SanteDBWrapper() {
             if (template.participation) {
                 template.participation = await getSubTemplates(template.participation, parms);
             }
+            
             return template;
         }
         /**
@@ -3267,6 +3268,16 @@ function SanteDBWrapper() {
             api: _hdsi
         });
 
+        /**
+            * @type {ResourceWrapper}
+            * @summary Represents the act relationship resource
+            * @memberof SanteDBWrapper.ResourceApi
+            */
+        this.actRelationship = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "ActRelationship",
+            api: _hdsi
+        });
 
         /**
          * @type {ResourceWrapper}

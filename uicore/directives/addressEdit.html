@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -27,9 +27,9 @@
     <div ng-if="!simpleEntry">
         <div class="accordion" id="address-edit-accordion">
             <div class="card mb-0" ng-repeat="addr in addressEdit track by $index">
-                <div class="card-header">
+                <div class="card-header bg-info pt-3">
                     <h2 class="mb-0">
-                        <button class="btn btn-block text-left collapse-indicator p-0" type="button" data-toggle="{{ keepPanelsOpen ? '' : 'collapse' }}" data-target="#address-accordion-{{ addr.useModel | concept }}" aria-expanded="{{ keepPanelsOpen || $index == 0 ? 'true' : 'false' }}">
+                        <button class="btn btn-block text-left collapse-indicator p-0 text-white" type="button" data-toggle="{{ keepPanelsOpen ? '' : 'collapse' }}" data-target="#address-accordion-{{ addr.useModel | concept }}" aria-expanded="{{ keepPanelsOpen || $index == 0 ? 'true' : 'false' }}">
                             {{ addr.useModel | concept }}
 
                             <i ng-if="!keepPanelsOpen" class="fas fa-fw fa-chevron-right float-right"></i>               

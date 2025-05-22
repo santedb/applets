@@ -423,3 +423,51 @@ table.dataTable thead > tr > th.sorting::after {
 .select2-container .select2-selection--single .select2-selection__rendered .select2-selection__clear {
     z-index:1;
 }
+
+.bg-secondary.bg-lighten-25 {
+    background-color: #90989f !important;
+}
+
+.bg-secondary.bg-lighten-50 {
+    background-color: #b5babf !important;
+}
+
+.bg-success.bg-lighten-25 {
+    background-color: #48d367 !important;
+}
+
+.bg-success.bg-lighten-50 {
+    background-color: #85e29a !important;
+}
+
+.bg-success.bg-lighten-75 {
+    background-color: #c2f0cc !important;
+}
+
+.bg-danger.bg-lighten-25 {
+    background-color: #e56773 !important;
+}
+
+.bg-danger.bg-lighten-50 {
+    background-color: #ed9aa2 !important;
+}
+
+.bg-danger.bg-lighten-75 {
+    background-color: #f6ccd0 !important;
+}
+.table-striped {
+    background-color: white;
+}
+
+.card-header {
+    min-height: 55px;
+}
+
+.tab-content {
+    border: 1px solid #e2e3e5;
+    padding: 25px;
+}
+
+.nav-tabs {
+    border: none;
+}
