@@ -4,6 +4,14 @@
 angular.module('santedb').controller('NotificationsTemplateEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
     async function initializeView(id) {
+        $scope.notificationTemplate = {
+            $type: "NotificationTemplate",
+            id: SanteDB.application.newGuid(),
+            tags: [],
+            parameters: [{}],
+            contents: [{}]
+        }
+
         if (id !== undefined) {
             try {
                 var notificationTemplate = await Promise.all([
@@ -12,13 +20,15 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
                 $timeout(() => {
                     $scope.isLoading = false;
                     $scope.notificationTemplate = notificationTemplate[0]
+                    $scope.notificationTemplate.contents.forEach((template, index) => {
+                        $scope.createEditor(template, index)
+                    });
                 })
             }
             catch (e) {
                 $rootScope.errorHandler(e);
             }
-        }
-        else {
+        } else {
             $scope.notificationTemplate = {
                 $type: "NotificationTemplate",
                 id: SanteDB.application.newGuid(),
@@ -26,43 +36,20 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
                 parameters: [{}],
                 contents: [{}]
             }
+            $scope.createEditor($scope.notificationTemplate.content[0], 0)
         }
-
-        // initialize CDSS editors
-        $scope.createEditor();
-        // var libraryDefinition = await SanteDB.resources.cdssLibraryDefinition.getAsync(null, null, null, true, { "oid": "1.3.6.1.4.1.52820.5.1.5.9.1" });
-        // $timeout(() => {
-        //     $scope.cdssLibrary = libraryDefinition.resource[0].library;
-        // });
-
-        // $scope.notificationTemplate.contents.forEach((template, index) => {
-        //     var editorId = "cdssEditor" + index
-        //     $scope.cdssEditors[index] = new CdssAceEditor(editorId, template.text, $scope.cdssLibrary.id, $scope.cdssLibrary.uuid);
-        // });
-
-        // console.log($scope.cdssEditors)
     }
 
-    $scope.templateDefinitions = { views: [{ type: "div", content: "" }] }
-    $scope._editor = null;
-
-    $scope.createEditor = function () {
-        if (!$scope._editor) {
-            var _needRefresh = false;
-            $scope._editor = new ViewAceEditor("cdssEditor0", $scope.templateDefinitions, "div");
-            $scope._editor.onChange(() => {
-                _needRefresh = true;
-                $scope.createNotificationTemplateForm.$setDirty();
-            });
-            validateInterval = setInterval(() => {
-                if (_needRefresh) {
-                    _needRefresh = false;
-                }
-            }, 5000);
-            $scope.$on('$destroy', function (s) {
-                clearInterval(validateInterval);
-            });
-            $scope._editor.onSave(() => $scope.createNotificationTemplateForm.$setPristine());
+    $scope.createEditor = function (template, index) {
+        var tempData = { views: [{ type: "div", content: "" }] }
+        if (template.text) {
+            tempData.content = template.text
+        }
+        if (!$scope.cdssEditors[index]) {
+            var editorId = "cdssEditor" + index
+            setTimeout(() => {
+                $scope.cdssEditors[index] = new ViewAceEditor(editorId, tempData, "div");
+            }, 10);
         }
     }
 
@@ -78,16 +65,10 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }
 
         //retrieve contents body values from all CDSS editors
-        // $scope.cdssEditors.forEach((editor, index) => {
-        //     console.log(editor.getValue())
-        //     $scope.notificationTemplate.contents[index].text = editor.getValue()
-        //     console.log($scope.notificationTemplate.contents[index])
-        // });
+        $scope.cdssEditors.forEach((editor, index) => {
+            $scope.notificationTemplate.contents[index].text = editor.getValue()
+        });
 
-        $scope.notificationTemplate.contents[0].text = $scope._editor.getValue()
-        console.log($scope._editor.getValue())
-
-        console.log($scope.notificationTemplate.contents)
 
         // convert list of tags into a single string
         var tagList = $scope.notificationTemplate.tags.join(',')
@@ -120,17 +101,17 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
     $scope.addNewTemplate = function () {
         $scope.notificationTemplate.contents.push($scope.newTemplate);
         $scope.newTemplate = {}
+        var templateDefinitions = { views: [{ type: "div", content: "" }] }
 
         setTimeout(() => {
             var editorId = "cdssEditor" + $scope.cdssEditors.length
-            $scope.cdssEditors.push(new CdssAceEditor(editorId, "", $scope.cdssLibrary.id, $scope.cdssLibrary.uuid));
+            $scope.cdssEditors.push(new ViewAceEditor(editorId, templateDefinitions, "div"));
         }, 10)
     }
 
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
-    $scope.cdssLibrary = {}
     $scope.cdssEditors = []
 
     if ($stateParams.id) {

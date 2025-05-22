@@ -145,7 +145,7 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
                             consumeComment(tokenIterator);
                             break;
                         case "entity.other.attribute-name.xml":
-                            if(startToken.type === "string.attribute-value.xml" && currentPath == "") {
+                            if (startToken.type === "string.attribute-value.xml" && currentPath == "") {
                                 currentPath = `@${currentToken.value}`;
                             }
                             break;
@@ -153,18 +153,18 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
                 }
 
                 var options = await SanteDB.resources.dataTemplateDefinition.invokeOperationAsync(null, "xsd-complete", {
-                    "path" : currentPath, 
-                    "type" : "SimplifiedViewDefinition"
+                    "path": currentPath,
+                    "type": "SimplifiedViewDefinition"
                 });
 
-                if(options) {
-                    switch(startToken.type) {
+                if (options) {
+                    switch (startToken.type) {
                         case "entity.other.attribute-name.xml":
-                            return options.filter(o=>o.attribute);
+                            return options.filter(o => o.attribute);
                         case "meta.tag.tag-name.xml":
                         case "text.tag-open.xml":
-                            return options.filter(o=>!o.attribute);
-                        default: 
+                            return options.filter(o => !o.attribute);
+                        default:
                             return options;
                     }
                 }
@@ -317,8 +317,8 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
         _editor.getSession().clearAnnotations();
         if (root.$type == "XmlException") {
             var exception = _exceptionExtract.exec(root.message);
-            if(!exception) { // HACK: Sometimes the regex doesn't parse
-                exception = [ null, 1, 1 ];
+            if (!exception) { // HACK: Sometimes the regex doesn't parse
+                exception = [null, 1, 1];
             }
             _editor.getSession().setAnnotations([
                 {
@@ -332,7 +332,7 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
         else {
             _editor.getSession().setAnnotations([
                 {
-                    row: 0, 
+                    row: 0,
                     column: 1,
                     text: root.message,
                     type: "error"
@@ -340,7 +340,7 @@ function ViewAceEditor(controlName, templateDefinition, viewType) {
             ]);
         }
     }
-    this.destroy = function() {
+    this.destroy = function () {
         _editor.destroy();
     }
 
