@@ -117,16 +117,6 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         }
     })
 
-    $scope.$watch("notificationInstance.template", async function (n, o) {
-        if (n != o && n) {
-            const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true)
-
-            $timeout(() => {
-                $scope.notificationInstance.instanceParameter = template.parameters
-            })
-        }
-    })
-
     $scope.retrieveEntityLabel = async function () {
         const entityLabel = await SanteDB.resources.concept.getAsync($scope.notificationInstance.entityType, null, null, true)
         $timeout(() => {

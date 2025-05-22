@@ -132,11 +132,10 @@
                             <div class="col-sm-12 col-md-9">
                                 <hdsi-expression 
                                     class="form-control"
-                                    focal-type="notificationInstance.instanceParameter[$index]" 
+                                    focal-type="notificationInstance.instanceParameter[$index].expression" 
                                     name="parameter{{$index}}"
                                     simple-input="true"
                                     ng-model="notificationInstance.instanceParameter[$index].expression"
-                                    aria-placeholder="Expression"
                                     required="required" 
                                 />
                                 <div ng-show="notificationInstanceForm.parameter{{$index}}.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
@@ -172,11 +171,10 @@
                     <div class="col-sm-12 col-md-9">
                         <hdsi-expression 
                             class="form-control" 
-                            focal-type="scopedObject.target[0].resource"
+                            focal-type="notificationInstance.trigger"
                             name="trigger" 
                             simple-input="true" 
                             ng-model="notificationInstance.trigger"
-                            aria-placeholder="Expression" 
                             required="required"
                         />
                         <div ng-show="notificationInstanceForm.trigger.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
@@ -194,11 +192,10 @@
                     <div class="col-sm-12 col-md-9">
                         <hdsi-expression 
                             class="form-control" 
-                            focal-type="scopedObject.target[0].resource"
+                            focal-type="notificationInstance.target"
                             name="target" 
                             simple-input="true" 
                             ng-model="notificationInstance.target"
-                            aria-placeholder="Expression" 
                             required="required" 
                         />
                         <div ng-show="notificationInstanceForm.target.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
