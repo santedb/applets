@@ -48,9 +48,13 @@
                         {{'ui.admin.notifications.instance.entityType' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <concept-select name="notificationInstanceEntityType" concept-set="'EntityClass'"
-                            required="required" ng-model="notificationInstance.entityType" key="'id'"
-                            ng-change="retrieveEntityLabel()" />
+                        <concept-select 
+                            name="notificationInstanceEntityType" 
+                            concept-set="'EntityClass'"
+                            required="required" 
+                            ng-model="notificationInstance.entityType"
+                            ng-change="retrieveEntityLabel()" 
+                        />
                     </div>
                 </div>
                 <!-- Description -->
@@ -69,10 +73,17 @@
                         {{'ui.admin.notifications.instance.template' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search type="'NotificationTemplate'" ng-model="notificationInstance.template"
-                            owner-form="notificationInstanceForm" search-field="'name'"
-                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" is-required="true" name="template"
-                            key="'id'" />
+                        <entity-search 
+                            type="'NotificationTemplate'" 
+                            ng-model="notificationInstance.template"
+                            owner-form="notificationInstanceForm" 
+                            search-field="'name'"
+                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" 
+                            is-required="true" 
+                            name="template"
+                            key="'id'" 
+                            upstream="true" 
+                        />
                     </div>
                 </div>
                 <div>
@@ -103,12 +114,14 @@
                                     data-content="{{p.description}}"></i>
                             </label>
                             <div class="col-sm-12 col-md-9">
-                                <hdsi-expression class="form-control"
+                                <hdsi-expression 
+                                    class="form-control"
                                     focal-type="notificationInstance.instanceParameter[$index]" name="expr{{p.id}}when"
                                     simple-input="true"
                                     ng-model="notificationInstance.instanceParameter[$index].expression"
                                     aria-placeholder="Expression"
-                                    required="required" />
+                                    required="required" 
+                                />
                             </div>
                         </div>
                     </div>
