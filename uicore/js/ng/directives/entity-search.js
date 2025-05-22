@@ -214,7 +214,8 @@ angular.module('santedb-lib')
                 forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
                 withRelationshipSourceClass: '=', // The class concept of the source object
                 withRelationshipTargetClass: '=', // The class concept of the target object
-                jsFilter: '<'
+                jsFilter: '<',
+                upstream: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -255,14 +256,14 @@ angular.module('santedb-lib')
                                         }
                                     }
 
-
                                     if ($scope.key && $scope.key != "id") {
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
+                                        query._upstream = $scope.upstream;
                                         var res = null;
                                         if ($scope.childResource) {
-                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
+                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown", $scope.upstream);
                                         }
                                         else {
                                             res = await api.findAsync(query);
@@ -284,10 +285,10 @@ angular.module('santedb-lib')
                                         var res = null;
 
                                         if ($scope.childResource) {
-                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
+                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, $scope.upstream);
                                         }
                                         else {
-                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown", _upstream: $scope.upstream });
                                         }
 
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
@@ -389,7 +390,7 @@ angular.module('santedb-lib')
                                     sourceClass: scope.withRelationshipSourceClass,
                                     targetClass: scope.withRelationshipTargetClass,
                                     relationshipType: scope.forRelationshipType
-                                })).resource;
+                                }, null, scope.upstream)).resource;
                                 if (serverRules && serverRules.length > 0) {
 
                                     filter.classConcept = serverRules.map(o => scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
