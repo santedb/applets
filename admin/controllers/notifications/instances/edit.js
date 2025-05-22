@@ -9,6 +9,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                 const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
                 setTimeout(() => {
                     $scope.notificationInstance = notificationInstance;
+                    $scope.templateDefinitions.views[0].content = notificationInstance.filter;
                     $scope.originalTemplate = notificationInstance.template;
                 })
             } catch (e) {
@@ -34,11 +35,13 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.createEditor = function () {
         if (!$scope._editor) {
+            console.log($scope.templateDefinitions)
             var _needRefresh = false;
             $scope._editor = new ViewAceEditor("cdssEditor", $scope.templateDefinitions, "div");
             $scope._editor.onChange(() => {
                 _needRefresh = true;
                 $scope.notificationInstanceForm.$setDirty();
+                $scope.notificationInstance.filter = $scope._editor.getValue();
             });
             validateInterval = setInterval(() => {
                 if (_needRefresh) {
@@ -54,8 +57,6 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.saveNotificationInstance = async function (notificationInstanceForm, event) {
         if (notificationInstanceForm.$invalid) return;
-
-        $scope.notificationInstance.filter = document.getElementById("cdssEditor").innerText;
 
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);

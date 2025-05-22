@@ -27,9 +27,12 @@
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.name"
-                            name="notificationInstanceName" required="required" class="form-control"
-                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                            name="name" required="required" class="form-control" />
+                        <div ng-show="notificationInstanceForm.name.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
+
                 </div>
                 <!-- Mnemonic -->
                 <div class="form-group row">
@@ -38,9 +41,13 @@
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.mnemonic"
-                            name="notificationInstanceMnemonic" required="required" class="form-control"
+                            name="mnemonic" required="required" class="form-control"
                             pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <div ng-show="notificationInstanceForm.mnemonic.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
+ 
                 </div>
                 <!-- Entity Type -->
                 <div class="form-group row">
@@ -49,12 +56,15 @@
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <concept-select 
-                            name="notificationInstanceEntityType" 
+                            name="entityType" 
                             concept-set="'EntityClass'"
                             required="required" 
                             ng-model="notificationInstance.entityType"
                             ng-change="retrieveEntityLabel()" 
                         />
+                        <div ng-show="notificationInstanceForm.entityType.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
                 <!-- Description -->
@@ -64,7 +74,10 @@
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <textarea autocomplete="__away" ng-model="notificationInstance.description"
-                            name="notificationInstanceDescription" required="required" class="form-control" />
+                            name="description" required="required" class="form-control" />
+                        <div ng-show="notificationInstanceForm.description.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
                 <!-- Template -->
@@ -73,17 +86,20 @@
                         {{'ui.admin.notifications.instance.template' | i18n}}
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <entity-search 
+                        <entity-search
                             type="'NotificationTemplate'" 
                             ng-model="notificationInstance.template"
                             owner-form="notificationInstanceForm" 
                             search-field="'name'"
                             filter="{ 'obsoletionTime' : 'null', '_upstream': true }" 
-                            is-required="true" 
                             name="template"
                             key="'id'" 
                             upstream="true" 
+                            required="required"
                         />
+                        <div ng-show="notificationInstanceForm.template.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -116,12 +132,16 @@
                             <div class="col-sm-12 col-md-9">
                                 <hdsi-expression 
                                     class="form-control"
-                                    focal-type="notificationInstance.instanceParameter[$index]" name="expr{{p.id}}when"
+                                    focal-type="notificationInstance.instanceParameter[$index]" 
+                                    name="parameter{{$index}}"
                                     simple-input="true"
                                     ng-model="notificationInstance.instanceParameter[$index].expression"
                                     aria-placeholder="Expression"
                                     required="required" 
                                 />
+                                <div ng-show="notificationInstanceForm.parameter{{$index}}.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -136,7 +156,10 @@
                             data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <div id="cdssEditor" style="min-height: 300px;" required="required"></div>
+                        <div id="cdssEditor" style="min-height: 300px;" required="required" name="filter"></div>
+                        <div ng-show="notificationInstance.filter == '' &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
                 <!-- Trigger -->
@@ -147,9 +170,18 @@
                             data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <hdsi-expression class="form-control" focal-type="scopedObject.target[0].resource"
-                            name="expr{{flt._id}}when" simple-input="true" ng-model="notificationInstance.trigger"
-                            aria-placeholder="Expression" required="required"/>
+                        <hdsi-expression 
+                            class="form-control" 
+                            focal-type="scopedObject.target[0].resource"
+                            name="trigger" 
+                            simple-input="true" 
+                            ng-model="notificationInstance.trigger"
+                            aria-placeholder="Expression" 
+                            required="required"
+                        />
+                        <div ng-show="notificationInstanceForm.trigger.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
                 <!-- Target -->
@@ -160,9 +192,18 @@
                             data-trigger="focus" data-title="Parameter Info" data-content=""></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
-                        <hdsi-expression class="form-control" focal-type="scopedObject.target[0].resource"
-                            name="expr{{flt._id}}when" simple-input="true" ng-model="notificationInstance.target"
-                            aria-placeholder="Expression" required="required" />
+                        <hdsi-expression 
+                            class="form-control" 
+                            focal-type="scopedObject.target[0].resource"
+                            name="target" 
+                            simple-input="true" 
+                            ng-model="notificationInstance.target"
+                            aria-placeholder="Expression" 
+                            required="required" 
+                        />
+                        <div ng-show="notificationInstanceForm.target.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,15 +211,15 @@
         <!-- Bottom Action Buttons -->
         <div class="container">
             <div class="float-right btn-group mt-2">
-                <button type="button" ng-disabled="notificationInstanceForm.$invalid" data-toggle="modal"
+                <button type="button" data-toggle="modal"
                     data-target="#testNotificationDialog" class="btn btn-success" id="testNotificationInstanceButton">
                     {{ 'ui.admin.notifications.instance.test' | i18n }}
                 </button>
-                <button type="button" ng-disabled="notificationInstanceForm.$invalid" class="btn btn-danger"
+                <button type="button" class="btn btn-danger"
                     id="cancelNotificationInstanceButton">
                     {{ 'ui.action.cancel' | i18n }}
                 </button>
-                <button type="submit" ng-disabled="notificationInstanceForm.$invalid" class="btn btn-primary"
+                <button type="submit" class="btn btn-primary"
                     id="saveNotificationInstanceButton">
                     {{ 'ui.action.save' | i18n }}
                 </button>

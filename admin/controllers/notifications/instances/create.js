@@ -21,10 +21,12 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
     $scope.createEditor = function () {
         if (!$scope._editor) {
             var _needRefresh = false;
+            
             $scope._editor = new ViewAceEditor("cdssEditor", $scope.templateDefinitions, "div");
             $scope._editor.onChange(() => {
                 _needRefresh = true;
                 $scope.notificationInstanceForm.$setDirty();
+                $scope.notificationInstance.filter = $scope._editor.getValue();
             });
             validateInterval = setInterval(() => {
                 if (_needRefresh) {
@@ -40,10 +42,6 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
     $scope.saveNotificationInstance = async function (notificationInstanceForm, event) {
         if (notificationInstanceForm.$invalid) return;
-
-        $scope.notificationInstance.filter = document.getElementById("cdssEditor").innerText;
-
-        console.log($scope.notificationInstance)
 
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
