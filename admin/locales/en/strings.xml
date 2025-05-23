@@ -1005,6 +1005,8 @@
     <string name="ui.admin.notifications.instance.purge.error">Could not purge notification instance: {error}</string>
     <string name="ui.admin.notifications.instance.modal.lastRun">Last Run</string>
     <string name="ui.admin.notifications.instance.modal.successful">Successful</string>
+    <string name="ui.admin.notifications.instance.modal.state">State</string>
+    <string name="ui.admin.notifications.instance.modal.status">Status</string>
     <string name="ui.admin.notifications.instance.modal.error">Could not retrieve last run data: {error}</string>
 
     <!-- scheduled notification template form -->

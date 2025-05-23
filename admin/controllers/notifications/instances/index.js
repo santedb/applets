@@ -141,15 +141,14 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         return r;
     }
 
-    $scope.handleLastRun = async function(r) {
+    $scope.handleLastRunModal = async function(r) {
         try {
-            const sentInstances = await SanteDB.resources.notificationInstance.findAsync({"lastSentAt": "!null"}, "full", true);
+            const lastRunData = await SanteDB.resources.jobInfo.getAsync("A5C97883-A21E-4C33-B428-E69002B7A453", "full", true);
             $timeout(() => {
-                $scope.totalSentCount = sentInstances.resource.length;
-                $scope.succeededSentCount = sentInstances.resource.filter(i => i.state == "2726bc79-a55a-4fea-be2c-627265872db5").length;
+                $scope.lastRunState = lastRunData.state;
+                $scope.lastRunStatus = lastRunData.status;
                 $("#lastRunModal").modal("show");
             });
-            
         }
         catch(e) {
             toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.modal.error", { error: e.message }));
