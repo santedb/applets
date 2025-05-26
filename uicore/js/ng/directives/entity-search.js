@@ -166,9 +166,10 @@ angular.module('santedb-lib')
             }
 
             retVal += "&nbsp;";
+            
             if (!minRender) {
                 if(selection.securityUserModel) 
-                    retVal += `<code class='d-non d-sm-inline ml-2'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</code> `;
+                    retVal += `<span class='d-non d-sm-inline'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</span> `;
                 if (selection.address)
                     retVal += "<small class='d-none d-sm-inline'>- (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
@@ -178,9 +179,9 @@ angular.module('santedb-lib')
             }
             
             if (selection.classConceptModel && !selection.typeConceptModel)
-                retVal += ` <span class='badge badge-secondary'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+                retVal += ` <span class='badge badge-secondary ml-1'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-secondary">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+                retVal += `<span class="badge badge-secondary ml-1">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
             if (selection.identifier) {

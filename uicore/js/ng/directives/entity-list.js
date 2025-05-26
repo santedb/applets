@@ -91,6 +91,7 @@ angular.module('santedb-lib')
 
         async function refreshItems(scope) {
             var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);
+            
             try {
                 waiterDiv.removeClass('d-none');
                 var query = angular.copy(scope.defaultQuery) || {};
@@ -160,6 +161,7 @@ angular.module('santedb-lib')
                 defaultQuery: '=',
                 upstream: '=',
                 searchField: '=',
+                shouldLoadOnInit: '=',
                 actions: '<',
                 itemActions: '<',
                 operationScope: '=',
@@ -173,11 +175,14 @@ angular.module('santedb-lib')
             templateUrl: '/org.santedb.uicore/directives/entityList.html',
             controller: ['$scope', "$state", function ($scope, $state) {
 
+                $scope.shouldLoadOnInit = $scope.shouldLoadOnInit || true;
+
                 $scope.$watch("defaultQuery", function (n, o) {
                     if (n && n != o) {
                         if ($scope.$$queryId !== undefined) {
                             $scope.$$queryId = SanteDB.application.newGuid();
                         }
+                        
                         refreshItems($scope);
                     }
                 })
@@ -249,12 +254,12 @@ angular.module('santedb-lib')
 
             }],
             link: function (scope, element, attrs) {
-
+                
                 $(element).entityList(scope);
 
                 scope.$$type = attrs.type;
                 scope._display = attrs.display || 'list';
-
+                scope.shouldLoadOnInit = attrs.shouldLoadOnInit ? attrs.shouldLoadOnInit == 'true' : true;
                 scope.$$keyProperty = attrs.keyProperty || 'id';
                 scope.$$orderBy = attrs.orderBy?.split(',') || 'creationTime:asc';
                 _operaation = attrs.operation;
@@ -312,7 +317,9 @@ angular.module('santedb-lib')
                 else if (!scope.$$sourceApi) { throw `No SanteDB API exists for ${scope.$$type}`; }
                 //else if (!_itemTemplate) { throw "entity-list missing item template"; }
 
-                refreshItems(scope);
+                if (scope.shouldLoadOnInit == true) {
+                    refreshItems(scope);
+                }
 
             }
         }
