@@ -54,6 +54,7 @@ angular.module('santedb-lib')
                         $(element).addClass("text-muted");
                         $(element).addClass("d-block");
                         $(element).removeClass("d-inline");
+                        
                         break;
                     default:
                         if(attrs.hintTitle) 
@@ -67,12 +68,10 @@ angular.module('santedb-lib')
                             $(element).attr('data-content', SanteDB.locale.getString(`${attrs.hintTitle}.hint`, scope.hintTextBinding));
                         }
         
+                        $(element).find('a i').addClass(attrs.hintTextClass ? attrs.hintTextClass : 'text-info');                        
                 }
 
-
                 $(element).ready(_=>$(element).popover({ trigger: 'hover',  html: true }));
-
-
             }
         }
     }]);

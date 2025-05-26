@@ -105,10 +105,16 @@
                                 'ui.model.patient.deceasedIndicator' | i18n }}</span>
                             {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )
                         </div>
-                        <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom |
-                            telecom }}</div>
-                        <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address |
-                            address }}</div>
+
+                        <!-- Telecom -->
+                        <div class="p-2" ng-if="patient.telecom">
+                            <i class="fas fa-phone"></i> {{ patient.telecom.PrimaryHome[0] | telecom }}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="p-2" ng-if="patient.address">
+                            <i class="fas fa-home"></i> {{ patient.address | address }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 hide-when-sticky">
