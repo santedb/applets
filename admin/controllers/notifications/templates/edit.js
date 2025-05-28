@@ -34,7 +34,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
                 id: SanteDB.application.newGuid(),
                 tags: [],
                 parameters: [{}],
-                contents: [{ templateLanguage: "en" }]
+                contents: [{}]
             }
             $scope.createEditor($scope.notificationTemplate.contents[0], 0)
         }

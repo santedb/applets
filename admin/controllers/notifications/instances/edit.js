@@ -91,7 +91,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.cdssLibrary = {}
     $scope.entityTypeMnemonic = ""
-    $scope.selectedEntityId = null;
+    $scope.selectedEntityId = "a52c43e0-dc6e-11ef-9551-a36f7144b253";
 
     initializeView($stateParams.id);
 
@@ -122,7 +122,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     $scope.retrieveEntityLabel = async function () {
         const entityLabel = await SanteDB.resources.concept.getAsync($scope.notificationInstance.entityType, null, null, true)
         $timeout(() => {
-            $scope.entityTypeLabel = entityLabel.name.en[0]
+            $scope.entityTypeLabel = entityLabel.name.en[0] || "Entity"
             $scope.entityTypeMnemonic = entityLabel.mnemonic
         })
     }
@@ -135,6 +135,6 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     }
 
     $scope.sendNotification = async function () {
-        $scope.testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", null, true);
+        $scope.testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
     }
 }]);

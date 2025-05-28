@@ -21,7 +21,7 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
     $scope.createEditor = function () {
         if (!$scope._editor) {
             var _needRefresh = false;
-            
+
             $scope._editor = new ViewAceEditor("cdssEditor", $scope.templateDefinitions, "div");
             $scope._editor.onChange(() => {
                 _needRefresh = true;
@@ -97,11 +97,14 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
         })
     }
 
-    $scope.validateCriteria = function () {
-        console.log("validate criteria")
+    $scope.validateCriteria = async function () {
+        const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
+        $timeout(() => {
+            $scope.testNotificationResult = validationResult;
+        })
     }
 
-    $scope.sendNotification = function () {
-        console.log("send notification")
+    $scope.sendNotification = async function () {
+        $scope.testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
     }
 }]);
