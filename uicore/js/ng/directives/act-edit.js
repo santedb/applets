@@ -289,9 +289,8 @@ angular.module('santedb-lib')
                         else {
                             $(".actBackEntry", element).removeClass('d-none');
                             $(".actMoveToHistory", element).removeClass('d-none');
-
                         }
-
+                        
                         if (_mode == "view") {
                             $(".editOnly", element).remove();
                             $(".viewOnly", element).removeClass("d-none");
@@ -300,11 +299,10 @@ angular.module('santedb-lib')
                             $(".viewOnly", element).remove();
                             $(".editOnly", element).removeClass("d-none");
                         }
+                        
                     }, 500);
                 }
                 scope.applyVisibilityAttributes();
-
-
 
                 _noCdss = attrs.disableCdss;
 

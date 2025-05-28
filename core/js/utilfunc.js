@@ -261,6 +261,9 @@ Date.prototype.formatHuman = function(formatString) {
     return moment(this).format(formatString);
 }
 
+Date.prototype.greaterOf = function(...otherDates) {
+    return [this, ...otherDates].sort((a,b) => a > b ? 1 : -1)[0];
+}
 
 /**
  * @returns The decoded base64 data as a JSON object
