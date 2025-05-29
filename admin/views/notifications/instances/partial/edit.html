@@ -125,9 +125,7 @@
                             ng-repeat="p in notificationInstance.instanceParameter track by $index">
                             <label class="control-label col-sm-12 col-md-3">
                                 {{ p.name }}
-                                <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
-                                    data-trigger="focus" data-title="Parameter Info"
-                                    data-content="{{p.description}}"></i>
+                                <i class="fa-solid fa-circle-question" title="{{p.description}}" style="color: #0275d8"></i>
                             </label>
                             <div class="col-sm-12 col-md-9">
                                 <hdsi-expression 
@@ -151,8 +149,7 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.filter' | i18n}}
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
-                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.filter.hint' | i18n }}" style="color: #0275d8"></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <div id="cdssEditor" style="min-height: 300px;" required="required" name="filter"></div>
@@ -165,9 +162,7 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.trigger' | i18n}}
-                        <hint-popover hint-title="Hello" />
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
-                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.trigger.hint' | i18n }}" style="color: #0275d8"></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <hdsi-expression 
@@ -187,8 +182,7 @@
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-3 control-label">
                         {{'ui.admin.notifications.instance.target' | i18n}}
-                        <i class="fa-solid fa-circle-question" style="color: #0275d8" data-toggle="popover"
-                            data-trigger="focus" data-title="Parameter Info" data-content=""></i>
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.target.hint' | i18n }}" style="color: #0275d8"></i>
                     </label>
                     <div class="col-sm-12 col-md-9">
                         <hdsi-expression 
