@@ -262,6 +262,10 @@ Date.prototype.formatHuman = function(formatString) {
 }
 
 Date.prototype.greaterOf = function(...otherDates) {
+    return [this, ...otherDates].sort((a,b) => a > b ? -1 : 1)[0];
+}
+
+Date.prototype.lesserOf = function(...otherDates) {
     return [this, ...otherDates].sort((a,b) => a > b ? 1 : -1)[0];
 }
 
