@@ -43,7 +43,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
     $scope.createEditor = function (template, index) {
         var tempData = { views: [{ type: "div", content: "" }] }
         if (template.text) {
-            tempData.content = template.text
+            tempData.views[index].content = template.text
         }
         if (!$scope.cdssEditors[index]) {
             var editorId = "cdssEditor" + index
