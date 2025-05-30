@@ -44,7 +44,7 @@
         ]"
         i18n-prefix="'ui.model.notification.'"
         properties="[ 'id', 'mnemonic', 'schedule', 'state', 'lastSentAt', 'creationTime', 'updatedTime', 'obsoletionTime' ]"
-        render="{ state: 'renderState', lastSentAt: 'renderLastSentAt',  creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
+        render="{ schedule: 'renderSchedule', state: 'renderState', lastSentAt: 'renderLastSentAt',  creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
         item-supplement="[ loadState ]"
     />
     <div class="modal" id="lastRunModal" role="dialog" aria-labelledby="lastRunModalTitle" data-backdrop="static" aria-hidden="true">

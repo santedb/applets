@@ -3,14 +3,33 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     async function initializeView() {
         $scope.totalSentCount;
         $scope.succeededSentCount;
+
+        try {
+            const jobInfo = await SanteDB.resources.jobInfo.getAsync("A5C97883-A21E-4C33-B428-E69002B7A453", "full", true);
+            $timeout(() => {
+                if (jobInfo && jobInfo.schedule.length) {
+                    let schedule = jobInfo.schedule;
+                    $scope.jobSchedule = "<ul class='p-0 m-0 list-unstyled'>" + schedule.map(o => {
+                        if (o.type == "Scheduled") {
+                            return `<li><i class='fas fa-calendar'></i> ${o.repeat.map(d => d.substring(0, 2)).join(",")} <br/>@ ${moment(o.start).format("HH:mm")}<br/>starting ${moment(o.start).format("YYYY-MM-DD")}</li>`;
+                        }
+                        else {
+                            return `<li><i class='fas fa-clock'></i> repeat ${moment.duration(o.interval).humanize(true)}</li>`;
+                        }
+                    }) + "</ul>";
+                }
+            });
+        }
+        catch(e) {
+            toastr.error(SanteDB.locale.getString("ui.admin.notifications.instance.schedule.error", { error: e.message }));
+        }
     }
 
     initializeView();
 
     $scope.renderState = function(r) {
-        if (r.stateModel) {
+        if (r.stateModel)
             return SanteDB.display.renderConcept(r.stateModel);
-        }
         return r.state || "";
     }
 
@@ -37,9 +56,13 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     }
 
     $scope.renderLastSentAt = function(r) {
-        if (r.lastSentAt != null && new Date(r.lastSentAt).getFullYear() != 1)
+        if (r.lastSentAt != null)
             return SanteDB.display.renderDate(r.lastSentAt);
         return "";
+    }
+
+    $scope.renderSchedule = function() {
+        return $scope.jobSchedule ? $scope.jobSchedule : "";
     }
 
     $scope.enable = async function(id) {
