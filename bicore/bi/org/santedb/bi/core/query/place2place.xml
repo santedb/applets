@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<BiQueryDefinition xmlns="http://santedb.org/bi" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://santedb.org/bi http://santedb.org/schema/v3.0/BusinessIntelligence.xsd" 
+    id="org.santedb.bi.core.query.place2Place" 
+    label="ui.santedb.bi.core.query.place2Place" 
+    status="active">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca&gt;</add>
+    </authors>
+    <annotation>
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>This query provides a view of all the place relationships in the datbase including catchment areas.</p>
+      </div>
+    </annotation>
+  </meta>
+  <dataSources>
+    <add ref="#org.santedb.bi.dataSource.main"/>
+  </dataSources>
+  <parameters>
+    <add name="name" type="string" label="ui.bi.core.common.name">
+      <meta>
+      <annotation>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <p>Filter by the name of the place</p>
+        </div>
+      </annotation>
+      </meta>
+    </add>
+    <add ref="#org.santedb.bi.core.parameter.common.entity.status" name="status" type="uuid"/>
+    <add ref="#org.santedb.bi.core.parameter.common.place.class" name="class" type="uuid"/>
+    <add ref="#org.santedb.bi.core.parameter.common.place.type" name="type" type="uuid"/>
+	<add ref="#org.santedb.bi.core.parameter.common.place.withChildren" name="parent" type="uuid" label="Root (Parent)">
+		<meta>
+		<annotation>
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			<p>The uppermost place in the hierarchy to begin the reporting for</p>
+		</div>
+		</annotation>
+		</meta>
+	</add>
+    <add ref="#org.santedb.bi.core.parameter.common.relationshipType" name="relType" type="uuid" label="Relationship">
+    <meta>
+        <annotation>
+            <div xmlns="http://www.w3.org/1999/xhtml"> 
+            <p>The relationship types to show</p>
+            </div>
+        </annotation>
+    </meta>
+    </add>
+  </parameters>
+  <definitions>
+    <add>
+      <providers>
+        <invariant>npgsql</invariant>
+        <invariant>FirebirdSQL</invariant>
+      </providers>
+        <![CDATA[
+WITH RECURSIVE PARENT_RELATIONS(CHILD_ID, PARENT_ID, PARENT_NAME) AS (
+	-- ROOT NODES 
+	SELECT ENT_VRSN_TBL.ENT_ID CHILD_ID, NULL::UUID PARENT_ID, NULL::TEXT AS PARENT_NAME
+	FROM 
+		ENT_VRSN_TBL 
+		INNER JOIN PLC_TBL USING (ENT_VRSN_ID)
+		INNER JOIN ENT_NAME_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_NAME_TBL.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+		INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	WHERE
+		CASE WHEN ${parent}::UUID IS NULL THEN ENT_VRSN_TBL.ENT_ID NOT IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE REL_TYP_CD_ID = 'bfcbb345-86db-43ba-b47e-e7411276ac7c') ELSE ${parent}::UUID = ENT_VRSN_TBL.ENT_ID END
+		AND HEAD 
+	UNION ALL 
+	SELECT SRC_ENT_ID CHILD_ID, TRG_ENT_ID PARENT_ID ,VAL AS PARENT_NAME
+	FROM 
+		ENT_REL_TBL
+		CROSS JOIN PARENT_RELATIONS
+		INNER JOIN ENT_NAME_TBL ON (TRG_ENT_ID = ENT_NAME_TBL.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+		INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	WHERE 
+		REL_TYP_CD_ID = 'bfcbb345-86db-43ba-b47e-e7411276ac7c'
+		AND ENT_REL_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+		AND PARENT_RELATIONS.CHILD_ID = TRG_ENT_ID
+)
+SELECT 
+	ent_vrsn_tbl.ent_id, 
+	parent_relations.parent_id, 
+	parent_name, 
+	ent_name_cmp_tbl.val AS name, 
+	cls_cd.val AS class, 
+	typ_cd.val AS type, 
+	sts_cd.mnemonic AS status,
+	rel.EFFT_VRSN_SEQ_ID AS rel_sequence,
+	trg_nam_cmp.val AS target_name, 
+	trg.ent_id AS trg_ent_id,
+	trg_cls_cd.val AS target_class,
+	trg_typ_cd.val AS target_type,
+	rel_cd.val AS relationship_type
+FROM 
+	ent_vrsn_tbl
+	INNER JOIN PARENT_RELATIONS ON (ENT_VRSN_TBL.ENT_ID = PARENT_RELATIONS.CHILD_ID)
+	INNER JOIN plc_tbl USING (ENT_VRSN_ID)
+	INNER JOIN ent_name_tbl ON (ent_vrsn_tbl.ent_id = ent_name_tbl.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	INNER JOIN cd_name_tbl cls_cd ON (ent_vrsn_tbl.CLS_CD_ID = cls_cd.cd_id AND cls_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+  	INNER JOIN cd_vrsn_tbl sts_cd ON (ent_vrsn_tbl.STS_CD_ID = sts_cd.cd_id AND sts_cd.HEAD)
+	LEFT JOIN cd_name_tbl typ_cd ON (ent_vrsn_tbl.TYP_CD_ID = typ_cd.cd_id AND typ_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+	LEFT JOIN ent_rel_tbl rel ON (rel.SRC_ENT_ID = PARENT_RELATIONS.CHILD_ID AND rel.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ent_vrsn_tbl trg ON (rel.TRG_ENT_ID = trg.ent_id AND trg.head AND trg.OBSLT_UTC IS NULL)
+	INNER JOIN ent_name_tbl trg_nam ON (trg.ent_id = trg_nam.ENT_ID AND trg_nam.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND trg_nam.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ENT_NAME_CMP_TBL trg_nam_cmp ON (trg_nam.NAME_ID = trg_nam_cmp.NAME_ID)
+	INNER JOIN cd_name_tbl trg_cls_cd ON (trg.CLS_CD_ID = trg_cls_cd.cd_id AND trg_cls_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+  	INNER JOIN cd_name_tbl trg_typ_cd ON (trg.TYP_CD_ID = trg_typ_cd.cd_id AND trg_typ_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN cd_name_tbl rel_cd ON (rel.REL_TYP_CD_ID = rel_cd.CD_ID AND rel_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+WHERE 
+  ent_vrsn_tbl.head 
+  AND CASE WHEN ${status}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.sts_cd_id = ${status}::UUID END
+  AND CASE WHEN ${name}::TEXT IS NULL THEN TRUE ELSE ent_name_cmp_tbl.val ILIKE '%' || ${name}::TEXT || '%' END
+  --AND ent_vrsn_tbl.cls_cd_id IN (SELECT cd_id FROM cd_set_mem_assoc_tbl WHERE set_id = '3d02fb53-1133-406d-a06f-7d47a556f3bc')
+  AND CASE WHEN ${class}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.cls_cd_id = ${class}::UUID END
+  AND CASE WHEN ${type}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.typ_cd_id = ${type}::UUID END 
+  AND CASE WHEN ${relType}::UUID IS NULL THEN TRUE ELSE rel.REL_TYP_CD_ID = ${relType}::UUID END
+        ]]>
+    </add>
+    <add>
+      <providers>
+        <invariant>sqlite</invariant>
+      </providers>
+     
+        <![CDATA[
+  WITH RECURSIVE PARENT_RELATIONS(CHILD_ID, PARENT_ID, PARENT_NAME) AS (
+	-- ROOT NODES 
+	SELECT ENT_VRSN_TBL.ENT_ID CHILD_ID, NULL::UUID PARENT_ID, NULL::TEXT AS PARENT_NAME
+	FROM 
+		ENT_VRSN_TBL 
+		INNER JOIN PLC_TBL USING (ENT_VRSN_ID)
+		INNER JOIN ENT_NAME_TBL ON (ENT_VRSN_TBL.ENT_ID = ENT_NAME_TBL.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+		INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	WHERE
+		CASE WHEN ${parent}::UUID IS NULL THEN ENT_VRSN_TBL.ENT_ID NOT IN (SELECT SRC_ENT_ID FROM ENT_REL_TBL WHERE REL_TYP_CD_ID = 'bfcbb345-86db-43ba-b47e-e7411276ac7c') ELSE ${parent}::UUID = ENT_VRSN_TBL.ENT_ID END
+		AND HEAD 
+	UNION ALL 
+	SELECT SRC_ENT_ID CHILD_ID, TRG_ENT_ID PARENT_ID ,VAL AS PARENT_NAME
+	FROM 
+		ENT_REL_TBL
+		CROSS JOIN PARENT_RELATIONS
+		INNER JOIN ENT_NAME_TBL ON (TRG_ENT_ID = ENT_NAME_TBL.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+		INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	WHERE 
+		REL_TYP_CD_ID = 'bfcbb345-86db-43ba-b47e-e7411276ac7c'
+		AND ENT_REL_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+		AND PARENT_RELATIONS.CHILD_ID = TRG_ENT_ID
+)
+SELECT 
+	ent_vrsn_tbl.ent_id, 
+	parent_relations.parent_id, 
+	parent_name, 
+	ent_name_cmp_tbl.val AS name, 
+	cls_cd.val AS class, 
+	typ_cd.val AS type, 
+	sts_cd.mnemonic AS status,
+	rel.EFFT_VRSN_SEQ_ID AS rel_sequence,
+	trg_nam_cmp.val AS target_name, 
+	trg.ent_id AS trg_ent_id,
+	trg_cls_cd.val AS target_class,
+	trg_typ_cd.val AS target_type,
+	rel_cd.val AS relatonship_type
+FROM 
+	ent_vrsn_tbl
+	INNER JOIN PARENT_RELATIONS ON (ENT_VRSN_TBL.ENT_ID = PARENT_RELATIONS.CHILD_ID)
+	INNER JOIN plc_tbl USING (ENT_VRSN_ID)
+	INNER JOIN ent_name_tbl ON (ent_vrsn_tbl.ent_id = ent_name_tbl.ENT_ID AND ENT_NAME_TBL.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND ent_name_tbl.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ENT_NAME_CMP_TBL ON (ENT_NAME_TBL.NAME_ID = ENT_NAME_CMP_TBL.NAME_ID)
+	INNER JOIN cd_name_tbl cls_cd ON (ent_vrsn_tbl.CLS_CD_ID = cls_cd.cd_id AND cls_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+  	INNER JOIN cd_vrsn_tbl sts_cd ON (ent_vrsn_tbl.STS_CD_ID = sts_cd.cd_id AND sts_cd.HEAD)
+	LEFT JOIN cd_name_tbl typ_cd ON (ent_vrsn_tbl.TYP_CD_ID = typ_cd.cd_id AND typ_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+	LEFT JOIN ent_rel_tbl rel ON (rel.SRC_ENT_ID = PARENT_RELATIONS.CHILD_ID AND rel.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ent_vrsn_tbl trg ON (rel.TRG_ENT_ID = trg.ent_id AND trg.head AND trg.OBSLT_UTC IS NULL)
+	INNER JOIN ent_name_tbl trg_nam ON (trg.ent_id = trg_nam.ENT_ID AND trg_nam.USE_CD_ID = '1ec9583a-b019-4baa-b856-b99caf368656' AND trg_nam.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN ENT_NAME_CMP_TBL trg_nam_cmp ON (trg_nam.NAME_ID = trg_nam_cmp.NAME_ID)
+	INNER JOIN cd_name_tbl trg_cls_cd ON (trg.CLS_CD_ID = trg_cls_cd.cd_id AND trg_cls_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+  	INNER JOIN cd_name_tbl trg_typ_cd ON (trg.TYP_CD_ID = trg_typ_cd.cd_id AND trg_typ_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+	INNER JOIN cd_name_tbl rel_cd ON (rel.REL_TYP_CD_ID = rel_cd.CD_ID AND rel_cd.OBSLT_VRSN_SEQ_ID IS NULL)
+WHERE 
+  ent_vrsn_tbl.head 
+  AND CASE WHEN ${status}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.sts_cd_id = ${status}::UUID END
+  AND CASE WHEN ${name}::TEXT IS NULL THEN TRUE ELSE ent_name_cmp_tbl.val ILIKE '%' || ${name}::TEXT || '%' END
+  -- AND ent_vrsn_tbl.cls_cd_id IN (SELECT cd_id FROM cd_set_mem_assoc_tbl WHERE set_id = '3d02fb53-1133-406d-a06f-7d47a556f3bc')
+  AND CASE WHEN ${class}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.cls_cd_id = ${class}::UUID END
+  AND CASE WHEN ${type}::UUID IS NULL THEN TRUE ELSE ent_vrsn_tbl.typ_cd_id = ${type}::UUID END 
+  AND CASE WHEN ${relType}::UUID IS NULL THEN TRUE ELSE rel.REL_TYP_CD_ID = ${relType}::UUID END
+        ]]>
+    </add>
+  </definitions>
+</BiQueryDefinition>

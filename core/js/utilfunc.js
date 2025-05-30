@@ -1,8 +1,8 @@
 /// <reference path="./santedb-model.js"/>
 /// <reference path="./santedb.js"/>
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -39,6 +39,17 @@ Object.defineProperty(Array.prototype, 'groupBy', { value: function(keySelector,
 }, enumerable: false });
 
 /**
+ * @summary Select a child property from each element in the array
+ * @param {String} keySelector The selector of the sub-property
+ */
+Object.defineProperty(Array.prototype, 'selectField', {
+    value: function(keySelector) {
+        return this.map(e => e[keySelector])
+    },
+    enumerable: false
+});
+
+/**
  * @method
  * @memberof Exception
  * @summary Get the root cause of the exception
@@ -53,6 +64,14 @@ Exception.prototype.getRootCause = function() {
     
 }
 
+/**
+ * @method
+ * @memberof Number
+ * @summary Determines if the number is a whole number
+ */
+Number.prototype.isWholeNumber = function() {
+    return Math.trunc(this) == this;
+}
 /**
  * @method
  * @memberof Date
@@ -242,6 +261,13 @@ Date.prototype.formatHuman = function(formatString) {
     return moment(this).format(formatString);
 }
 
+Date.prototype.greaterOf = function(...otherDates) {
+    return [this, ...otherDates].sort((a,b) => a > b ? -1 : 1)[0];
+}
+
+Date.prototype.lesserOf = function(...otherDates) {
+    return [this, ...otherDates].sort((a,b) => a > b ? 1 : -1)[0];
+}
 
 /**
  * @returns The decoded base64 data as a JSON object
@@ -401,6 +427,12 @@ function scrubModelProperties(source) {
 
     tSource.forEach(function (object) {
         Object.keys(object).forEach(function (key) {
+
+            // Hidden properties
+            if(key.indexOf("_") == 0) {
+                delete object[key];
+                return;
+            }
             var rawValue = object[key];
 
             if (!Array.isArray(rawValue))
@@ -415,13 +447,10 @@ function scrubModelProperties(source) {
                     // Set the key property to the selected / item value if present
                     if (!keyValue && value.id) {
                         object[keyProperty] = value.id;
-                        // Remove the detail object
-                        delete (object[key]);
                     }
+                    delete object[key];
                 }
-
-                // Scan down 
-                if (value && typeof (value) == "object" && !(value instanceof Date))
+                else if (value && typeof (value) == "object" && !(value instanceof Date))
                     scrubModelProperties(value);
             });
         });
@@ -436,7 +465,10 @@ function scrubModelProperties(source) {
  */
 function ensureIsArray(objectToMakeArray) {
 
-    if(!Array.isArray(objectToMakeArray)) {
+    if(objectToMakeArray === null || objectToMakeArray === undefined) {
+        return null;
+    }
+    else if(!Array.isArray(objectToMakeArray)) {
         if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
         {
             var arr = [];
@@ -562,19 +594,24 @@ function applyCascadeInstructions(source) {
                 })
                     .forEach(function (instruction) {
                         
+                        var sourcePlayer = source.participation[instruction.sourceRole];
+                        if(!sourcePlayer) return;
                         // Apply the cascade for actTime, startTime, stopTime
                         if(relationship.targetModel.statusConcept == StatusKeys.Completed) {
                             relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
                         }
                         relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
 
-                        if (!relationship.targetModel.participation[instruction.targetRole]
-                        ) // Only cascade if not specified
+                        if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
                         {
-                            relationship.targetModel.participation[instruction.targetRole] = source.participation[instruction.sourceRole];
+                            relationship.targetModel.participation[instruction.targetRole] = sourcePlayer.map(ptcpt => {
+                                ptcpt = angular.copy(ptcpt);
+                                ptcpt.act = relationship.targetModel.id;
+                                return ptcpt;
+                            });
                         }
                         else if(!relationship.targetModel.participation[instruction.targetRole][0].player) {
-                            relationship.targetModel.participation[instruction.targetRole][0].player =  source.participation[instruction.sourceRole][0].player;
+                            relationship.targetModel.participation[instruction.targetRole][0].player = sourcePlayer[0].player;
                             delete relationship.targetModel.participation[instruction.targetRole][0].playerModel;
                         }
                     });
@@ -608,7 +645,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
             try {
                 var addr = ensureIsArray(entity.address[k]);
 
-                var intlPromises = addr.map(async function (addrItem) {
+                var intlPromises = addr.map(async function (addrItem) {                    
                     if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
                     if (!addrItem.use)
@@ -617,16 +654,15 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
                     if (addrItem.component) {
                         // If the component contains a reference to a place copy the place data elements
-                        if(addrItem.component._AddressPlaceRef && addrItem.component._AddressPlaceRef.length > 0 &&
-                            addrItem.component._AddressPlaceRef[0] !== "")
+                        if(addrItem.component.PlaceRef && addrItem.component.PlaceRef.length > 0 &&
+                            addrItem.component.PlaceRef[0] !== "")
                         {
                             try {
-                                var pr = await SanteDB.resources.place.getAsync(addrItem.component._AddressPlaceRef[0], 'fastview');
+                                var pr = await SanteDB.resources.place.getAsync(addrItem.component.PlaceRef[0], 'fastview');
+                                
                                 var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
                                 Object.keys(copyAddress[0].component).forEach(k => {
-                                    if(!addrItem.component[k] || addrItem.component[k].length == 0) {
-                                        addrItem.component[k] = copyAddress[0].component[k];
-                                    }
+                                    addrItem.component[k] = copyAddress[0].component[k];
                                 });
                             }
                             catch(e) {

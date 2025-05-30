@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -93,7 +93,7 @@ angular.module('santedb-lib')
                     if (selection.classConcept == EntityClassKeys.ServiceDeliveryLocation)
                         retVal += "<i class='fa fa-fw fa-hospital'></i> ";
                     else
-                        retVal += "<i class='fa fa-fw fa-map-pin'></i> ";
+                        retVal += "<i class='fa fa-fw fa-map-pin'></i>";
                     break;
                 case "Organization":
                     retVal += "<i class='fa fa-fw fa-sitemap'></i> ";
@@ -166,20 +166,22 @@ angular.module('santedb-lib')
             }
 
             retVal += "&nbsp;";
+            
             if (!minRender) {
                 if(selection.securityUserModel) 
-                    retVal += `<code class='d-non d-sm-inline ml-2'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</code> `;
+                    retVal += `<span class='d-non d-sm-inline'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</span> `;
                 if (selection.address)
-                    retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
+                    retVal += "<small class='d-none d-sm-inline'>- (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
                 else if (selection.oid)
                     retVal += "<small class='d-none d-sm-inline ml-2'> - (<i class='fa fa-cogs'></i> " + selection.oid + ")</small>";
                 else if (selection.mnemonic)
                     retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
+            
             if (selection.classConceptModel && !selection.typeConceptModel)
-                retVal += ` <span class='badge badge-secondary ml-2'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
+                retVal += ` <span class='badge badge-secondary ml-1'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
-                retVal += `<span class="badge badge-secondary ml-2">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
+                retVal += `<span class="badge badge-secondary ml-1">${SanteDB.display.renderConcept(selection.typeConceptModel)}</span> `;
             }
 
             if (selection.identifier) {
@@ -213,7 +215,8 @@ angular.module('santedb-lib')
                 forRelationshipType: '=', // If this is the target of the relationship then the default query can be auto-populated with this information
                 withRelationshipSourceClass: '=', // The class concept of the source object
                 withRelationshipTargetClass: '=', // The class concept of the target object
-                jsFilter: '<'
+                jsFilter: '<',
+                upstream: '<'
             },
             restrict: 'E',
             require: 'ngModel',
@@ -224,8 +227,6 @@ angular.module('santedb-lib')
                 function ($scope, $rootScope) {
 
                     $scope.setValue = (selectControl, resource, value) => {
-
-
                         if (!value || Array.isArray(value) && value.length == 0) {
                             $(selectControl).find('option').remove();
                             $(selectControl).trigger('change.select2');
@@ -256,14 +257,14 @@ angular.module('santedb-lib')
                                         }
                                     }
 
-
                                     if ($scope.key && $scope.key != "id") {
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
                                         query._viewModel = "dropdown";
+                                        query._upstream = $scope.upstream;
                                         var res = null;
                                         if ($scope.childResource) {
-                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown");
+                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown", $scope.upstream);
                                         }
                                         else {
                                             res = await api.findAsync(query);
@@ -285,10 +286,10 @@ angular.module('santedb-lib')
                                         var res = null;
 
                                         if ($scope.childResource) {
-                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, null);
+                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, $scope.upstream);
                                         }
                                         else {
-                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown" });
+                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown", _upstream: $scope.upstream });
                                         }
 
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
@@ -390,7 +391,7 @@ angular.module('santedb-lib')
                                     sourceClass: scope.withRelationshipSourceClass,
                                     targetClass: scope.withRelationshipTargetClass,
                                     relationshipType: scope.forRelationshipType
-                                })).resource;
+                                }, null, scope.upstream)).resource;
                                 if (serverRules && serverRules.length > 0) {
 
                                     filter.classConcept = serverRules.map(o => scope.withRelationshipSourceClass ? o.targetClass : o.sourceClass);
@@ -538,7 +539,8 @@ angular.module('santedb-lib')
                         templateSelection: function (o) { return renderObject(o, scope.minRender); },
                         keepSearchResults: true,
                         templateResult: function (o) { return renderObject(o, scope.minRender); },
-                        placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`)
+                        placeholder: SanteDB.locale.getString(`ui.table.search.field.${searchProperty}`),
+                        allowClear: true
                     });
 
 

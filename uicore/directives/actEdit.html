@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -23,7 +23,7 @@
         <div class="actInputList" ng-if="::!model.$templateUrl">
             <!-- Header Information for the core act-->
             <div class="scroll-sticky">
-                <div class="actHeader object-header card">
+                <div class="actHeader object-header card d-none">
                     <div class="row">
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.template' | i18n }}
@@ -99,32 +99,37 @@
             </div>
 
             <!-- START CURRENT ENTRY -->
-            <ul class="nav nav-tabs actBackEntry editOnly">
+            <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
-                    <button class="nav-link active" data-toggle="tab" data-target="#currentActionTab"><i
+                    <button class="nav-link active" data-toggle="tab" data-target="#current-actions"><i
                             class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n
                         }}</button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item actBackEntry">
                     <button class="nav-link" data-toggle="tab" data-target="#historyActionTab"><i
                             class="fas fa-fw fa-clock-rotate-left"></i> {{ 'ui.model.act.tag.isBackentryTrue' | i18n
                         }}</button>
                 </li>
             </ul>
-            <div class="tab-content mb-2">
-                <div id="currentActionTab" class="tab-pane show active">
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="current-actions" role="tabpanel" aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
-                        <li class="list-group-item d-flex flex-column"
+                        <li class="my-2 list-group-item d-flex flex-column border-top"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
-                            ng-class="{ 'bg-light' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-secondary text-white' : comp.operation == '4' }">
+                            ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-light' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-secondary text-white' : comp.operation == '4' }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
-                                <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
-                                | i18n }}
+                                <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss' | i18n }}
                             </div>
                             <div class="d-flex justify-content-left">
                                 <!-- PROPOSE Should allow users to select an override -->
-                                <div class="actProposeControl editOnly"
-                                    ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
+                                <div class="actProposeControl editOnly d-none"
+                                    ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
+                                        (
+                                            !comp.targetModel.tag.$userAdded &amp;&amp; comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' ||
+                                            comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || 
+                                            comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'
+                                        )">
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-control"
                                             ng-model="comp.targetModel.isNegated" id="negate{{$index}}"
@@ -134,7 +139,7 @@
                                     </label>
                                 </div>
                                 <!-- Render the main act entry content -->
-                                <div class="flex-grow-1 actEntryComponent">
+                                <div class="flex-grow-1 actEntryComponent my-auto">
                                     <div ng-if="!comp.targetModel.isNegated" class="editOnly"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
@@ -162,20 +167,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="editOnly btn-group"
-                                    ng-if="comp.targetModel.operation !== 'InsertOrUpdate' &amp;&amp; !comp.targetModel.participation.Performer">
-                                    <button type="button" ng-click="markComplete($index)" class="btn btn-primary">
+                                <div class="editOnly btn-group d-none"
+                                    ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'">
+                                    <button ng-if="!comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary">
                                         <i class="fas fa-fw fa-check"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.complete' | i18n }}</span>
                                     </button>
                                     <button type="button" ng-click="moveHistory($index)"
-                                        class="btn btn-secondary actMoveToHistory"
-                                        ng-if="comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'">
-                                        <i class="fas fa-fw fa-clock-rotate-left"></i> <span
+                                        class="btn btn-dark actMoveToHistory d-none"
+                                        ng-if="!comp.targetModel.tag.$userAdded">
+                                        <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> <span
                                             class="d-none d-lg-inline">{{
-                                            'ui.action.historical' | i18n }}</span>
+                                            comp.targetModel.tag.isBackEntry ? 'ui.action.undo' : 'ui.action.historical' | i18n }}</span>
                                     </button>
-                                    <div class="actRemoveItem editOnly btn-group"
+                                    <div class="actRemoveItem editOnly btn-group d-none"
                                         ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
                                         <button type="button" ng-click="removeItem($index)" class="btn btn-danger"
                                             ng-if="comp.operation != '4'">
@@ -191,9 +196,11 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div ng-if="comp.targetModel.participation.Performer" class="alert alert-secondary d-flex">
-                                    <h5 class="align-self-center text-success"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
-                                    <div class="d-flex flex-column">
+
+                                <!-- Performer -->
+                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'" class="alert alert-secondary d-flex my-auto">
+                                    <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
+                                    <div class="d-flex flex-column my-auto">
                                         <div>
                                             <i class="fas fa-fw fa-user-doctor"></i> {{
                                             comp.targetModel.participation.Performer[0].playerModel.name | name }}
@@ -205,7 +212,7 @@
                                     </div>
                                 </div>
 
-                                <div class="actEditItem viewOnly"
+                                <div class="actEditItem viewOnly d-none"
                                     ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'">
                                     <button type="button" ng-click="editItem($index)" class="btn btn-primary"
                                         ng-disabled="comp.targetModel.actTime.age('hour') &gt; 24">
@@ -217,7 +224,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="historyActionTab" class="tab-pane actBackEntry editOnly">
+                <div id="historyActionTab" class="tab-pane editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
                             <ng-include src="resolveBackentryTemplate(tpl)"></ng-include>
@@ -227,8 +234,11 @@
             </div>
 
             <div class="btn-group float-right">
+                <div ng-if="ownerForm.$invalid" class="text-danger btn">
+                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'error.actEdit.incomplete' | i18n }}
+                </div>
                 <div class="dropup btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem" data-display="static"
+                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem d-none" data-display="static"
                         data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
                         <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
@@ -250,9 +260,10 @@
                     <button class="btn" ng-click="action.children ? null : doAction(action)"
                         ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
                         data-toggle="{{ action.children ? 'dropdown' : null }}" demand="{{action.demand}}"
-                        type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}">
+                        type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}"
+                        ng-disabled="action.validOnly &amp;&amp; ownerForm.$invalid">
                         <i class="fas fa-fw" ng-class="action.icon"></i>
-                        {{ action.label || 'ui.action.' + action.name | i18n }}
+                        {{ action.label || 'ui.action.' + action.name | i18n }} 
                     </button>
 
                     <div class="dropdown-menu" data-display="static">

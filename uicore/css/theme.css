@@ -54,7 +54,7 @@ label.control-label > small.d-block {
 }
 
 
-label.control-label.required:after {
+label.control-label.required:before {
     content: '*';
 }
 
@@ -104,6 +104,19 @@ label.control-label.required:after {
 }
 
 
+.collapse-indicator-horizontal i:last-child {
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.collapse-indicator-horizontal[aria-expanded="true"] i:last-child {
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(190deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg) translate(-20%, 10%);
+}
+
 .select2-container .select2-selection--single, 
 .select2-container .select2-selection--multiple {
     line-height: 1.5;
@@ -126,6 +139,8 @@ label.control-label.required:after {
     font-size: 10px;
 }
 
+@media (min-width:576px){.modal-xl{max-width:90%}}
+@media (min-width:992px){.modal-xl{max-width:950px}}
 @media (min-width:1100px){.modal-xl{max-width:1000px}}
 @media(min-width:1400px){ .modal-xl{max-width:1350px}}
 div.pseudo-input {
@@ -403,4 +418,56 @@ table.dataTable thead > tr > th.sorting::after {
 .wrap-anywhere {
     white-space: unset !important;
     overflow-wrap: anywhere;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered .select2-selection__clear {
+    z-index:1;
+}
+
+.bg-secondary.bg-lighten-25 {
+    background-color: #90989f !important;
+}
+
+.bg-secondary.bg-lighten-50 {
+    background-color: #b5babf !important;
+}
+
+.bg-success.bg-lighten-25 {
+    background-color: #48d367 !important;
+}
+
+.bg-success.bg-lighten-50 {
+    background-color: #85e29a !important;
+}
+
+.bg-success.bg-lighten-75 {
+    background-color: #c2f0cc !important;
+}
+
+.bg-danger.bg-lighten-25 {
+    background-color: #e56773 !important;
+}
+
+.bg-danger.bg-lighten-50 {
+    background-color: #ed9aa2 !important;
+}
+
+.bg-danger.bg-lighten-75 {
+    background-color: #f6ccd0 !important;
+}
+.table-striped {
+    background-color: white;
+}
+
+.card-header {
+    min-height: 55px;
+}
+
+.tab-content {
+    border: 1px solid #e2e3e5;
+    padding: 25px;
+}
+
+.nav-tabs {
+    border: none;
 }

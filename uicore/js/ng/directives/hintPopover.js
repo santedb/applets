@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -54,6 +54,7 @@ angular.module('santedb-lib')
                         $(element).addClass("text-muted");
                         $(element).addClass("d-block");
                         $(element).removeClass("d-inline");
+                        
                         break;
                     default:
                         if(attrs.hintTitle) 
@@ -67,12 +68,10 @@ angular.module('santedb-lib')
                             $(element).attr('data-content', SanteDB.locale.getString(`${attrs.hintTitle}.hint`, scope.hintTextBinding));
                         }
         
+                        $(element).find('a i').addClass(attrs.hintTextClass ? attrs.hintTextClass : 'text-info');                        
                 }
 
-
                 $(element).ready(_=>$(element).popover({ trigger: 'hover',  html: true }));
-
-
             }
         }
     }]);

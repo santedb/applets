@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -90,6 +90,7 @@
   <type type="ActParticipation" all="false">
     <property name="source" all="true" />
     <property name="target" all="true" />
+    <property name="player"/>
     <property name="playerModel" all="true" ref="$type" behavior="always" />
     <property name="participationRole" all="true" />
     <property name="key" all="true" />
@@ -715,18 +716,24 @@
         <property name="playerModel" all="false" behavior="always">
           <property name="id" />
           <property name="version" />
-          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" all="true" />
           <property name="identifier" all="true" />
           <property name="name" all="true" behavior="always">
             <property name="*" ref="EntityName" />
           </property>
           <property name="tag" all="true" />
+          <property name="quantityConceptModel" behavior="always" ref="ConceptNested"/>
+          <property name="quantityConcept" behavior="always" ref="ConceptNested"/>
           <property name="extension" all="true" />
-          <property name="relationship" all="false">
+          <property name="relationship" all="true" behavior="always">
+            <property name="HasGeneralization" all="true">
+              <property name="targetModel" behavior="always" ref="MaterialParticipant" />
+            </property>
             <property name="*" all="false">
               <property name="target" all="true" />
               <property name="targetModel" all="true" />
-            </property>
+              <property name="quantity" />
+              </property>
           </property>
           <property name="participation" all="true">
             <property name="*" all="false">
@@ -740,16 +747,21 @@
         <property name="actModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
         <property name="participationRoleModel" behavior="never" />
+        <property name="quantity" />
         <property name="player" all="true" />
-        <property name="playerModel" all="false" behavior="always">
+        <property name="playerModel" all="true" behavior="always">
           <property name="id" />
           <property name="version" />
           <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
           <property name="identifier" all="true" />
-          <property name="name" all="true" behavior="always" />
+          <property name="name" all="true" behavior="always">
+            <property name="*" ref="EntityName" />
+          </property>
           <property name="tag" all="true" />
           <property name="extension" all="true" />
           <property name="lotNumber" all="true" />
+          <property name="quantityConcept" />
+          <property name="quantityConceptModel" behavior="always" ref="ConceptNested"/>
           <property name="participation" all="true">
             <property name="*" all="false">
               <property name="participationRole" />
@@ -805,10 +817,12 @@
       </property>
       <property name="Performer" all="true">
         <property name="relationshipTypeModel" behavior="always" />
+        <property name="player" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
       <property name="SecondaryPerformer" all="true">
         <property name="relationshipTypeModel" behavior="always" />
+        <property name="player" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
       <property name="*" ref="ActParticipation" all="true" />
@@ -846,7 +860,7 @@
         <property name="source" />
       </property>
       <property name="Fulfills" all="true">
-        <property name="targetModel" behavior="always" ref="Act" />
+        <property name="targetModel" behavior="always" ref="SubstanceAdministration" />
       </property>
       <property name="*" behavior="always" all="true" />
     </property>
@@ -916,6 +930,7 @@
       </property>
     </property>
   </type>
+
 
   <type type="QuantityObservation" all="true">
     <property name="tag" all="true" behavior="always" />

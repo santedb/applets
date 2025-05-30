@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -53,13 +53,13 @@ angular.module('santedb-lib')
                     if (!$scope.parameter || $scope.parameter.values.list) return;
                     try {
                         var parameters = [{ id: null, value: SanteDB.locale.getString("ui.wait") }];
-                        $timeout(()=> $scope.parameter.values.list = parameters);
+                        $timeout(() => $scope.parameter.values.list = parameters);
 
                         // Now fetch
                         // TODO: Add parameters list here
                         // TODO: Add fetch here
                         parameters = await SanteDBBi.executeQueryAsync($scope.parameter.id, { _count: 1000 });
-                        $timeout(()=> $scope.parameter.values.list = parameters);
+                        $timeout(() => $scope.parameter.values.list = parameters);
                     }
                     catch (e) {
 
@@ -94,7 +94,7 @@ angular.module('santedb-lib')
                 var dt = {};
                 $scope.parameterValues = {};
 
-                function setReportContent (elementId, content) {
+                function setReportContent(elementId, content) {
 
                     if (dt[elementId]) {
                         dt[elementId].destroy();
@@ -118,7 +118,7 @@ angular.module('santedb-lib')
                 $scope.printReport = async function (view) {
                     try {
                         SanteDB.display.buttonWait(`#btnPrintReport_${view.name}`, true);
-                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view.name, "html", $scope.parameterValues );
+                        var report = await SanteDBBi.renderReportAsync($scope.reportId, view.name, "html", $scope.parameterValues);
 
                         var headerInjection = `<link rel="stylesheet" type="text/css" href="/org.santedb.bicore/css/print.css?${new Date()}" />`;
                         report = report.replace(`<title>${view.name}</title>`, `<title>${SanteDB.locale.getString($scope.report.label)} - ${SanteDB.locale.getString(view.label)}</title>`);
@@ -169,21 +169,20 @@ angular.module('santedb-lib')
 
                         var parameterValues = angular.copy($scope.parameterValues);
                         Object.keys(parameterValues).forEach(p => {
-                            if(parameterValues[p] instanceof Date)
-                            {
+                            if (parameterValues[p] instanceof Date) {
                                 parameterValues[p] = new moment(parameterValues[p]).format('YYYY-MM-DD')
                             }
                         });
-                        
+
                         var parms = jQuery.param(parameterValues);
                         parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
 
-                       
+
                         var win = window.open(`/bis/Report/${format}/${$scope.report.id}?${parms}&_view=${view}`, '_blank');
                         win.onload = function (e) {
                             win.close();
                         };
-                       
+
 
                     }
                     catch (e) {
@@ -195,7 +194,7 @@ angular.module('santedb-lib')
                 }
 
                 $scope.updateParameterValues = async function (form) {
-                    
+
                     try {
                         SanteDB.display.buttonWait("#btnApply", true);
 
@@ -220,7 +219,7 @@ angular.module('santedb-lib')
 
 
                     }
-                    catch(e) {
+                    catch (e) {
                         $rootScope.errorHandler(e);
                     }
                     finally {
@@ -262,7 +261,7 @@ angular.module('santedb-lib')
                             $scope.report = report;
                             $scope.report.parameterDefinitions = parameters;
 
-                            if($scope.report.parameterDefinitions == undefined ||
+                            if ($scope.report.parameterDefinitions == undefined ||
                                 $scope.report.parameterDefinitions.length == 0) {
                                 $scope.updateParameterValues();
                             }
@@ -279,7 +278,7 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
-                
+
             }
         }
     }])
@@ -291,19 +290,18 @@ angular.module('santedb-lib')
      */
     .directive('reportView', ['$compile', '$rootScope', function ($compile, $rootScope) {
 
-        
-        (function($) {
+
+        (function ($) {
             function ReportViewJquery(scope) {
-                this.refresh = function(e)
-                {
+                this.refresh = function (e) {
                     scope.isRendering = false;
                     scope.renderReport();
                 };
             }
             $.fn.extend({
-                reportView : function(scope) {
-                    this.each(function() {
-                        if(!this.ReportView) {
+                reportView: function (scope) {
+                    this.each(function () {
+                        if (!this.ReportView) {
                             this.ReportView = new ReportViewJquery(scope || angular.element($(this).scope()));
                         }
                     });
@@ -315,7 +313,7 @@ angular.module('santedb-lib')
             scope: {
                 reportId: "<",
                 parameters: "=",
-                view: "<"
+                view: "<",
             },
             restrict: "E",
             replace: true,
@@ -324,6 +322,9 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
             }],
             link: function (scope, element, attrs) {
+
+                var nodt = attrs.noDataTables == "true";
+                var responsiveTables = attrs.responsiveTables == "true";
 
                 var dt = null; // data table reference
                 // HACK: Parmaeters weren't passed so we shall construct them
@@ -337,11 +338,17 @@ angular.module('santedb-lib')
                     $(element).html(content);
 
                     // Data tables?
-                    var tableData = $("table", $(element));
-                    if (tableData.length > 0) {
-                        $(tableData).addClass("table table-striped w-100");
-                        $(tableData).DataTable();
+                    if (!nodt) {
+                        var tableData = $("table", $(element));
+                        if (tableData.length > 0) {
+                            $(tableData).addClass("table table-striped w-100");
+                            $(tableData).DataTable();
+                        }
                     }
+                    else if (responsiveTables) {
+                        $("table", $(element)).addClass("table-responsive");
+                    }
+
                     if (compile)
                         $compile($(element))(scope);
                 };
@@ -384,7 +391,7 @@ angular.module('santedb-lib')
                     }
                 });
 
-                if(attrs.id) {
+                if (attrs.id) {
                     $(element).reportView(scope);
                 }
             }
@@ -457,7 +464,7 @@ angular.module('santedb-lib')
                     scope.data = [scope.data];
 
                 for (var i in scope.data) {
-                    if(parseInt(i) === NaN) continue;
+                    if (parseInt(i) === NaN) continue;
                     if (scope.type == "line" || scope.type == "radar") {
 
                         scope.data[i].backgroundColor = scope.data[i].backgroundColor || randomColor(0.1, parseInt(i));
@@ -507,22 +514,22 @@ angular.module('santedb-lib')
                             }
                         }];
 
-                        if(xAxis.type == 'time' || xAxis.type == 'timeseries') {
+                        if (xAxis.type == 'time' || xAxis.type == 'timeseries') {
                             scale.xAxes[0].time = xAxis.time;
                         }
                     }
                 }
 
                 // Correct any datasets
-                scope.data = scope.data.map(d=> {
-                    if(d.type == "bubble") {
-                        d.data = d.data.map((p,i)=>{ 
+                scope.data = scope.data.map(d => {
+                    if (d.type == "bubble") {
+                        d.data = d.data.map((p, i) => {
                             p = p || {};
-                            return { 
+                            return {
                                 y: p.y || 0,
                                 r: p.r || p,
-                                x: p.x || scope.labels[i] 
-                            } 
+                                x: p.x || scope.labels[i]
+                            }
                         });
                     }
                     return d;

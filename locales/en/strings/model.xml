@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -112,6 +112,7 @@
   <string name="ui.model.entityName.use">Type</string>
   <string name="ui.model.entityAddress.use">Type</string>
   <string name="ui.model.entityTelecom.use">Use</string>
+  <string name="ui.model.entityRelationship.new">New Relative</string>
   <string name="ui.model.entityRelationship.type">Type</string>
   <string name="ui.model.entityRelationship.prefix">Has a</string>
   <string name="ui.model.entityRelationship.inverse.prefix">Is a</string>
@@ -160,6 +161,7 @@
   <string name="ui.model.entity.id">UUID</string>
   <string name="ui.model.entity.classConcept">Classification</string>
   <string name="ui.model.entity.typeConcept">Type</string>
+  <string name="ui.model.entity.relationship.requiresRelationship">Children under the age of 18 require at least one relative.</string>
   <string name="ui.model.entity.relationship.relationshipType">Relationship</string>
   <string name="ui.model.entity.relationship.hasA">HAS A</string>
   <string name="ui.model.entity.relationship.isA">IS A</string>
@@ -281,6 +283,7 @@
   <string name="ui.model.entity.identifier.authority">Domain</string>
   <string name="ui.model.patient.administrativeInfo">Extra</string>
   <string name="ui.model.patient.demographics">Demographics</string>
+  <string name="ui.model.patient.other">Other</string>
   <string name="ui.model.patient.birth">Birth</string>
   <string name="ui.model.patient.death">Death</string>
   <string name="ui.model.patient.name">Name</string>
@@ -303,7 +306,7 @@
   <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
-  <string name="ui.model.patient.dateOfBirth">DOB</string>
+  <string name="ui.model.patient.dateOfBirth">Date of Birth</string>
   <string name="ui.model.patient.dateOfBirth.hint"><![CDATA[The date on which the patient was born. If the exact date is unknown, or you wish to enter the age, use the <code>approx</code> checkbox]]></string>
   <string name="ui.model.patient.dateOfBirth.age">Age</string>
   <string name="ui.model.patient.dateOfBirth.approx">Approx.</string>
@@ -362,6 +365,8 @@
   <string name="ui.model.person.deceasedIndicator">Person is Deceased</string>
   <string name="ui.model.person.deceasedDate.approx">Approximate Date</string>
   <string name="ui.model.patient.summary">Patient Summary</string>
+  <string name="ui.model.person.relationship.Student">School</string>
+  <string name="ui.model.person.relationship.Student.hint">Select the school that the person is currently registered in</string>
   <string name="ui.model.person.relationship.Employee">Employer(s)</string>
   <string name="ui.model.person.relationship.Employee.hint">Select one or more employers under which the person has active employment</string>
   <string name="ui.model.place.name">Name</string>
@@ -532,12 +537,16 @@
   <string name="ui.model.act.reasonConcept.other">Other Reason</string>
   <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
+  <string name="ui.model.act.actTime.date">Date Performed</string>
   <string name="ui.model.act.startTime">Started</string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another act</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends performing this action based on the inputs provided on another input</string>
+  <string name="ui.model.act.relationship.Fulfills">Fulfills</string>
+  <string name="ui.model.act.relationship.Fulfills.target.startTime">Scheduled Start</string>
+  <string name="ui.model.act.relationship.Fulfills.target.actTime">Scheduled Date</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
@@ -545,6 +554,7 @@
   <string name="ui.model.act.participation.RecordTarget">Subject</string>
   <string name="ui.model.act.participation.RecordTarget.container">Container</string>
   <string name="ui.model.act.participation.Informant">Informant</string>
+  <string name="ui.model.act.participation.ResponsibleParty">Responsible Party</string>
   <string name="ui.model.act.isNegated">Not Performed</string>
   <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
   <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>
@@ -564,6 +574,7 @@
   <!-- Account management -->
   <string name="ui.model.act.accm.participation.Consumable.id">Material Lot/Batch</string>
   <string name="ui.model.act.accm.participation.quantity">Count</string>
+  <string name="ui.model.act.accm.participation.expiry">Expiration Date</string>
   <string name="ui.model.act.participation.Consumable.partialQuantity">Partial {unit}</string>
   <!-- Audit Logs -->
   <string name="ui.model.audit.action">Action</string>
@@ -983,4 +994,13 @@
     <string name="ui.model.dataTemplateDefinition.public">Is Public</string>
     <string name="ui.model.dataTemplateDefinition.public.hint">Making a template public means that users can manually add this to their encounters in the EMR view</string>
 
+    <!-- Care Plans-->
+    <string name="ui.model.carePlan.pathway">Care Pathway</string>
+    <string name="ui.model.carePlan.pathway.hint">Select the care pathway for which the plan applies</string>
+
+    <!-- Substance Administrations -->
+     <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
+     <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+     <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
+     <string name="ui.model.substanceAdministration.site">Administration Site</string>
 </resources>

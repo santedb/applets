@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -207,6 +207,7 @@
       <string name="ui.action">Actions</string>
       <string name="ui.action.ok">Ok</string>
       <string name="ui.action.dismiss">Dismiss</string>
+      <string name="ui.action.show">Show</string>
       <string name="ui.action.cancel">Cancel</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
@@ -290,6 +291,7 @@
       <string name="ui.action.bug">Report Bug</string>
       <string name="ui.action.logout">Logout</string>
       <string name="ui.action.close">Close</string>
+      <string name="ui.action.setting">Settings</string>
       <string name="ui.action.findDuplicates">Find Duplicates</string>
       <string name="ui.action.unlink">Unlink</string>
       <string name="ui.action.detail">Details</string>
@@ -347,6 +349,7 @@
       <string name="ui.table.search.field.securityUser.userName">Search by username</string>
       <string name="ui.table.search.field.name||oid">Search by name or OID</string>
       <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
+      <string name="ui.table.search.field.name.component.value||securityUser.userName">Search by name or username</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -641,7 +644,7 @@
       <string name="security.challenge.text3">The city where you were born</string>
       <string name="security.challenge.text4">Your favorite food</string>
       <string name="security.challenge.text5">Secondary school you attended</string>
-      <string name="security.challenge.text6">First care you owned</string>
+      <string name="security.challenge.text6">First car you owned</string>
       <string name="security.challenge.text7">Favourite book or author</string>
       <string name="security.challenge.text8">Your favorite movie</string>
       <string name="security.challenge.text9">Your first job/employer</string>
@@ -670,8 +673,8 @@
       <string name="ui.mdm.action.unlock">Edit Anyways</string>
       <string name="ui.mdm.view.local">You are viewing a LOCAL record - this represents an unverified source of data from a source system. Editing this record would cause a mismatch in data between systems.</string>
       <string name="ui.mdm.view.recordOfTruth">You are looking at a RECORD OF TRUTH. You may update this record with official registration information for the patient.</string>
-      <string name="ui.mdm.view.master">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record. This record is synthesized from multiple &lt;strong&gt;LOCAL&lt;/strong&gt; records. Editing the record will create a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;</string>
-      <string name="ui.mdm.view.masterAdjudicated">You are looking at a &lt;strong&gt;MASTER&lt;/strong&gt; record with a &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;. Changes should be made on the &lt;strong&gt;RECORD OF TRUTH&lt;/strong&gt;</string>
+      <string name="ui.mdm.view.master">You are looking at a MASTER record. This record is synthesized from multiple LOCAL records. Editing the record will create a RECORD OF TRUTH.</string>
+      <string name="ui.mdm.view.masterAdjudicated">You are looking at a MASTER record with a RECORD OF TRUTH. Changes should be made on the RECORD OF TRUTH.</string>
       <string name="ui.mdm.isTrue">This MASTER record has been verified. The data you are seeing is the OFFICIAL data from the RECORD OF TRUTH.</string>
       <string name="ui.mdm.edit.master">This is a MASTER record. Editing it will result in the creation a new LOCAL record for the administrative panel which will be.</string>
       <string name="ui.mdm.edit.recordOfTruth">You are editing a RECORD OF TRUTH, this record should contain the &quot;official&quot; data for this object.</string>

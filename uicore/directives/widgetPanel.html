@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -26,8 +26,8 @@
     <div class="row">
         <div class="col" ng-repeat="group in widgetGroups track by $index"
             ng-class="{ 'col-12' : !renderSize &amp;&amp; group.size == 'Large' || renderSize == 'Large', 'col-sm-12 col-lg-6' : !renderSize &amp;&amp; group.size == 'Medium' || renderSize == 'Medium', 'col-sm-6 col-lg-3': !renderSize &amp;&amp; group.size == 'Small' || renderSize == 'Small' }">
-            <div class="mt-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="::$eval(panel.guard[0] || 'true')">
-                <div class="card widget-card">
+            <div class="mb-2 p-0 col" ng-repeat="panel in group.widgets" ng-if="$eval(panel.guard[0] || 'true')">
+                <div class="card widget-card flat">
                     <div class="card-header d-flex align-items-center justify-content-between"
                         ng-class="panel.headerClass">
                         <h5 class="mb-0">
@@ -36,21 +36,25 @@
                         <div class="btn-group" ng-if="panel.views &amp;&amp; !noAlt">
                             <button class="btn btn-danger" type="button" ng-if="panel.view" ng-click="closeView(panel)">
                                 <i class="fa fa-times"></i>
+                                <span class="d-none d-lg-inline">{{ 'ui.action.cancel' | i18n }}</span>
                             </button>
-                            <button class="btn btn-info" type="button" ng-click="setView(panel, 'Edit')"
+                            <button class="btn btn-sm btn-info" type="button" ng-click="setView(panel, 'Edit')"
                                 id="pnl{{panel.id}}Edit"
                                 ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">
                                 <i class="fas fa-pencil-alt"></i>
+                                <span class="d-none d-lg-inline">{{ 'ui.action.edit' | i18n }}</span>
                             </button>
                             <button class="btn btn-success" type="button" ng-click="submitForm(panel)"
                                 ng-disabled="(panel.editForm || panel.settingsForm).$invalid" ng-if="panel.view === 'Edit' || panel.view === 'Settings'">
                                 <i class="fas fa-check"></i>
+                                <span class="d-none d-lg-inline">{{ 'ui.action.save' | i18n }}</span>
                             </button>
                             <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Settings')"
                                 ng-click="setView(panel, 'Settings')" id="pnl{{panel.id}}Setting"
                                 ng-if="panel.view != 'Settings' &amp;&amp; hasView(panel, 'Settings') &amp;&amp; !altView">
                                 <i class="fa fa-cog"></i>
+                                <span class="d-none d-lg-inline">{{ 'ui.action.setting' | i18n }}</span>
                             </button>
                             <button class="btn btn-primary" type="button" ng-init="disableView(panel, 'Alternate')"
                                 ng-click="setView(panel, 'Alternate')" id="pnl{{panel.id}}Alternate"

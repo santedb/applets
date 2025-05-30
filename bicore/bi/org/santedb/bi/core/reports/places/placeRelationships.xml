@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<BiReportDefinition xmlns="http://santedb.org/bi"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://santedb.org/bi http://santedb.org/schema/v3.0/BusinessIntelligence.xsd"
+    id="org.santedb.bi.core.reports.places.relations"
+    label="ui.bi.core.report.places.relations"
+    name="All Place Relationships"
+    status="active">
+    <meta>
+        <authors>
+            <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+        </authors>
+        <annotation>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <p>Report shows a list of all places and their related places (such as catchment
+                    information, dedicated service delivery, etc.)</p>
+            </div>
+        </annotation>
+        <public>true</public>
+    </meta>
+    <dataSources>
+        <!-- Main Tabular dataset -->
+        <query ref="#org.santedb.bi.core.query.place2Place" name="main" />
+        <!-- Aggregate by type -->
+        <view name="by-type">
+            <query ref="#org.santedb.bi.core.query.place2Place" />
+            <aggregations>
+                <add>
+                    <providers>
+                        <invariant>FirebirdSQL</invariant>
+                        <invariant>npgsql</invariant>
+                        <invariant>sqlite</invariant>
+                    </providers>
+          <grouping>
+                        <column name="type">relationship_type</column>
+                    </grouping>
+          <select>
+                        <column name="n_places" fn="count-distinct">ent_id</column>
+                    </select>
+                </add>
+            </aggregations>
+        </view>
+    </dataSources>
+    <views>
+        <add id="org.santedb.bi.core.reports.places.all.table" label="ui.bi.common.tabular"
+            name="table" type="tabular">
+            <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+                <bi:dataTable source="main">
+                    <bi:column>
+                        <bi:header>Parent</bi:header>
+                        <bi:column>
+                            <bi:header>Parent UUID</bi:header>
+                            <bi:cell>
+                                <bi:link href="#!/data/place/${parent_id}">
+                                    <bi:value>parent_id</bi:value>
+                                    <sup>
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </sup>
+                                </bi:link>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Parent</bi:header>
+                            <bi:cell>
+                                <bi:value>parent_name</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                    </bi:column>
+                    <bi:column>
+                        <bi:header>Place</bi:header>
+                        <bi:column>
+                            <bi:header>UUID</bi:header>
+                            <bi:cell>
+                                <bi:link href="#!/data/place/${ent_id}">
+                                    <bi:value>ent_id</bi:value>
+                                    <sup>
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </sup>
+                                </bi:link>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Name</bi:header>
+                            <bi:cell>
+                                <bi:value>name</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Status</bi:header>
+                            <bi:cell>
+                                <bi:value>status</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Classification</bi:header>
+                            <bi:cell>
+                                <bi:value>class</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Sub-Type</bi:header>
+                            <bi:cell>
+                                <bi:value>type</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                    </bi:column>
+                    <bi:column>
+                        <bi:header>Related Object</bi:header>
+                        <bi:column>
+                            <bi:header>Relationship</bi:header>
+                            <bi:cell>
+                                <bi:value>relationship_type</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Name</bi:header>
+                            <bi:cell>
+                                <bi:value>target_name</bi:value>
+                            </bi:cell>
+                        </bi:column>
+                        <bi:column>
+                            <bi:header>Classification / Sub-Type</bi:header>
+                            <bi:cell><bi:value>target_class</bi:value> / <bi:value>target_type</bi:value></bi:cell>
+                        </bi:column>
+                    </bi:column>
+                </bi:dataTable>
+            </div>
+        </add>
+        <add id="org.santedb.bi.core.reports.places.all.chart" label="ui.bi.common.chart"
+            name="chart" type="chart">
+            <div xmlns="http://www.w3.org/1999/xhtml" xmlns:bi="http://santedb.org/bi/view">
+                <!-- Shows line chart with each audit event type -->
+                <bi:chart source="by-type" type="pie" legend="true">
+                    <bi:title>Place Relationship Types</bi:title>
+                    <bi:labels>type</bi:labels>
+                    <bi:dataset label="# Places" fn="sum">n_places</bi:dataset>
+                </bi:chart>
+            </div>
+        </add>
+    </views>
+</BiReportDefinition>

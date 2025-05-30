@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<BiParameterDefinition xmlns="http://santedb.org/bi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://santedb.org/bi http://santedb.org/schema/v3.0/BusinessIntelligence.xsd" 
+  id="org.santedb.bi.core.parameter.common.relationshipType" 
+  name="class" 
+  label="ui.bi.core.common.relationship.type" 
+  type="uuid" 
+  status="active">
+  <meta>
+    <authors>
+      <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
+    </authors>
+    <annotation lang="en">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <p>Defines values for the concept set for relationship type</p>
+      </div>
+    </annotation>
+  </meta>
+  <query>
+    <dataSources>
+      <add ref="#org.santedb.bi.dataSource.main" name="main"/>
+    </dataSources>
+    <definitions>
+      <add>
+        <providers>
+          <invariant>npgsql</invariant>
+        </providers>
+        <![CDATA[
+           SELECT cd_id AS id, val
+          FROM cd_vrsn_tbl
+            INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
+          WHERE
+            SET_ID = 'ee16a667-2085-440a-b1e7-4032d10b9f40'
+            AND HEAD
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>fbsql</invariant>
+        </providers>
+        <![CDATA[
+           SELECT cd_id AS id, val
+          FROM cd_vrsn_tbl
+            INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
+          WHERE
+            SET_ID = char_to_uuid('ee16a667-2085-440a-b1e7-4032d10b9f40')
+            AND HEAD
+            ]]>
+      </add>
+      <add>
+        <providers>
+          <invariant>sqlite</invariant>
+        </providers>
+        <![CDATA[
+            SELECT cd_id AS id, val
+          FROM cd_vrsn_tbl
+            INNER JOIN CD_SET_MEM_ASSOC_TBL USING (cd_id)
+            INNER JOIN CD_NAME_TBL USING (CD_ID)
+          WHERE
+            SET_ID = x'67A616EE85200A44B1E74032D10B9F40'
+            AND HEAD
+            ]]>
+      </add>
+    </definitions>
+  </query>
+</BiParameterDefinition>

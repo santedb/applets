@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -91,6 +91,7 @@ angular.module('santedb-lib')
 
         async function refreshItems(scope) {
             var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);
+            
             try {
                 waiterDiv.removeClass('d-none');
                 var query = angular.copy(scope.defaultQuery) || {};
@@ -112,12 +113,12 @@ angular.module('santedb-lib')
                 var results = null;
                 var viewModel = query._viewModel || 'full';
                 if (scope.$$operation) {
-                    results = await scope.$$sourceApi.invokeOperationAsync(scope.operationScope, scope.$$operation, query, scope.upstream == true);
+                    results = await scope.$$sourceApi.invokeOperationAsync(scope.operationScope, scope.$$operation, query, scope.upstream); // == true);
                 } else if (scope.$$subResource) {
-                    results = await scope.$$sourceApi.findAssociatedAsync(scope.subResourceScope, scope.$$subResource, query, viewModel, scope.upstream == true);
+                    results = await scope.$$sourceApi.findAssociatedAsync(scope.subResourceScope, scope.$$subResource, query, viewModel, scope.upstream);// == true);
                 }
                 else {
-                    results = await scope.$$sourceApi.findAsync(query, viewModel, scope.upstream == true);
+                    results = await scope.$$sourceApi.findAsync(query, viewModel, scope.upstream); // == true);
                 }
 
                 // Check if there are search results and an array of one or more item supplement functions to add additional information for the resource.
@@ -160,6 +161,7 @@ angular.module('santedb-lib')
                 defaultQuery: '=',
                 upstream: '=',
                 searchField: '=',
+                shouldLoadOnInit: '=',
                 actions: '<',
                 itemActions: '<',
                 operationScope: '=',
@@ -173,11 +175,14 @@ angular.module('santedb-lib')
             templateUrl: '/org.santedb.uicore/directives/entityList.html',
             controller: ['$scope', "$state", function ($scope, $state) {
 
+                $scope.shouldLoadOnInit = $scope.shouldLoadOnInit || true;
+
                 $scope.$watch("defaultQuery", function (n, o) {
                     if (n && n != o) {
                         if ($scope.$$queryId !== undefined) {
                             $scope.$$queryId = SanteDB.application.newGuid();
                         }
+                        
                         refreshItems($scope);
                     }
                 })
@@ -249,14 +254,14 @@ angular.module('santedb-lib')
 
             }],
             link: function (scope, element, attrs) {
-
+                
                 $(element).entityList(scope);
 
                 scope.$$type = attrs.type;
                 scope._display = attrs.display || 'list';
-
+                scope.shouldLoadOnInit = attrs.shouldLoadOnInit ? attrs.shouldLoadOnInit == 'true' : true;
                 scope.$$keyProperty = attrs.keyProperty || 'id';
-                scope.$$orderBy = attrs.orderBy || 'creationTime:asc';
+                scope.$$orderBy = attrs.orderBy?.split(',') || 'creationTime:asc';
                 _operaation = attrs.operation;
                 scope.$$subResource = attrs.subResource;
                 scope.$$eleId = attrs.id;
@@ -267,21 +272,21 @@ angular.module('santedb-lib')
                 var _listTemplate = null;
                 // item template?
                 if (attrs.itemTemplate) {
-                    _listTemplate = $("#listTemplate", element).html()
+                    _listTemplate = $(".entityListTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", `<ng-include src="'${attrs.itemTemplate}'" />`)
                         .replace("$itemClass", attrs.itemClass)
                         .replace("$idRoot", scope.$$eleId);
                 }
                 else {
-                    _listTemplate = $("#listTemplate", element).html()
+                    _listTemplate = $(".entityListTemplate", element).html()
                         .replaceAll("xg-", "ng-")
                         .replace("$template", _itemTemplate)
                         .replace("$itemClass", attrs.itemClass)
                         .replace("$idRoot", scope.$$eleId);
                 }
-                $("#listContainer", element).html(_listTemplate);
-                $compile(angular.element("#listContainer"))(scope);
+                $(`.entityListContainer`, element).html(_listTemplate);
+                $compile(angular.element(".entityListContainer"))(scope);
 
                 $(".entity-list-waiter", element).attr("id", `${scope.$$eleId}_${scope.$$scid}`);
 
@@ -312,7 +317,9 @@ angular.module('santedb-lib')
                 else if (!scope.$$sourceApi) { throw `No SanteDB API exists for ${scope.$$type}`; }
                 //else if (!_itemTemplate) { throw "entity-list missing item template"; }
 
-                refreshItems(scope);
+                if (scope.shouldLoadOnInit == true) {
+                    refreshItems(scope);
+                }
 
             }
         }

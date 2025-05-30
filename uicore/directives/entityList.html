@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -27,11 +27,11 @@
                         <div class="btn-group globalActions" ng-if="actions">
                             <div ng-repeat="action in actions track by $index" class="btn-group">
                                 <button type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" class="btn"
-                                    ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="actionList_button_{{$index}}">
+                                    ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="{{::$$eleId}}actionList_button_{{$index}}">
                                     <i class="fas fa-fw" ng-class="action.icon"></i>
                                     {{ action.label || 'ui.action.' + action.name | i18n }}
                                 </button>
-                                <div class="dropdown-menu overflow-auto" id="actionList_{{$index}}" ng-if="action.children" data-display="static">
+                                <div class="dropdown-menu overflow-auto" id="{{::$$eleId}}actionList_{{$index}}" ng-if="action.children" data-display="static">
                                     <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
                                         ng-repeat="child in action.children track by $index" >
                                         <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name | i18n }}
@@ -53,17 +53,19 @@
                             <option value="15" ng-if="_display == 'list'">15</option>
                         </select>
                     </div>
-                    <div class="m-1 viewChange d-none">
-                        <div class="btn-group">
-                            <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
-                                ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
-                                    class="fas fa-fw fa-th-list m-1"></i></button>
-                            <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
-                                ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
-                                    class="fas fa-fw fa-th m-1"></i></button>
-                        </div>
+                </div>
+
+                <div class="m-1 viewChange d-none">
+                    <div class="btn-group">
+                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
+                            ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
+                                class="fas fa-fw fa-th-list m-1"></i></button>
+                        <button class="btn btn-info" ng-class="{ 'active' : _display == 'grid'}"
+                            ng-click="_display = 'grid'; queryControl.resultsPerPage = 9"><i
+                                class="fas fa-fw fa-th m-1"></i></button>
                     </div>
                 </div>
+                
                 <div class="m-1 filter d-none">
                         <div class="float-right">
                             {{ 'ui.action.search' | i18n }}:
@@ -76,24 +78,30 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col">
             <hr />
         </div>
     </div>
-    <div id="listContainer" class="row">
 
+    <div class="col">
+        <div class="entityListContainer row">
+        </div>
     </div>
+
     <div class="row" ng-if="results.totalResults == 0">
         <div class="col-12 text-center">
             {{ 'ui.table.noRecords' | i18n }}
         </div>
     </div>
+
     <div class="row">
         <div class="col">
             <hr />
         </div>
     </div>
+
     <div class="row">
         <div class="col-6">
             {{ results.totalResults &gt; 0 ? results.offset + 1 : 0 }} .. {{ results.offset + results.resource.length }}
@@ -131,18 +139,20 @@
 
     <!-- The following is used as a template for each of the list items 
         xg-* is replaced with ng-* when injecting the HTML into the template-->
-    <div class="d-none" id="listTemplate"> 
+    <div class="d-none entityListTemplate"> 
         <div class="card $itemClass"
-            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display != 'list', 'col-12' : _display == 'list' }"
-            xg-repeat="item in results.resource track by $index">         
-            $template
-            <div class="card-footer" xg-if="itemActions">
+            xg-class="{ 'col-xs-12 col-lg-6 col-xl-4' : _display == 'grid', 'col-xs-12 col-lg-6' : _display == 'gallery', 'col-12' : _display == 'list' }"
+            xg-repeat="item in results.resource track by $index">        
+            <div class="card-body">
+                $template
+            </div>
+
+            <div class="card-footer py-0 pb-4" xg-if="itemActions">
                 <div class="btn-group float-right">
-                    <button xg-repeat="action in itemActions track by $index" class="btn {{ action.className }}"
+                    <button xg-repeat="action in itemActions track by $index" class="btn {{ action.className }} rounded ml-2"
                         id="$idRoot_action_{{action.name}}_{{$parent.$parent.$index}}" xg-click="doAction(action, item, $parent.$parent.$index)"
                         xg-if="filterAction(action, item)" demand="{{ action.demand }}">
-                        <i class="fas fa-fw {{action.icon}}"></i>
-                        {{ action.label || 'ui.action.' + action.name | i18n }}
+                            <i class="fas fa-fw {{action.icon}}"></i>{{ action.label || 'ui.action.' + action.name | i18n }}
                     </button>
                 </div>
             </div>

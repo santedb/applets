@@ -1,6 +1,6 @@
 <!--
- - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
- - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  - 
  - Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -16,8 +16,7 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="mb-1 scroll-sticky object-header">
-
-    <div class="card mb-0">
+    <div class="card">
         <div class="card-body" ng-if="!patient">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
         </div>
@@ -106,10 +105,16 @@
                                 'ui.model.patient.deceasedIndicator' | i18n }}</span>
                             {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )
                         </div>
-                        <div class="p-2" ng-if="patient.telecom"><i class="fas fa-home"></i> {{ patient.telecom |
-                            telecom }}</div>
-                        <div class="p-2" ng-if="patient.address"><i class="fas fa-home"></i> {{ patient.address |
-                            address }}</div>
+
+                        <!-- Telecom -->
+                        <div class="p-2" ng-if="patient.telecom">
+                            <i class="fas fa-phone"></i> {{ patient.telecom.PrimaryHome[0] | telecom }}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="p-2" ng-if="patient.address">
+                            <i class="fas fa-home"></i> {{ patient.address | address }}
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 hide-when-sticky">

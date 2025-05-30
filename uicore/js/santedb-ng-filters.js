@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 - 2024, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
  * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
@@ -173,6 +173,47 @@ angular.module('santedb-lib')
     .filter('address', function () {
         return function (modelValue, type) {
             return SanteDB.display.renderEntityAddress(modelValue, type);
+        }
+    })
+    /**
+     * @method telecom
+     * @memberof Angular
+     * @summary Renders an telecom address to the display
+     * @see {SanteDBModel.EntityTelecomAddress}
+     * TODO - enhance this function, added because it was missing
+     */
+    .filter('telecom', function () {
+        return function (modelValue) {
+            return modelValue.value;
+        }
+    })
+    /**
+     * @method entityCount
+     * @memberof Angular
+     * @summary Returns the total entity count within the object tracking entities 
+     * @see {SanteDBModel.Entity}
+     * @param {object} entityObject The entity object to tally entities from
+     */
+    .filter('entityCount', function () {
+        return function (entityObject) {            
+            let count = 0;
+
+            for (const key of Object.keys(entityObject)) {
+                count += entityObject[key].length;
+            }
+
+            return count;
+        }
+    })
+    /**
+     * @method convertToId
+     * @memberof Angular
+     * @summary Returns a transformed snake case string for ids
+     * @param {string} stringToConvert The string to convert
+     */
+    .filter('convertToId', function () {
+        return function (stringToConvert) {            
+            return stringToConvert.toLowerCase().replace(/ /g, '-');
         }
     })
     /**
