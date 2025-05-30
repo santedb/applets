@@ -96,15 +96,4 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
             $scope.entityTypeMnemonic = entityLabel.mnemonic
         })
     }
-
-    $scope.validateCriteria = async function () {
-        const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
-        $timeout(() => {
-            $scope.testNotificationResult = validationResult;
-        })
-    }
-
-    $scope.sendNotification = async function () {
-        $scope.testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
-    }
 }]);

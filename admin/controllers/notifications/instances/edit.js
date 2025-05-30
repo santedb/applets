@@ -9,9 +9,9 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                 const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
                 $timeout(() => {
                     $scope.notificationInstance = notificationInstance;
-                    $scope.templateDefinitions.views[0].content = notificationInstance.filter;
                     $scope.originalTemplate = notificationInstance.template;
                     $scope.id = id;
+                    $scope.createEditor();
                 })
             } catch (e) {
                 $rootScope.errorHandler(e);
@@ -26,19 +26,17 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                 template: null,
                 instanceParameter: [],
             }
+            $scope.createEditor();
         }
-
-        $scope.createEditor();
     }
 
-    $scope.templateDefinitions = { views: [{ type: "div", content: "" }] }
     $scope._editor = null;
 
     $scope.createEditor = function () {
         if (!$scope._editor) {
-            console.log($scope.templateDefinitions)
+            const templateDefinitions = { views: [{ type: "div", content: $scope.notificationInstance.filter }] }
             var _needRefresh = false;
-            $scope._editor = new ViewAceEditor("cdssEditor", $scope.templateDefinitions, "div");
+            $scope._editor = new ViewAceEditor("cdssEditor", templateDefinitions, "div");
             $scope._editor.onChange(() => {
                 _needRefresh = true;
                 $scope.notificationInstanceForm.$setDirty();
@@ -93,6 +91,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     $scope.cdssLibrary = {}
     $scope.entityTypeMnemonic = ""
     $scope.selectedEntityId = "a52c43e0-dc6e-11ef-9551-a36f7144b253";
+    $scope.notificationInstance = {};
 
     initializeView($stateParams.id);
 
