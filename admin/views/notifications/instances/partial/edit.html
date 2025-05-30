@@ -203,7 +203,7 @@
         <!-- Bottom Action Buttons -->
         <div class="container">
             <div class="float-right btn-group mt-2">
-                <button type="button" data-toggle="modal"
+                <button ng-if="id != null" type="button" data-toggle="modal"
                     data-target="#testNotificationDialog" class="btn btn-success" id="testNotificationInstanceButton">
                     {{ 'ui.admin.notifications.instance.test' | i18n }}
                 </button>

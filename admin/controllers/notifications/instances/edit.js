@@ -11,6 +11,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                     $scope.notificationInstance = notificationInstance;
                     $scope.templateDefinitions.views[0].content = notificationInstance.filter;
                     $scope.originalTemplate = notificationInstance.template;
+                    $scope.id = id;
                 })
             } catch (e) {
                 $rootScope.errorHandler(e);
