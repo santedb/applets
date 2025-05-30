@@ -248,13 +248,23 @@
                                     key="'id'" />
                             </div>
                         </div>
-                        <div>
-                            <h2>
-                                {{testNotificationResult.subject}}
-                            </h2>
-                            <p>
-                                {{testNotificationResult.text}}
-                            </p>
+                        <div ng-if="testNotificationResult != null">
+                            <h2>{{ 'ui.admin.notifications.instance.results' | i18n }}</h2>
+                            <hr />
+                            <div>
+                                <h3>
+                                    <span class="badge badge-success" ng-if="testNotificationSuccessful">{{ 'ui.admin.notifications.instance.test.success' | i18n }}</span>
+                                    <span class="badge badge-danger" ng-if="!testNotificationSuccessful">{{ 'ui.admin.notifications.instance.test.error' | i18n }}</span>
+                                </h3>
+                            </div>
+                            <div class="mt-2 p-2 border">
+                                <h3>
+                                    {{testNotificationResult.subject}}
+                                </h3>
+                                <p>
+                                    {{testNotificationResult.text}}
+                                </p>
+                            </div>
                         </div>
                         <div class="container">
                             <div class="float-right btn-group mt-2">

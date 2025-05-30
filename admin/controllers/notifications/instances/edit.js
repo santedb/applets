@@ -128,13 +128,34 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     }
 
     $scope.validateCriteria = async function () {
-        const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
-        $timeout(() => {
-            $scope.testNotificationResult = validationResult;
-        })
+        $scope.testNotificationResult = null;
+        try {
+            const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
+            $timeout(() => {
+                $scope.testNotificationResult = validationResult;
+                $scope.testNotificationSuccessful = true;
+            })
+        } catch {
+            $timeout(() => {
+                $scope.testNotificationSuccessful = false;
+                $scope.testNotificationResult = { subject: 'Error validating notification' }
+            })
+        }
     }
 
     $scope.sendNotification = async function () {
-        $scope.testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
+        $scope.testNotificationResult = null;
+        try {
+            const testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
+            $timeout(() => {
+                $scope.testNotificationResult = testNotificationResult;
+                $scope.testNotificationSuccessful = true;
+            })
+        } catch {
+            $timeout(() => {
+                $scope.testNotificationSuccessful = false;
+                $scope.testNotificationResult = { text: 'Error sending notification' }
+            })
+        }        
     }
 }]);
