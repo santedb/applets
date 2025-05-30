@@ -257,12 +257,19 @@
                                     <span class="badge badge-danger" ng-if="!testNotificationSuccessful">{{ 'ui.admin.notifications.instance.test.error' | i18n }}</span>
                                 </h3>
                             </div>
+                            <div ng-if="testEntity != null" class="border p-2 my-2">
+                                <p>{{ testEntity.name }} {{ testEntity.id }}</p>
+                                <p>{{ 'org.santedb.widget.admin.panel.facility.profile.telecom' | i18n }}:</p>
+                            </div>
                             <div class="mt-2 p-2 border">
                                 <h3>
                                     {{testNotificationResult.subject}}
                                 </h3>
-                                <p>
+                                <p ng-if="testNotificationSuccessful">
                                     {{testNotificationResult.text}}
+                                </p>
+                                <p ng-if="!testNotificationSuccessful">
+                                    {{ testNotificationResult.text | i18n }}
                                 </p>
                             </div>
                         </div>

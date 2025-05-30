@@ -129,8 +129,16 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.validateCriteria = async function () {
         $scope.testNotificationResult = null;
+        $scope.testEntity = null;
         try {
             const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
+            const entity = await SanteDB.resources.concept.getAsync($scope.notificationInstance.entityType, null, null, true)
+
+            $scope.testEntity = {
+                id: entity.id,
+                name: entity.mnemonic
+            }
+
             $timeout(() => {
                 $scope.testNotificationResult = validationResult;
                 $scope.testNotificationSuccessful = true;
@@ -138,13 +146,14 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         } catch {
             $timeout(() => {
                 $scope.testNotificationSuccessful = false;
-                $scope.testNotificationResult = { subject: 'Error validating notification' }
+                $scope.testNotificationResult = { text: 'ui.admin.notifications.instance.test.validate.error' }
             })
         }
     }
 
     $scope.sendNotification = async function () {
         $scope.testNotificationResult = null;
+        $scope.testEntity = null;
         try {
             const testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
             $timeout(() => {
@@ -154,7 +163,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         } catch {
             $timeout(() => {
                 $scope.testNotificationSuccessful = false;
-                $scope.testNotificationResult = { text: 'Error sending notification' }
+                $scope.testNotificationResult = { text: 'ui.admin.notifications.instance.test.sending.error' }
             })
         }        
     }
