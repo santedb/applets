@@ -22,8 +22,15 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
         return "";
     }
 
+    $scope.renderStatus = function(r) {
+        if (r.statusModel) {
+            return SanteDB.display.renderConcept(r.statusModel);
+        }
+        return r.status || "";
+    }
+
     $scope.delete = async function(id, index) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.template.delete.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.template.delete.confirm"))) {
             try {
                 await SanteDB.resources.notificationTemplate.deleteAsync(id, true);
                 toastr.success(SanteDB.locale.getString("ui.admin.notifications.template.delete.success"));
@@ -36,7 +43,7 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
     }
 
     $scope.restore = async function(id, index) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.template.restore.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.template.restore.confirm"))) {
             try {
                 const template = await SanteDB.resources.notificationTemplate.getAsync(id, null, null, true);
 
@@ -83,7 +90,7 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
     }
 
     $scope.purge = async function(id) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.template.purge.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.template.purge.confirm"))) {
             try {
                 await SanteDB.resources.notificationTemplate.deleteAsync(id, true);
 
@@ -97,6 +104,12 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
             }
 
         }
+    }
+
+    $scope.loadStatus = async function(r) {
+        if (r.status)
+            r.statusModel = await SanteDB.resources.concept.getAsync(r.status);
+        return r;
     }
 
     async function initializeView() { }

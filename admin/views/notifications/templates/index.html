@@ -40,7 +40,8 @@
         { action: 'purge', name: 'purge', className: 'btn btn-danger', icon: 'fas fa-fire-flame-curved', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', when: 'r.obsoletionTime' },  
     ]"
     properties="[ 'id','mnemonic', 'tags', 'status', 'creationTime', 'updatedTime' ]"
-    render="{ creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime' }"
+    render="{ creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime', status: 'renderStatus' }"
     i18n-prefix="'ui.admin.notifications.template.'"
+    item-supplement="[ loadStatus ]"
 />
 </div>

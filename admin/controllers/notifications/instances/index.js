@@ -8,7 +8,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     initializeView();
 
     $scope.renderState = function(r) {
-        if(r.stateModel) {
+        if (r.stateModel) {
             return SanteDB.display.renderConcept(r.stateModel);
         }
         return r.state || "";
@@ -92,7 +92,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     }
 
     $scope.delete = async function(id, index) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.instances.delete.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.instances.delete.confirm"))) {
             try {
                 await SanteDB.resources.notificationInstance.deleteAsync(id, true);
                 toastr.success(SanteDB.locale.getString("ui.admin.notifications.instances.delete.success"));
@@ -105,7 +105,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     }
 
     $scope.restore = async function(id) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.instance.restore.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.instance.restore.confirm"))) {
             try {
                 var instance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
                 instance.obsoletionTime = null;
@@ -121,7 +121,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     }
 
     $scope.purge = async function(id) {
-        if(confirm(SanteDB.locale.getString("ui.admin.notifications.instance.purge.confirm"))) {
+        if (confirm(SanteDB.locale.getString("ui.admin.notifications.instance.purge.confirm"))) {
             try {
                 await SanteDB.resources.notificationInstance.deleteAsync(id, true);
                 $("#NotificationInstanceTable").attr("newQueryId", true);
@@ -136,7 +136,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
     }
 
     $scope.loadState = async function(r) {
-        if(r.state)
+        if (r.state)
             r.stateModel = await SanteDB.resources.concept.getAsync(r.state);
         return r;
     }
