@@ -70,7 +70,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
             await SanteDB.resources.notificationInstance.updateAsync($stateParams.id, $scope.notificationInstance, true);
 
-            toastr.success(SanteDB.locale.getString("ui.admin.notification.instance.save.success"));
+            toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.save.success"));
 
             $state.go("santedb-admin.notifications.instances.index");
         }
@@ -96,6 +96,10 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
 
     $scope.goToNewTemplate = async function () {
         $state.go("santedb-admin.notifications.templates.create")
+    }
+
+    $scope.onCancelClicked = async function () {
+        $state.go("santedb-admin.notifications.instances.index");
     }
 
     $scope.$watch("notificationInstance.template", async function (n, o) {

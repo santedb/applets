@@ -55,7 +55,7 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
             await SanteDB.resources.notificationInstance.insertAsync($scope.notificationInstance, true);
 
-            toastr.success(SanteDB.locale.getString("ui.admin.notification.instance.save.success"));
+            toastr.success(SanteDB.locale.getString("ui.admin.notifications.instance.save.success"));
 
             $state.go("santedb-admin.notifications.instances.index");
         }
@@ -70,6 +70,10 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
     $scope.goToNewTemplate = async function () {
         $state.go("santedb-admin.notifications.templates.create")
+    }
+
+    $scope.onCancelClicked = async function () {
+        $state.go("santedb-admin.notifications.instances.index");
     }
 
     $scope.cdssLibrary = {}

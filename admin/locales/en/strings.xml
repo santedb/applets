@@ -1042,6 +1042,7 @@
     <string name="ui.admin.notifications.instance.trigger">Trigger</string>
     <string name="ui.admin.notifications.instance.target">Target</string>
     <string name="ui.admin.notifications.instance.test">Test</string>
+    <string name="ui.admin.notifications.instance.save.success">Notification Instance saved successfully</string>
     <string name="ui.admin.notifications.instance.validateCriteria">Validate Criteria</string>
     <string name="ui.admin.notifications.instance.sendNotification">Send Notification</string>
     <string name="ui.admin.notifications.instance.results">Results</string>
