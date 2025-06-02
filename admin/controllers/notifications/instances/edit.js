@@ -10,7 +10,6 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
                 $timeout(() => {
                     $scope.notificationInstance = notificationInstance;
                     $scope.originalTemplate = notificationInstance.template;
-                    $scope.id = id;
                     $scope.createEditor();
                 })
             } catch (e) {
@@ -125,46 +124,5 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             $scope.entityTypeLabel = entityLabel.name.en[0] || "Entity"
             $scope.entityTypeMnemonic = entityLabel.mnemonic
         })
-    }
-
-    $scope.validateCriteria = async function () {
-        $scope.testNotificationResult = null;
-        $scope.testEntity = null;
-        try {
-            const validationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "validate-notification", null, true);
-            const entity = await SanteDB.resources.concept.getAsync($scope.notificationInstance.entityType, null, null, true)
-
-            $scope.testEntity = {
-                id: entity.id,
-                name: entity.mnemonic
-            }
-
-            $timeout(() => {
-                $scope.testNotificationResult = validationResult;
-                $scope.testNotificationSuccessful = true;
-            })
-        } catch {
-            $timeout(() => {
-                $scope.testNotificationSuccessful = false;
-                $scope.testNotificationResult = { text: 'ui.admin.notifications.instance.test.validate.error' }
-            })
-        }
-    }
-
-    $scope.sendNotification = async function () {
-        $scope.testNotificationResult = null;
-        $scope.testEntity = null;
-        try {
-            const testNotificationResult = await SanteDB.resources.notificationInstance.invokeOperationAsync($stateParams.id, "test-send-notification", { selectedEntity: $scope.selectedEntityId, entityType: $scope.notificationInstance.entityType }, true);
-            $timeout(() => {
-                $scope.testNotificationResult = testNotificationResult;
-                $scope.testNotificationSuccessful = true;
-            })
-        } catch {
-            $timeout(() => {
-                $scope.testNotificationSuccessful = false;
-                $scope.testNotificationResult = { text: 'ui.admin.notifications.instance.test.sending.error' }
-            })
-        }        
     }
 }]);
