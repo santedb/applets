@@ -10,8 +10,7 @@
                             <h2 class="mb-0">
                                 <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
                                     data-target="#coreTemplateProps" aria-expanded="true">
-                                    <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.templates.names' | i18n
-                                    }}
+                                    <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.templates.names' | i18n}}
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </h2>
@@ -75,8 +74,7 @@
                             <h2 class="mb-0">
                                 <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
                                     aria-expanded="true" data-target="#parametersProps">
-                                    <i class="fa fa-list"></i> {{ 'ui.admin.notifications.templates.parameters' | i18n
-                                    }}
+                                    <i class="fa fa-list"></i> {{ 'ui.admin.notifications.templates.parameters' | i18n}}
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </h2>
@@ -111,10 +109,8 @@
                                 <button type="button"
                                     ng-click="notificationTemplate.parameters.push(newParameter); newParameter = {}"
                                     class="btn btn-success">
-                                    <i class="fas fa-plus-cricle"></i> {{
-                                    'ui.admin.notifications.templates.addParameter' |
-                                    i18n
-                                    }}
+                                    <i class="fas fa-plus-cricle"></i>
+                                    {{'ui.admin.notifications.templates.addParameter'| i18n}}
                                 </button>
                             </div>
                         </div>
@@ -134,8 +130,8 @@
                                 </button>
                                 <button ng-if="$index!==0" type="button" class="collapse-indicator btn btn-link p-0"
                                     data-toggle="collapse" data-target="#templateProps{{$index}}" aria-expanded="true">
-                                    <i class="fa fa-file-lines"></i> {{ 'ui.admin.notifications.templates.template' |
-                                    i18n }}
+                                    <i class="fa fa-file-lines"></i>
+                                    {{ 'ui.admin.notifications.templates.template' |i18n }}
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </h2>
