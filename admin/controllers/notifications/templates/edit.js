@@ -109,6 +109,11 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         }, 10)
     }
 
+    $scope.removeTemplate = function (index) {
+        $scope.notificationTemplate.contents.splice(index, 1)
+        $scope.cdssEditors.splice(index, 1)
+    }
+
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
