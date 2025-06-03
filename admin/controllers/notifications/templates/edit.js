@@ -49,12 +49,22 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             var editorId = "cdssEditor" + index
             setTimeout(() => {
                 $scope.cdssEditors[index] = new ViewAceEditor(editorId, tempData, "div");
+                $scope.editorErrors.push(false)
             }, 10);
         }
     }
 
     // Save notification template
     async function saveNotificationTemplate(createNotificationTemplateForm, event) {
+        //retrieve contents body values from all code editors
+        $scope.cdssEditors.forEach((editor, index) => {
+            $scope.notificationTemplate.contents[index].text = editor.getValue()
+            if (!editor.getValue()) {
+                $scope.editorErrors[index] = true
+                return;
+            }
+        })
+
         if (createNotificationTemplateForm.$invalid) return;
 
         // determine whether the template was drafted or published
@@ -63,12 +73,6 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         } else if (event == "saveDraftTemplateButton") {
             $scope.notificationTemplate.status = "0AC6638B-4E72-466A-A20F-1ADB3B8F2139"
         }
-
-        //retrieve contents body values from all CDSS editors
-        $scope.cdssEditors.forEach((editor, index) => {
-            $scope.notificationTemplate.contents[index].text = editor.getValue()
-        });
-
 
         // convert list of tags into a single string
         var tagList = $scope.notificationTemplate.tags.join(',')
@@ -106,18 +110,21 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         setTimeout(() => {
             var editorId = "cdssEditor" + $scope.cdssEditors.length
             $scope.cdssEditors.push(new ViewAceEditor(editorId, templateDefinitions, "div"));
+            $scope.editorErrors.push(false)
         }, 10)
     }
 
     $scope.removeTemplate = function (index) {
         $scope.notificationTemplate.contents.splice(index, 1)
         $scope.cdssEditors.splice(index, 1)
+        $scope.editorErrors.splice(index, 1)
     }
 
     $scope.saveNotificationTemplate = saveNotificationTemplate
     $scope.newParameter = {}
     $scope.newTemplate = {}
     $scope.cdssEditors = []
+    $scope.editorErrors = []
 
     if ($stateParams.id) {
         $scope.isLoading = true;
