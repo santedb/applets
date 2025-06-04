@@ -316,8 +316,8 @@ angular.module('santedb-lib')
                 if (!scope.$$type) { throw "@type required on entity-list"; }
                 else if (!scope.$$sourceApi) { throw `No SanteDB API exists for ${scope.$$type}`; }
                 //else if (!_itemTemplate) { throw "entity-list missing item template"; }
-
-                if (scope.shouldLoadOnInit == true) {
+                
+                if (scope.shouldLoadOnInit == true || scope.defaultQuery?._any != '') {
                     refreshItems(scope);
                 }
 
