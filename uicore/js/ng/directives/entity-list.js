@@ -317,10 +317,9 @@ angular.module('santedb-lib')
                 else if (!scope.$$sourceApi) { throw `No SanteDB API exists for ${scope.$$type}`; }
                 //else if (!_itemTemplate) { throw "entity-list missing item template"; }
                 
-                if (scope.shouldLoadOnInit == true || scope.defaultQuery?._any != '') {
+                if (scope.shouldLoadOnInit == true || (scope.defaultQuery && scope.defaultQuery._any != '')) {
                     refreshItems(scope);
                 }
-
             }
         }
     }]);
