@@ -1,0 +1,219 @@
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml">
+    <form class="form" ng-submit="saveNotificationInstance(notificationInstanceForm)" name="notificationInstanceForm"
+        novalidate="novalidate" autocomplete="off">
+        <div class="card">
+            <div class="container mt-2 mb-2">
+                <!-- Name -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.name' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.name"
+                            name="name" required="required" class="form-control" />
+                        <div ng-show="notificationInstanceForm.name.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Mnemonic -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.mnemonic' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <input autocomplete="__away" type="text" maxlength="64" ng-model="notificationInstance.mnemonic"
+                            name="mnemonic" required="required" class="form-control"
+                            pattern="^[a-zA-Z0-9_\-]{2,}$" />
+                        <div ng-show="notificationInstanceForm.mnemonic.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+ 
+                </div>
+                <!-- Entity Type -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.entityType' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <concept-select 
+                            class="form-control"
+                            name="entityType" 
+                            concept-set="'EntityClass'"
+                            required="required" 
+                            ng-model="notificationInstance.entityType"
+                            ng-change="retrieveEntityLabel()" 
+                        />
+                        <div ng-show="notificationInstanceForm.entityType.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.description' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <textarea autocomplete="__away" ng-model="notificationInstance.description"
+                            name="description" required="required" class="form-control" />
+                        <div ng-show="notificationInstanceForm.description.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Template -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.template' | i18n}}
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <entity-search
+                            type="'NotificationTemplate'" 
+                            ng-model="notificationInstance.template"
+                            owner-form="notificationInstanceForm" 
+                            search-field="'name'"
+                            filter="{ 'obsoletionTime' : 'null', '_upstream': true }" 
+                            name="template"
+                            key="'id'" 
+                            upstream="true" 
+                            required="required"
+                        />
+                        <div ng-show="notificationInstanceForm.template.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button ng-click="goToNewTemplate()" class="btn btn-primary float-right">
+                        {{ 'ui.admin.notifications.instance.newTemplate' | i18n }}
+                    </button>
+                </div>
+            </div>
+            <!-- Parameters -->
+            <div class="card accordion mb-2" id="parametersAccordion">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#notificationParameters" aria-expanded="true">
+                            <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.instance.parameters' | i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="notificationParameters">
+                    <div class="card-body container">
+                        <!-- Parameter Name -->
+                        <div class="form-group row"
+                            ng-repeat="p in notificationInstance.instanceParameter track by $index">
+                            <label class="control-label col-sm-12 col-md-3">
+                                {{ p.name }}
+                                <i class="fa-solid fa-circle-question" title="{{p.description}}" style="color: #0275d8"></i>
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <hdsi-expression 
+                                    class="form-control"
+                                    focal-type="notificationInstance.instanceParameter[$index].expression" 
+                                    name="parameter{{$index}}"
+                                    simple-input="true"
+                                    ng-model="notificationInstance.instanceParameter[$index].expression"
+                                    required="required" 
+                                />
+                                <div ng-show="notificationInstanceForm.parameter{{$index}}.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <!-- Filter -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.filter' | i18n}}
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.filter.hint' | i18n }}" style="color: #0275d8"></i>
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <div id="cdssEditor" style="min-height: 300px;" required="required" name="filter"></div>
+                        <div ng-show="notificationInstance.filter == '' &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Trigger -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.trigger' | i18n}}
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.trigger.hint' | i18n }}" style="color: #0275d8"></i>
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <hdsi-expression 
+                            class="form-control" 
+                            focal-type="notificationInstance.trigger"
+                            name="trigger" 
+                            simple-input="true" 
+                            ng-model="notificationInstance.trigger"
+                            required="required"
+                        />
+                        <div ng-show="notificationInstanceForm.trigger.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Target -->
+                <div class="form-group row">
+                    <label class="col-sm-12 col-md-3 control-label">
+                        {{'ui.admin.notifications.instance.target' | i18n}}
+                        <i class="fa-solid fa-circle-question" title="{{ 'ui.admin.notifications.instance.target.hint' | i18n }}" style="color: #0275d8"></i>
+                    </label>
+                    <div class="col-sm-12 col-md-9">
+                        <hdsi-expression 
+                            class="form-control" 
+                            focal-type="notificationInstance.target"
+                            name="target" 
+                            simple-input="true" 
+                            ng-model="notificationInstance.target"
+                            required="required" 
+                        />
+                        <div ng-show="notificationInstanceForm.target.$error['required'] &amp;&amp; notificationInstanceForm.$submitted" class="text-danger">
+                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Action Buttons -->
+        <div class="container">
+            <div class="float-right btn-group mt-2">
+                <button type="button" class="btn btn-danger"
+                    id="cancelNotificationInstanceButton" ng-click="onCancelClicked()">
+                    {{ 'ui.action.cancel' | i18n }}
+                </button>
+                <button type="submit" class="btn btn-primary"
+                    id="saveNotificationInstanceButton">
+                    {{ 'ui.action.save' | i18n }}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
