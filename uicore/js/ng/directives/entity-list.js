@@ -161,7 +161,7 @@ angular.module('santedb-lib')
                 defaultQuery: '=',
                 upstream: '=',
                 searchField: '=',
-                shouldLoadOnInit: '=',
+                shouldLoadOnInit: '<',
                 actions: '<',
                 itemActions: '<',
                 operationScope: '=',
