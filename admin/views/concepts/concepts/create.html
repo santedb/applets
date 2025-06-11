@@ -160,10 +160,10 @@
                                     </div>
                                     <entity-search type="'CodeSystem'" ng-model="conceptMap.codeSystem"
                                         search-field="'authority'" owner-form="createConceptForm" 
-                                        filter="{obsoletionTime: 'null'}" required="required" auto-tab-next="true"
+                                        filter="{obsoletionTime: 'null'}" class="form-control" required="required" auto-tab-next="true"
                                         style="width:30%;"></entity-search>
                                     <entity-search type="'ReferenceTerm'"
-                                        style="width:30%;" ng-model="conceptMap.term"
+                                        style="width:30%;" class="form-control" ng-model="conceptMap.term"
                                         search-field="'mnemonic'" is-required="true"
                                         owner-form="createConceptForm"
                                         auto-tab-next="false"
