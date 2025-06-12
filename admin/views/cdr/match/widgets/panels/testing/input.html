@@ -29,7 +29,7 @@
                     <hint-popover hint-title="ui.admin.matches.config.test.input" />
                 </label>
                 <div class="col-sm-12 col-md-9">
-                    <entity-search name="txtInputPatient" required="required" type="'Patient'"
+                    <entity-search name="txtInputPatient" class="form-control" required="required" type="'Patient'"
                         ng-model="scopedObject._test.input" search-field="'identifier.value'">
                     </entity-search>
                     <div class="text-danger" ng-show="testForm.txtInputPatient.$error['required']">
@@ -44,7 +44,7 @@
                 <div class="col-sm-12 col-md-9">
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="dup in scopedObject._test.knownDuplicates track by $index">
-                            <entity-search name="txtDuplicate{{$index}}" required="required" type="'Patient'"
+                            <entity-search class="form-control" name="txtDuplicate{{$index}}" required="required" type="'Patient'"
                                 ng-model="dup.id" search-field="'identifier.value'">
                             </entity-search>
                             <div class="text-danger" ng-show="testForm['txtDuplicate' + $index].$error['required']">

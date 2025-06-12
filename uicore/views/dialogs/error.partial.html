@@ -46,19 +46,19 @@
                         <div>
                             <span>
                                 <strong>
-                                    <a data-toggle="collapse" class="collapse-indicator text-danger" data-target="#errorDetail" href="">
+                                    <button type="button" data-toggle="collapse" class="collapse-indicator text-danger  btn btn-link mx-1 my-0" data-target="#errorDetailRoot" >
                                         <i class="fa fa-chevron-right"></i> {{ $root.error.message  | i18n }}
-                                    </a>
+                                    </button>
                                 </strong>
                             </span>
-                            <pre class="collapse out" id="errorDetail">({{$root.error.type}}) : {{ $root.error.details.responseText || $root.error.details }}</pre>
+                            <pre class="collapse out" id="errorDetailRoot">({{$root.error.type}}) : {{ $root.error.details.responseText || $root.error.details }}</pre>
                         </div>
-                        <div ng-if="'{{ $env_type }}' == 'debug'" ng-repeat="cause in $root.error.cause">
-                            <a data-toggle="collapse" class="collapse-indicator" data-target="#causeDetail" href="">
+                        <div ng-repeat="cause in $root.error.cause track by $index">
+                            <button type="button" data-toggle="collapse" class="collapse-indicator btn btn-link mx-1 my-0" data-target="#causeDetail{{ $index }}">
                                 <i class="fa fa-chevron-right"></i> {{ 'ui.error.causedBy' | i18n }}
                                 <span class="text-danger">{{ cause.message  | i18n }}</span>
-                            </a>
-                            <pre class="collapse out" id="causeDetail">({{cause.type}}) : {{ cause.detail }}</pre>
+                            </button>
+                            <pre class="collapse out" id="causeDetail{{$index}}">({{cause.type}}) : {{ cause.detail }}</pre>
                         </div>
                     </div>
                 </div>

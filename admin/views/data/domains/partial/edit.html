@@ -252,7 +252,7 @@
                                     i18n }}</label>
                                 <div class="col-md-10 col-sm-12">
                                     <entity-search multiple="multiple" type="'Concept'" ng-model="domain.scope"
-                                        search-field="'name.value'"
+                                        search-field="'name.value'" class="form-control"
                                         filter="{ 'conceptSet' : [ '62C5FDE0-A3AA-45DF-94E9-242F4451644A', '4E6DA567-0094-4F23-8555-11DA499593AF'] }">
                                     </entity-search>
 
@@ -262,7 +262,7 @@
                                 <label class="control-label col-sm-12 col-md-2">{{ 'ui.model.identityDomain.policy' |
                                     i18n }}</label>
                                 <div class="col-md-10 col-sm-12">
-                                    <entity-search type="'SecurityPolicy'" ng-model="domain.policy"
+                                    <entity-search type="'SecurityPolicy'" class="form-control" ng-model="domain.policy"
                                         search-field="'name'"  filter="{ 'obsoletionTime' : 'null' }">
                                     </entity-search>
                                 </div>
@@ -290,7 +290,7 @@
                                     'ui.model.identityDomain.assigningAuthority.assigningApplication' | i18n }}
                                 </label>
                                 <div class="col-md-6 col-sm-12">
-                                    <entity-search type="'SecurityApplication'" ng-model="assigner.assigningApplication"
+                                    <entity-search class="form-control" type="'SecurityApplication'" ng-model="assigner.assigningApplication"
                                         search-field="'name'" filter="{ 'obsoletionTime' : 'null' }">
                                     </entity-search>
                                 </div>
