@@ -18,7 +18,7 @@
 <div xmlns="http://www.w3.org/1999/xhtml" class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-12 text-center" ng-if="!login.scope">
-            {{ login.welcomeMessage || 'ui.login.realm' | i18n }} : <strong>{{ $root.system.config.realmName }}</strong>
+            {{ login.welcomeMessage || {{ $appsetting.welcomeMessage }} || 'ui.login.realm' | i18n }} : <strong>{{ $root.system.config.realmName }}</strong>
         </div>
         <div class="col-sm-12 alert-warning alert" ng-if="login.scope">
             <i class="fas fa-shield-alt"></i> {{ 'ui.elevate' | i18n }}
