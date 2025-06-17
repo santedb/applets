@@ -97,6 +97,9 @@ SanteDBWrapper.prototype.display = new function () {
     this.renderDate = function (date, precision, inHumanFormat) {
         var dateFormat;
 
+        if(!(date instanceof Date)) {
+            date = new Date(date);
+        }
         if (!SanteDB.locale.dateFormats) {
             SanteDB.resources.locale.findAsync().then(function (locale) {
                 var localeAsset = locale[SanteDB.locale.getLocale()];
