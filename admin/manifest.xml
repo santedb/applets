@@ -230,21 +230,21 @@
     </menuItem>
   </menuItem>
 
-  <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.dashboard"
+  <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.index"
     asset="/org.santedb.admin/views/notifications/index.html" order="0">
     <icon>fas fa-solid fa-paper-plane</icon>
-    <text lang="en">Scheduled Notifications</text>
+    <text lang="en">Notifications</text>
     <menuItem order="10" context="org.santedb.admin"
       launch="santedb-admin.notifications.templates.index"
       asset="/org.santedb.admin/views/notifications/templates/index.html">
-      <icon>fas fa-table</icon>
+      <icon>far fa-file-lines</icon>
       <text lang="en">Templates</text>
     </menuItem>
     <menuItem order="20" context="org.santedb.admin"
       launch="santedb-admin.notifications.instances.index"
       asset="/org.santedb.admin/views/notifications/instances/index.html">
-      <icon>fas fa-table</icon>
-      <text lang="en">Notifications</text>
+      <icon>fas fa-paper-plane</icon>
+      <text lang="en">Instances</text>
     </menuItem>
   </menuItem>
 

@@ -3,207 +3,201 @@
         ng-submit="saveNotificationTemplate(createNotificationTemplateForm, $event.originalEvent.submitter.id)"
         name="createNotificationTemplateForm" novalidate="novalidate" autocomplete="off">
         <div class="accordion mb-2" id="templateAccordion">
-            <ul class="list-unstyled mb-0">
-                <li>
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="mb-0">
-                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                    data-target="#coreTemplateProps" aria-expanded="true">
-                                    <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.templates.names' | i18n}}
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                            </h2>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            data-target="#coreTemplateProps" aria-expanded="true">
+                            <i class="fa fa-clipboard"></i> {{ 'ui.admin.notifications.templates.names' | i18n}}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="coreTemplateProps">
+                    <div class="card-body container-fluid">
+                        <!-- name -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{'ui.admin.notifications.templates.templateName' | i18n}}
+                                <hint-popover hint-title="ui.admin.notifications.templates.templateName" />
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input autocomplete="__away" type="text" maxlength="64"
+                                    ng-model="notificationTemplate.name" name="name" required="required"
+                                    class="form-control" />
+                                <div ng-show="createNotificationTemplateForm.name.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
+                                    class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
+                            </div>
                         </div>
-                        <div class="collapse show" id="coreTemplateProps">
-                            <div class="card-body container-fluid">
-                                <!-- name -->
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{'ui.admin.notifications.templates.templateName' | i18n}}
-                                    </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" maxlength="64"
-                                            ng-model="notificationTemplate.name" name="name" required="required"
-                                            class="form-control" />
-                                        <div ng-show="createNotificationTemplateForm.name.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
-                                            class="text-danger">
-                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- mnemonic -->
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{'ui.admin.notifications.templates.templateMnemonic' | i18n}}
-                                    </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" maxlength="64"
-                                            ng-model="notificationTemplate.mnemonic" name="mnemonic" required="required"
-                                            class="form-control" />
-                                        <div ng-show="createNotificationTemplateForm.mnemonic.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
-                                            class="text-danger">
-                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                                        </div>
-                                    </div>
+                        <!-- mnemonic -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{'ui.admin.notifications.templates.templateMnemonic' | i18n}}
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input autocomplete="__away" type="text" maxlength="64"
+                                    ng-model="notificationTemplate.mnemonic" name="mnemonic" required="required"
+                                    class="form-control" />
+                                <div ng-show="createNotificationTemplateForm.mnemonic.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
+                                    class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- tags -->
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{'ui.admin.notifications.templates.templateTags' | i18n}}
-                                    </label>
-                                    <div class="col-xs-12 col-md-9">
-                                        <tag-input name="tags" ng-model="notificationTemplate.tags" required="required"
-                                            class="form-control" />
-                                        <div ng-show="createNotificationTemplateForm.tags.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
-                                            class="text-danger">
-                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                                        </div>
-                                    </div>
+                        <!-- tags -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{'ui.admin.notifications.template.tags' | i18n}}
+                            </label>
+                            <div class="col-xs-12 col-md-9">
+                                <tag-input name="tags" ng-model="notificationTemplate.tags" required="required"
+                                    class="form-control" />
+                                <div ng-show="createNotificationTemplateForm.tags.$error['required'] &amp;&amp; createNotificationTemplateForm.$submitted"
+                                    class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-
-                <li>
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="mb-0">
-                                <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
-                                    aria-expanded="true" data-target="#parametersProps">
-                                    <i class="fa fa-list"></i> {{ 'ui.admin.notifications.templates.parameters' | i18n}}
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                            </h2>
-                        </div>
-                        <div class="collapse show" id="parametersProps">
-                            <div class="card-body container-fluid">
-                                <!-- Parameters -->
-                                <ul class="list-unstyled mb-0">
-                                    <li ng-repeat="param in notificationTemplate.parameters track by $index">
-                                        <div class="form-group row">
-                                            <label class="col-sm-12 col-md-3">
-                                                <input type="text" maxlength="64" ng-model="param.name"
-                                                    name="parameters[$index].name" class="form-control"
-                                                    placeholder="{{'ui.admin.notifications.templates.parameterName' | i18n}}" />
-                                            </label>
-                                            <div class="col-sm-11 col-md-8">
-                                                <input autocomplete="__away" type="text" maxlength="128"
-                                                    ng-model="param.description" name="parameters[$index].description"
-                                                    class="form-control"
-                                                    placeholder="{{ 'ui.admin.notifications.templates.parameterDescription' | i18n }}" />
-                                            </div>
-                                            <div class="col-sm-1 col-md-1" ng-if="$index!==0">
-                                                <button type="button"
-                                                    ng-click="notificationTemplate.parameters.splice($index, 1)"
-                                                    class="btn btn-danger mt-1"><i
-                                                        class="fas fa-fw fa-times-circle"></i></button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                                <button type="button"
-                                    ng-click="notificationTemplate.parameters.push(newParameter); newParameter = {}"
-                                    class="btn btn-success">
-                                    <i class="fas fa-plus-cricle"></i>
-                                    {{'ui.admin.notifications.templates.addParameter'| i18n}}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li ng-repeat="template in notificationTemplate.contents track by $index">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="mb-0">
-                                <button ng-if="$index==0" type="button" class="collapse-indicator btn btn-link p-0"
-                                    data-toggle="collapse" data-target="#templateProps{{$index}}" aria-expanded="true">
-                                    <i class="fa fa-file-lines"></i> {{
-                                    'ui.admin.notifications.templates.defaultTemplate' |
-                                    i18n }}
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                                <button ng-if="$index!==0" type="button" class="collapse-indicator btn btn-link p-0"
-                                    data-toggle="collapse" data-target="#templateProps{{$index}}" aria-expanded="true">
-                                    <i class="fa fa-file-lines"></i>
-                                    {{ 'ui.admin.notifications.templates.template' |i18n }}
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                            </h2>
-                        </div>
-                        <div class="collapse show" id="templateProps{{$index}}">
-                            <div class="card-body container-fluid">
-                                <!-- Template -->
-                                <div class="form-group row" ng-if="$index!==0">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{ 'ui.admin.notifications.templates.templateLanguage' | i18n }}
-                                    </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" maxlength="64" ng-model="template.lang"
-                                            name="template[{{$index}}].language" class="form-control" />
-                                    </div>
-                                </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0" data-toggle="collapse"
+                            aria-expanded="true" data-target="#parametersProps">
+                            <i class="fa fa-list"></i> {{ 'ui.admin.notifications.templates.parameters' | i18n}}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="parametersProps">
+                    <div class="card-body container-fluid">
+                        <!-- Parameters -->
+                        <ul class="list-unstyled mb-0">
+                            <li ng-repeat="param in notificationTemplate.parameters track by $index">
                                 <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{ 'ui.admin.notifications.templates.templateSubject' | i18n }}
+                                    <label class="col-sm-12 col-md-3">
+                                        <input type="text" maxlength="64" ng-model="param.name"
+                                            name="parameters[$index].name" class="form-control"
+                                            placeholder="{{'ui.admin.notifications.templates.parameterName' | i18n}}" />
                                     </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <input autocomplete="__away" type="text" maxlength="64"
-                                            ng-model="template.subject" name="template[{{$index}}].subject"
-                                            class="form-control" />
+                                    <div class="col-sm-11 col-md-8">
+                                        <input autocomplete="__away" type="text" maxlength="128"
+                                            ng-model="param.description" name="parameters[$index].description"
+                                            class="form-control"
+                                            placeholder="{{ 'ui.admin.notifications.templates.parameterDescription' | i18n }}" />
+                                    </div>
+                                    <div class="col-sm-1 col-md-1" ng-if="$index!==0">
+                                        <button type="button"
+                                            ng-click="notificationTemplate.parameters.splice($index, 1)"
+                                            class="btn btn-danger mt-1" title="{{ 'ui.admin.notifications.templates.removeParameter.hint' | i18n }}"><i
+                                                class="fas fa-fw fa-times-circle"></i></button>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-12 col-md-3 control-label">
-                                        {{ 'ui.admin.notifications.templates.templateBody' | i18n }}
-                                    </label>
-                                    <div class="col-sm-12 col-md-9">
-                                        <div id="cdssEditor{{$index}}" style="min-height: 100px;">
-                                        </div>
-                                        <div ng-show="editorErrors[{{$index}}] &amp;&amp; createNotificationTemplateForm.$submitted"
-                                            class="text-danger">
-                                            <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
-                                        </div>
-                                    </div>
-                                </div>
+                            </li>
+                        </ul>
+
+                        <button type="button"
+                            ng-click="notificationTemplate.parameters.push(newParameter); newParameter = {}"
+                            class="btn btn-success">
+                            <i class="fas fa-plus-cricle"></i>
+                            {{'ui.admin.notifications.templates.addParameter'| i18n}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card" ng-repeat="template in notificationTemplate.contents track by $index">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button ng-if="$index==0" type="button" class="collapse-indicator btn btn-link p-0"
+                            data-toggle="collapse" data-target="#templateProps{{$index}}" aria-expanded="true">
+                            <i class="fa fa-file-lines"></i> {{
+                            'ui.admin.notifications.templates.defaultTemplate' |
+                            i18n }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button ng-if="$index!==0" type="button" class="collapse-indicator btn btn-link p-0"
+                            data-toggle="collapse" data-target="#templateProps{{$index}}" aria-expanded="true">
+                            <i class="fa fa-file-lines"></i>
+                            {{ 'ui.admin.notifications.templates.contentOverride' | i18n: {language: (template.lang === undefined || template.lang === "") ? "(Choose Language)" : template.lang } }}
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </h2>
+                </div>
+                <div class="collapse show" id="templateProps{{$index}}">
+                    <div class="card-body container-fluid">
+                        <!-- Template -->
+                        <div class="form-group row" ng-if="$index!==0">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.admin.notifications.templates.templateLanguage' | i18n }}
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input autocomplete="__away" type="text" maxlength="64" ng-model="template.lang"
+                                    name="template[{{$index}}].language" class="form-control" />
                             </div>
-                            <div class="form-group">
-                                <button type="button" ng-if="$index!==0" ng-click="removeTemplate($index)"
-                                    class="btn btn-danger ml-3"><i class="fas fa-fw fa-times-circle"></i> {{
-                                    'ui.admin.notifications.templates.removeTemplate' | i18n }}
-                                </button>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.admin.notifications.templates.templateSubject' | i18n }}
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <input autocomplete="__away" type="text" maxlength="64"
+                                    ng-model="template.subject" name="template[{{$index}}].subject"
+                                    class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-3 control-label">
+                                {{ 'ui.admin.notifications.templates.templateBody' | i18n }}
+                            </label>
+                            <div class="col-sm-12 col-md-9">
+                                <div id="cdssEditor{{$index}}" style="min-height: 100px;">
+                                </div>
+                                <div ng-show="editorErrors[{{$index}}] &amp;&amp; createNotificationTemplateForm.$submitted"
+                                    class="text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="mb-0">
-                                <button type="button" class="collapse-indicator btn btn-link p-0"
-                                    ng-click="addNewTemplate()">
-                                    <i class="fa fa-plus-circle"></i> {{
-                                    'ui.admin.notifications.templates.addTemplate' | i18n }}
-                                </button>
-                            </h2>
-                        </div>
+                    <div class="form-group">
+                        <button type="button" ng-if="$index!==0" ng-click="removeTemplate($index)"
+                            class="btn btn-danger ml-3"><i class="fas fa-fw fa-times-circle"></i> {{
+                            'ui.admin.notifications.templates.removeTemplate' | i18n }}
+                        </button>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        <button type="button" class="collapse-indicator btn btn-link p-0"
+                            ng-click="addNewTemplate()">
+                            <i class="fa fa-plus-circle"></i> {{
+                            'ui.admin.notifications.templates.addTemplate' | i18n }}
+                        </button>
+                    </h2>
+                </div>
+            </div>
         </div>
 
-        <div class="float-right btn-group">
-            <button type="submit" class="btn btn-primary" id="saveDraftTemplateButton">
-                <i class="fas fa-pen-ruler"></i> {{ 'ui.admin.notifications.templates.saveDraft' | i18n }}
-            </button>
-            <button type="submit" class="btn btn-success" id="publishTemplateButton">
-                <i class="fas fa-check"></i> {{ 'ui.admin.notifications.templates.publish' | i18n }}
-            </button>
+        <div class="d-flex justify-content-end">
+            <div class="mb-5 btn-group">
+                <button type="button" class="btn btn-danger" id="cancelButton" ng-click="cancelButtonClicked()">
+                    {{ 'ui.action.cancel' | i18n }}
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveDraftTemplateButton">
+                    <i class="fas fa-pen-ruler"></i> {{ 'ui.admin.notifications.templates.saveDraft' | i18n }}
+                </button>
+                <button type="submit" class="btn btn-success" id="publishTemplateButton">
+                    <i class="fas fa-check"></i> {{ 'ui.admin.notifications.templates.publish' | i18n }}
+                </button>
+            </div>
         </div>
     </form>
 </div>

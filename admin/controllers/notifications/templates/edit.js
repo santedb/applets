@@ -14,16 +14,16 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
 
         if (id !== undefined) {
             try {
-                var notificationTemplate = await Promise.all([
-                    await SanteDB.resources.notificationTemplate.getAsync(id, null, null, true),
-                ])
+                var notificationTemplate = await SanteDB.resources.notificationTemplate.getAsync(id, null, null, true)
                 $timeout(() => {
                     $scope.isLoading = false;
-                    $scope.notificationTemplate = notificationTemplate[0]
+                    $scope.notificationTemplate = notificationTemplate
                     $scope.notificationTemplate.contents.forEach((template, index) => {
                         $scope.createEditor(template, index)
                     });
                 })
+
+                document.title = document.title + ' - ' + notificationTemplate.name
             }
             catch (e) {
                 $rootScope.errorHandler(e);
@@ -81,6 +81,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         try {
             SanteDB.display.buttonWait("#publishTemplateButton", true);
             SanteDB.display.buttonWait("#saveDraftTemplateButton", true);
+            SanteDB.display.buttonWait("#cancelButton", true);
             // Update
             var notificationTemplate = null;
             if ($stateParams.id) {
@@ -89,7 +90,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
             else {
                 notificationTemplate = await SanteDB.resources.notificationTemplate.insertAsync($scope.notificationTemplate, upstream = true);
             }
-            toastr.success(SanteDB.locale.getString("ui.admin.notificationTemplate.save.success"));
+            toastr.success(SanteDB.locale.getString("ui.admin.notifications.templates.save.success"));
 
             $state.go("santedb-admin.notifications.templates.index");
         }
@@ -99,6 +100,7 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         finally {
             SanteDB.display.buttonWait("#publishTemplateButton", false);
             SanteDB.display.buttonWait("#saveDraftTemplateButton", false);
+            SanteDB.display.buttonWait("#cancelButton", false);
         }
     }
 
@@ -118,6 +120,10 @@ angular.module('santedb').controller('NotificationsTemplateEditController', ["$s
         $scope.notificationTemplate.contents.splice(index, 1)
         $scope.cdssEditors.splice(index, 1)
         $scope.editorErrors.splice(index, 1)
+    }
+
+    $scope.cancelButtonClicked = function(){
+        $state.go("santedb-admin.notifications.templates.index");
     }
 
     $scope.saveNotificationTemplate = saveNotificationTemplate

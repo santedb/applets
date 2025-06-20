@@ -3,6 +3,8 @@
 
 angular.module('santedb').controller('NotificationsInstanceEditController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", "$interval", function ($scope, $rootScope, $state, $stateParams, $timeout, $interval) {
 
+    const NotificationState_NotYetRun = "AC843892-F7E0-47B6-8F84-11C14E7E96C6";
+
     async function initializeView(id) {
         if (id !== undefined) {
             try {
@@ -20,7 +22,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
         } else {
             $scope.notificationInstance = {
                 $type: 'NotificationInstance',
-                state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
+                state: NotificationState_NotYetRun,
                 filter: '',
                 template: null,
                 instanceParameter: [],
@@ -63,7 +65,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             $scope.notificationInstance.instanceParameter.forEach(parameter => {
                 if (parameter.$type == "NotificationTemplateParameter") {
                     parameter.$type = "NotificationInstanceParameter";
-                    parameter.templateParameter = parameter.id
+                    parameter.templateParameter = parameter.name
                     parameter.id = null;
                 }
             });
@@ -108,10 +110,13 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             $timeout(() => {
                 if (template.id == $scope.originalTemplate) {
                     for (i = 0; i < $scope.notificationInstance.instanceParameter.length; i++) {
-                        let templateParameter = template.parameters.find(p => p.id == $scope.notificationInstance.instanceParameter[i].templateParameter);
+                        let templateParameter = template.parameters.find(p => p.name == $scope.notificationInstance.instanceParameter[i].templateParameter);
                         if (templateParameter != undefined) {
                             $scope.notificationInstance.instanceParameter[i].name = templateParameter.name;
                             $scope.notificationInstance.instanceParameter[i].description = templateParameter.description;
+                        }
+                        else{
+                            //TODO: Notify that the parameter is invalid.
                         }
                     }
                 } else {

@@ -3,10 +3,12 @@
 
 angular.module('santedb').controller('NewNotificationController', ["$scope", "$rootScope", "$state", "$stateParams", "$timeout", function ($scope, $rootScope, $state, $stateParams, $timeout) {
 
+    const NotificationState_NotYetRun = "AC843892-F7E0-47B6-8F84-11C14E7E96C6";
+
     async function initializeView() {
         $scope.notificationInstance = {
             $type: 'NotificationInstance',
-            state: 'AC843892-F7E0-47B6-8F84-11C14E7E96C6',
+            state: NotificationState_NotYetRun,
             filter: '',
             template: null,
             instanceParameter: [],
@@ -49,7 +51,7 @@ angular.module('santedb').controller('NewNotificationController', ["$scope", "$r
 
             $scope.notificationInstance.instanceParameter.forEach(parameter => {
                 parameter.$type = "NotificationInstanceParameter";
-                parameter.templateParameter = parameter.id
+                parameter.templateParameter = parameter.name
                 parameter.id = null;
             });
 

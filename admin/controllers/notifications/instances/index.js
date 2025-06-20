@@ -1,11 +1,13 @@
 angular.module('santedb').controller('NotificationInstanceIndexController', ["$scope", "$rootScope", "$state", "$templateCache", "$timeout", function ($scope, $rootScope, $state, $templateCache, $timeout) {
+
+    const NotificationSendingJob_GUID = "A5C97883-A21E-4C33-B428-E69002B7A453";
     
     async function initializeView() {
         $scope.totalSentCount;
         $scope.succeededSentCount;
 
         try {
-            const jobInfo = await SanteDB.resources.jobInfo.getAsync("A5C97883-A21E-4C33-B428-E69002B7A453", "full", true);
+            const jobInfo = await SanteDB.resources.jobInfo.getAsync(NotificationSendingJob_GUID, "full", true);
             $timeout(() => {
                 if (jobInfo && jobInfo.schedule.length) {
                     let schedule = jobInfo.schedule;
@@ -166,7 +168,7 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
 
     $scope.handleLastRunModal = async function(r) {
         try {
-            const lastRunData = await SanteDB.resources.jobInfo.getAsync("A5C97883-A21E-4C33-B428-E69002B7A453", "full", true);
+            const lastRunData = await SanteDB.resources.jobInfo.getAsync(NotificationSendingJob_GUID, "full", true);
             $timeout(() => {
                 $scope.lastRunState = lastRunData.state;
                 $scope.lastRunStatus = lastRunData.status;
