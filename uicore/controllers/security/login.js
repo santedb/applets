@@ -79,6 +79,10 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                             $scope.login._lockPassword =
                             $scope.login._lockUserName = true;
                         $scope.login._mfaDetail = e.data.error_description;
+
+                        $timeout(() => {
+                            $("input[name='loginMfa']").focus();
+                        }, 100);
                     });
                     return;
                 case "password_expired":

@@ -337,6 +337,7 @@
   <string name="ui.model.patient.multipleBirthOrder.4">4th of multiple-birth</string>
   <string name="ui.model.patient.multipleBirthOrder.5">5th of multiple-birth</string>
   <string name="ui.model.patient.educationLevel">Education Level</string>
+  <string name="ui.model.patient.extension.birthValidated">Patient Registration Officially Validated (has Birth Certificate, Immigration Documents, etc.)</string>
   <string name="ui.model.patient.educationLevel.hint">Select the highest level of education which the patient has attained</string>
   <string name="ui.model.patient.livingArrangement">Living Arrangement</string>
   <string name="ui.model.patient.livingArrangement.hint">Select the living arrangement that the patient is currently living under</string>
@@ -356,6 +357,7 @@
   <string name="ui.model.person.occupation">Occupation</string>
   <string name="ui.model.person.occupation.hint">Select the most appropraite occupation code for the person</string>
   <string name="ui.model.person.deceasedDate">Deceased</string>
+  <string name="ui.model.person.deceasedInd">Known to be Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>
   <string name="ui.model.person.nationality.hint">Select the nationality of the person</string>
   <string name="ui.model.person.vipStatus">VIP Status</string>
