@@ -10,11 +10,10 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             try {
                 const notificationInstance = await SanteDB.resources.notificationInstance.getAsync(id, null, null, true);
                 $timeout(() => {
-                    document.title = document.title + " - " + notificationInstance.mnemonic;
                     $scope.notificationInstance = notificationInstance;
                     $scope.originalTemplate = notificationInstance.template;
                     $scope.createEditor();
-                });
+                })
             } catch (e) {
                 $rootScope.errorHandler(e);
             } finally {
@@ -59,17 +58,11 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     $scope.saveNotificationInstance = async function (notificationInstanceForm, event) {
         if (notificationInstanceForm.$invalid) return;
 
-
-
         try {
             SanteDB.display.buttonWait("#saveNotificationInstanceButton", true);
             SanteDB.display.buttonWait("#cancelNotificationInstanceButton", true);
 
-            //Remove obsolete parameters.
-            $scope.notificationInstance.instanceParameter = $scope.notificationInstance.instanceParameter.filter((ip) => ip._isObsolete !== true);
-
             $scope.notificationInstance.instanceParameter.forEach(parameter => {
-                //Convert any templated parameters from changing the entity over to the instance parameter.
                 if (parameter.$type == "NotificationTemplateParameter") {
                     parameter.$type = "NotificationInstanceParameter";
                     parameter.templateParameter = parameter.name
@@ -101,7 +94,7 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
     $scope.selectedEntityId = "a52c43e0-dc6e-11ef-9551-a36f7144b253";
     $scope.notificationInstance = {};
 
-    
+    initializeView($stateParams.id);
 
     $scope.goToNewTemplate = async function () {
         $state.go("santedb-admin.notifications.templates.create")
@@ -116,32 +109,16 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             const template = await SanteDB.resources.notificationTemplate.getAsync($scope.notificationInstance.template, null, null, true);
             $timeout(() => {
                 if (template.id == $scope.originalTemplate) {
-                    let instance = $scope.notificationInstance;
-
-                    for (i = 0; i < instance.instanceParameter.length; i++) {
-                        let templateParameter = template.parameters.find(p => p.name == instance.instanceParameter[i].templateParameter);
+                    for (i = 0; i < $scope.notificationInstance.instanceParameter.length; i++) {
+                        let templateParameter = template.parameters.find(p => p.name == $scope.notificationInstance.instanceParameter[i].templateParameter);
                         if (templateParameter != undefined) {
-                            instance.instanceParameter[i].name = templateParameter.name;
-                            instance.instanceParameter[i].description = templateParameter.description;
+                            $scope.notificationInstance.instanceParameter[i].name = templateParameter.name;
+                            $scope.notificationInstance.instanceParameter[i].description = templateParameter.description;
                         }
                         else{
                             //TODO: Notify that the parameter is invalid.
-                            instance.instanceParameter[i].name = instance.instanceParameter[i].templateParameter;
-                            instance.instanceParameter[i]._isObsolete = true;
                         }
                     }
-
-                    let newParameters = template.parameters.filter(p => instance.instanceParameter.findIndex((ip) => ip.templateParameter === p.name) < 0);
-
-                    newParameters.forEach((np) => {
-                        instance.instanceParameter.push({
-                            $type: "NotificationInstanceParameter",
-                            name: np.name,
-                            description: np.description,
-                            templateParameter: np.name
-                        });
-                    });
-
                 } else {
                     $scope.notificationInstance.instanceParameter = template.parameters;
                 }
@@ -157,6 +134,4 @@ angular.module('santedb').controller('NotificationsInstanceEditController', ["$s
             $scope.entityTypeMnemonic = entityLabel.mnemonic
         })
     }
-
-    initializeView($stateParams.id);
 }]);
