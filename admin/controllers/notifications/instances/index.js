@@ -6,6 +6,12 @@ angular.module('santedb').controller('NotificationInstanceIndexController', ["$s
         $scope.totalSentCount;
         $scope.succeededSentCount;
 
+        //HACK: Can't set explicit title with v3 infra.
+
+        $timeout(() => {
+            document.title = SanteDB.locale.getString("ui.admin.notifications.instances.index.title");
+        });
+
         try {
             const jobInfo = await SanteDB.resources.jobInfo.getAsync(NotificationSendingJob_GUID, "full", true);
             $timeout(() => {

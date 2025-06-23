@@ -1,5 +1,13 @@
 angular.module('santedb').controller('NotificationTemplateTableController', ["$scope", "$timeout", "$state", function ($scope, $timeout, $state) {
 
+    async function initializeView() { 
+        //HACK: Can't set explicit title with v3 infra.
+        $timeout(() => {
+            document.title = SanteDB.locale.getString("ui.admin.notifications.templates.index.title");
+        });
+        
+    }
+
     $scope.renderCreationTime = function(r) {
         if (r.createdBy != null && r.creationTime != null)
             return `<provenance provenance-id="'${r.createdBy}'" sessionfn="$parent.sessionFunction" provenance-time="'${r.creationTime}'"></provenance>`;
@@ -111,8 +119,6 @@ angular.module('santedb').controller('NotificationTemplateTableController', ["$s
             r.statusModel = await SanteDB.resources.concept.getAsync(r.status);
         return r;
     }
-
-    async function initializeView() { }
 
     initializeView();
 }]);
