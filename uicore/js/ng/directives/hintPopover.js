@@ -24,6 +24,12 @@ angular.module('santedb-lib')
      * @method clippy
      * @memberof Angular
      * @summary Renders a simple helper info button - like clippy
+     * @example Display a fully customized popover
+     *  
+     * <hint-popover
+     *   hint-title="ui.help.popover.Title"
+     *   hint-text="ui.help.popover.Text"
+     * />
      */
     .directive("hintPopover", ["$rootScope", function ($rootScope) {
 

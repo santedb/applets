@@ -807,6 +807,7 @@
     <!-- Scheduled Notifications -->
     <string name="ui.admin.notifications.dashboard.title">Notifications</string>
     <string name="ui.admin.notifications.dashboard.help">Use templates to create automated messages to patients, their parents or guardians, nurses, practitioners and other people. Schedule specific events to trigger notifications and extract parameters to fill templates when sending the notification. Notifications can be sent to email addresses when configured, or other services when an external system is configured.</string>
+    <string name="ui.admin.notifications.templates.index.title">Notification Templates - SanteDB</string>
     <string name="ui.admin.notifications.templates.title">Templates</string>
     <string name="ui.admin.notifications.templates.count">Template Management</string>
     <string name="ui.admin.notifications.template.create">Create a Template</string>
@@ -828,6 +829,7 @@
     <string name="ui.admin.notifications.template.purge.success">Notification template has been successfully purged</string>
     <string name="ui.admin.notifications.template.purge.error">Could not purge notification template: {e}</string>
 
+    <string name="ui.admin.notifications.instances.index.title">Notification Instances - SanteDB</string>
     <string name="ui.admin.notifications.instances.title">Instances</string>
     <string name="ui.admin.notifications.instances.count">Instance Management</string>
     <string name="ui.admin.notifications.instances.create">Create a Notification</string>
@@ -883,6 +885,7 @@
     <string name="ui.admin.notifications.templates.removeParameter.hint">Remove this parameter. Ensure no instances of this template use the parameter.</string>
 
     <!-- Notification Instance Form -->
+    <string name="ui.admin.notifications.instance.coreProperties">Core Properties</string>
     <string name="ui.admin.notifications.instance.name">Name</string>
     <string name="ui.admin.notifications.instance.mnemonic">Mnemonic</string>
     <string name="ui.admin.notifications.instance.entityType">Entity Type</string>
@@ -894,6 +897,8 @@
     <string name="ui.admin.notifications.instance.trigger">Trigger</string>
     <string name="ui.admin.notifications.instance.target">Target</string>
     <string name="ui.admin.notifications.instance.test">Test</string>
+    <string name="ui.admin.notifications.instance.expresions">Filter, Target and Trigger</string>
+    <string name="ui.admin.notifications.instance.obsoleteParameter">This parameter is no longer used in the template and will be removed when you save.</string>
     <string name="ui.admin.notifications.instance.save.success">Notification Instance saved successfully</string>
     <string name="ui.admin.notifications.instance.validateCriteria">Validate Criteria</string>
     <string name="ui.admin.notifications.instance.sendNotification">Send Notification</string>
