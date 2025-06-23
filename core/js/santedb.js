@@ -4934,7 +4934,8 @@ function SanteDBWrapper() {
             */
         this.getString = function (stringId, parameters) {
             try {
-                var retVal = __SanteDBAppService.GetString(stringId);
+                var retVal =
+                    __SanteDBAppService.GetString(stringId);
 
                 if (retVal && retVal.replace) {
                     retVal = retVal.replace(/\{.*?\}/ig, function (s) {

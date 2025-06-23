@@ -216,7 +216,7 @@
                                                 <entity-search ng-if="!conceptMap.$newConcept" type="'Concept'"
                                                     style="width:45%; height:100%" ng-model="conceptMap.source"
                                                     search-field="'name.value||mnemonic'" is-required="true"
-                                                    owner-form="quickAddReferenceTermForm"
+                                                    owner-form="quickAddReferenceTermForm" class="form-control" 
                                                     filter="{ 'statusConcept.mnemonic' : 'ACTIVE' }" required="required"
                                                     name="edit.referenceTermConcept{{$index}}"></entity-search>
                                                 <input ng-if="conceptMap.$newConcept" type="text" class="form-control"

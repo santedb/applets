@@ -44,6 +44,10 @@
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
 
+  <errors>
+        <add code="403" asset="/org.santedb.admin/views/error/403.html" />
+  </errors>
+
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.dashboard"
     asset="/org.santedb.admin/views/dashboard.html" order="-100">

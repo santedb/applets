@@ -30,16 +30,6 @@
     </div>
 
     <div ng-show="scopedObject.securityRole.id" ng-controller="EditGroupMembersController">
-            <table id="groupMembershipTable" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
         <div id="addUserToGroup" class="mb-3">
             <div class="d-flex align-items-baseline justify-content-start">
                 <span class="me-2 mr-2 font-weight-bold">{{ 'ui.action.add' | i18n }}</span>
@@ -47,9 +37,22 @@
                 <entity-search type="'SecurityUser'" selector="'entity'" key='"userName"' class="form-control me-2 mr-2"
                     style="width:75%" search-field="'userName'" ng-model="newUser.userName"
                     filter="{ obsoletionTime: 'null' }" />
-                <button type="button" class="btn btn-primary input-group-btn mx-2 align-self-center"
+                <button type="button" id="btnAddUser" class="btn btn-primary input-group-btn mx-2 align-self-center"
                     ng-disabled="!newUser || newUser.exec" ng-click="addUser()"><i class="fas"
-                        ng-class="{'fa-plus-circle': !newUser.exec, 'fa-circle-notch fa-spin': newUser.exec }"></i></button>
+                        ng-class="{'fa-plus-circle': !newUser.exec, 'fa-circle-notch fa-spin': newUser.exec }"></i>
+                    {{ 'ui.action.add' | i18n }}</button>
             </div>
+        </div>
+        <table id="groupMembershipTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
     </div>
+
 </div>
