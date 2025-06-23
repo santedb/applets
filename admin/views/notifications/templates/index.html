@@ -1,0 +1,47 @@
+<!--
+ - Copyright 2021-2024 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Copyright (C) 2019 - 2025, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="false">~/controllers/notifications/templates/index.js</sdb:script>
+    <sdb:state name="santedb-admin.notifications.templates.index">
+        <sdb:url></sdb:url>
+        <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4.2.0</sdb:demand>
+        <sdb:view>
+            <sdb:controller>NotificationTemplateTableController</sdb:controller>
+        </sdb:view>
+    </sdb:state>
+    <h2>{{ 'ui.admin.notifications.templates.title' | i18n }}</h2>
+    <entity-table
+    id="NotificationTemplateTable"
+    type="NotificationTemplate"
+    search-field="mnemonic"
+    upstream="true"
+    default-query="{ obsoletionTime: 'null', _viewModel: 'full' }"
+    actions="[ { name: 'create', sref: 'santedb-admin.notifications.templates.create', className: 'btn-primary', icon: 'fa fa-plus-circle' } ]"
+    item-actions="[ 
+        { name: 'edit', sref: 'santedb-admin.notifications.templates.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-primary', icon: 'fa fa-pencil-alt', when: 'r.obsoletionTime == null' },
+        { name: 'clone', action: 'clone', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-info', icon: 'fas fa-copy', when: 'r.obsoletionTime == null' },
+        { name: 'delete', action: 'delete', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', className: 'btn-danger', icon: 'fa fa-trash', when: 'r.obsoletionTime == null' },
+        { name: 'restore', action: 'restore', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.8', className: 'btn-success', icon: 'fa fa-trash-restore', when: 'r.obsoletionTime' },
+        { action: 'purge', name: 'purge', className: 'btn btn-danger', icon: 'fas fa-fire-flame-curved', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.5', when: 'r.obsoletionTime' },  
+    ]"
+    properties="[ 'mnemonic', 'tags', 'status', 'creationTime', 'updatedTime' ]"
+    render="{ creationTime: 'renderCreationTime', updatedTime: 'renderUpdatedTime', obsoletionTime: 'renderObsoletionTime', status: 'renderStatus' }"
+    i18n-prefix="'ui.admin.notifications.template.'"
+    item-supplement="[ loadStatus ]"
+/>
+</div>
