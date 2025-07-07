@@ -91,40 +91,40 @@ angular.module('santedb').controller('EditConceptSetController', ["$scope", "$ro
                 $timeout(() => $scope.createConceptSetForm.conceptSetMnemonic.$setValidity('duplicate', valid));
             }
         });
-    
+
         $scope.$watch("conceptSet.oid", async function (n, o) {
             if (n != o && n && n.length > 1) {
                 var valid = !await checkDuplicate({ oid: n });
                 $timeout(() => $scope.createConceptSetForm.conceptSetOid.$setValidity('duplicate', valid));
             }
         });
-    
+
         $scope.$watch("conceptSet.url", async function (n, o) {
             if (n != o && n && n.length > 1) {
                 var valid = !await checkDuplicate({ url: n });
                 $timeout(() => $scope.createConceptSetForm.conceptSetUrl.$setValidity('duplicate', valid));
             }
         });
-    
+
     }
     // Bind to scope
     $scope.saveConceptSet = saveConceptSet;
 
     // Download code system
-    $scope.downloadConceptSet = function(id) {
+    $scope.downloadConceptSet = function (id) {
         var win = window.open(`/hdsi/ConceptSet/${id}/_export?_include=Concept:conceptSet%3d${id}%26_exclude=conceptSet%26_exclude=referenceTerm&_includesFirst=true&_include=ConceptSet:compose.source=${id}%26_exclude=concept`, '_blank');
         win.onload = function (e) {
             win.close();
         };
     }
 
-    $scope.exportConceptSet = function(format) {
-        
-        var parms = jQuery.param({"set-id":$stateParams.id})
+    $scope.exportConceptSet = function (format) {
+
+        var parms = jQuery.param({ "set-id": $stateParams.id })
         var win = window.open(`/bis/Report/${format}/org.santedb.bi.core.reports.concept.set?${parms}&_view=table&_download=true`, '_blank');
         win.onload = function (e) {
             //win.close();
         };
-       
+
     }
 }]);

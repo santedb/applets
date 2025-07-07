@@ -34,6 +34,7 @@
         i18n-prefix="'ui.admin.users.'"
         default-filter="initialFilter"
         render="{ lockout: 'renderLockout', updatedBy: 'renderUpdatedBy' }"
+        sort="{ 'updatedBy' : 'modifiedOn' }"
         properties="[ 'userName', 'lastLoginTime', 'lockout', 'updatedBy' ]"
         item-class="{ 'updatedBy' : 'w-25'}"
         item-actions="[ 

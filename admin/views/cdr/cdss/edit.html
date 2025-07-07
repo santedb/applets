@@ -120,11 +120,13 @@
                                             <input type="radio" name="newObject" ng-model="test.source" value="db" />
                                             {{ 'ui.admin.cdss.edit.test.source.db' | i18n }}
                                         </label>
+                                        <div class="d-flex align-content-start w-100">
                                         <entity-search is-required="true" ng-if="test.source == 'db'"
-                                            class="form-control" type="test.type" required="required"
+                                            class="form-control flex-grow-1" type="test.type" required="required"
                                             filter="{ statusConcept : [ 'c8064cbd-fa06-4530-b430-1a52f1530c27', 'afc33800-8225-4061-b168-bacc09cdbae3', 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' ] }"
                                             ng-model="test.db" search-field="'identifier.value'"
                                             name="existingRecord"></entity-search>
+                                        </div>
                                         <div class="text-danger" ng-if="testForm.existingRecord.$error['required']">
                                             <i class="fas fa-exclamation-triangle fs-fw"></i> {{ 'ui.error.required' |
                                             i18n }}

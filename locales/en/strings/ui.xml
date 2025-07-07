@@ -311,6 +311,8 @@
       <string name="ui.action.undo">Undo</string>
       <string name="ui.action.recompute">Re-Compute</string>
       <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
+      <string name="ui.action.lastRun">Last Run</string>
+
       <!-- Data Tables -->
 
       <string name="ui.common.results">Showing {start} to {end} of {total} results</string>
@@ -747,4 +749,31 @@
       <string name="ui.userEntity.preferences.ui">Theme</string>
       <string name="ui.userEntity.preferences.ui.light">Light</string>
       <string name="ui.userEntity.preferences.ui.dark">Dark</string>
+
+
+      <!-- dCDR Restart Page strings -->
+       <string name="ui.app.restart.default.pageTitle">App Restart Required</string>
+       <string name="ui.app.restart.default.titleLabel">App Restart Required</string>
+       <string name="ui.app.restart.default.contentLabel">The App needs to be restarted. Click the Quit button below, and then re-launch the app.</string>
+       <string name="ui.app.restart.default.quit">Quit</string>
+
+       <string name="ui.app.restart.configuration.pageTitle">Configuration Successful</string>
+       <string name="ui.app.restart.configuration.titleLabel">Configuration Successfully Applied</string>
+       <string name="ui.app.restart.configuration.contentLabel">The configuration was successfully applied. Please restart the app by clicking quit below and then launching the app again.</string>
+       <string name="ui.app.restart.configuration.quit">Quit</string>
+
+       <string name="ui.app.restart.initial.pageTitle">Setup Complete</string>
+       <string name="ui.app.restart.initial.titleLabel">Initial Setup is Complete</string>
+       <string name="ui.app.restart.initial.contentLabel">This device has been setup successfully. Please restart the app by clicking quit below and then launching the app again.</string>
+       <string name="ui.app.restart.initial.quit">Quit</string>
+
+       <string name="ui.app.restart.update.pageTitle">Update Complete</string>
+       <string name="ui.app.restart.update.titleLabel">Update Applied Successfully</string>
+       <string name="ui.app.restart.update.contentLabel">The app update is complete. Please restart the app by clicking quit below and then launching the app again.</string>
+       <string name="ui.app.restart.update.quit">Quit</string>
+
+       <string name="ui.app.restart.backupRestore.pageTitle">Restore Complete</string>
+       <string name="ui.app.restart.backupRestore.titleLabel">Restore from Backup Completed</string>
+       <string name="ui.app.restart.backupRestore.contentLabel">The restore operation is complete. Please restart the app by clicking quit below and then launching the app again.</string>
+       <string name="ui.app.restart.backupRestore.quit">Quit</string>
 </resources>

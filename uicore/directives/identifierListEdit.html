@@ -44,6 +44,9 @@
                                 <button ng-if="id.id &amp;&amp; !createMode" class="btn btn-outline-danger btn-sm" ng-click="id.operation = 'Delete'" type="button">
                                     <i class="fas fa-fw fa-times-circle"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span>
                                 </button>
+                                <button ng-if="!noAdd &amp;&amp; !createMode &amp;&amp; $index &gt; 0" class="btn btn-outline-danger btn-sm" ng-click="model[domain.domainName].splice($index, 1)" type="button">
+                                    <i class="fas fa-fw fa-times-circle"></i><span class="d-none d-sm-inline">{{ 'ui.action.remove' | i18n }}</span>
+                                </button>
                                 <button ng-if="!noAdd &amp;&amp; !createMode" ng-click="model[domain.domainName].push({ value: '' })" type="button" class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-fw fa-plus-circle"></i><span class="d-none d-sm-inline">{{ 'ui.action.add' | i18n }}</span>
                                 </button>

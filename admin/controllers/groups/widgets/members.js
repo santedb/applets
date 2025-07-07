@@ -17,23 +17,26 @@
  */
 angular.module('santedb').controller('EditGroupMembersController', ["$scope", "$rootScope", "$state", "$templateCache", "$stateParams", "$compile", '$timeout', function ($scope, $rootScope, $state, $templateCache, $stateParams, $compile, $timeout) {
 
+    var membersTable = null;
     /**
      * @summary Add the newUser object to the group
      */
-     $scope.addUser = function () {
-        // Add new user
-        $scope.newUser.exec = true;
-        $scope.newUser.$type = 'SecurityUser';
-        SanteDB.resources.securityRole.addAssociatedAsync($scope.scopedObject.securityRole.id, 'user', $scope.newUser)
-            .then(function (d) {
-                delete ($scope.newUser);
-
-                membersTable.ajax.reload();
-            })
-            .catch(function (e) {
-                delete ($scope.newUser);
-                $rootScope.errorHandler(e);
-            })
+     $scope.addUser = async function () {
+        try {
+            SanteDB.display.buttonWait("#btnAddUser", true);
+            $scope.newUser.$type = 'SecurityUser';
+            $scope.newUser.exec = true;
+            await SanteDB.resources.securityRole.addAssociatedAsync($scope.scopedObject.securityRole.id, 'user', $scope.newUser);
+            delete($scope.newUser);
+            membersTable.ajax.reload();
+        }
+        catch(e) {
+            $rootScope.errorHandler(e);
+        }
+        finally {
+            SanteDB.display.buttonWait('#btnAddUser', false);
+        }
+       
     }
 
     /**

@@ -70,9 +70,9 @@
                         properties="[ 'name', 'classConcept', 'statusConcept' ]" button-bar="'#addChildHeader'" />
                 </div>
 
-                <div id="addChildHeader">
+                <div id="addChildHeader" class="w-100">
                     <div class="input-group" ng-show="panel.view == 'Edit'">
-                        <entity-search type="'Organization'" style="width:75%"
+                        <entity-search type="'Organization'" class="form-control" style="width:60%"
                         group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" ng-model="newChild"
                             search-field="'name.component.value'"
                             for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"

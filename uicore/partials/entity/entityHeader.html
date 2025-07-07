@@ -22,9 +22,9 @@
         </div>
         <div class="card-body container-fluid p-2" ng-if="entity">
             <div class="row">
-                <div class="col-6">
+                <div class="col-8">
                     <div class="p-2 flex-grow-1 d-flex">
-                        <h5 class="m-0"><i ng-if="entity.$icon" class="fas fa-fw" ng-class="entity.$icon"></i> {{
+                        <h5 class="m-0 d-inline"><i ng-if="entity.$icon" class="fas fa-fw" ng-class="entity.$icon"></i> {{
                             entity.name | name }} <span class="badge badge-info mr-2">{{
                                 entity.classConceptModel | concept }}</span> <span class="badge badge-primary mr-2" ng-if="entity.typeConceptModel">
                                     {{ entity.typeConceptModel | concept }}
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="p-2 flex-grow-1 float-right">
                         <h5 class="m-0 p-0">
                             <div>

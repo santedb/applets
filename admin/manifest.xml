@@ -44,6 +44,10 @@
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
   </info>
 
+  <errors>
+        <add code="403" asset="/org.santedb.admin/views/error/403.html" />
+  </errors>
+
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.dashboard"
     asset="/org.santedb.admin/views/dashboard.html" order="-100">
@@ -161,18 +165,20 @@
       <icon>fas fa-tasks</icon>
       <text lang="en">Data Quality Rules</text>
     </menuItem>
-     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index" asset="/org.santedb.admin/views/cdr/match/index.html">
-        <icon>fas fa-users-cog</icon>
-        <text lang="en">Match Configuration</text>
-      </menuItem>
-      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard" asset="/org.santedb.admin/views/cds/cdss/index.html">
-        <icon>fas fa-swatchbook</icon>
-        <text lang="en">Decision Support</text>
-      </menuItem>
-      <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
-        asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
-        <icon>fas fa-square-up-right</icon>
-        <text lang="en">Extensions</text>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index"
+      asset="/org.santedb.admin/views/cdr/match/index.html">
+      <icon>fas fa-users-cog</icon>
+      <text lang="en">Match Configuration</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard"
+      asset="/org.santedb.admin/views/cds/cdss/index.html">
+      <icon>fas fa-swatchbook</icon>
+      <text lang="en">Decision Support</text>
+    </menuItem>
+    <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
+      asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
+      <icon>fas fa-square-up-right</icon>
+      <text lang="en">Extensions</text>
     </menuItem>
   </menuItem>
   <menuItem context="org.santedb.admin" launch="santedb-admin.data.index"
@@ -208,7 +214,7 @@
   </menuItem>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.concept.dashboard"
-  asset="/org.santedb.admin/views/concepts/index.html" order="10">
+    asset="/org.santedb.admin/views/concepts/index.html" order="10">
     <icon>fas fa-book-medical</icon>
     <text lang="en">Concept Dictionary</text>
     <menuItem order="0" context="org.santedb.admin" launch="santedb-admin.concept.codeSystem.index"
@@ -228,6 +234,23 @@
     </menuItem>
   </menuItem>
 
+  <menuItem context="org.santedb.admin" launch="santedb-admin.notifications.index"
+    asset="/org.santedb.admin/views/notifications/index.html" order="0">
+    <icon>fas fa-solid fa-paper-plane</icon>
+    <text lang="en">Notifications</text>
+    <menuItem order="10" context="org.santedb.admin"
+      launch="santedb-admin.notifications.templates.index"
+      asset="/org.santedb.admin/views/notifications/templates/index.html">
+      <icon>far fa-file-lines</icon>
+      <text lang="en">Templates</text>
+    </menuItem>
+    <menuItem order="20" context="org.santedb.admin"
+      launch="santedb-admin.notifications.instances.index"
+      asset="/org.santedb.admin/views/notifications/instances/index.html">
+      <icon>fas fa-paper-plane</icon>
+      <text lang="en">Instances</text>
+    </menuItem>
+  </menuItem>
 
   <viewModel key="relationship_full">
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
