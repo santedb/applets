@@ -28,6 +28,11 @@
       <string name="ui.true">Yes</string>
       <string name="ui.false">No</string>
       <string name="ui.barcode">Barcode Label</string>
+
+      <!-- Common Alerts-->
+       <string name="ui.alert.alert">Alert</string>
+       <string name="ui.alert.confirm">Confirm</string>
+       <string name="ui.alert.prompt">Please Provide Input</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
       <string name="ui.common.version">Version</string>
