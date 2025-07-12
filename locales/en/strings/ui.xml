@@ -17,6 +17,7 @@
  - the License.
  -->
 <resources>
+      
     <string name="ui.debug">DEBUG ENVIRONMENT</string>
     <string name="ui.generated.on">Generated On</string>
       <string name="ui.card">Card</string>
@@ -776,4 +777,7 @@
        <string name="ui.app.restart.backupRestore.titleLabel">Restore from Backup Completed</string>
        <string name="ui.app.restart.backupRestore.contentLabel">The restore operation is complete. Please restart the app by clicking quit below and then launching the app again.</string>
        <string name="ui.app.restart.backupRestore.quit">Quit</string>
+
+       <string name="ui.sync.pull">Pulling {resource} from upstream</string>
+       <string name="ui.sync.pull.state">Pulling {resource} from upstream ({count} objects)</string>
 </resources>
