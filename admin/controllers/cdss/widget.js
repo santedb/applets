@@ -65,7 +65,7 @@ angular.module('santedb').controller('CdssWidgetController', ["$scope", "$rootSc
             case "SanteDB.Cdss.Xml.Model.Expressions.CdssCsharpExpressionDefinition, SanteDB.Cdss.Xml":
                 return `<pre class="m-1"><small class="badge badge-success">C#</small> ${logicBlock.expression.replace("<", "&lt;").replace(">", "&gt;")} </pre>`;
             case "SanteDB.Cdss.Xml.Model.Expressions.CdssFactReferenceExpressionDefinition, SanteDB.Cdss.Xml":
-                return `<code class="m-1"><i class="fas fa-cube fa-fw"></i> ${logicBlock.ref}</code>`
+                return `<code class="m-1"><i class="fas fa-cube fa-fw"></i> ${logicBlock.ref}</code>`;
             case "SanteDB.Cdss.Xml.Model.Expressions.CdssQueryExpressionDefinition, SanteDB.Cdss.Xml":
                 var retVal = `<pre>FROM <small class="badge badge-success">HDSI</small> ${logicBlock.source.replace("<", "&lt;").replace(">", "&gt;")}\r\n`;
                 if(logicBlock.orderBy) {

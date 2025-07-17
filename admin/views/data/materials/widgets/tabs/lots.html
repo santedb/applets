@@ -29,25 +29,13 @@
         <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
     </div>
     <div ng-if="scopedObject" class="m-2" ng-controller="MaterialLotController">
-        <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
-        <entity-table id="MaterialLotTable" type="ManufacturedMaterial" search-field="lotNumber"
-            default-query="{ 'relationship[Instance].source.relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09' }"
-            render="{ updatedBy: 'renderUpdatedBy', name: 'renderName', 'gtin': 'renderGtin', statusConcept: 'renderStatusConcept', expiry: 'renderExpiry' }"
-            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
-            default-sort="{ 'modifiedOn' : 'desc' }" item-actions="[ 
-                { name: 'edit', action: 'doEditLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
-                { name: 'delete', action: 'doDeleteLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
-            ]" actions="[ 
-                { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addLot', className: 'btn-primary', icon: 'fa fa-plus-circle' }
-            ]" properties="[ 'name', 'gtin', 'lotNumber', 'expiry',  'statusConcept', 'updatedBy' ]"
-            >
-        </entity-table>
 
+        
         
         <!-- MODAL FOR CREATING A NEW SPECIALIZATION -->
         <div class="modal" id="editLotModal" data-backdrop="static" role="dialog"
-            aria-labelledby="editLotModalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
+            aria-labelledby="editLotModalTitle">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editLotModalTitle">
@@ -163,6 +151,20 @@
                 </div>
             </div>
         </div>
+        <!-- Note: Change in Version 3 - The Materials here are specializations of holder -->
+        <entity-table id="MaterialLotTable" type="ManufacturedMaterial" search-field="lotNumber"
+            default-query="{ 'relationship[Instance].source.relationship[HasGeneralization].target' : scopedObject.id, _viewModel: 'fastview', 'determinerConcept': 'F29F08DE-78A7-4A5E-AEAF-7B545BA19A09' }"
+            render="{ updatedBy: 'renderUpdatedBy', name: 'renderName', 'gtin': 'renderGtin', statusConcept: 'renderStatusConcept', expiry: 'renderExpiry' }"
+            i18n-prefix="'ui.model.manufacturedMaterial.'" item-class="{ 'name' : 'w-25', 'updatedBy' : 'w-20' }"
+            default-sort="{ 'modifiedOn' : 'desc' }" item-actions="[ 
+                { name: 'edit', action: 'doEditLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-primary', icon: 'fa fa-pencil' },  
+                { name: 'delete', action: 'doDeleteLot', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.1', className: 'btn-danger', icon: 'fa fa-trash' },  
+            ]" actions="[ 
+                { name: 'add', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4.1.0', action: 'addLot', className: 'btn-primary', icon: 'fa fa-plus-circle' }
+            ]" properties="[ 'name', 'gtin', 'lotNumber', 'expiry',  'statusConcept', 'updatedBy' ]"
+            >
+        </entity-table>
+
     </div>
 
 </div>

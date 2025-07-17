@@ -318,6 +318,9 @@
           </property>
         </property>
       </property>
+      <property name="Duplicate" behavior="always" all="true">
+        <property name="targetModel" behavior="never" />
+      </property>
       <property name="*" ref="EntityRelationship" all="true" />
     </property>
     <property name="participation" all="false">

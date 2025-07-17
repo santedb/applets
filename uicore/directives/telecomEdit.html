@@ -27,8 +27,7 @@
                         <concept-select concept-set="'HumanTelecomAddressType'" ng-model="tel.type" class="form-control"
                             required="required" />
                     </div>
-
-                    <input type="text" ng-pattern="tel.type == 'c1c0a4ff-4238-4044-b89b-9c9798995b94' ? '\\w+?@\\w{2,}?\\.[a-zA-Z]{2,4}' : '\\+?[0-9\\(\\)\\-]{6,}'"
+                    <input type="text" inputmode="{{ tel.type == 'c1c0a4ff-4238-4044-b89b-9c9798995b94' ? 'email' : 'tel' }}" ng-pattern="tel.type == 'c1c0a4ff-4238-4044-b89b-9c9798995b94' ? '\\w+?@\\w{2,}?\\.[a-zA-Z]{2,4}' : '\\+?[0-9\\(\\)\\-]{6,}'"
                         class="form-control" maxlength="32" ng-model="tel.editValue" ng-required="requiredTypes.indexOf(t) &gt; -1" name="{{::controlPrefix}}tel{{t}}{{$index}}" />
                 
                     <div class="col-12 p-0">

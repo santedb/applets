@@ -54,7 +54,7 @@ angular.module('santedb-lib')
                         return $q.reject(response);;
                     }
                 }
-                else if(response.status != 503) // Not ready - Resolve with not ready payload (HTML)
+                else if(response.status != 503 && response.status != 403) // Not ready - Resolve with not ready payload (HTML)
 				{
 					return $q.reject(response);
 				}

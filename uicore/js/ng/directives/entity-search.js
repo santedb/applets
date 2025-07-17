@@ -400,11 +400,14 @@ angular.module('santedb-lib')
                         });
                     }
 
+                    // Does the drop-down exist in a modal? If so - set the parent
+                    var dropDownParent = $(element).parents('.modal-body');
                     // Bind select 2 search
                     var select2 = $(element).select2({
                         language: {
                             searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
+                        dropdownParent: dropDownParent.length > 0 ? dropDownParent : null,
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
 
@@ -436,6 +439,10 @@ angular.module('santedb-lib')
                                 filter["_count"] = 10;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
+
+                                if(scope.upstream) {
+                                    filter["_upstream"] = true;
+                                }
                                 return filter;
                             },
                             processResults: function (data, params) {

@@ -74,7 +74,7 @@
     </definition>
   </server>
   <client>
-    <definition resource="Patient" name="ui.subscription.patient.out" mode="subscription" ignoreModifiedOn="false" trigger="always">
+    <definition resource="Entity" name="ui.subscription.patient.out" mode="subscription" ignoreModifiedOn="false" trigger="always">
       <guards>
         <!--<when>subscribed.classConcept == 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'</when>
         <when>subscribed.id</when>-->
