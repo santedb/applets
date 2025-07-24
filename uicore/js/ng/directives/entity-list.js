@@ -90,9 +90,12 @@ angular.module('santedb-lib')
         })(jQuery);
 
         async function refreshItems(scope) {
-            var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);
+            var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);      
             
             try {
+                const entityListContainer = document.getElementsByClassName('entityListContainer')[0];
+                entityListContainer.scrollIntoView({ behavior: 'smooth' });
+
                 waiterDiv.removeClass('d-none');
                 var query = angular.copy(scope.defaultQuery) || {};
 
