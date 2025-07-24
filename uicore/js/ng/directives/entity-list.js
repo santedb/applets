@@ -293,8 +293,8 @@ angular.module('santedb-lib')
                 if(attrs.noActions) {
                     $(".globalActions", element).addClass("d-none");
                 }
-                if (attrs.canChangeView == "true") {
-                    $(".viewChange", element).removeClass("d-none");
+                if (attrs.canChangeView != "true") {
+                    $(".viewChange", element).addClass("d-none");
                 }
                 if (attrs.canSize == "true") {
                     $(".resultSize", element).removeClass("d-none");
