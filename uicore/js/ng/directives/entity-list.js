@@ -90,9 +90,12 @@ angular.module('santedb-lib')
         })(jQuery);
 
         async function refreshItems(scope) {
-            var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);
+            var waiterDiv = $(`#${scope.$$eleId}_${scope.$$scid}`);      
             
             try {
+                const entityListContainer = document.getElementsByClassName('entityListContainer')[0];
+                entityListContainer.scrollIntoView({ behavior: 'smooth' });
+
                 waiterDiv.removeClass('d-none');
                 var query = angular.copy(scope.defaultQuery) || {};
 
@@ -293,8 +296,8 @@ angular.module('santedb-lib')
                 if(attrs.noActions) {
                     $(".globalActions", element).addClass("d-none");
                 }
-                if (attrs.canChangeView == "true") {
-                    $(".viewChange", element).removeClass("d-none");
+                if (attrs.canChangeView != "true") {
+                    $(".viewChange", element).addClass("d-none");
                 }
                 if (attrs.canSize == "true") {
                     $(".resultSize", element).removeClass("d-none");
