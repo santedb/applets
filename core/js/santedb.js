@@ -1024,6 +1024,7 @@ function ResourceWrapper(_config) {
         * @param {any} data The data / resource which is to be created
         * @param {any} state A unique state object which is passed back to the caller
         * @param {boolean} upstream True if the registration should be directly submitted to the upstream iCDR server
+        * @param {boolean} dontReturnObject True if the created object should not be returned
         * @returns {Promise} The promise for the operation
         * @description When inserting data into the CDR, it is important that the object passed into {@param data} has an appropriate $type which matches the type of data being 
         *               sent. This check is done to ensure that a {@link Patient} is not submitted to the {@link Act} endpoint.
@@ -1051,7 +1052,7 @@ function ResourceWrapper(_config) {
         *   }
         * }
         */
-    this.insertAsync = function (data, upstream, state) {
+    this.insertAsync = function (data, upstream, state, dontReturnObject) {
 
         if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info` && data.$type !== `${_config.resource}Definition`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
@@ -1074,6 +1075,10 @@ function ResourceWrapper(_config) {
 
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
+        }
+
+        if(dontReturnObject !== undefined) {
+            headers["X-SanteDB-NoEcho"] = true;
         }
 
         // Perform post
@@ -1099,7 +1104,7 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, force, upstream, state) {
+    this.patchAsync = function (id, etag, patch, force, upstream, state, dontReturnObject) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1114,6 +1119,11 @@ function ResourceWrapper(_config) {
 
         if (force) {
             headers['X-Patch-Force'] = true;
+        }
+
+        
+        if(dontReturnObject !== undefined) {
+            headers["X-SanteDB-NoEcho"] = true;
         }
 
         patch.appliesTo = patch.appliesTo || {};
@@ -1141,7 +1151,7 @@ function ResourceWrapper(_config) {
         * @param {boolean} upstream True if the update should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
         */
-    this.updateAsync = function (id, data, upstream, state) {
+    this.updateAsync = function (id, data, upstream, state, dontReturnObject) {
 
         if (data.id && data.id !== id)
             throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
@@ -1159,6 +1169,10 @@ function ResourceWrapper(_config) {
 
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
+        }
+
+        if(dontReturnObject !== undefined) {
+            headers["X-SanteDB-NoEcho"] = true;
         }
 
         // Send PUT
@@ -1181,7 +1195,7 @@ function ResourceWrapper(_config) {
     * @param {boolean} upstream True if the delete should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
-    this.deleteAsync = function (id, upstream, state) {
+    this.deleteAsync = function (id, upstream, state, dontReturnObject) {
 
         var headers = {
             Accept: _config.accept
@@ -1191,6 +1205,10 @@ function ResourceWrapper(_config) {
 
         if (upstream !== undefined) {
             headers["X-SanteDB-Upstream"] = upstream;
+        }
+        
+        if(dontReturnObject !== undefined) {
+            headers["X-SanteDB-NoEcho"] = true;
         }
 
         return _config.api.deleteAsync({
