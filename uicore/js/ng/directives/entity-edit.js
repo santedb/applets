@@ -749,6 +749,10 @@ angular.module('santedb-lib')
                                             var hint = rExp.gen();
                                             hint = hint.replace(/[A-Z]/g, 'A').replace(/[0-9]/g, '9').replace(/[a-z]/g, 'a');
                                             authorities[authority.domainName].validationHint = hint;
+                                            authorities[authority.domainName].inputMode = /^\d+$/.test(hint) ? 'numeric' : 'text';
+                                        }
+                                        else {
+                                            authorities[authority.domainName].inputMode = 'text';
                                         }
                                     }
                                 });

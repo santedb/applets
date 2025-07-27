@@ -2058,7 +2058,7 @@ function SanteDBWrapper() {
          * @description In some templates, sub objects will have no $type, and just a reference to a template mnemonic. This method will take a template
          *              object and will resolve these references to other templates. {@link https://help.santesuite.org/santedb/data-and-information-architecture/conceptual-data-model#templates}
          */
-        async function getSubTemplates(collection, parms) {
+        async function getSubTemplates(collection, parms, viewModel) {
             var promises = Object.keys(collection).map(function (key) {
                 try {
                     var relationships = collection[key];
@@ -2073,7 +2073,7 @@ function SanteDBWrapper() {
                             var targetProperty = rel.playerModel || rel.targetModel;
 
                             if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
-                                var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, "full", parms);
+                                var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, viewModel || "full", parms);
 
                                 // Initialize the template 
                                 if (object.tag) {
@@ -2926,13 +2926,13 @@ function SanteDBWrapper() {
          * @param {any} parms The parameters to pass to the template
          * @returns {any} The templated object
          */
-        this.getTemplateContentAsync = async function (templateId, parms) {
-            var template = await _resources.template.getAsync(`${templateId}/skel`, "full", parms);
+        this.getTemplateContentAsync = async function (templateId, parms, viewModel) {
+            var template = await _resources.template.getAsync(`${templateId}/skel`, viewModel || "full", parms);
             if (template.relationship) { // Find relationship templates
-                template.relationship = await getSubTemplates(template.relationship, parms);
+                template.relationship = await getSubTemplates(template.relationship, parms, viewModel);
             }
             if (template.participation) {
-                template.participation = await getSubTemplates(template.participation, parms);
+                template.participation = await getSubTemplates(template.participation, parms, viewModel);
             }
             
             return template;
