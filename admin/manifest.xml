@@ -252,6 +252,12 @@
     </menuItem>
   </menuItem>
 
+  <menuItem context="org.santedb.admin" launch="santedb-admin.madx.index"
+    asset="/org.santedb.admin/views/madx/index.html" order="0">
+    <icon>fas fa-square-poll-horizontal</icon>
+    <text>Indicators</text>
+  </menuItem>
+
   <viewModel key="relationship_full">
     <definition>/org.santedb.admin/model/relationship_full.xml</definition>
   </viewModel>
