@@ -7,5 +7,14 @@
             <sdb:controller>MadxDashboardController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <h1>Madx</h1>
+    <h1>Indicators</h1>
+    <entity-table
+        id="ScheduledIndicatorsTable"
+        type="ScheduledIndicator"
+        item-actions="[
+            {name: 'viewExecutions', action: 'viewExecutions', className: 'btn-info', icon: 'fa fa-eye'}
+        ]"
+        i18n-prefix="'ui.model.indicator.'"
+        properties="[ 'period', 'sentSuccessfully' ]"
+    />
 </div>
