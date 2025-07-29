@@ -319,6 +319,7 @@
       <string name="ui.action.export.confirm">You are about to export potentially sensitive data from the CDR in XML format. Extra audits will be generated and your actions may be reviewed by an administrator. Do you want to continue?</string>
       <string name="ui.action.lastRun">Last Run</string>
       <string name="ui.action.viewExecutions">View Executions</string>
+      <string name="ui.action.resend">Resend</string>
 
       <!-- Data Tables -->
 
