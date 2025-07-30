@@ -1013,6 +1013,7 @@
     <!-- Scheduled Indicators -->
     <string name="ui.model.indicator.period">Period</string>
     <string name="ui.model.indicator.sentSuccessfully">Sent Successfully</string>
+    <string name="ui.model.indicator.value">Value</string>
 
     <!-- Substance Administrations -->
      <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
