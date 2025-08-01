@@ -7,13 +7,13 @@
             <sdb:controller>MadxDashboardController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <h1>Indicators</h1>
+    <h2>{{ 'ui.admin.indicators.title' | i18n }}</h2>
     <entity-table
         id="ScheduledIndicatorsTable"
         type="ScheduledIndicator"
         search-field="period"
         item-actions="[
-            {name: 'viewExecutions', action: 'viewExecutions', className: 'btn-info', icon: 'fa fa-eye'},
+            {name: 'view', className: 'btn-info', icon: 'fa fa-eye'},
             {name: 'resend', action: 'resend', className: 'btn-success', icon: 'fa fa-paper-plane'}
         ]"
         i18n-prefix="'ui.model.indicator.'"

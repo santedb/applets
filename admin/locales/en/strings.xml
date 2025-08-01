@@ -910,5 +910,7 @@
     <string name="ui.admin.notifications.instance.filter.hint">Which entities will be the subject of the notification. Enter an expression that selects only the entities which should receive a message when the notification is triggered.</string>
     <string name="ui.admin.notifications.instance.trigger.hint">When the notification should be run. Enter an expression that determines when to run this notification.</string>
     <string name="ui.admin.notifications.instance.target.hint">How to notify the subject of the notification. Enter an expression that resolves into a valid contact point for the subject.</string>
-
+    
+    <!-- Scheduled Indicators -->
+    <string name="ui.admin.indicators.title">Indicators Log</string>
 </resources>
