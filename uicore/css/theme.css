@@ -419,6 +419,26 @@ table.dataTable tbody > tr > td {
     vertical-align: middle;
 }
 
+.maxw-fit {
+    max-width: fit-content;
+}
+
+.maxh-fit {
+    max-height: fit-content;
+}
+
+.minw-fit {
+    min-width: fit-content;
+}
+
+.minh-fit {
+    min-height: fit-content;
+}
+
+.dt-layout-table {
+    overflow-x: scroll;
+}
+
 .wrap-anywhere {
     white-space: unset !important;
     overflow-wrap: anywhere;
