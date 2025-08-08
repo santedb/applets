@@ -65,4 +65,7 @@
   <viewModel key="attribution">
     <definition>/org.santedb.core/model/attribution.xml</definition>
   </viewModel>
+  <viewModel key="noModelProperties">
+    <definition>/org.santedb.core/model/noModelProperties.xml</definition>
+  </viewModel>
 </AppletManifest>
