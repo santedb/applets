@@ -16,6 +16,10 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="mb-1 scroll-sticky object-header">
+    <div class="mb-3">
+        <ng-include src="'/_dynamic/EntityHeaderExtensions.html'" />
+    </div>
+    
     <div class="card">
         <div class="card-body" ng-if="!entity">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
@@ -87,7 +91,7 @@
 
         </div>
     </div>
-    <ng-include src="'/_dynamic/EntityHeaderExtensions.html'" />
+    
     
 
 </div>

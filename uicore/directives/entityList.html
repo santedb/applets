@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="m-1 viewChange d-none">
+                <div class="m-1 viewChange d-none d-lg-inline">
                     <div class="btn-group">
                         <button class="btn btn-info" ng-class="{ 'active' : _display == 'list'}"
                             ng-click="_display = 'list'; queryControl.resultsPerPage = 5"><i
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 
-                <div class="m-1 filter d-none">
+                <div class="m-1 filter d-none my-auto">
                         <div class="float-right">
                             {{ 'ui.action.search' | i18n }}:
                             <input class="form-control w-75 d-inline"

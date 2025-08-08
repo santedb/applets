@@ -41,7 +41,7 @@
                 <input ng-pattern="authorities[model.domainModel.domainName].validation" ng-model="model.value" ng-model-options="{ updateOn: 'change blur'}"
                     class="form-control" name="identifier{{identifier.id}}" ng-required="isRequired"
                     ng-disabled="!model.domainModel.domainName" ng-readonly="!authorities[model.domainModel.domainName]"
-                    placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" />
+                    placeholder="{{ authorities[model.domainModel.domainName].validationHint }}" inputmode="{{ authorities[model.domainModel.domainName].inputMode }}" />
 
                 <div class="input-group-append"  ng-if="authorities[model.domainModel.domainName].checkDigitAlgorithm">
                     <span class="input-group-text">

@@ -439,6 +439,10 @@ angular.module('santedb-lib')
                                 filter["_count"] = 10;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
+
+                                if(scope.upstream) {
+                                    filter["_upstream"] = true;
+                                }
                                 return filter;
                             },
                             processResults: function (data, params) {

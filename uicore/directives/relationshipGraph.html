@@ -33,12 +33,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-5 pl-2 pr-2">
         <div id="entityNetworkDiagram{{viewData._id}}">
         </div>
-        <div id="renderSvg{{viewData._id}}" class="col-12 autoscroll">
+        <div id="renderSvg{{viewData._id}}" class="col-12 d-flex justify-content-center autoscroll">
             <i class="fas fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }} {{ _id }}
         </div>
-        <div class="col-12" ng-bind-html="'ui.entity.relationship.legend' | i18n"></div>
+        <div class="col-12 mt-5" ng-bind-html="'ui.entity.relationship.legend' | i18n"></div>
     </div>
 </div>
