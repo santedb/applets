@@ -20,22 +20,28 @@
         <div ng-if="::model.$templateUrl" ng-init="act = model">
             <ng-include src="model.$templateUrl" />
         </div>
-        <div class="actInputList" ng-if="::!model.$templateUrl">
+
+        <div class="actInputList mb-3" ng-if="::!model.$templateUrl">
             <!-- Header Information for the core act-->
             <div class="scroll-sticky">
                 <div class="actHeader object-header card d-none">
                     <div class="row">
+                        <!-- Template -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.template' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
                             <i class="fas fa-fw fa-table-cells"></i>
-                            {{ model.templateModel.name }} <span class="badge badge-primary">{{ model.typeConceptModel |
-                                concept }}</span>
+                            {{ model.templateModel.name }} 
+                            <span class="badge badge-primary">{{ model.typeConceptModel | concept }}</span>
                         </div>
+
+                        <!-- Participant -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.participation.RecordTarget' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
                             <i class="fas fa-fw" ng-class="{
                             'fa-person' : model.participation.RecordTarget[0].playerModel.classConcept == 'bacd9c6f-3fa9-481e-9636-37457962804d', 
@@ -43,16 +49,22 @@
                         }"></i>
                             {{ model.participation.RecordTarget[0].playerModel.name | name }}
                         </div>
+
+                        <!-- Location -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.participation.Location' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
                             <i class="fas fa-fw fa-house-chimney-medical"></i>
                             {{ model.participation.Location[0].playerModel.name | name }}
                         </div>
+
+                        <!-- Act Time -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.actTime' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
                             <div ng-if="model.startTime || model.stopTime">
                                 <span ng-if="model.startTime">{{ 'ui.model.act.startTime' | i18n }} <i
@@ -64,9 +76,12 @@
                                 <i class="fas fa-fw fa-clock"></i> {{ model.actTime | extDate: 'M' }}
                             </div>
                         </div>
+
+                        <!-- Performer -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label">
                             {{ 'ui.model.act.participation.Performer' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2 d-flex justify-content-between">
                             <span class="mr-2" ng-repeat="aut in model.participation.Authororiginator track by $index">
                                 <i class="fas fa-fw fa-user-doctor"></i> {{ aut.playerModel.name | name }}
@@ -75,17 +90,23 @@
                                 <i class="fas fa-fw fa-user-doctor"></i> {{ aut.playerModel.name | name }}
                             </span>
                         </div>
+
+                        <!-- Informant -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label" ng-if="model.participation.Informant">
                             {{ 'ui.model.act.participation.Informant' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2" ng-if="model.participation.Informant">
                             <i class="fas fa-fw fa-person"></i> {{ model.participation.Informant[0].playerModel.name |
                             name }}
                         </div>
+
+                        <!-- _HasComponent -->
                         <label class="col-sm-12 col-md-3 col-xl-2 control-label"
                             ng-if="model.relationship._HasComponent">
                             {{ 'ui.model.act.participation._HasComponent' | i18n }}
                         </label>
+
                         <div class="col-sm-12 col-md-9 col-xl-4" ng-if="model.relationship._HasComponent">
                             <i class="fas fa-fw fa-list-check"></i> {{
                             model.relationship._HasComponent.holderModel.typeConceptModel | concept }}
@@ -101,14 +122,16 @@
             <!-- START CURRENT ENTRY -->
             <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
-                    <button class="nav-link active" data-toggle="tab" data-target="#current-actions"><i
-                            class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n
-                        }}</button>
+                    <button class="nav-link active" data-toggle="tab" data-target="#current-actions">
+                        <i class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n }}
+                    </button>
                 </li>
+
                 <li class="nav-item actBackEntry">
-                    <button class="nav-link" data-toggle="tab" data-target="#historyActionTab"><i
-                            class="fas fa-fw fa-clock-rotate-left"></i> {{ 'ui.model.act.tag.isBackentryTrue' | i18n
-                        }}</button>
+                    <button class="nav-link" data-toggle="tab" data-target="#historyActionTab">
+                        <i class="fas fa-fw fa-clock-rotate-left"></i> 
+                        {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}
+                    </button>
                 </li>
             </ul>
 
@@ -121,7 +144,8 @@
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss' | i18n }}
                             </div>
-                            <div class="d-flex justify-content-left">
+
+                            <div class="d-flex justify-content-left mb-2">
                                 <!-- PROPOSE Should allow users to select an override -->
                                 <div class="actProposeControl editOnly d-none"
                                     ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
@@ -138,62 +162,32 @@
                                         <span></span>
                                     </label>
                                 </div>
+
                                 <!-- Render the main act entry content -->
                                 <div class="flex-grow-1 actEntryComponent my-auto">
                                     <div ng-if="!comp.targetModel.isNegated" class="editOnly"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
-                                        <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)">
-
-                                        </ng-include>
+                                            <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
                                     </div>
+
                                     <div ng-if="comp.targetModel.isNegated">
-                                        <div class="input-group">
+                                        <div class="input-group mb-0">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     {{ 'ui.model.act.isNegated.reason' | i18n }}
                                                 </span>
                                             </div>
+
                                             <concept-select ng-model="comp.targetModel.reasonConcept"
                                                 concept-set="'ProtocolViolationReason'" required="required"
-                                                class="form-control" name="violationReason{{$index}}"
+                                                class="form-control h-auto" name="violationReason{{$index}}"
                                                 ng-change="loadReasonConcept(comp.targetModel)" />
-                                            {{ comp.targetModel.reasonConceptModel | concept }}
                                         </div>
-                                        <div class="text-danger"
-                                            ng-if="ownerForm['violationReason' + $index].$error['required']">
-                                            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' |
-                                            i18n }}
+
+                                        <div class="text-danger" ng-if="ownerForm['violationReason' + $index].$error['required']">
+                                            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="editOnly btn-group d-none"
-                                    ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'">
-                                    <button ng-if="!comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary">
-                                        <i class="fas fa-fw fa-check"></i> <span class="d-none d-lg-inline">{{
-                                            'ui.action.complete' | i18n }}</span>
-                                    </button>
-                                    <button type="button" ng-click="moveHistory($index)"
-                                        class="btn btn-dark actMoveToHistory d-none"
-                                        ng-if="!comp.targetModel.tag.$userAdded">
-                                        <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> <span
-                                            class="d-none d-lg-inline">{{
-                                            comp.targetModel.tag.isBackEntry ? 'ui.action.undo' : 'ui.action.historical' | i18n }}</span>
-                                    </button>
-                                    <div class="actRemoveItem editOnly btn-group d-none"
-                                        ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')">
-                                        <button type="button" ng-click="removeItem($index)" class="btn btn-danger"
-                                            ng-if="comp.operation != '4'">
-                                            <i class="fas fa-fw fa-times-circle"></i> <span
-                                                class="d-none d-lg-inline">{{
-                                                'ui.action.remove' | i18n }}</span>
-                                        </button>
-                                        <button type="button" ng-click="comp.operation = undefined"
-                                            class="btn btn-success" ng-if="comp.operation == '4'">
-                                            <i class="fa-solid fa-arrow-rotate-left"></i> <span
-                                                class="d-none d-lg-inline">{{
-                                                'ui.action.undo' | i18n }}</span>
-                                        </button>
                                     </div>
                                 </div>
 
@@ -221,9 +215,52 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- Buttons -->
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'" class="d-flex my-2 justify-content-center">
+                                <div class="editOnly btn-group d-none">
+                                    <!-- Complete -->
+                                    <button ng-if="!comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-3">
+                                        <i class="fas fa-fw fa-check"></i> 
+                                        <span class="d-lg-inline">
+                                            {{ 'ui.action.complete' | i18n }}
+                                        </span>
+                                    </button>
+
+                                    <!-- Back Entry -->
+                                    <button type="button" ng-click="moveHistory($index)"
+                                        class="btn btn-dark actMoveToHistory mr-3 d-none"
+                                        ng-if="!comp.targetModel.tag.$userAdded">
+                                            <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> 
+                                            <span class="d-lg-inline">
+                                                {{ comp.targetModel.tag.isBackEntry ? 'ui.action.undo' : 'ui.action.historical' | i18n }}
+                                            </span>
+                                    </button>
+
+                                    <div ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')"
+                                        class="actRemoveItem editOnly btn-group d-none">
+                                            <!-- Remove -->
+                                            <button type="button" ng-click="removeItem($index)" class="btn btn-danger" ng-if="comp.operation != '4'">
+                                                <i class="fas fa-fw fa-times-circle"></i> 
+                                                <span class="d-lg-inline">
+                                                    {{ 'ui.action.remove' | i18n }}
+                                                </span>
+                                            </button>
+
+                                            <!-- Undo -->
+                                            <button type="button" ng-click="comp.operation = undefined" class="btn btn-success" ng-if="comp.operation == '4'">
+                                                <i class="fa-solid fa-arrow-rotate-left"></i> 
+                                                <span class="d-lg-inline">
+                                                    {{ 'ui.action.undo' | i18n }}
+                                                </span>
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
+
                 <div id="historyActionTab" class="tab-pane editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
@@ -233,21 +270,26 @@
                 </div>
             </div>
 
-            <div class="btn-group float-right">
-                <div ng-if="ownerForm.$invalid" class="text-danger btn">
-                    <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'error.actEdit.incomplete' | i18n }}
-                </div>
+            <!-- Errors -->
+            <div ng-if="ownerForm.$invalid" class="text-danger font-weight-bold">
+                <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'error.actEdit.incomplete' | i18n }}
+            </div>
+            
+            <div class="btn-group col-12 p-0 mt-3">
                 <div class="dropup btn-group">
                     <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem d-none" data-display="static"
                         data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
-                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
+
                     <div class="dropdown-menu overflow-auto" style="max-height: 50vh;" id="addActionDropdown">
                         <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
                             ng-repeat="tpl in availableTemplates track by $index">
-                            <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
+                                <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
                         </button>
+
                         <div class="dropdown-divider"></div>
+
                         <div class="dropdown-item">
                             <input type="search" ng-model="searchTemplateString"
                                 ng-change="doFilter(searchTemplateString)" class="form-control"
@@ -255,28 +297,27 @@
                         </div>
                     </div>
                 </div>
-                <div ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn-group"
+
+                <div ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn-group float-right"
                     ng-class="{ 'dropup' : action.children }">
-                    <button class="btn" ng-click="action.children ? null : doAction(action)"
-                        ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
-                        data-toggle="{{ action.children ? 'dropdown' : null }}" demand="{{action.demand}}"
-                        type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}"
-                        ng-disabled="action.validOnly &amp;&amp; ownerForm.$invalid">
-                        <i class="fas fa-fw" ng-class="action.icon"></i>
-                        {{ action.label || 'ui.action.' + action.name | i18n }} 
-                    </button>
-
-                    <div class="dropdown-menu" data-display="static">
-                        <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
-                            ng-repeat="child in action.children track by $index">
-                            <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name
-                            | i18n }}
-
+                        <button class="btn" ng-click="action.children ? null : doAction(action)"
+                            ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
+                            data-toggle="{{ action.children ? 'dropdown' : null }}" demand="{{action.demand}}"
+                            type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}"
+                            ng-disabled="action.validOnly &amp;&amp; ownerForm.$invalid">
+                                <i class="fas fa-fw" ng-class="action.icon"></i>
+                                {{ action.label || 'ui.action.' + action.name | i18n }} 
                         </button>
-                    </div>
+
+                        <div class="dropdown-menu" data-display="static">
+                            <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
+                                ng-repeat="child in action.children track by $index">
+                                    <i class="fas fa-fw" ng-class="child.icon"></i> 
+                                        {{ child.label || 'ui.action.' + child.name | i18n }}
+                            </button>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
