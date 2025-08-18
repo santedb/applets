@@ -201,7 +201,7 @@
         <property name="protocolModel" behavior="never" />
     </type>
 
-    <type type="ActNode" all="true">
+    <type type="ActNote" all="true">
         <property name="authorModel" behavior="never" />
     </type>
 
