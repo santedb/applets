@@ -173,6 +173,14 @@
 
                                     <div ng-if="comp.targetModel.isNegated">
                                         <div class="input-group mb-0">
+                                            <label class="control-label mr-2">
+                                                {{ ::comp.targetModel.typeConceptModel | concept }} 
+
+                                                <span ng-if="comp.targetModel.participation.Product[0].playerModel">
+                                                    : {{ comp.targetModel.participation.Product[0].playerModel.name.Assigned | name }}
+                                                </span>
+                                            </label>
+
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
                                                     {{ 'ui.model.act.isNegated.reason' | i18n }}
