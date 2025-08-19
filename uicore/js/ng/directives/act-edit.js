@@ -185,6 +185,8 @@ angular.module('santedb-lib')
                             // Relationship
                             itm.targetModel.actTime = itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime || itm.targetModel.startTime;
                         }
+
+                        $scope.applyVisibilityAttributes();
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);

@@ -199,21 +199,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Performer -->
-                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'" class="alert alert-secondary d-flex my-auto">
-                                    <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
-                                    <div class="d-flex flex-column my-auto">
-                                        <div>
-                                            <i class="fas fa-fw fa-user-doctor"></i> {{
-                                            comp.targetModel.participation.Performer[0].playerModel.name | name }}
-                                        </div>
-                                        <div
-                                            ng-repeat="sec in comp.targetModel.participation.SecondaryPerformer track by $index">
-                                            <i class="fas fa-fw fa-user-nurse"></i> {{ sec.playerModel.name | name }}
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="actEditItem viewOnly d-none"
                                     ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'">
                                     <button type="button" ng-click="editItem($index)" class="btn btn-primary"
@@ -221,6 +206,24 @@
                                         <i class="fas fa-fw fa-pencil"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.edit' | i18n }}</span>
                                     </button>
+                                </div>
+                            </div>
+
+                            <!-- Performer -->
+                            <div class="row justify-content-center">
+                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'" 
+                                    class="alert alert-secondary d-flex my-auto p-2">
+                                        <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
+                                        <div class="d-flex flex-column my-auto">
+                                            <div>
+                                                <i class="fas fa-fw fa-user-doctor"></i> {{
+                                                comp.targetModel.participation.Performer[0].playerModel.name | name }}
+                                            </div>
+                                            <div
+                                                ng-repeat="sec in comp.targetModel.participation.SecondaryPerformer track by $index">
+                                                <i class="fas fa-fw fa-user-nurse"></i> {{ sec.playerModel.name | name }}
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
 
