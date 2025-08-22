@@ -310,12 +310,12 @@ angular.module('santedb-lib')
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
                     scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False').sort((a,b) => a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
-                    scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && a.targetModel.tag.isBackEntry[0] == 'True')
+                    scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && (a.targetModel.tag.isBackEntry[0] == 'True' || a.targetModel.tag.isBackEntry[0] == 'true'))
                         .groupBy(
                             o => o.targetModel.templateModel.mnemonic,
                             o => o.targetModel
                         );
-
+                    
                     // Bind utility functions
                     scope.model.relationship.HasComponent.forEach(comp => {
                         comp.targetModel._getEncounter = () => scope.model;

@@ -140,7 +140,7 @@
                     <ul class="overflow-auto list-group">
                         <li class="my-2 list-group-item d-flex flex-column border-top"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
-                            ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-light' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-secondary text-white' : comp.operation == '4' }">
+                            ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-light' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4' }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss' | i18n }}
                             </div>
@@ -231,7 +231,7 @@
                             <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'" class="d-flex my-2 justify-content-center">
                                 <div class="editOnly btn-group d-none">
                                     <!-- Complete -->
-                                    <button ng-if="!comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-3">
+                                    <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-3">
                                         <i class="fas fa-fw fa-check"></i> 
                                         <span class="d-lg-inline">
                                             {{ 'ui.action.complete' | i18n }}
@@ -240,11 +240,12 @@
 
                                     <!-- Back Entry -->
                                     <button type="button" ng-click="moveHistory($index)"
+                                        ng-disabled="comp.operation == 4"
                                         class="btn btn-dark actMoveToHistory mr-3 d-none"
-                                        ng-if="!comp.targetModel.tag.$userAdded">
+                                        ng-if="!comp.targetModel.tag.$userAdded &amp;&amp; !comp.targetModel.isNegated">
                                             <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> 
                                             <span class="d-lg-inline">
-                                                {{ comp.targetModel.tag.isBackEntry ? 'ui.action.undo' : 'ui.action.historical' | i18n }}
+                                                <span ng-if="comp.targetModel.tag.isBackEntry">{{  'ui.action.undo' | i18n }} </span>{{ 'ui.action.historical' | i18n }}
                                             </span>
                                     </button>
 
@@ -262,7 +263,7 @@
                                             <button type="button" ng-click="comp.operation = undefined" class="btn btn-success" ng-if="comp.operation == '4'">
                                                 <i class="fa-solid fa-arrow-rotate-left"></i> 
                                                 <span class="d-lg-inline">
-                                                    {{ 'ui.action.undo' | i18n }}
+                                                    {{ 'ui.action.undo' | i18n }} {{ 'ui.action.remove' | i18n }}
                                                 </span>
                                             </button>
                                     </div>
