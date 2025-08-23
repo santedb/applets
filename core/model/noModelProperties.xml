@@ -1,6 +1,6 @@
 <ViewModel xmlns="http://santedb.org/model/view">
 
-
+    <type type="Bundle" all="true" />
     <!-- Reference Types -->
     <type type="NonVersionedEntityData" all="true">
         <property name="createdByModel" behavior="never" />
@@ -16,7 +16,7 @@
 
     <type type="ReferenceTerm" base="NonVersionedEntityData">
         <property name="CodeSystemModel" behavior="never"/>
-        <property name="name" behavior="always">
+        <property name="name" behavior="always" all="true">
             <property name="*" all="true" />
         </property>
     </type>
@@ -38,15 +38,15 @@
         <property name="conceptSetModel" behavior="never" />
 
 
-        <property name="referenceTerm" behavior="always">
+        <property name="referenceTerm" behavior="always" all="true">
             <property name="*" ref="ConceptReferenceTerm" />
         </property>
-        <property name="name" behavior="always">
+        <property name="name" behavior="always" all="true">
             <property name="*" ref="ConceptName" />
         </property>
-        <property name="conceptSet" behavior="always" />
+        <property name="conceptSet" behavior="always" all="true" />
         <property name="tag" behavior="always" />
-        <property name="extension" behavior="always">
+        <property name="extension" behavior="always" all="true">
             <property name="*" ref="ConceptExtension" />
         </property>
     </type>
@@ -80,7 +80,7 @@
 
     <type type="EntityAddress" all="true">
         <property name="useModel" behavior="never" />
-        <property name="component" behavior="always">
+        <property name="component" behavior="always" all="true">
             <property name="*" ref="EntityAddressComponent" />
         </property>
     </type>
@@ -91,7 +91,7 @@
 
     <type type="EntityName" all="true">
         <property name="useModel" behavior="never" />
-        <property name="component" behavior="always">
+        <property name="component" behavior="always" all="true">
             <property name="*" ref="EntityNameComponent" />
         </property>
     </type>
@@ -110,30 +110,28 @@
         <property name="templateModel" behavior="never" />
 
         <!-- Ensure Collections -->
-        <property name="identifier" behavior="always">
+        <property name="identifier" behavior="always" all="true">
             <property name="*" ref="EntityIdentifier" />
         </property>
-        <property name="address" behavior="always">
+        <property name="address" behavior="always" all="true">
             <property name="*" ref="EntityAddress" />
         </property>
-        <property name="telecom" behavior="always">
+        <property name="telecom" behavior="always"> all="true"
             <property name="*" ref="EntityTelecom" />
         </property>
-        <property name="name" behavior="always">
-            <property name="*" ref="EntityName" />
+        <property name="name" behavior="always" all="true">
+            <property name="*" behavior="always" ref="EntityName" />
         </property>
-        <property name="relationship" behavior="always">
+        <property name="relationship" behavior="always" all="true">
             <property name="*" ref="EntityRelationship" />
         </property>
-        <property name="policy" behavior="always" />
-        <property name="extension" behavior="always">
+        <property name="policy" behavior="always"  all="true"/>
+        <property name="extension" behavior="always" all="true">
             <property name="*" ref="EntityExtension" />
         </property>
-        <property name="note" behavior="always" />
-        <property name="tag" behavior="always" />
-        <property name="participation" behavior="always">
-            <property name="*" ref="ActParticipation" />
-        </property>
+        <property name="note" behavior="always"  all="true"/>
+        <property name="tag" behavior="always" all="true" />
+        <property name="participation" behavior="never" all="true" />
     </type>
 
     <type type="ApplicationEntity" base="Entity">
@@ -167,7 +165,7 @@
 
     <type type="Place" base="Entity">
 
-        <property name="service" behavior="always">
+        <property name="service" behavior="always" all="true">
             <property name="serviceConceptModel" behavior="never" />
         </property>
     </type>
@@ -236,22 +234,22 @@
         <property name="obsoletionReasonModel" behavior="never" />
         <property name="reasonConceptModel" behavior="never" />
 
-        <property name="geo" behavior="always" />
+        <property name="geo" behavior="always" all="true" />
         <!-- Relationships are loaded -->
-        <property name="identifier" behavior="always">
+        <property name="identifier" behavior="always" all="true">
             <property name="*" ref="ActIdentifier" />
         </property>
-        <property name="relationship" behavior="always">
+        <property name="relationship" behavior="always" all="true">
             <property name="*" ref="ActRelationship" />
         </property>
-        <property name="policy" behavior="always" />
-        <property name="extension" behavior="always">
+        <property name="policy" behavior="always" all="true" />
+        <property name="extension" behavior="always" all="true">
             <property name="*" ref="ActExtension" />
         </property>
-        <property name="note" behavior="always" />
-        <property name="tag" behavior="always" />
-        <property name="protocol" behavior="always" />
-        <property name="participation" behavior="always">
+        <property name="note" behavior="always" all="true" />
+        <property name="tag" behavior="always" all="true" />
+        <property name="protocol" behavior="always" all="true" />
+        <property name="participation" behavior="always" all="true">
             <property name="*" ref="ActParticipation" />
         </property>
     </type>
@@ -302,7 +300,7 @@
         <property name="admissionSourceModel" behavior="never" />
 
         <!-- Collections -->
-        <property name="specialArrangement" behavior="always" />
+        <property name="specialArrangement" behavior="always" all="true" />
     </type>
 
     <type type="PatientEncounterArrangement" all="true">

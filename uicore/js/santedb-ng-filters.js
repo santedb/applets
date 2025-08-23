@@ -271,15 +271,7 @@ angular.module('santedb-lib')
      */
     .filter('age', function () {
         return function (date, display, other) {
-
-            var source = other ? moment(other) : moment();
-            var diff = source.diff(date, 'days');
-            if (display == 'D' || diff < 45)
-                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
-            diff = source.diff(date, 'months');
-            if (display == 'M' || diff < 18)
-                return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
-            return source.diff(date, 'years') + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.yearsOld');
+            return SanteDB.display.renderAge(date, other, display);
         }
     })
     /**
