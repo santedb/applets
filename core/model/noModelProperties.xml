@@ -1,0 +1,321 @@
+<ViewModel xmlns="http://santedb.org/model/view">
+
+    <type type="Bundle" all="true" />
+    <!-- Reference Types -->
+    <type type="NonVersionedEntityData" all="true">
+        <property name="createdByModel" behavior="never" />
+        <property name="updateByModel" behavior="never" />
+        <property name="obsoletedByModel" behavior="never" />
+    </type>
+
+    <type type="VersionedEntityData">
+        <property name="createdByModel" behavior="never" />
+        <property name="obsoletedByModel" behavior="never" />
+        <property name="previousVersionModel" behavior="never" />
+    </type>
+
+    <type type="ReferenceTerm" base="NonVersionedEntityData">
+        <property name="CodeSystemModel" behavior="never"/>
+        <property name="name" behavior="always" all="true">
+            <property name="*" all="true" />
+        </property>
+    </type>
+    
+    <type type="ConceptExtension" all="true">
+        <property name="extensionTypeModel" behavior="never" />
+    </type>
+
+    <type type="ConceptName" all="true" />
+
+    <type type="ConceptReferenceTerm" all="true">
+        <property name="termModel" behavior="never"/>
+        <property name="relationshipTypeModel" behavior="never" />
+    </type>
+
+    <type type="Concept" base="VersionedEntityData">
+        <property name="statusModel" behavior="never" />
+        <property name="conceptClassModel" behavior="never" />
+        <property name="conceptSetModel" behavior="never" />
+
+
+        <property name="referenceTerm" behavior="always" all="true">
+            <property name="*" ref="ConceptReferenceTerm" />
+        </property>
+        <property name="name" behavior="always" all="true">
+            <property name="*" ref="ConceptName" />
+        </property>
+        <property name="conceptSet" behavior="always" all="true" />
+        <property name="tag" behavior="always" />
+        <property name="extension" behavior="always" all="true">
+            <property name="*" ref="ConceptExtension" />
+        </property>
+    </type>
+    <type type="Protocol" base="NonVersionedEntityData">
+    </type>
+
+    <!-- CONTROL THE LOADING OF ENTITIES -->
+    <type type="EntityIdentifier" all="true">
+        <property name="domainModel" behavior="never" />
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="EntityRelationship" all="true">
+        <property name="classificationModel" behavior="never" />
+        <property name="targetModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never" />
+        <property name="relationshipRoleModel" behavior="never" />
+    </type>
+
+    <type type="EntityExtension" all="true">
+        <property name="extensionTypeModel" behavior="never" />
+    </type>
+
+    <type type="EntityNote" all="true">
+        <property name="authorModel" behavior="never" />
+    </type>
+
+    <type type="EntityAddressComponent" all="true">
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="EntityAddress" all="true">
+        <property name="useModel" behavior="never" />
+        <property name="component" behavior="always" all="true">
+            <property name="*" ref="EntityAddressComponent" />
+        </property>
+    </type>
+
+    <type type="EntityNameComponent" all="true">
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="EntityName" all="true">
+        <property name="useModel" behavior="never" />
+        <property name="component" behavior="always" all="true">
+            <property name="*" ref="EntityNameComponent" />
+        </property>
+    </type>
+
+    <type type="EntityTelecom" all="true">
+        <property name="useModel" behavior="never" />
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="Entity" base="VersionedEntityData">
+        <property name="typeConceptModel" behavior="never" />
+        <property name="classConceptModel" behavior="never" />
+        <property name="determinerConceptModel" behavior="never" />
+        <property name="statusConceptModel" behavior="never" />
+        <property name="creationActModel" behavior="never" />
+        <property name="templateModel" behavior="never" />
+
+        <!-- Ensure Collections -->
+        <property name="identifier" behavior="always" all="true">
+            <property name="*" ref="EntityIdentifier" />
+        </property>
+        <property name="address" behavior="always" all="true">
+            <property name="*" ref="EntityAddress" />
+        </property>
+        <property name="telecom" behavior="always"> all="true"
+            <property name="*" ref="EntityTelecom" />
+        </property>
+        <property name="name" behavior="always" all="true">
+            <property name="*" behavior="always" ref="EntityName" />
+        </property>
+        <property name="relationship" behavior="always" all="true">
+            <property name="*" ref="EntityRelationship" />
+        </property>
+        <property name="policy" behavior="always"  all="true"/>
+        <property name="extension" behavior="always" all="true">
+            <property name="*" ref="EntityExtension" />
+        </property>
+        <property name="note" behavior="always"  all="true"/>
+        <property name="tag" behavior="always" all="true" />
+        <property name="participation" behavior="never" all="true" />
+    </type>
+
+    <type type="ApplicationEntity" base="Entity">
+        <property name="securityApplicationModel" behavior="never" />
+    </type>
+
+    <type type="Material" base="Entity">
+        <property name="formConceptModel" behavior="never" />
+        <property name="quantityConceptModel" behavior="never" />
+    </type>
+
+    <type type="Container" base="Material"></type>
+
+    <type type="ManufacturedMaterial" base="Material"></type>
+
+    <type type="NonPersonLivingSubject" base="Entity">
+        <property name="strainModel" behavior="never" />
+    </type>
+
+    <type type="Person" base="Entity">
+        <property name="genderConceptModel" behavior="never" />
+        <property name="occupationModel" behavior="never" />
+        <property name="vipStatusModel" behavior="never" />
+        <property name="nationalityModel" behavior="never" />
+        <property name="language" behavior="always" all="true" />
+    </type>
+
+    <type type="Organization" base="Entity">
+        <property name="industryConceptModel" behavior="never" />
+    </type>
+
+    <type type="Place" base="Entity">
+
+        <property name="service" behavior="always" all="true">
+            <property name="serviceConceptModel" behavior="never" />
+        </property>
+    </type>
+
+    <type type="UserEntity" base="Person">
+        <property name="securityUserModel" behavior="never" />
+    </type>
+
+    <type type="DeviceEntity" base="Entity">
+        <property name="securityDeviceModel" behavior="never" />
+    </type>
+
+    <type type="Patient" base="Person">
+        <property name="livingArrangementModel" behavior="never" />
+        <property name="religionModel" behavior="never" />
+        <property name="ethnicityModel" behavior="never" />
+        <property name="maritalStatusModel" behavior="never" />
+        <property name="educationLevelModel" behavior="never" />
+    </type>
+
+    <type type="Provider" base="Person">
+        <property name="providerSpecialtyModel" behavior="never" />
+    </type>
+
+    <!--  CONTROL THE LOADING OF ACTS  -->
+    <type type="ActExtension" all="true">
+        <property name="extensionTypeModel" behavior="never" />
+    </type>
+
+    <type type="ActProtocol" all="true">
+        <property name="protocolModel" behavior="never" />
+    </type>
+
+    <type type="ActNote" all="true">
+        <property name="authorModel" behavior="never" />
+    </type>
+
+    <type type="ActIdentifier" all="true">
+        <property name="domainModel" behavior="never" />
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="ActRelationship" all="true">
+        <property name="classificationModel" behavior="never" />
+        <property name="targetModel" behavior="never" />
+        <property name="relationshipTypeModel" behavior="never" />
+    </type>
+
+    <type type="ActParticipation" all="true">
+        <property name="playeModel" behavior="never" />
+        <property name="classificationModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="actModel" behavior="never" />
+    </type>
+
+    <type type="SecurityPolicyInstance" all="true">
+        <property name="policyModel" behavior="never" />
+    </type>
+
+    <type type="Act" all="true" base="VersionedEntityData">
+        <property name="typeConceptModel" behavior="never" />
+        <property name="classConceptModel" behavior="never" />
+        <property name="statusConceptModel" behavior="never" />
+        <property name="templateModel" behavior="never" />
+        <property name="moodConceptModel" behavior="never" />
+        <property name="obsoletionReasonModel" behavior="never" />
+        <property name="reasonConceptModel" behavior="never" />
+
+        <property name="geo" behavior="always" all="true" />
+        <!-- Relationships are loaded -->
+        <property name="identifier" behavior="always" all="true">
+            <property name="*" ref="ActIdentifier" />
+        </property>
+        <property name="relationship" behavior="always" all="true">
+            <property name="*" ref="ActRelationship" />
+        </property>
+        <property name="policy" behavior="always" all="true" />
+        <property name="extension" behavior="always" all="true">
+            <property name="*" ref="ActExtension" />
+        </property>
+        <property name="note" behavior="always" all="true" />
+        <property name="tag" behavior="always" all="true" />
+        <property name="protocol" behavior="always" all="true" />
+        <property name="participation" behavior="always" all="true">
+            <property name="*" ref="ActParticipation" />
+        </property>
+    </type>
+
+    <type type="Account" base="Act">
+        <property name="currencyModel" behavior="never" />
+    </type>
+
+    <type type="CarePathwayDefinition" base="NonVersionedEntityData">
+        <property name="encounterTemplateModel" behavior="never" />
+    </type>
+
+    <type type="CarePlan" base="Act">
+        <property name="pathwayModel" behavior="never" />
+    </type>
+
+    <type type="FinancialContract" base="Act">
+        <property name="paymentTermsModel" behavior="never" />
+    </type>
+
+    <type type="FinancialTransaction" base="Act">
+        <property name="currencyModel" behavior="never" />
+    </type>
+
+    <type type="InvoiceElement" base="Act">
+        <property name="modifierModel" behavior="never" />
+        <property name="currencyModel" behavior="never" />
+    </type>
+
+    <type type="Observation" base="Act">
+        <property name="interpretationConceptModel" behavior="never" />
+    </type>
+
+    <type type="QuantityObservation" base="Observation">
+        <property name="unitOfMeasureModel" behavior="never" />
+    </type>
+
+    <type type="CodedObservation" base="Observation">
+        <property name="valueModel" behavior="never" />
+    </type>
+
+    <type type="Narrative" base="Act"></type>
+
+    <type type="TextObservation" base="Act"></type>
+
+    <type type="PatientEncounter" base="Act">
+        <property name="dischargeDispositionModel" behavior="never" />
+        <property name="admissionSourceModel" behavior="never" />
+
+        <!-- Collections -->
+        <property name="specialArrangement" behavior="always" all="true" />
+    </type>
+
+    <type type="PatientEncounterArrangement" all="true">
+        <property name="typeModel" behavior="never" />
+    </type>
+
+    <type type="Procedure" base="Act">
+        <property name="methodModel" behavior="never" />
+        <property name="approachSiteModel" behavior="never" />
+        <property name="targetSiteModel" behavior="never" />
+    </type>
+
+    <type type="SubstanceAdministration" base="Act">
+        <property name="routeModel" behavior="never" />
+        <property name="doseUnitModel" behavior="never" />
+        <property name="siteModel" behavior="never" />
+    </type>
+</ViewModel>

@@ -59,6 +59,25 @@ SanteDBWrapper.prototype.display = new function () {
     }
 
     /**
+     * 
+     * @param {*} date The date for the age computation
+     * @param {*} otherDate The other date for the age computation
+     * @param {*} units The units (M or D)
+     * @returns The formatted age
+     */
+    this.renderAge = function (date, otherDate, units) {
+
+        var source = otherDate ? moment(otherDate) : moment();
+        var diff = source.diff(date, 'days');
+        if (units == 'D' || diff < 45)
+            return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
+        diff = source.diff(date, 'months');
+        if (units == 'M' || diff < 18)
+            return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
+        return source.diff(date, 'years') + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.yearsOld');
+    };
+
+    /**
      * @method
      * @memberof SanteDBWrapper.display
      * @summary Replaces the content of the button with a defined wait state
@@ -97,7 +116,7 @@ SanteDBWrapper.prototype.display = new function () {
     this.renderDate = function (date, precision, inHumanFormat) {
         var dateFormat;
 
-        if(date && date !== "" && !(date instanceof Date)) {
+        if (date && date !== "" && !(date instanceof Date)) {
             date = new Date(date);
         }
         if (!SanteDB.locale.dateFormats) {
@@ -112,7 +131,7 @@ SanteDBWrapper.prototype.display = new function () {
             });
         }
 
-        var root = inHumanFormat ? SanteDB.locale.dateFormats.human || SanteDB.locale.dateFormats : SanteDB.locale.dateFormats ;
+        var root = inHumanFormat ? SanteDB.locale.dateFormats.human || SanteDB.locale.dateFormats : SanteDB.locale.dateFormats;
         switch (precision) {
             case 1:   // Year     "Y"
             case 'Y':
@@ -184,8 +203,7 @@ SanteDBWrapper.prototype.display = new function () {
         else
             retVal = concept[Object.keys(concept)[0]];
 
-        if (Array.isArray(retVal))
-        {
+        if (Array.isArray(retVal)) {
             var name = retVal[0];
             return name[0].toUpperCase() + name.substring(1);
         }
@@ -207,14 +225,13 @@ SanteDBWrapper.prototype.display = new function () {
         if (domain && id[domain])
             retVal = id[domain][0].value;
         else
-            for (var k in id)
-                { 
-                    retVal = id[k][0].value;
-                    domain = k;
-                    break;
-                }
-        
-        if(emitDomain) {
+            for (var k in id) {
+                retVal = id[k][0].value;
+                domain = k;
+                break;
+            }
+
+        if (emitDomain) {
             retVal += ` <small>${domain}</small>`;
         }
 
@@ -409,7 +426,7 @@ SanteDBWrapper.prototype.display = new function () {
         }
         retVal += "</span>";
 
-        if(patient.address) {
+        if (patient.address) {
             retVal += "<br/><span class='mr-1'><i class='fas fa-fw fa-house'></i> ";
             retVal += SanteDB.display.renderEntityAddress(patient.address);
             retVal += "</span>";
@@ -490,7 +507,7 @@ SanteDBWrapper.prototype.display = new function () {
      * @param {string} units The units (days, weeks, etc.)
      * @param {string} prefix The UI prefix
      */
-    this.renderDateDifference = function(date1, date2, units, prefix) {
+    this.renderDateDifference = function (date1, date2, units, prefix) {
 
         var diff = null, suffix = null;
         switch (units) {
@@ -515,10 +532,9 @@ SanteDBWrapper.prototype.display = new function () {
                 suffix = `${prefix}.minutes`;
                 break;
             default:
-                ___uomprec.forEach(p =>
-                {
-                     var pdf = date2.diff(date1, p);
-                    if(pdf > 0) {
+                ___uomprec.forEach(p => {
+                    var pdf = date2.diff(date1, p);
+                    if (pdf > 0) {
                         diff = pdf;
                         suffix = `${prefix}.${p}`;
                     }
@@ -567,11 +583,11 @@ SanteDBWrapper.prototype.display = new function () {
 function attachStickyScrollEvent() {
 
     var contentWrapper = $(".content-wrapper");
-    
-    if(contentWrapper.length) {
+
+    if (contentWrapper.length) {
         contentWrapper.scroll(() => {
             $(".scroll-sticky").each((i, ele) => {
-                if(CSS.supports && CSS.supports('position','sticky')) {
+                if (CSS.supports && CSS.supports('position', 'sticky')) {
                     var cOfs = ele.getBoundingClientRect().top;
                     var cwOfs = contentWrapper[0].getBoundingClientRect().top;
                     var stuck = (cOfs - cwOfs) < 50;
@@ -587,8 +603,8 @@ function attachStickyScrollEvent() {
 }
 $(document).ready(attachStickyScrollEvent);
 
-$(".content-wrapper").ready(()=> {
-$(".content-wrapper").scroll(e => {
-    
-  })
+$(".content-wrapper").ready(() => {
+    $(".content-wrapper").scroll(e => {
+
+    })
 });

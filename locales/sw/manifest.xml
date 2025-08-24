@@ -25,22 +25,18 @@
   <locales>
     <locale code="sw">
       <asset>/org.santedb.i18n.sw/lib/angular/sw.js</asset>
-      <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
     <locale code="sw-ke">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ke.js</asset>
-      <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
     <locale code="sw-tz">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-tz.js</asset>
-      <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
     <locale code="sw-ug">
       <asset>/org.santedb.i18n.sw/lib/angular/sw-ug.js</asset>
-      <asset>/org.santedb.i18n.sw/lib/fullcalendar/sw.js</asset>
       <asset>/org.santedb.i18n.sw/lib/select2/sw.js</asset>
     </locale>
   </locales>

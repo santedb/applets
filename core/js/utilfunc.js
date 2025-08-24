@@ -24,19 +24,35 @@
  * @param {Function} valueSelector The function predicate that returns the value for the groupin
  * @returns {Object} An object whose keys represent the delegate returned by {keySelector}
  */
-Object.defineProperty(Array.prototype, 'groupBy', { value: function(keySelector, valueSelector) {
-    var retVal = {};
-    this.forEach(itm => {
-        var keyValue = keySelector(itm);
-        if(retVal[keyValue]) {
-            retVal[keyValue].push(valueSelector(itm));
-        }
-        else {
-            retVal[keyValue] = [valueSelector(itm)];
-        }
-    });
-    return retVal;
-}, enumerable: false });
+Object.defineProperty(Array.prototype, 'groupBy', { 
+    value: function(keySelector, valueSelector) {
+        var retVal = {};
+        this.forEach(itm => {
+            var keyValue = keySelector(itm);
+            if(retVal[keyValue]) {
+                retVal[keyValue].push(valueSelector(itm));
+            }
+            else {
+                retVal[keyValue] = [valueSelector(itm)];
+            }
+        });
+        return retVal;
+    }, 
+    enumerable: false 
+});
+
+
+/**
+ * @summary Select distinct objects from the array
+ */
+Object.defineProperty(Array.prototype, 'distinct', { 
+    value: function() {
+        var rv = [];
+        this.forEach(v => !rv.includes(v) ? rv.push(v) : null);
+        return rv;
+    }, 
+    enumerable: false 
+});
 
 /**
  * @summary Select a child property from each element in the array
