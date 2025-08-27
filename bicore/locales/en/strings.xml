@@ -43,6 +43,10 @@
     <string name="ui.bi.core.common.place.class">Classification</string>
     <string name="ui.bi.core.common.place.type">Type (sub-classification)</string>
     <string name="ui.bi.core.report.audit.objectAccess">Object Access</string>
+    <string name="ui.bi.core.date.dob.from">From (Date of Birth)</string>
+    <string name="ui.bi.core.date.dob.to">To (Date of Birth)</string>
+    <string name="ui.bi.core.date.reg.from">From (Registration Date)</string>
+    <string name="ui.bi.core.date.reg.to">To (Registration Date)</string>
 
     <!-- Common Output -->
     <string name="ui.bi.core.label.date">Date</string>
