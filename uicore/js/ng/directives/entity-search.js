@@ -69,7 +69,8 @@ angular.module('santedb-lib')
         }
 
         function renderObject(selection, minRender) {
-
+            selection.text = '';
+            
             if (selection.text)
                 return selection.text;
 
@@ -132,9 +133,7 @@ angular.module('santedb-lib')
                     break;
             }
 
-
             retVal += "&nbsp;";
-
 
             if(selection.lotNumber) {
                 retVal += `${selection.lotNumber} - `;
@@ -550,10 +549,8 @@ angular.module('santedb-lib')
                         allowClear: true
                     });
 
-
-
                     // On change
-                    element.on('change', function (e) {
+                    element.on('change', function (e) {                        
                         var val = $(element).select2("val");
 
                         // Remove loading indicator
@@ -567,14 +564,15 @@ angular.module('santedb-lib')
                             var target = scope.copyNulls.to;
                             var from = scope.copyNulls.from.split('.').reduce((p, c, i) => i == 1 ? data[p][c] : p[c]);
                             scope.copyNulls.values.forEach(o => target[o] = target[o] || from[o]);
-
                         }
+
                         if (scope.changeClear && val != ngModel.$viewValue && scope.changeClear.scope) {
                             scope.changeClear.values.forEach(o => {
                                 console.info(scope.changeClear.resetTo);
                                 scope.changeClear.scope[o] = angular.copy(scope.changeClear.resetTo);
                             });
                         }
+
                         //e.currentTarget.options.selectedIndex = e.currentTarget.options.length - 1;
                         if (valueProperty) {
                             var modelVal = {};
@@ -588,11 +586,11 @@ angular.module('santedb-lib')
                             else
                                 modelVal[valueProperty] = val;
                             scope.$apply(() => ngModel.$setViewValue(modelVal));
-                        }
-                        else {
+                        } else {
                             scope.$apply(() => ngModel.$setViewValue(val));
                         }
                     });
+
                     ngModel.$render = function () {
                         if (valueProperty) {
                             if (Array.isArray(ngModel.$viewValue))
@@ -608,7 +606,6 @@ angular.module('santedb-lib')
                     if (ngModel.$viewValue) {
                         scope.setValue(element, scope.type, ngModel.$viewValue);
                     }
-
                 });
             }
         };
