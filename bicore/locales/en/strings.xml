@@ -67,6 +67,9 @@
     <string name="ui.bi.reports.description">Description</string>
     <string name="ui.bi.reports.author">Author(s)</string>
 
+    <string name="ui.bi.report.registrationsByGender.regByGender">Patient Registrations by Gender</string>
+    <string name="ui.bi.report.registrationsByGender.regByAge">Patient Registrations by Ages (in years)</string>
+
     <string name="ui.bi.marts.name">Datamart</string>
     <string name="ui.bi.marts.description">Description</string>
     <string name="ui.bi.marts.author">Author(s)</string>
