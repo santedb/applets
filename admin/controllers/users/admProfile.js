@@ -18,45 +18,49 @@
  */
 angular.module('santedb')
     .controller('AdminUserProfileWidgetController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
+        /**
+         * Updates the user entity
+         */
+        $scope.update = async function (form) {
 
+            if (form.$invalid) return; // don't process invalid form
 
-    /**
-     * Updates the user entity
-     */
-    $scope.update = async function (form) {
+            // Now post the changed update object 
+            try {
+                var submissionObject = angular.copy($scope.editObject);
+                await prepareEntityForSubmission(submissionObject);
 
-        if (form.$invalid) return; // don't process invalid form
-
-        // Now post the changed update object 
-        try {
-            var submissionObject = angular.copy($scope.editObject);
-            await prepareEntityForSubmission(submissionObject);
-
-            submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
-            // Find the preferred language
-            submissionObject.language = submissionObject.language || [];
-            if ($scope.editObject.preferredLanguage) {
-                var personLanguage = new PersonLanguageCommunication({ isPreferred: true, languageCode: $scope.editObject.preferredLanguage.languageCode });
-                if (!submissionObject.language.find(o => o.isPreferred)) {
-                    submissionObject.language.push(personLanguage);
+                submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
+                // Find the preferred language
+                submissionObject.language = submissionObject.language || [];
+                if ($scope.editObject.preferredLanguage) {
+                    var personLanguage = new PersonLanguageCommunication({ isPreferred: true, languageCode: $scope.editObject.preferredLanguage.languageCode });
+                    if (!submissionObject.language.find(o => o.isPreferred)) {
+                        submissionObject.language.push(personLanguage);
+                    }
                 }
-            }
-            if (submissionObject.version) {
-                $scope.scopedObject = await SanteDB.resources.userEntity.updateAsync(submissionObject.id, submissionObject);
-            }
-            else {
-                $scope.scopedObject = await SanteDB.resources.userEntity.insertAsync(submissionObject);
-            }
+                if (submissionObject.version) {
+                    $scope.scopedObject = await SanteDB.resources.userEntity.updateAsync(submissionObject.id, submissionObject);
+                }
+                else {
+                    $scope.scopedObject = await SanteDB.resources.userEntity.insertAsync(submissionObject);
+                }
 
-            var refetch = await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
-            $timeout(() => $scope.scopedObject = refetch);
-            toastr.success(SanteDB.locale.getString("ui.model.userEntity.saveSuccess"));
-            form.$valid = true;
+                var refetch = await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
+                $timeout(() => $scope.scopedObject = refetch);
+                toastr.success(SanteDB.locale.getString("ui.model.userEntity.saveSuccess"));
+                form.$valid = true;
+            }
+            catch (e) {
+                $rootScope.errorHandler(e);
+                form.$valid = false;
+            }
         }
-        catch (e) {
-            $rootScope.errorHandler(e);
-            form.$valid = false;
-        }
-    }
 
+        $scope.$watch("scopedObject", async function (n, o) {
+            if (n && n != null) {
+                delete ($scope.editObject); // Delete the current edit object
+                $scope.editObject = angular.copy(n);
+            }
+        });
     }]);

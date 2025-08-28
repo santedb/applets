@@ -435,7 +435,7 @@ angular.module('santedb-lib')
                                 else if (scope.defaultResults) {
                                     Object.keys(scope.defaultResults).forEach(k => filter[k] = scope.defaultResults[k]);
                                 }
-                                filter["_count"] = 10;
+                                filter["_count"] = 25;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = "dropdown";
 

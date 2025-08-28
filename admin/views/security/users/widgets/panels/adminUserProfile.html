@@ -99,14 +99,21 @@
                 </div>
             </div>
         </div>
-        <form ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off"
-            ng-if="panel.view == 'Edit'">
+
+        <form ng-if="panel.view == 'Edit'" ng-submit="update(panel.editForm)" name="panel.editForm" method="dialog" novalidate="novalidate" autocomplete="off">
+            <!-- Name -->
             <name-edit is-required="true" model="editObject.name" simple-entry="true" no-add="true" no-type="true"
                 owner-form="panel.editForm" />
+
             <hr />
+
+            <!-- Address -->
             <address-edit is-required="false" model="editObject.address" no-add="true" simple-entry="true" no-type="true"
                 owner-form="panel.editForm" />
+
             <hr />
+            
+            <!-- Telecom -->
             <div class="form-group row">
                 <label class="col-md-3 col-sm-12 control-label">
                     {{ 'ui.model.entity.telecom.Public' | i18n }}
@@ -116,6 +123,8 @@
                         no-label="true" />
                 </div>
             </div>
+
+            <!-- Language -->
             <div class="form-group row">
                 <label for="language" class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n
                     }}</label>
@@ -127,6 +136,7 @@
                 </div>
             </div>
             
+            <!-- Employer -->
             <div class="form-group row">
                 <label for="familyName"
                     class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}
@@ -138,6 +148,8 @@
                         />
                 </div>
             </div>
+
+            <!-- Facility -->
             <div class="form-group row">
                 <label for="familyName"
                     class="col-sm-12 col-md-3 control-label">
@@ -153,6 +165,8 @@
                         multiple="multiple" />
                 </div>
             </div>
+
+            <!-- Managed Facilities -->
             <div class="form-group row">
                 <label for="familyName"
                     class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.MaintainedEntity' | i18n }}
