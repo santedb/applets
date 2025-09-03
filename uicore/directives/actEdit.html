@@ -228,10 +228,10 @@
                             </div>
 
                             <!-- Buttons -->
-                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'" class="d-flex my-2 justify-content-center">
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'" class="d-flex my-2 justify-content-end col-10 offset-1">
                                 <div class="editOnly btn-group d-none">
                                     <!-- Complete -->
-                                    <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-3">
+                                    <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-2">
                                         <i class="fas fa-fw fa-check"></i> 
                                         <span class="d-lg-inline">
                                             {{ 'ui.action.complete' | i18n }}
@@ -241,7 +241,7 @@
                                     <!-- Back Entry -->
                                     <button type="button" ng-click="moveHistory($index)"
                                         ng-disabled="comp.operation == 4"
-                                        class="btn btn-dark actMoveToHistory mr-3 d-none"
+                                        class="btn btn-dark actMoveToHistory mr-2 d-none"
                                         ng-if="!comp.targetModel.tag.$userAdded &amp;&amp; !comp.targetModel.isNegated">
                                             <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> 
                                             <span class="d-lg-inline">
