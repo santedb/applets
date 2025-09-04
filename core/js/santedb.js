@@ -3329,6 +3329,17 @@ function SanteDBWrapper() {
             resource: "CodedObservation",
             api: _hdsi
         });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the DateObservation Resource
+            */
+        this.dateObservation = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "DateObservation",
+            api: _hdsi
+        });
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi

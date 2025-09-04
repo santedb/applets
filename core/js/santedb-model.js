@@ -1,22 +1,4 @@
-/*
- * Copyright (C) 2021 - 2025, SanteSuite Inc. and the SanteSuite Contributors (See NOTICE.md for full copyright notices)
- * Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
- * Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you 
- * may not use this file except in compliance with the License. You may 
- * obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- * License for the specific language governing permissions and limitations under 
- * the License.
- */
-
-// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Association`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Association)
 /**
  * @class
@@ -63,7 +45,7 @@ function Association (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Association 
-// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.BaseEntityData, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!BaseEntityData)
 /**
  * @class
@@ -145,7 +127,7 @@ function BaseEntityData (copyData) {
 	this.creationTimeModel = copyData.creationTimeModel;
 	}
 }  // BaseEntityData 
-// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.IdentifiedData, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifiedData)
 /**
  * @class
@@ -182,12 +164,13 @@ function IdentifiedData (copyData) {
 	this.id = copyData.id;
 	}
 }  // IdentifiedData 
-// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.NonVersionedEntityData, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!NonVersionedEntityData)
 /**
  * @class
  * @constructor
  * @public
+ * @abstract
  * @extends BaseEntityData
  * @summary Updateable entity data which is not versioned
  * @description <p>In SanteDB, objects which are non-versioned don't track changes over time, and therefore provide an updated time
@@ -280,7 +263,7 @@ function NonVersionedEntityData (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // NonVersionedEntityData 
-// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedAssociation`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedAssociation)
 /**
  * @class
@@ -328,7 +311,7 @@ function VersionedAssociation (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // VersionedAssociation 
-// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.VersionedEntityData`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!VersionedEntityData)
 /**
  * @class
@@ -435,7 +418,7 @@ function VersionedEntityData (copyData) {
 	this.previousVersion = copyData.previousVersion;
 	}
 }  // VersionedEntityData 
-// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionClientDefinition, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionClientDefinition)
 /**
  * @class
@@ -491,7 +474,7 @@ function SubscriptionClientDefinition (copyData) {
 	this.resource = copyData.resource;
 	}
 }  // SubscriptionClientDefinition 
-// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionDefinition, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SubscriptionDefinition)
 /**
  * @class
@@ -549,7 +532,7 @@ function SubscriptionDefinition (copyData) {
 	this.uuid = copyData.uuid;
 	}
 }  // SubscriptionDefinition 
-// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityApplication, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityApplication)
 /**
  * @class
@@ -683,12 +666,13 @@ function SecurityApplication (copyData) {
 	this.applicationSecret = copyData.applicationSecret;
 	}
 }  // SecurityApplication 
-// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityChallenge, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityChallenge)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a security challenge
  * @property {string} text The text for the security challenge
  * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
@@ -783,7 +767,7 @@ function SecurityChallenge (copyData) {
 	this.text = copyData.text;
 	}
 }  // SecurityChallenge 
-// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityDevice, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityDevice)
 /**
  * @class
@@ -917,12 +901,13 @@ function SecurityDevice (copyData) {
 	this.deviceSecret = copyData.deviceSecret;
 	}
 }  // SecurityDevice 
-// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityEntity, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityEntity)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Security Entity base class
  * @property {Date} updatedTime Gets or sets the time that this object was last modified in ISO format
  * @property {Date} modifiedOn Gets the time this item was modified
@@ -1011,7 +996,7 @@ function SecurityEntity (copyData) {
 	this.updatedTime = copyData.updatedTime;
 	}
 }  // SecurityEntity 
-// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicy, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicy)
 /**
  * @class
@@ -1119,7 +1104,7 @@ function SecurityPolicy (copyData) {
 	this.handler = copyData.handler;
 	}
 }  // SecurityPolicy 
-// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityPolicyInstance, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityPolicyInstance)
 /**
  * @class
@@ -1179,7 +1164,7 @@ function SecurityPolicyInstance (copyData) {
 	this.policy = copyData.policy;
 	}
 }  // SecurityPolicyInstance 
-// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityProvenance, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityProvenance)
 /**
  * @class
@@ -1275,7 +1260,7 @@ function SecurityProvenance (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // SecurityProvenance 
-// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityRole, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityRole)
 /**
  * @class
@@ -1381,7 +1366,7 @@ function SecurityRole (copyData) {
 	this.name = copyData.name;
 	}
 }  // SecurityRole 
-// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.SecurityUser, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SecurityUser)
 /**
  * @class
@@ -1580,7 +1565,7 @@ function SecurityUser (copyData) {
 	this.email = copyData.email;
 	}
 }  // SecurityUser 
-// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Patient, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Patient)
 /**
  * @class
@@ -2205,7 +2190,7 @@ function Patient (copyData) {
 	this.multipleBirthOrder = copyData.multipleBirthOrder;
 	}
 }  // Patient 
-// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Roles.Provider, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Provider)
 /**
  * @class
@@ -2780,7 +2765,7 @@ function Provider (copyData) {
 	this.providerSpecialty = copyData.providerSpecialty;
 	}
 }  // Provider 
-// SanteDB.Core.Model.Patch.PatchCollection, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchCollection, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchCollection)
 /**
  * @class
@@ -2819,7 +2804,7 @@ function PatchCollection (copyData) {
 	this.patch = copyData.patch;
 	}
 }  // PatchCollection 
-// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.Patch, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Patch)
 /**
  * @class
@@ -2915,7 +2900,7 @@ function Patch (copyData) {
 	this.version = copyData.version;
 	}
 }  // Patch 
-// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchOperation)
 /**
  * @class
@@ -2947,7 +2932,7 @@ function PatchOperation (copyData) {
 	this.op = copyData.op;
 	}
 }  // PatchOperation 
-// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchTarget, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PatchTarget)
 /**
  * @class
@@ -2985,7 +2970,7 @@ function PatchTarget (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatchTarget 
-// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.Parameter, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Parameter)
 /**
  * @class
@@ -3011,7 +2996,7 @@ function Parameter (copyData) {
 	this.name = copyData.name;
 	}
 }  // Parameter 
-// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Parameters.ParameterCollection, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ParameterCollection)
 /**
  * @class
@@ -3031,7 +3016,7 @@ function ParameterCollection (copyData) {
 	this.parameter = copyData.parameter;
 	}
 }  // ParameterCollection 
-// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ApplicationEntity, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ApplicationEntity)
 /**
  * @class
@@ -3558,7 +3543,7 @@ function ApplicationEntity (copyData) {
 	this.securityApplicationModel = copyData.securityApplicationModel;
 	}
 }  // ApplicationEntity 
-// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Container, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Container)
 /**
  * @class
@@ -4114,7 +4099,7 @@ function Container (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // Container 
-// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.DeviceEntity, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!DeviceEntity)
 /**
  * @class
@@ -4627,7 +4612,7 @@ function DeviceEntity (copyData) {
 	this.manufacturerModelName = copyData.manufacturerModelName;
 	}
 }  // DeviceEntity 
-// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Entity, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Entity)
 /**
  * @class
@@ -5119,7 +5104,7 @@ function Entity (copyData) {
 	this.address = copyData.address;
 	}
 }  // Entity 
-// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddress, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityAddress)
 /**
  * @class
@@ -5161,7 +5146,7 @@ function Entity (copyData) {
  * @property {string} component.StreetType             The street type (example: Street, Road, Hwy)            
  * @property {string} component.UnitDesignator             Identifies the type of unit (example: Suite, Apartment, Unit)            
  * @property {string} component.UnitIdentifier             The identifier of the unit (example: 820)            
- * @property {string} component.PlaceReference             The identifier in the address that points to another 
+ * @property {string} component.PlaceRef             The identifier in the address that points to another 
  * @property {string} component.Zone             Identifies the region or zone or division            
  * @property {string} component.$other Unclassified
  * @property {Date} modifiedOn
@@ -5218,7 +5203,7 @@ function EntityAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityAddress 
-// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityAddressComponent, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AddressComponent)
 /**
  * @class
@@ -5283,7 +5268,7 @@ function AddressComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // AddressComponent 
-// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityName, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityName)
 /**
  * @class
@@ -5359,7 +5344,7 @@ function EntityName (copyData) {
 	this.externId = copyData.externId;
 	}
 }  // EntityName 
-// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityNameComponent, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNameComponent)
 /**
  * @class
@@ -5424,7 +5409,7 @@ function EntityNameComponent (copyData) {
 	this.type = copyData.type;
 	}
 }  // EntityNameComponent 
-// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityRelationship, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityRelationship)
 /**
  * @class
@@ -5546,7 +5531,7 @@ function EntityRelationship (copyData) {
 	this.holderModel = copyData.holderModel;
 	}
 }  // EntityRelationship 
-// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.EntityTelecomAddress, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTelecomAddress)
 /**
  * @class
@@ -5623,7 +5608,7 @@ function EntityTelecomAddress (copyData) {
 	this.useModel = copyData.useModel;
 	}
 }  // EntityTelecomAddress 
-// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.GenericComponentValues`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!GenericComponentValues)
 /**
  * @class
@@ -5684,7 +5669,7 @@ function GenericComponentValues (copyData) {
 	this.typeModel = copyData.typeModel;
 	}
 }  // GenericComponentValues 
-// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.ManufacturedMaterial, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ManufacturedMaterial)
 /**
  * @class
@@ -6224,7 +6209,7 @@ function ManufacturedMaterial (copyData) {
 	this.lotNumber = copyData.lotNumber;
 	}
 }  // ManufacturedMaterial 
-// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Material, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Material)
 /**
  * @class
@@ -6757,7 +6742,7 @@ function Material (copyData) {
 	this.expiryDate = copyData.expiryDate;
 	}
 }  // Material 
-// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.NonPersonLivingSubject, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!NonPersonLivingSubject)
 /**
  * @class
@@ -7261,7 +7246,7 @@ function NonPersonLivingSubject (copyData) {
 	this.strain = copyData.strain;
 	}
 }  // NonPersonLivingSubject 
-// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Organization, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Organization)
 /**
  * @class
@@ -7762,7 +7747,7 @@ function Organization (copyData) {
 	this.industryConceptModel = copyData.industryConceptModel;
 	}
 }  // Organization 
-// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Person, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Person)
 /**
  * @class
@@ -8326,7 +8311,7 @@ function Person (copyData) {
 	this.dateOfBirthPrecision = copyData.dateOfBirthPrecision;
 	}
 }  // Person 
-// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PersonLanguageCommunication, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PersonLanguageCommunication)
 /**
  * @class
@@ -8387,7 +8372,7 @@ function PersonLanguageCommunication (copyData) {
 	this.externId = copyData.externId;
 	}
 }  // PersonLanguageCommunication 
-// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.Place, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Place)
 /**
  * @class
@@ -8889,7 +8874,7 @@ function Place (copyData) {
 	this.isMobile = copyData.isMobile;
 	}
 }  // Place 
-// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.PlaceService, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PlaceService)
 /**
  * @class
@@ -8955,7 +8940,7 @@ function PlaceService (copyData) {
 	this.serviceConceptModel = copyData.serviceConceptModel;
 	}
 }  // PlaceService 
-// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Entities.UserEntity, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!UserEntity)
 /**
  * @class
@@ -9532,7 +9517,7 @@ function UserEntity (copyData) {
 	this.securityUserModel = copyData.securityUserModel;
 	}
 }  // UserEntity 
-// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.AssigningAuthority, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AssigningAuthority)
 /**
  * @class
@@ -9638,12 +9623,13 @@ function AssigningAuthority (copyData) {
 	this.assigningApplication = copyData.assigningApplication;
 	}
 }  // AssigningAuthority 
-// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.CodeSystem, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!CodeSystem)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a code system which is a collection of reference terms
  * @property {string} name Gets or sets the name of the code system
  * @property {string} oid Gets or sets the Oid of the code system
@@ -9768,7 +9754,7 @@ function CodeSystem (copyData) {
 	this.name = copyData.name;
 	}
 }  // CodeSystem 
-// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Concept, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Concept)
 /**
  * @class
@@ -9796,6 +9782,10 @@ function CodeSystem (copyData) {
  * @property {string} conceptSet Concept sets as identifiers for XML purposes only
  * @property {object} conceptSetModel [Delay loaded from conceptSet],  Gets concept sets to which this concept is a member
  * @property {ConceptSet} conceptSet.classifier  where classifier is from {@link ConceptSet} mnemonic
+ * @property {object} tag Gets a list of all tags associated with the concept
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {object} extension Gets a list of all extensions associated with the concept
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
  * @property {string} previousVersion
  * @property {string} version
  * @property {Int64} sequence
@@ -9880,6 +9870,16 @@ function Concept (copyData) {
 	 */
 	this.previousVersion = copyData.previousVersion;
 	/**
+	 * @summary Gets a list of all extensions associated with the concept
+	 * @type {object} 
+	 */
+	this.extension = copyData.extension;
+	/**
+	 * @summary Gets a list of all tags associated with the concept
+	 * @type {object} 
+	 */
+	this.tag = copyData.tag;
+	/**
 	 * @type {object} 
 	 */
 	this.conceptSetModel = copyData.conceptSetModel;
@@ -9928,12 +9928,13 @@ function Concept (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // Concept 
-// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptClass, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptClass)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Identifies a classification for a concept
  * @property {string} name Gets or sets the name of the concept class
  * @property {string} mnemonic Gets or sets the mnemonic
@@ -10034,7 +10035,7 @@ function ConceptClass (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptClass 
-// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptName, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptName)
 /**
  * @class
@@ -10089,7 +10090,7 @@ function ConceptName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ConceptName 
-// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptReferenceTerm, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptReferenceTerm)
 /**
  * @class
@@ -10154,7 +10155,7 @@ function ConceptReferenceTerm (copyData) {
 	this.term = copyData.term;
 	}
 }  // ConceptReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationship, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationship)
 /**
  * @class
@@ -10219,12 +10220,13 @@ function ConceptRelationship (copyData) {
 	this.targetConcept = copyData.targetConcept;
 	}
 }  // ConceptRelationship 
-// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptRelationshipType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptRelationshipType)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Concept relationship type
  * @property {string} name Gets or sets the name of the relationship
  * @property {string} mnemonic The invariant of the relationship type
@@ -10325,12 +10327,13 @@ function ConceptRelationshipType (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptRelationshipType 
-// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSet, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSet)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents set of concepts
  * @property {string} name Gets or sets the name of the concept set
  * @property {string} mnemonic Gets or sets the mnemonic for the concept set (used for convenient lookup)
@@ -10456,7 +10459,7 @@ function ConceptSet (copyData) {
 	this.name = copyData.name;
 	}
 }  // ConceptSet 
-// SanteDB.Core.Model.DataTypes.ConceptSetComposition, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetComposition, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ConceptSetComposition)
 /**
  * @class
@@ -10516,7 +10519,7 @@ function ConceptSetComposition (copyData) {
 	this.instruction = copyData.instruction;
 	}
 }  // ConceptSetComposition 
-// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Extension`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Extension)
 /**
  * @class
@@ -10588,7 +10591,75 @@ function Extension (copyData) {
 	this.value = copyData.value;
 	}
 }  // Extension 
-// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptExtension, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptExtension)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Extension
+ * @summary Extension bound to entity
+ * @property {Array<byte>} value
+ * @property {string} externId
+ * @property {string} valueModel [Delay loaded from value], 
+ * @property {ExtensionType} extensionTypeModel [Delay loaded from extensionType], 
+ * @property {string} extensionType
+ * @property {Date} modifiedOn
+ * @property {string} source
+ * @property {Concept} sourceModel [Delay loaded from source], 
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {ConceptExtension} copyData Copy constructor (if present)
+ */
+function ConceptExtension (copyData) { 
+	this.$type = 'ConceptExtension';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @type {Concept} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @type {string} 
+	 */
+	this.source = copyData.source;
+	/**
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {string} 
+	 */
+	this.extensionType = copyData.extensionType;
+	/**
+	 * @type {ExtensionType} 
+	 */
+	this.extensionTypeModel = copyData.extensionTypeModel;
+	/**
+	 * @type {string} 
+	 */
+	this.valueModel = copyData.valueModel;
+	/**
+	 * @type {string} 
+	 */
+	this.externId = copyData.externId;
+	/**
+	 * @type {Array<byte>} 
+	 */
+	this.value = copyData.value;
+	}
+}  // ConceptExtension 
+// SanteDB.Core.Model.DataTypes.EntityExtension, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityExtension)
 /**
  * @class
@@ -10656,7 +10727,7 @@ function EntityExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityExtension 
-// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActExtension, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActExtension)
 /**
  * @class
@@ -10724,12 +10795,13 @@ function ActExtension (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActExtension 
-// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ExtensionType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ExtensionType)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Instructions on how an extensionshould be handled
  * @property {string} handlerClass Gets or sets the description
  * @property {string} uri Gets or sets the uri of the extension
@@ -10848,7 +10920,7 @@ function ExtensionType (copyData) {
 	this.handlerClass = copyData.handlerClass;
 	}
 }  // ExtensionType 
-// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.GeoTag, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!GeoTag)
 /**
  * @class
@@ -10900,7 +10972,7 @@ function GeoTag (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // GeoTag 
-// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifiedDataReference, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Reference)
 /**
  * @class
@@ -10943,7 +11015,7 @@ function Reference (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Reference 
-// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityIdentifier, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityIdentifier)
 /**
  * @class
@@ -11036,7 +11108,7 @@ function EntityIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // EntityIdentifier 
-// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActIdentifier, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActIdentifier)
 /**
  * @class
@@ -11129,7 +11201,7 @@ function ActIdentifier (copyData) {
 	this.value = copyData.value;
 	}
 }  // ActIdentifier 
-// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierBase`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentifierBase)
 /**
  * @class
@@ -11231,12 +11303,13 @@ function IdentifierBase (copyData) {
 	this.value = copyData.value;
 	}
 }  // IdentifierBase 
-// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentityDomain, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!IdentityDomain)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a model class which is an assigning authority
  * @property {string} name Gets or sets the name of the assigning authority
  * @property {string} domainName Gets or sets the domain name of the assigning authority
@@ -11419,7 +11492,7 @@ function IdentityDomain (copyData) {
 	this.name = copyData.name;
 	}
 }  // IdentityDomain 
-// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Note`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Note)
 /**
  * @class
@@ -11480,7 +11553,7 @@ function Note (copyData) {
 	this.text = copyData.text;
 	}
 }  // Note 
-// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.EntityNote, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityNote)
 /**
  * @class
@@ -11538,7 +11611,7 @@ function EntityNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // EntityNote 
-// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActNote, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActNote)
 /**
  * @class
@@ -11596,12 +11669,13 @@ function ActNote (copyData) {
 	this.text = copyData.text;
 	}
 }  // ActNote 
-// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTerm, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTerm)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a basic reference term
  * @property {string} mnemonic Gets or sets the mnemonic for the reference term
  * @property {CodeSystem} codeSystemModel [Delay loaded from codeSystem],  Gets or sets the code system
@@ -11714,7 +11788,7 @@ function ReferenceTerm (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // ReferenceTerm 
-// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ReferenceTermName, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ReferenceTermName)
 /**
  * @class
@@ -11810,7 +11884,7 @@ function ReferenceTermName (copyData) {
 	this.language = copyData.language;
 	}
 }  // ReferenceTermName 
-// SanteDB.Core.Model.DataTypes.RelationshipValidationRule, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.RelationshipValidationRule, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!RelationshipValidationRule)
 /**
  * @class
@@ -11940,7 +12014,7 @@ function RelationshipValidationRule (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // RelationshipValidationRule 
-// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.Tag`1, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Tag)
 /**
  * @class
@@ -12042,7 +12116,105 @@ function Tag (copyData) {
 	this.key = copyData.key;
 	}
 }  // Tag 
-// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptTag, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
+//if(!ConceptTag)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @extends Tag
+ * @summary Represents a tag associated with an concept
+ * @property {string} key
+ * @property {string} value
+ * @property {string} source
+ * @property {Entity} sourceModel [Delay loaded from source], 
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {ConceptTag} copyData Copy constructor (if present)
+ */
+function ConceptTag (copyData) { 
+	this.$type = 'ConceptTag';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {Entity} 
+	 */
+	this.sourceModel = copyData.sourceModel;
+	/**
+	 * @type {string} 
+	 */
+	this.source = copyData.source;
+	/**
+	 * @type {string} 
+	 */
+	this.value = copyData.value;
+	/**
+	 * @type {string} 
+	 */
+	this.key = copyData.key;
+	}
+}  // ConceptTag 
+// SanteDB.Core.Model.DataTypes.EntityTag, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!EntityTag)
 /**
  * @class
@@ -12140,7 +12312,7 @@ function EntityTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // EntityTag 
-// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ActTag, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActTag)
 /**
  * @class
@@ -12238,12 +12410,13 @@ function ActTag (copyData) {
 	this.key = copyData.key;
 	}
 }  // ActTag 
-// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.TemplateDefinition, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!TemplateDefinition)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a template definition
  * @description A template definition specifies the registerd templates for entities and acts in SanteDB like 
             act templates, or entity templates
@@ -12358,7 +12531,7 @@ function TemplateDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // TemplateDefinition 
-// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Collection.Bundle, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Bundle)
 /**
  * @class
@@ -12434,7 +12607,7 @@ function Bundle (copyData) {
 	this.modifiedOn = copyData.modifiedOn;
 	}
 }  // Bundle 
-// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObject, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditableObject)
 /**
  * @class
@@ -12504,7 +12677,7 @@ function AuditableObject (copyData) {
 	this.customCode = copyData.customCode;
 	}
 }  // AuditableObject 
-// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditActorData, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditActorData)
 /**
  * @class
@@ -12562,7 +12735,7 @@ function AuditActorData (copyData) {
 	this.role = copyData.role;
 	}
 }  // AuditActorData 
-// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditCode, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditCode)
 /**
  * @class
@@ -12606,7 +12779,7 @@ function AuditCode (copyData) {
 	this.code = copyData.code;
 	}
 }  // AuditCode 
-// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditEventData, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditEventData)
 /**
  * @class
@@ -12697,7 +12870,7 @@ function AuditEventData (copyData) {
 	this.action = copyData.action;
 	}
 }  // AuditEventData 
-// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadata, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!AuditMetadata)
 /**
  * @class
@@ -12723,7 +12896,7 @@ function AuditMetadata (copyData) {
 	this.key = copyData.key;
 	}
 }  // AuditMetadata 
-// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Account, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Account)
 /**
  * @class
@@ -13098,7 +13271,7 @@ function Account (copyData) {
 	this.balance = copyData.balance;
 	}
 }  // Account 
-// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Act, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Act)
 /**
  * @class
@@ -13488,7 +13661,7 @@ function Act (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // Act 
-// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActParticipation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActParticipation)
 /**
  * @class
@@ -13627,7 +13800,7 @@ function ActParticipation (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActParticipation 
-// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActProtocol, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActProtocol)
 /**
  * @class
@@ -13707,7 +13880,7 @@ function ActProtocol (copyData) {
 	this.protocol = copyData.protocol;
 	}
 }  // ActProtocol 
-// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ActRelationship, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ActRelationship)
 /**
  * @class
@@ -13804,12 +13977,13 @@ function ActRelationship (copyData) {
 	this.classificationModel = copyData.classificationModel;
 	}
 }  // ActRelationship 
-// SanteDB.Core.Model.Acts.CarePathwayDefinition, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePathwayDefinition, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePathwayDefinition)
 /**
  * @class
  * @constructor
  * @public
+ * @extends NonVersionedEntityData
  * @summary Represents a single care pathway
  * @property {string} mnemonic Gets or sets the mnemonic for the care pathway
  * @property {string} name Gets or sets the name of the care pathway
@@ -13943,7 +14117,7 @@ function CarePathwayDefinition (copyData) {
 	this.mnemonic = copyData.mnemonic;
 	}
 }  // CarePathwayDefinition 
-// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePlan, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!CarePlan)
 /**
  * @class
@@ -14307,7 +14481,7 @@ function CarePlan (copyData) {
 	this.title = copyData.title;
 	}
 }  // CarePlan 
-// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.ControlAct, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!ControlAct)
 /**
  * @class
@@ -14654,7 +14828,7 @@ function ControlAct (copyData) {
 	this.isNegated = copyData.isNegated;
 	}
 }  // ControlAct 
-// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialContract, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialContract)
 /**
  * @class
@@ -15012,7 +15186,7 @@ function FinancialContract (copyData) {
 	this.paymentTerms = copyData.paymentTerms;
 	}
 }  // FinancialContract 
-// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.FinancialTransaction, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!FinancialTransaction)
 /**
  * @class
@@ -15385,7 +15559,7 @@ function FinancialTransaction (copyData) {
 	this.amount = copyData.amount;
 	}
 }  // FinancialTransaction 
-// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.InvoiceElement, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!InvoiceElement)
 /**
  * @class
@@ -15777,7 +15951,7 @@ function InvoiceElement (copyData) {
 	this.modifier = copyData.modifier;
 	}
 }  // InvoiceElement 
-// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Narrative, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Narrative)
 /**
  * @class
@@ -16153,7 +16327,7 @@ function Narrative (copyData) {
 	this.versionCode = copyData.versionCode;
 	}
 }  // Narrative 
-// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Observation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Observation)
 /**
  * @class
@@ -16531,7 +16705,7 @@ function Observation (copyData) {
 	this.interpretationConcept = copyData.interpretationConcept;
 	}
 }  // Observation 
-// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.QuantityObservation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!QuantityObservation)
 /**
  * @class
@@ -16911,7 +17085,7 @@ function QuantityObservation (copyData) {
 	this.value = copyData.value;
 	}
 }  // QuantityObservation 
-// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.TextObservation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!TextObservation)
 /**
  * @class
@@ -17281,7 +17455,7 @@ function TextObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // TextObservation 
-// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CodedObservation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!CodedObservation)
 /**
  * @class
@@ -17655,7 +17829,382 @@ function CodedObservation (copyData) {
 	this.valueType = copyData.valueType;
 	}
 }  // CodedObservation 
-// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.DateObservation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
+//if(!DateObservation)
+/**
+ * @class
+ * @constructor
+ * @public
+ * @summary Represents an observation which contains a date value
+ * @property {string} valueType Value type
+ * @property {string} value Gets or sets the key of the uom concept
+ * @property {DatePrecision} valuePrecision Precision of the data in 
+    {@link Value}(see: {@link DatePrecision} for values)
+ * @property {string} interpretationConcept Gets or sets the interpretation concept
+ * @property {Concept} interpretationConceptModel [Delay loaded from interpretationConcept],  Gets or sets the concept which indicates the interpretation of the observtion
+ * @property {boolean} isNegated Identifies whether the act represented in this instance actually occurred
+ * @property {string} template The template on which the act is based
+ * @property {TemplateDefinition} templateModel [Delay loaded from template],  Delay load property for the template
+ * @property {Date} actTime The moment in time that this act occurred in ISO format
+ * @property {Date} startTime The time when the act should or did start ocurring in ISO format
+ * @property {Date} stopTime The time when the act should or did stop ocurring in ISO format
+ * @property {string} classConcept The classification key of the activity(see: {@link ActClassKeys} for values)
+ * @property {string} moodConcept The mood (or mode) of the Act instance(see: {@link ActMoodKeys} for values)
+ * @property {string} reasonConcept Identifies a codified reason as to why this act did (or did not, or should or should not) occur.(see: {@link ActReasonKeys} for values)
+ * @property {string} obsoletionReason Gets or sets the reason why the act was obsoleted/deleted(see: {@link ActReasonKeys} for values)
+ * @property {string} statusConcept The concept which describes the current status of the act(see: {@link StatusKeys} for values)
+ * @property {string} typeConcept Gets or sets the key of the concept which further classifies the type of act occurring
+ * @property {Concept} classConceptModel [Delay loaded from classConcept],  Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+ * @property {Concept} moodConceptModel [Delay loaded from moodConcept],  Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+ * @property {Concept} reasonConceptModel [Delay loaded from reasonConcept],  Delay loads the concept from 
+    {@link ReasonConceptKey}
+ * @property {Concept} obsoletionReasonModel [Delay loaded from obsoletionReason],  Delay loads the concept from 
+    {@link ObsoletionReasonKey}
+ * @property {Concept} statusConceptModel [Delay loaded from statusConcept],  Delay loads the concept represented in 
+    {@link StatusConceptKey}
+ * @property {Concept} typeConceptModel [Delay loaded from typeConcept],  Delay loads the concept represented in 
+    {@link TypeConceptKey}
+ * @property {object} identifier Identifiers by which this act is known
+ * @property {ActIdentifier} identifier.classifier  where classifier is from {@link IdentifierBase} domain
+ * @property {object} relationship Gets a list of all associated acts for this act
+ * @property {ActRelationship} relationship.Appends             Indicates that the source act appends information contained in the target act            
+ * @property {ActRelationship} relationship.Arrival             Links the transortation act from another act            
+ * @property {ActRelationship} relationship.Departure             Links a transporation act from another act indicating departure of the subject            
+ * @property {ActRelationship} relationship.Documents             The source act documents the target act            
+ * @property {ActRelationship} relationship.EpisodeLink             Links two instances of the same act over time (example: chronic conditions)            
+ * @property {ActRelationship} relationship.Evaluates             Used to link a goal to an observation            
+ * @property {ActRelationship} relationship.Fulfills             Indicates that the source act fulfills the target act            
+ * @property {ActRelationship} relationship.HasAuthorization             Indicates that the target act authorizes the source act            
+ * @property {ActRelationship} relationship.HasComponent             Indicates that the target act is a component of the source act            
+ * @property {ActRelationship} relationship.HasControlVariable             Relationship from an act to one or more control variables (for example: device settings, or environment)            
+ * @property {ActRelationship} relationship.HasManifestation             The assertion that a new observation may be a manifestation of another            
+ * @property {ActRelationship} relationship.HasPrecondition             Indicates that the target act is a pre-condition of the source act            
+ * @property {ActRelationship} relationship.HasReason             Indicates a reasoning as to why the source act is occurring            
+ * @property {ActRelationship} relationship.HasReferenceValues             Indicates that the source act contains reference values from the target            
+ * @property {ActRelationship} relationship.HasSubject             Indicates the subject of a particular act (example: clinical act is a subject of a control act)            
+ * @property {ActRelationship} relationship.HasSupport             Indicates an existing act is suggesting evidence for a new observation.            
+ * @property {ActRelationship} relationship.IsCauseOf             Indicates that the source act is the cause of the target act            
+ * @property {ActRelationship} relationship.IsDerivedFrom             Indicates the source act is derived from information contained in the target act            
+ * @property {ActRelationship} relationship.IsExcerptOf             Indicates that the source act is an excerpt of the target act            
+ * @property {ActRelationship} relationship.RefersTo             Indicates that the source act refers to the target act            
+ * @property {ActRelationship} relationship.Replaces             The source act replaces the target act            
+ * @property {ActRelationship} relationship.StartsAfterStartOf             Indicates that the source act starts after the start of another act            
+ * @property {ActRelationship} relationship.Transforms             Indicates that the source act transforms the target act            
+ * @property {ActRelationship} relationship.Duplicate             Duplicate entity            
+ * @property {ActRelationship} relationship.$other Unclassified
+ * @property {SecurityPolicyInstance} policy Gets or sets the security policy instances associated with the act
+ * @property {object} extension Gets a list of all extensions associated with the act
+ * @property {Array<byte>} extension.classifier  where classifier is from {@link Extension} extensionType
+ * @property {ActNote} note Gets a list of all notes associated with the act
+ * @property {object} tag Gets a list of all tags associated with the act
+ * @property {string} tag.classifier  where classifier is from {@link Tag} key
+ * @property {ActProtocol} protocol Identifies protocols attached to the act
+ * @property {object} participation Gets or sets the entities and participations they play in the act
+ * @property {ActParticipation} participation.Admitter             The player entity was the person who was responsible for admitting the patient into a facility or care scenario.            
+ * @property {ActParticipation} participation.Attender             The player entity represents the attending physician for the patient            
+ * @property {ActParticipation} participation.Authenticator             The player entity represents an entity which authenticates the provision of care            
+ * @property {ActParticipation} participation.Authororiginator             The player entity is responsible for the creation of data described in the act            
+ * @property {ActParticipation} participation.Baby             The player is a resultant person in that it was the baby             
+ * @property {ActParticipation} participation.Beneficiary             The player is a beneficiary of the act such a receiver of a financial instrument, or other good            
+ * @property {ActParticipation} participation.CallbackContact             The player entity represents something that should be contacted upon completion of the act            
+ * @property {ActParticipation} participation.CausativeAgent             The player entity is an agent which caused the act to occur            
+ * @property {ActParticipation} participation.Consultant             The player entity is acting as a consult to the carrying out of the act            
+ * @property {ActParticipation} participation.Consumable             The player entity was or is to be consumed during the process of carrying out the act.            
+ * @property {ActParticipation} participation.CoverageTarget             The player entity represents the target coverage entity of the act            
+ * @property {ActParticipation} participation.Custodian             The player entity is the data custodian of the act (is responsible for storing and securing the act)            
+ * @property {ActParticipation} participation.DataEnterer             The player entity represents the person or device which phisically entered the data at the terminal            
+ * @property {ActParticipation} participation.Destination             The player etity represents the ultimate destination of the goods/materials/services described in the act            
+ * @property {ActParticipation} participation.Device             The player entity represents the device on which the act or data from the act was acquired or recorded            
+ * @property {ActParticipation} participation.DirectTarget             The player entity represents the directed target of care provided in the act            
+ * @property {ActParticipation} participation.Discharger             The player entity represents the person who is responsible for the discharging of the patient from an encounter            
+ * @property {ActParticipation} participation.Distributor             The player entity is the source distribution point for the financial or material instruments contained in the message            
+ * @property {ActParticipation} participation.Donor             The player entity represents the donor of tissue or materials used in the act            
+ * @property {ActParticipation} participation.EntryLocation             The location where the act was entered.            
+ * @property {ActParticipation} participation.Escort             The player entity was responsible for escorting the patient during the course of the act            
+ * @property {ActParticipation} participation.Exposure             The player entity something to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureAgent             The player entity represents the agent (material) to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureSource             The player entity describes the source of the material to which the patient was exposed            
+ * @property {ActParticipation} participation.ExposureTarget             The player entity describes the target to which the agent was exposed            
+ * @property {ActParticipation} participation.GuarantorParty             The player represents a party which is used as a financial guarantor for payment in the carrying out of the act            
+ * @property {ActParticipation} participation.Holder             The player is responsible for holding the act            
+ * @property {ActParticipation} participation.IndirectTarget             The entity not directly present in the act but which will be the focust of th act.            
+ * @property {ActParticipation} participation.Informant             The player was a person or device which informed data presented in the act. (Example: A mother telling a nurse that their child had a reaction)            
+ * @property {ActParticipation} participation.InformationRecipient             The player entity represents something that should be cc'ed on the act            
+ * @property {ActParticipation} participation.LegalAuthenticator             The player entity is responsible for legally authenticating the content of the act            
+ * @property {ActParticipation} participation.Location             The location where the service was performed.            
+ * @property {ActParticipation} participation.NonreuseableDevice             The player represents a consumable that can no longer be used            
+ * @property {ActParticipation} participation.Origin             The player represents the origin of the act            
+ * @property {ActParticipation} participation.Participation             The player entity participates in the act in no particular classification            
+ * @property {ActParticipation} participation.Performer             The player entity is responsible for performing the clinical steps documented in the act            
+ * @property {ActParticipation} participation.PrimaryInformationRecipient             The player entity represents a high priority contact which should be informed or cc'ed on the act            
+ * @property {ActParticipation} participation.PrimaryPerformer             The player entity was the primary performer of the act. This is used in procedures where more than one performer is present            
+ * @property {ActParticipation} participation.Product             The player represents a product that is not necessarily consumed but informs the act            
+ * @property {ActParticipation} participation.Receiver             The player represents the entity which is the intended receiver of the act            
+ * @property {ActParticipation} participation.RecordTarget             The player represents the entity to which the act is recorded against            
+ * @property {ActParticipation} participation.ReferredBy             The player represents the entity which referred the act or caused the act to be undertaken            
+ * @property {ActParticipation} participation.ReferredTo             The player entity represents the entity which was referred to            
+ * @property {ActParticipation} participation.Referrer             The player entity represents the person who was originally the referrer.            
+ * @property {ActParticipation} participation.Remote             The player entity represents a remote portion of the act            
+ * @property {ActParticipation} participation.ResponsibleParty             The player entity is ultimately responsible for the carrying out of the act            
+ * @property {ActParticipation} participation.ReusableDevice             The player entity represents a device which can be reused in future acts            
+ * @property {ActParticipation} participation.SecondaryPerformer             The secondary performing person (support clinician).            
+ * @property {ActParticipation} participation.Specimen             The player entity represents a specimen collected for the purpose of testing and diagnosis            
+ * @property {ActParticipation} participation.Subject             The player entity is the subject of an act, but not necessarily the record target (meaning the act is about a particular entity but not to be attached to their record)            
+ * @property {ActParticipation} participation.Tracker             The player entity is responsible for tracking the progress of the act            
+ * @property {ActParticipation} participation.Transcriber             The person who transcribed data from the original act.            
+ * @property {ActParticipation} participation.UgentNotificationContact             The player entity represents a contact entity in case of an emergency occurs during the act.            
+ * @property {ActParticipation} participation.Verifier             The player entity was responsible for verifying the accuracy of the data in the act            
+ * @property {ActParticipation} participation.Via             The player entity represents an entity where the act occurred "via" this entity (i.e. in transport)            
+ * @property {ActParticipation} participation.Witness             The player entity represents a legal witness to the act occurring.            
+ * @property {ActParticipation} participation.$other Unclassified
+ * @property {GeoTag} geo Gets or sets the geo-tag
+ * @property {string} previousVersion
+ * @property {string} version
+ * @property {Int64} sequence
+ * @property {Date} creationTimeModel [Delay loaded from creationTime],  Gets or sets the time at which the data was created
+ * @property {Date} creationTime Gets or sets the creation time as an ISO date format
+ * @property {Date} obsoletionTimeModel [Delay loaded from obsoletionTime],  Gets or sets the time when the data is or will become invalid
+ * @property {Date} obsoletionTime Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+ * @property {SecurityProvenance} createdByModel [Delay loaded from createdBy],  Gets or sets the user that created this base data
+ * @property {Date} modifiedOn Gets the time that the object was last modified (from base data, default to CreationTime)
+ * @property {SecurityProvenance} obsoletedByModel [Delay loaded from obsoletedBy],  Gets or sets the user that obsoleted this base data
+ * @property {string} createdBy Gets or sets the security provenance object which represents the creation of this object
+ * @property {string} obsoletedBy Gets or sets the security provenance object which represents the obsoletion of this data
+ * @property {string} id Gets or sets the primary identifying UUID of this object
+ * @property {BatchOperationType} operation Gets or sets the operation(see: {@link BatchOperationType} for values)
+ * @property {string} $type Gets the type registration of this object
+ * @param {DateObservation} copyData Copy constructor (if present)
+ */
+function DateObservation (copyData) { 
+	this.$type = 'DateObservation';
+	if(copyData) {
+	/**
+	 * @summary Gets or sets the operation
+	 * @type {BatchOperationType} 
+	 */
+	this.operation = copyData.operation;
+	/**
+	 * @summary Gets or sets the primary identifying UUID of this object
+	 * @type {string} 
+	 */
+	this.id = copyData.id;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the obsoletion of this data
+	 * @type {string} 
+	 */
+	this.obsoletedBy = copyData.obsoletedBy;
+	/**
+	 * @summary Gets or sets the security provenance object which represents the creation of this object
+	 * @type {string} 
+	 */
+	this.createdBy = copyData.createdBy;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.obsoletedByModel = copyData.obsoletedByModel;
+	/**
+	 * @summary Gets the time that the object was last modified (from base data, default to CreationTime)
+	 * @type {Date} 
+	 */
+	this.modifiedOn = copyData.modifiedOn;
+	/**
+	 * @type {SecurityProvenance} 
+	 */
+	this.createdByModel = copyData.createdByModel;
+	/**
+	 * @summary Gets or sets the time that the data is no longer valid (was deleted/obsoleted) in ISO format
+	 * @type {Date} 
+	 */
+	this.obsoletionTime = copyData.obsoletionTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.obsoletionTimeModel = copyData.obsoletionTimeModel;
+	/**
+	 * @summary Gets or sets the creation time as an ISO date format
+	 * @type {Date} 
+	 */
+	this.creationTime = copyData.creationTime;
+	/**
+	 * @type {Date} 
+	 */
+	this.creationTimeModel = copyData.creationTimeModel;
+	/**
+	 * @type {Int64} 
+	 */
+	this.sequence = copyData.sequence;
+	/**
+	 * @type {string} 
+	 */
+	this.version = copyData.version;
+	/**
+	 * @type {string} 
+	 */
+	this.previousVersion = copyData.previousVersion;
+	/**
+	 * @summary Gets or sets the geo-tag
+	 * @type {GeoTag} 
+	 */
+	this.geo = copyData.geo;
+	/**
+	 * @summary Gets or sets the entities and participations they play in the act
+	 * @type {object} 
+	 */
+	this.participation = copyData.participation;
+	/**
+	 * @summary Identifies protocols attached to the act
+	 * @type {ActProtocol} 
+	 */
+	this.protocol = copyData.protocol;
+	/**
+	 * @summary Gets a list of all tags associated with the act
+	 * @type {object} 
+	 */
+	this.tag = copyData.tag;
+	/**
+	 * @summary Gets a list of all notes associated with the act
+	 * @type {ActNote} 
+	 */
+	this.note = copyData.note;
+	/**
+	 * @summary Gets a list of all extensions associated with the act
+	 * @type {object} 
+	 */
+	this.extension = copyData.extension;
+	/**
+	 * @summary Gets or sets the security policy instances associated with the act
+	 * @type {SecurityPolicyInstance} 
+	 */
+	this.policy = copyData.policy;
+	/**
+	 * @summary Gets a list of all associated acts for this act
+	 * @type {object} 
+	 */
+	this.relationship = copyData.relationship;
+	/**
+	 * @summary Identifiers by which this act is known
+	 * @type {object} 
+	 */
+	this.identifier = copyData.identifier;
+	/**
+	 * @type {Concept} 
+	 */
+	this.typeConceptModel = copyData.typeConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.statusConceptModel = copyData.statusConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.obsoletionReasonModel = copyData.obsoletionReasonModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.reasonConceptModel = copyData.reasonConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.moodConceptModel = copyData.moodConceptModel;
+	/**
+	 * @type {Concept} 
+	 */
+	this.classConceptModel = copyData.classConceptModel;
+	/**
+	 * @summary Gets or sets the key of the concept which further classifies the type of act occurring
+	 * @type {string} 
+	 */
+	this.typeConcept = copyData.typeConcept;
+	/**
+	 * @summary Delay loads the concept represented in 
+    {@link StatusConceptKey}
+	 * @type {string} 
+	 */
+	this.statusConcept = copyData.statusConcept;
+	/**
+	 * @summary Delay loads the concept from 
+    {@link ObsoletionReasonKey}
+	 * @type {string} 
+	 */
+	this.obsoletionReason = copyData.obsoletionReason;
+	/**
+	 * @summary Identifies a codified reason as to why this act did (or did not, or should or should not) occur.
+	 * @type {string} 
+	 */
+	this.reasonConcept = copyData.reasonConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link MoodConceptKey}
+   property
+	 * @type {string} 
+	 */
+	this.moodConcept = copyData.moodConcept;
+	/**
+	 * @summary Gets the delay-loaded value of the 
+    {@link ClassConceptKey}
+	 * @type {string} 
+	 */
+	this.classConcept = copyData.classConcept;
+	/**
+	 * @summary The time when the act should or did stop ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.stopTime = copyData.stopTime;
+	/**
+	 * @summary The time when the act should or did start ocurring in ISO format
+	 * @type {Date} 
+	 */
+	this.startTime = copyData.startTime;
+	/**
+	 * @summary The moment in time that this act occurred in ISO format
+	 * @type {Date} 
+	 */
+	this.actTime = copyData.actTime;
+	/**
+	 * @type {TemplateDefinition} 
+	 */
+	this.templateModel = copyData.templateModel;
+	/**
+	 * @summary The template on which the act is based
+	 * @type {string} 
+	 */
+	this.template = copyData.template;
+	/**
+	 * @summary Identifies whether the act represented in this instance actually occurred
+	 * @type {boolean} 
+	 */
+	this.isNegated = copyData.isNegated;
+	/**
+	 * @type {Concept} 
+	 */
+	this.interpretationConceptModel = copyData.interpretationConceptModel;
+	/**
+	 * @summary Gets or sets the concept which indicates the interpretation of the observtion
+	 * @type {string} 
+	 */
+	this.interpretationConcept = copyData.interpretationConcept;
+	/**
+	 * @summary Precision of the data in 
+    {@link Value}
+	 * @type {DatePrecision} 
+	 */
+	this.valuePrecision = copyData.valuePrecision;
+	/**
+	 * @summary Gets or sets the key of the uom concept
+	 * @type {string} 
+	 */
+	this.value = copyData.value;
+	/**
+	 * @summary Value type
+	 * @type {string} 
+	 */
+	this.valueType = copyData.valueType;
+	}
+}  // DateObservation 
+// SanteDB.Core.Model.Acts.PatientEncounter, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounter)
 /**
  * @class
@@ -18030,7 +18579,7 @@ function PatientEncounter (copyData) {
 	this.dischargeDisposition = copyData.dischargeDisposition;
 	}
 }  // PatientEncounter 
-// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.PatientEncounterArrangement, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!PatientEncounterArrangement)
 /**
  * @class
@@ -18099,7 +18648,7 @@ function PatientEncounterArrangement (copyData) {
 	this.type = copyData.type;
 	}
 }  // PatientEncounterArrangement 
-// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Procedure, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Procedure)
 /**
  * @class
@@ -18477,7 +19026,7 @@ function Procedure (copyData) {
 	this.method = copyData.method;
 	}
 }  // Procedure 
-// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.Protocol, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!Protocol)
 /**
  * @class
@@ -18576,7 +19125,7 @@ function Protocol (copyData) {
 	this.name = copyData.name;
 	}
 }  // Protocol 
-// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.SubstanceAdministration, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 //if(!SubstanceAdministration)
 /**
  * @class
@@ -18976,7 +19525,7 @@ function SubstanceAdministration (copyData) {
 	this.route = copyData.route;
 	}
 }  // SubstanceAdministration 
-// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.BatchOperationType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!BatchOperationType)
 /**
  * @enum {string}
@@ -19016,7 +19565,7 @@ const BatchOperationType = {
 	Ignore : 'Ignore',
 	IgnoreInt : '5',
 }  // BatchOperationType 
-// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionModeType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionModeType)
 /**
  * @enum {string}
@@ -19041,7 +19590,7 @@ const SubscriptionModeType = {
 	FullOrPartial : 'FullOrPartial',
 	FullOrPartialInt : '3',
 }  // SubscriptionModeType 
-// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Subscription.SubscriptionTriggerType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!SubscriptionTriggerType)
 /**
  * @enum {string}
@@ -19096,7 +19645,7 @@ const SubscriptionTriggerType = {
 	Manual : 'Manual',
 	ManualInt : '64',
 }  // SubscriptionTriggerType 
-// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Security.PolicyGrantType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!PolicyGrantType)
 /**
  * @enum {string}
@@ -19121,7 +19670,7 @@ const PolicyGrantType = {
 	Grant : 'Grant',
 	GrantInt : '2',
 }  // PolicyGrantType 
-// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActorTypeKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActorTypeKeys)
 /**
  * @enum {string}
@@ -19147,7 +19696,7 @@ const ActorTypeKeys = {
 	 */
 	Device : '5d584bec-7cfe-4d24-a6d7-efaf7f315c1f',
 }  // ActorTypeKeys 
-// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.DatePrecision, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!DatePrecision)
 /**
  * @enum {string}
@@ -19192,7 +19741,7 @@ const DatePrecision = {
 	Second : 'Second',
 	SecondInt : '6',
 }  // DatePrecision 
-// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressUseKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressUseKeys)
 /**
  * @enum {string}
@@ -19262,7 +19811,7 @@ const AddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // AddressUseKeys 
-// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityClassKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityClassKeys)
 /**
  * @enum {string}
@@ -19364,7 +19913,7 @@ const EntityClassKeys = {
 	 */
 	ZoneOrTerritory : '3f9b5ff2-97a6-40be-8fcb-e71d18c8ee42',
 }  // EntityClassKeys 
-// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.DeterminerKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!DeterminerKeys)
 /**
  * @enum {string}
@@ -19386,7 +19935,7 @@ const DeterminerKeys = {
 	 */
 	Specific : 'f29f08de-78a7-4a5e-aeaf-7b545ba19a09',
 }  // DeterminerKeys 
-// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameUseKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!NameUseKeys)
 /**
  * @enum {string}
@@ -19460,7 +20009,7 @@ const NameUseKeys = {
 	 */
 	Syllabic : 'b4ca3bf0-a7fc-44f3-87d5-e126beda93ff',
 }  // NameUseKeys 
-// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActParticipationKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActParticipationKeys)
 /**
  * @enum {string}
@@ -19694,7 +20243,7 @@ const ActParticipationKeys = {
 	 */
 	Witness : '0b82357f-5ae0-4543-ab8e-a33e9b315bab',
 }  // ActParticipationKeys 
-// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.EntityRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!EntityRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -20356,7 +20905,7 @@ const EntityRelationshipTypeKeys = {
 	 */
 	ReportTarget : '34d144e0-4f3b-4555-8f0b-bee370d05719',
 }  // EntityRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.StatusKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!StatusKeys)
 /**
  * @enum {string}
@@ -20410,7 +20959,7 @@ const StatusKeys = {
 	 */
 	AllStates : 'System.Guid[]',
 }  // StatusKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressUseKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressUseKeys)
 /**
  * @enum {string}
@@ -20452,7 +21001,7 @@ const TelecomAddressUseKeys = {
 	 */
 	WorkPlace : 'eaa6f08e-bb8e-4457-9dc0-3a1555fadf5c',
 }  // TelecomAddressUseKeys 
-// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Patch.PatchOperationType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!PatchOperationType)
 /**
  * @enum {string}
@@ -20487,7 +21036,7 @@ const PatchOperationType = {
 	TestNotEqual : 'TestNotEqual',
 	TestNotEqualInt : '4',
 }  // PatchOperationType 
-// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.AddressComponentKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AddressComponentKeys)
 /**
  * @enum {string}
@@ -20611,13 +21160,13 @@ const AddressComponentKeys = {
 	/** 
 	 *             The identifier in the address that points to another 
 	 */
-	PlaceReference : 'a314f427-2b6d-4948-9146-a5f700973899',
+	PlaceRef : 'a314f427-2b6d-4948-9146-a5f700973899',
 	/** 
 	 *             Identifies the region or zone or division            
 	 */
 	Zone : 'beb49585-0f65-4f2e-9481-dd11cb7a15e0',
 }  // AddressComponentKeys 
-// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NameComponentKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!NameComponentKeys)
 /**
  * @enum {string}
@@ -20651,7 +21200,7 @@ const NameComponentKeys = {
 	 */
 	Title : '4386d92a-d81b-4033-b968-01e57e20d5e0',
 }  // NameComponentKeys 
-// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.RelationshipClassKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!RelationshipClassKeys)
 /**
  * @enum {string}
@@ -20685,7 +21234,7 @@ const RelationshipClassKeys = {
 	 */
 	ConfirmedLink : 'aef80d5e-911a-456e-97f4-d341e420181a',
 }  // RelationshipClassKeys 
-// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.TelecomAddressTypeKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!TelecomAddressTypeKeys)
 /**
  * @enum {string}
@@ -20719,7 +21268,7 @@ const TelecomAddressTypeKeys = {
 	 */
 	Internet : 'c1c0a4e9-4238-4044-b89b-9c9798995b93',
 }  // TelecomAddressTypeKeys 
-// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.IdentifierReliability, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!IdentifierReliability)
 /**
  * @enum {string}
@@ -20744,7 +21293,7 @@ const IdentifierReliability = {
 	Informative : 'Informative',
 	InformativeInt : '2',
 }  // IdentifierReliability 
-// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -20778,7 +21327,7 @@ const ConceptRelationshipTypeKeys = {
 	 */
 	WiderThan : 'ae8b4f2f-009f-4e0d-b35e-5a89555c5980',
 }  // ConceptRelationshipTypeKeys 
-// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ConceptClassKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptClassKeys)
 /**
  * @enum {string}
@@ -20844,7 +21393,7 @@ const ConceptClassKeys = {
 	 */
 	Language : 'ed032625-8139-4bdd-af25-c54a6960f87d',
 }  // ConceptClassKeys 
-// SanteDB.Core.Model.DataTypes.ConceptSetCompositionOperation, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.DataTypes.ConceptSetCompositionOperation, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ConceptSetCompositionOperation)
 /**
  * @enum {string}
@@ -20864,7 +21413,7 @@ const ConceptSetCompositionOperation = {
 	Exclude : 'Exclude',
 	ExcludeInt : '2',
 }  // ConceptSetCompositionOperation 
-// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CodeSystemKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!CodeSystemKeys)
 /**
  * @enum {string}
@@ -20922,7 +21471,7 @@ const CodeSystemKeys = {
 	 */
 	AdministrativeGender : '7a3a7139-b93e-4a99-bd54-749e30fe712a',
 }  // CodeSystemKeys 
-// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectIdType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectIdType)
 /**
  * @enum {string}
@@ -21002,7 +21551,7 @@ const AuditableObjectIdType = {
 	Custom : 'Custom',
 	CustomInt : '13',
 }  // AuditableObjectIdType 
-// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectLifecycle, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectLifecycle)
 /**
  * @enum {string}
@@ -21092,7 +21641,7 @@ const AuditableObjectLifecycle = {
 	PermanentErasure : 'PermanentErasure',
 	PermanentErasureInt : '15',
 }  // AuditableObjectLifecycle 
-// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectRole, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectRole)
 /**
  * @enum {string}
@@ -21222,7 +21771,7 @@ const AuditableObjectRole = {
 	Query : 'Query',
 	QueryInt : '24',
 }  // AuditableObjectRole 
-// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditableObjectType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditableObjectType)
 /**
  * @enum {string}
@@ -21257,7 +21806,7 @@ const AuditableObjectType = {
 	Other : 'Other',
 	OtherInt : '4',
 }  // AuditableObjectType 
-// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.NetworkAccessPointType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!NetworkAccessPointType)
 /**
  * @enum {string}
@@ -21282,7 +21831,7 @@ const NetworkAccessPointType = {
 	TelephoneNumber : 'TelephoneNumber',
 	TelephoneNumberInt : '3',
 }  // NetworkAccessPointType 
-// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.ActionType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActionType)
 /**
  * @enum {string}
@@ -21317,7 +21866,7 @@ const ActionType = {
 	Execute : 'Execute',
 	ExecuteInt : '16',
 }  // ActionType 
-// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.EventIdentifierType, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!EventIdentifierType)
 /**
  * @enum {string}
@@ -21422,7 +21971,7 @@ const EventIdentifierType = {
 	Logout : 'Logout',
 	LogoutInt : '262144',
 }  // EventIdentifierType 
-// SanteDB.Core.Model.Attributes.ResourceSensitivityClassification, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Attributes.ResourceSensitivityClassification, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ResourceSensitivityClassification)
 /**
  * @enum {string}
@@ -21447,7 +21996,7 @@ const ResourceSensitivityClassification = {
 	Metadata : 'Metadata',
 	MetadataInt : '4',
 }  // ResourceSensitivityClassification 
-// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.OutcomeIndicator, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!OutcomeIndicator)
 /**
  * @enum {string}
@@ -21477,7 +22026,7 @@ const OutcomeIndicator = {
 	EpicFail : 'EpicFail',
 	EpicFailInt : '8',
 }  // OutcomeIndicator 
-// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Audit.AuditMetadataKey, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!AuditMetadataKey)
 /**
  * @enum {string}
@@ -21562,7 +22111,7 @@ const AuditMetadataKey = {
 	CorrelationToken : 'CorrelationToken',
 	CorrelationTokenInt : '14',
 }  // AuditMetadataKey 
-// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.CurrencyKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!CurrencyKeys)
 /**
  * @enum {string}
@@ -21652,7 +22201,7 @@ const CurrencyKeys = {
 	 */
 	Rand : '69f1fd07-ba26-4e92-8ad0-deac7559e90f',
 }  // CurrencyKeys 
-// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActClassKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActClassKeys)
 /**
  * @enum {string}
@@ -21754,7 +22303,7 @@ const ActClassKeys = {
 	 */
 	List : 'b0323489-9a09-411a-bb55-ff283830ea1a',
 }  // ActClassKeys 
-// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActMoodKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActMoodKeys)
 /**
  * @enum {string}
@@ -21800,7 +22349,7 @@ const ActMoodKeys = {
 	 */
 	Request : 'e658ca72-3b6a-4099-ab6e-7cf6861a5b61',
 }  // ActMoodKeys 
-// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActReasonKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActReasonKeys)
 /**
  * @enum {string}
@@ -21850,7 +22399,7 @@ const ActReasonKeys = {
 	 */
 	ColdStorageFailure : '06922eac-0cae-49af-a33c-fc7096349e4a',
 }  // ActReasonKeys 
-// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.ActRelationshipTypeKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!ActRelationshipTypeKeys)
 /**
  * @enum {string}
@@ -21956,7 +22505,7 @@ const ActRelationshipTypeKeys = {
 	 */
 	Duplicate : '2bbf068b-9121-4081-bf3c-ab62c01362ee',
 }  // ActRelationshipTypeKeys 
-// SanteDB.Core.Model.Acts.CarePathwayEnrollmentMode, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Acts.CarePathwayEnrollmentMode, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!CarePathwayEnrollmentMode)
 /**
  * @enum {string}
@@ -21976,7 +22525,7 @@ const CarePathwayEnrollmentMode = {
 	Automatic : 'Automatic',
 	AutomaticInt : '1',
 }  // CarePathwayEnrollmentMode 
-// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.1997.0, Culture=neutral, PublicKeyToken=null
+// SanteDB.Core.Model.Constants.NullReasonKeys, SanteDB.Core.Model, Version=3.0.2013.0, Culture=neutral, PublicKeyToken=null
 // if(!NullReasonKeys)
 /**
  * @enum {string}
