@@ -44,7 +44,7 @@ angular.module('santedb-lib')
                   var val = $(element).val();
                   if(val !== "") {
                      var proposals = [];
-                     var issues = await SanteDBCdss.analyzeAsync(new Bundle({ resource: [ targetObject ] }), true, library, proposals);
+                     var issues = await SanteDBCdss.analyzeAsync(targetObject, true, library, proposals);
                      $timeout(() => 
                      {
                         // Set the validity
