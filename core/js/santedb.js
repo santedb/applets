@@ -4855,12 +4855,16 @@ function SanteDBWrapper() {
             */
         this.logoutAsync = function () {
             return new Promise(function (fulfill, reject) {
-
-                if (!_session || _session === undefined)
-                {
-                    resetSessionVariables();
-                    if (fulfill) fulfill();
-                    return;
+                try {
+                    if (!_session || _session === undefined)
+                    {
+                        resetSessionVariables();
+                        if (fulfill) fulfill();
+                        return;
+                    }
+                }
+                catch (e1) {
+                    if (reject) reject(e1);
                 }
 
                 try {
