@@ -357,4 +357,5 @@
       <string name="error.signing.cert.remove">Error removing signing certificate {subject} from {identity}</string>
       <string name="error.signing.cert.duplicate">Signing certificate is already assigned to another device</string>
       <string name="error.session.facility.required">Please select the facility in which you are working for this session</string>
+      <string name="error.data.notFound">{type} with ID {id} was not found</string>
 </resources>

@@ -24,15 +24,19 @@ function SanteDBCdssWrapper() {
  
     const _promoteFields = [
         "interpretationConcept",
+        "interpretationConceptModel",
         "value",
         "unitOfMeasure",
+        "unitOfMeasureModel",
         "reasonConcept",
+        "reasonConceptModel",
         "negationInd",
         "extension",
         "tag",
         "policy",
         "note",
-        "statusConcept"
+        "statusConcept",
+        "statusConceptModel"
     ];
 
     /**
@@ -47,37 +51,57 @@ function SanteDBCdssWrapper() {
      * @remarks The ${object} is updated with selected fields such as interpretationConcept, etc.
      */
     this.analyzeAsync = async function (object, replaceValues, libraryIds, outProposals) {
-        if (object.$type !== "Bundle") {
-            throw new Exception("ArgumentException", "Object must be a bundle");
-        }
-
+       
         try {
 
             // Submission needs to clear fields
+            var api = null;
             if(object.$type == Bundle.name || object.resource) {
                 object.resource.forEach(o => delete o.interpretationConcept);
+                api = SanteDB.resources.bundle;
             }
             else {
                 delete object.interpretationConcept;
+                api = SanteDB.resources.act;
             }
 
             // Submit the bundle to the analyze endpoint
-            var analysis = await SanteDB.resources.bundle.invokeOperationAsync(null, "analyze", { target: object, libraryId: libraryIds }, null, "fastview");
+            var analysis = await api.invokeOperationAsync(null, "analyze", { target: object, libraryId: libraryIds }, null, "fastview");
 
             // Analysis issues 
             var issues = analysis.issue;
-            var objectReturn = analysis.submission;
+            var objectReturn = await api.invokeOperationAsync(null, "expand", { object: analysis.submission }, null, "noModelProperties");
             if(analysis.propose  && Array.isArray(outProposals)) {
                 // Expand the data 
                 var proposals = await Promise.all(analysis.propose.map(async action => {
                     return await SanteDB.resources.act.invokeOperationAsync(null, "expand", { object: action }, null, "full");
                 }));
-                proposals.forEach(p=> outProposals.push(p));
+                proposals.forEach(p =>
+                {
+                    // If the proposal is replacing an existing component, find the component and replace it
+                    if(object.$type !== Bundle.name && p.tag && p.tag["$cdss.overwriteComponent"]) {
+                        object.relationship = object.relationship || {};
+                        object.relationship.HasComponent = object.relationship.HasComponent || [];
+                        var idx = object.relationship.HasComponent.findIndex(o => (o.target || o.targetModel.id) == p.tag["$cdss.overwriteComponent"]);
+                        if(idx == -1) // not found push
+                        {
+                            object.relationship.HasComponent.push(p);
+                        }
+                        else {
+                            _promoteFields.forEach(k => object.relationship.HasComponent[idx].targetModel[k] = p[k]);
+                        }
+                    }
+                    else {
+                        outProposals.push(p);
+                    }
+                });
             }
 
             // We want to update any item in the submitted object with any interpretation concept or fields that have changed 
+            objectReturn.resource = objectReturn.resource || [ objectReturn ];
+
             objectReturn.resource.forEach(r => {
-                var originalObject = object.resource.find(o=>o.id == r.id);
+                var originalObject = object.resource?.find(o=>o.id == r.id) || object;
                 if (!originalObject) return;
 
                 // Copy any non-model fields over to 

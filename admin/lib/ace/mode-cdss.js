@@ -36,7 +36,7 @@ ace.define("ace/mode/cdss_highlight_rules", ["require", "exports", "module", "ac
             "keyword.control": "define include as end having repeat when then with propose apply assign where from select order by raise",
             "keyword.other": "fact data logic rule protocol library model metadata type",
             "constant.language": "true false iterations until for",
-            "storage.type": "Patient Act SubstanceAdministration Procedure QuantityObservation CodedObservation TextObservation PatientEncounter Narrative",
+            "storage.type": "Patient Act SubstanceAdministration Procedure QuantityObservation CodedObservation TextObservation DateObservation PatientEncounter Narrative",
             "storage.modifier": "negation track-by normalize computed scoped-to",
             "support.function": "hdsi csharp all none any query first last average ",
             "support.constant": "active dont-use trial-use retired json xml error danger warn info context proposal",

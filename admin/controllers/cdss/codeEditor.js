@@ -20,7 +20,7 @@ function CdssAceEditor(controlName, initialText, fileName, libraryUuid) {
     // TODO:
     var _defaultAutoComplete = {
         "keyword": "define include as end having with where from select order by metadata type",
-        "structure": "rule model fact library protocol data logic",
+        "structure": "rule model fact library protocol data logic import",
         "action" : "repeat propose apply assign raise",
         "control": "iterations until when then",
         "format": "json xml",

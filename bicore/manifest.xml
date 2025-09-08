@@ -21,7 +21,6 @@
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB Core BI Definitions</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
-
   </info>
 
   <menuItem context="org.santedb.admin" launch="santedb-admin.bi.index"
@@ -40,6 +39,7 @@
       <text lang="en">Data Warehouse</text>
     </menuItem>
   </menuItem>
+
   <strings lang="en" extern="locales/en/strings.xml" />
   <strings lang="en-ca" extern="locales/en/strings.xml" />
   <strings lang="en-us" extern="locales/en/strings.xml" />
