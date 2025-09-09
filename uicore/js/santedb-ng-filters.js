@@ -184,7 +184,7 @@ angular.module('santedb-lib')
      */
     .filter('telecom', function () {
         return function (modelValue) {
-            return modelValue.value;
+            return SanteDB.display.renderEntityTelecom(modelValue);
         }
     })
     /**

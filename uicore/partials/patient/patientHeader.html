@@ -57,6 +57,9 @@
                                 <button ng-if="printCard" class="btn btn-sm btn-outline-primary" ng-click="printCard()">
                                     <i class="fas fa-fw fa-qrcode"></i> <span class="d-none d-md-inline">{{ 'ui.action.print.vrp' | i18n }}</span>
                                 </button>
+                                <button ng-if="startVisit" class="btn btn-sm btn-outline-success" ng-click="startVisit()">
+                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
+                                </button>
                             </div>
                         </h5>
                     </div>
@@ -110,7 +113,7 @@
 
                         <!-- Telecom -->
                         <div class="p-2" ng-if="patient.telecom">
-                            <i class="fas fa-phone"></i> {{ patient.telecom.PrimaryHome[0] | telecom }}
+                            <i class="fas fa-phone"></i> {{ patient.telecom | telecom }}
                         </div>
 
                         <!-- Address -->
@@ -126,8 +129,8 @@
                                 <i class="fas fa-fw fa-people-arrows"></i>
                                 <span class="badge badge-primary m-2">{{ rel.relationshipTypeModel || k | concept }} </span>
                                 {{ r.targetModel.name | name }} 
-                                <a ng-if="r.targetModel.telecom.MobileContact" href="{{r.targetModel.telecom.MobileContact[0].value}}">
-                                    <i class="fas fa-fw fa-phone"></i> {{ r.targetModel.telecom.MobileContact[0].value }}
+                                <a ng-if="r.targetModel.telecom">
+                                    <i class="fas fa-fw fa-phone"></i> {{ r.targetModel.telecom | telecom }}
                                 </a>
                             </div>
                         </div>

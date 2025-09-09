@@ -904,7 +904,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
 
         Object.keys(object.relationship).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
             var relationship = object.relationship[k] = ensureIsArray(object.relationship[k]);
-            relationship.filter(r=> r).forEach(rel => {
+            relationship.filter(r=> r && r.operation != BatchOperationType.IgnoreInt && r.operation != BatchOperationType.Ignore).forEach(rel => {
                 if(rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
                     rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
@@ -928,7 +928,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     if(object.participation) {
         Object.keys(object.participation).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
             var participations = object.participation[k] = ensureIsArray(object.participation[k]);
-            participations.filter(p=>p).forEach(ptcpt => {
+            participations.filter(p=>p && p.operation != BatchOperationType.IgnoreInt && p.operation != BatchOperationType.Ignore).forEach(ptcpt => {
                 if(ptcpt.playerModel) {
                     var relatedObject = angular.copy(ptcpt.playerModel);
                     ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();

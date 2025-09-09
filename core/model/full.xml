@@ -413,7 +413,7 @@
       </property>
     </property>
     <property name="typeConcept" />
-    <property name="typeConceptModel" behavior="always" all="false" ref="ConceptNested" />
+    <property name="typeConceptModel" behavior="always" all="true" ref="ConceptNested" />
     <property name="note" behavior="always">
       <property name="text" />
       <property name="authorModel" behavior="always" ref="UserEntity" />

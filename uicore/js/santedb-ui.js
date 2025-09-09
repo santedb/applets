@@ -79,6 +79,26 @@ SanteDBWrapper.prototype.display = new function () {
 
     /**
      * @method
+     * @summary Render one or more entity telecom values
+     * @param {Object} telecomValue The telecom value or collection of telecoms
+     */
+    this.renderEntityTelecom = function(telecomValue) {
+        const telRegex = /^(?:tel:)?(.*)$/i;
+        if(telecomValue.value) // simple telecom 
+        {
+            return telRegex.exec(telecomValue)[1];
+        }
+        else if(typeof telecomValue === "string")
+        {
+            return telecomValue;
+        }
+        else {
+            var firstKey = Object.keys(telecomValue);
+            return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
+        }
+    }
+    /**
+     * @method
      * @memberof SanteDBWrapper.display
      * @summary Replaces the content of the button with a defined wait state
      * @param {String} target The target of the wait button
