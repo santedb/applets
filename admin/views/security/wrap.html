@@ -23,16 +23,12 @@
             <sdb:title lang="en">Security</sdb:title>
         </sdb:view>
     </sdb:state>
-    <div class="container-fluid">
-            <div class="row" ng-if="$root.system.config.sync.mode == 'Sync'">
-                <div class="col alert alert-warning">
-                    <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.syncMode.warning' | i18n}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <ui-view></ui-view>
-                </div>
+    <div class="w-100">
+        <div ng-if="$root.system.config.sync.mode == 'Sync'">
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> {{ 'ui.admin.syncMode.warning' | i18n}}
             </div>
         </div>
+        <ui-view></ui-view>
+    </div>
 </div>
