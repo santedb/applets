@@ -71,6 +71,7 @@
     <property name="targetModel" all="true" behavior="always" ref="Entity" />
     <property name="relationshipType" all="true" behavior="always" />
     <property name="holderModel" behavior="never" />
+    <property name="classification" behavior="always" />
     <property name="sourceModel" behavior="never" />
     <property name="relationshipTypeModel" behavior="always" all="true" ref="ConceptNested" />
     <property name="key" all="true" />
@@ -82,6 +83,7 @@
     <property name="targetModel" all="true" behavior="always" />
     <property name="relationshipType" all="true" />
     <property name="holderModel" behavior="never" />
+    <property name="classification" behavior="always" />
     <property name="sourceModel" behavior="never" />
     <property name="relationshipTypeModel" behavior="never" />
     <property name="key" all="true" />
@@ -95,6 +97,7 @@
     <property name="participationRole" all="true" />
     <property name="key" all="true" />
     <property name="quantity" all="true" />
+    <property name="classification" behavior="always" />
   </type>
   <type type="ReferenceTerm" all="false">
     <property name="name" behavior="always" all="true" />
