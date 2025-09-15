@@ -19,9 +19,16 @@
     <div ng-if="widgets.length &gt; 1">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" ng-repeat="tabWidget in widgets" ng-if="$eval(tabWidget.guard[0] || 'true')">
-                <a name="{{ tabWidget.name }}" class="nav-link" href="javascript:" ng-class="{'active' : $index == 0}"
-                    id="tabWidget-{{tabWidget.name}}" data-toggle="tab" data-target="#widget_{{$index}}" role="tab"><i
-                        ng-class="tabWidget.icon"></i> {{ tabWidget.name | i18n }}</a>
+                <a name="{{ tabWidget.name }}" class="nav-link" href="javascript:"
+                    ng-class="{'active' : $index == 0}" id="tabWidget-{{tabWidget.name}}" data-toggle="tab"
+                    data-target="#widget_{{$index}}" role="tab"><i ng-class="tabWidget.icon"></i> {{ tabWidget.name |
+                    i18n }}
+                    <div class="mx-1 px-2 py-1 badge" ng-repeat="badge in tabWidget.badges track by $index"
+                        ng-class="'badge-' + (badge.badge || 'primary')" ng-if="$eval(badge.guard[0] || 'true')">
+                        <i class="fas fa-fw" ng-class="badge.icon"></i>
+                    </div>
+                </a>
+
             </li>
         </ul>
         <div class="tab-content">

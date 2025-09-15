@@ -71,7 +71,8 @@ angular.module('santedb-lib')
         function renderObject(selection, minRender) {
 
             // Clearing text breaks  grouping display - ensure that there are no children before clearing text
-            if(!selection.children) {
+            // Also need to preserve placeholder and preserve the loading 
+            if(!selection.children && !selection.loading && selection.id != "") {
                 selection.text = '';
             }
             
