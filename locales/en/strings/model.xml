@@ -940,6 +940,13 @@
   <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
   <string name="ui.model.observation.interpretationConcept.high">High</string>
   <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
+
+  <string name="ui.model.observation.pregnancy.lmp">Date of Last Menstrual Period</string>
+  <string name="ui.model.observation.pregnancy.status">Pregnancy Status</string>
+  <string name="ui.model.observation.pregnancy.estimatedDeliveryDate">Estimated Delivery Date</string>
+  <string name="ui.model.observation.pregnancy.estimatedAgeOfFetus">Estimated Age of Fetus</string>
+  <string name="ui.model.observation.pregnancy.doesPatientHavePregnancyHistory">Has History of Pregnancy</string>
+  <string name="ui.model.observation.pregnancy.pregnancyConfirmationMethod">Pregnancy Confirmation Method</string>
   
   <!-- Care Pathway Definitions -->
    <string name="ui.model.carePathwayDefinition.description">Description</string>
