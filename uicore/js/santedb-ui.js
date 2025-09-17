@@ -86,7 +86,7 @@ SanteDBWrapper.prototype.display = new function () {
         const telRegex = /^(?:tel:)?(.*)$/i;
         if(telecomValue.value) // simple telecom 
         {
-            return telRegex.exec(telecomValue)[1];
+            return telRegex.exec(telecomValue.value)[1];
         }
         else if(typeof telecomValue === "string")
         {
