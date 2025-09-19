@@ -1021,6 +1021,58 @@
     </property>
   </type>
 
+  
+  <type type="DateObservation" all="true">
+    <property name="createdBy" behavior="never" />
+    <property name="tag" all="true" behavior="always" />
+    <property name="creationTime" />
+    <property name="creationTimeModel" behavior="never" />
+    <property name="version" />
+    <property name="protocol" behavior="always" />
+    <property name="templateModel" behavior="always" all="false">
+      <property name="mnemonic" />
+    </property>
+    <property name="classConcept" behavior="always" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+
+    <property name="classConceptModel" behavior="always" />
+    <property name="protocol" behavior="always" />
+    <property name="previousVersion" behavior="never" />
+    <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="statusConceptModel" behavior="never" />
+    <property name="moodConceptModel" behavior="never" />
+    <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
+    <property name="relationship" all="true" behavior="always">
+      <property name="*" ref="ActRelationship" all="true" />
+    </property>
+    <property name="participation" all="true" behavior="always">
+      <property name="Location" all="false">
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="playerModel" all="false" behavior="always">
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
+          <property name="participation" behavior="never" />
+        </property>
+      </property>
+      <property name="*" all="false">
+        <property name="actModel" behavior="never" />
+        <property name="sourceModel" behavior="never" />
+        <property name="act" all="true" />
+        <property name="participationRoleModel" behavior="never" />
+        <property name="player" all="true" />
+        <property name="playerModel" behavior="never" />
+      </property>
+    </property>
+  </type>
+
   <type type="CodedObservation" all="true">
     <property name="createdBy" behavior="never" />
     <property name="tag" all="true" behavior="always" />
@@ -1032,6 +1084,7 @@
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
 
     <property name="classConceptModel" behavior="always" />
     <property name="protocol" behavior="always" />
@@ -1084,6 +1137,7 @@
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
+    <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
 
     <property name="classConceptModel" behavior="always" />
     <property name="protocol" behavior="always" />

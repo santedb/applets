@@ -103,12 +103,12 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
     }
 
     $scope.navSourceConcept = function(r, index) {
-        var data = $("#ConceptRelationshipTable table").DataTable().row(index).data();
+        var data = $("#ConceptRelationshipInTable table").DataTable().row(index).data();
         $state.go("santedb-admin.concept.concepts.view", { id: data.source });
     }
 
     $scope.navTargetConcept = function(r, index) {
-        var data = $("#ConceptRelationshipTable table").DataTable().row(index).data();
+        var data = $("#ConceptRelationshipOutTable table").DataTable().row(index).data();
         $state.go("santedb-admin.concept.concepts.view", { id: data.targetConcept });
     }
 
@@ -117,8 +117,8 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
             try {
                 SanteDB.display.buttonWait(`#ConceptRelationshipremove${i}`, true);
                 await SanteDB.resources.conceptRelationship.deleteAsync(cr);
-                $("#ConceptRelationshipTable").attr("newQueryId", true);
-                $("#ConceptRelationshipTable table").DataTable().draw();
+                $("#ConceptRelationshipOutTable").attr("newQueryId", true);
+                $("#ConceptRelationshipOutTable table").DataTable().draw();
                 toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptRelationship.delete.success"));
             }
             catch (e) {
@@ -145,8 +145,8 @@ angular.module('santedb').controller('ConceptWidgetController', ["$scope", "$roo
         try {
             SanteDB.display.buttonWait("#btnSaveConceptRelationship", true);
             var res = await SanteDB.resources.conceptRelationship.insertAsync($scope.newConceptRelationship);
-            $("#ConceptRelationshipTable").attr("newQueryId", true);
-            $("#ConceptRelationshipTable table").DataTable().draw();
+            $("#ConceptRelationshipOutTable").attr("newQueryId", true);
+            $("#ConceptRelationshipOutTable table").DataTable().draw();
             $("#addConceptRelationshipModal").modal("hide");
             toastr.success(SanteDB.locale.getString("ui.admin.concept.conceptRelationship.create.success"));
         }
