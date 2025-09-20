@@ -150,9 +150,11 @@
                                 <div class="actProposeControl editOnly d-none"
                                     ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
                                         (
-                                            !comp.targetModel.tag.$userAdded &amp;&amp; comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' ||
-                                            comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || 
-                                            comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'
+                                            !comp.targetModel.tag.$userAdded &amp;&amp; comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' &amp;&amp; 
+                                            (
+                                                comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || 
+                                                comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079'
+                                            )
                                         )">
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-control"
