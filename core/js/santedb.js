@@ -3329,6 +3329,17 @@ function SanteDBWrapper() {
             resource: "CodedObservation",
             api: _hdsi
         });
+
+        /**
+            * @type {ResourceWrapper}
+            * @memberof SanteDBWrapper.ResourceApi
+            * @summary Represents the DateObservation Resource
+            */
+        this.dateObservation = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "DateObservation",
+            api: _hdsi
+        });
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -4828,6 +4839,14 @@ function SanteDBWrapper() {
             });
         }
 
+        let resetSessionVariables = function(){
+            _oauthSession = _session = null;
+            window.sessionStorage.removeItem('token');
+            window.sessionStorage.removeItem('refresh_token');
+            window.sessionStorage.removeItem('lang');
+            SanteDB.locale.setLocale(null);
+        };
+
         /**
             * @method logoutAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -4836,6 +4855,18 @@ function SanteDBWrapper() {
             */
         this.logoutAsync = function () {
             return new Promise(function (fulfill, reject) {
+                try {
+                    if (!_session || _session === undefined)
+                    {
+                        resetSessionVariables();
+                        if (fulfill) fulfill();
+                        return;
+                    }
+                }
+                catch (e1) {
+                    if (reject) reject(e1);
+                }
+
                 try {
                     _auth.postAsync({
                         resource: "signout",
@@ -4846,11 +4877,7 @@ function SanteDBWrapper() {
                         }
                     })
                         .then(function (d) {
-                            _oauthSession = _session = null;
-                            window.sessionStorage.removeItem('token');
-                            window.sessionStorage.removeItem('refresh_token');
-                            window.sessionStorage.removeItem('lang');
-                            SanteDB.locale.setLocale(null);
+                            resetSessionVariables();
                             if (fulfill) fulfill(d);
                         })
                         .catch(reject);

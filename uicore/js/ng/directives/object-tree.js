@@ -37,7 +37,7 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/objectTree.html',
             controller: ['$scope', '$rootScope',
                 function ($scope, $rootScope) {
-                    $scope.isExpandible = (val) => angular.isObject(val) && !(val instanceof Date) && $scope.depth < 5;
+                    $scope.isExpandible = (val) => angular.isObject(val) && !(val instanceof Date) && $scope.depth < 10;
                 }
             ],
             link: function (scope, element, attrs, ngModel) {

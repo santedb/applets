@@ -69,7 +69,12 @@ angular.module('santedb-lib')
         }
 
         function renderObject(selection, minRender) {
-            selection.text = '';
+
+            // Clearing text breaks  grouping display - ensure that there are no children before clearing text
+            // Also need to preserve placeholder and preserve the loading 
+            if(!selection.children && !selection.loading && selection.id != "") {
+                selection.text = '';
+            }
             
             if (selection.text)
                 return selection.text;
@@ -127,7 +132,7 @@ angular.module('santedb-lib')
                     if(selection.icon) {
                         retVal += `<i class='${selection.icon}'></i> `;
                     }
-                    else {
+                    else if(selection.text && selection.text != "") {
                         retVal += "<i class='fa fa-fw fa-box'></i> ";
                     }
                     break;

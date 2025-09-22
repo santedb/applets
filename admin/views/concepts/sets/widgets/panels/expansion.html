@@ -87,7 +87,7 @@
                                                 <td>
                                                     <span ng-if="compose.targetModel"><i class="fas fa-viruses"></i> {{
                                                         compose.targetModel.mnemonic }}</span>
-                                                    <entity-search ng-if="!compose.targetModel" type="'ConceptSet'"
+                                                    <entity-search style="width:100%" ng-if="!compose.targetModel" type="'ConceptSet'"
                                                         class="form-control" ng-model="compose.target"
                                                         ng-disabled="true"
                                                         filter="{ 'obsoletionTime' : 'null' }"></entity-search>
@@ -112,7 +112,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <entity-search type="'ConceptSet'" class="form-control"
+                                                    <entity-search style="width:100%" type="'ConceptSet'" class="form-control"
                                                         ng-model="newCompose.target" search-field="'name'"
                                                         filter="{ 'obsoletionTime' : 'null', 'compose.instruction': [ '!1', '!2' ] }"></entity-search>
                                                 </td>
@@ -254,7 +254,7 @@
                                 </label>
                                 <div class="col-md-9 col-sm-12">
                                     <entity-search type="'Concept'" class="form-control"
-                                        ng-model="edit.concept.id" search-field="'mnemonic'"
+                                        ng-model="edit.concept.id" search-field="'mnemonic||name.value'"
                                         required="required" is-required="true"
                                         name="existingTermSearch"
                                         filter="{ 'obsoletionTime' : 'null' }"></entity-search>

@@ -27,7 +27,7 @@
 
     <div ng-controller="ConceptWidgetController">
 
-        <entity-table id="ConceptRelationshipTable" type="ConceptRelationship" search-field="source.name.value"
+        <entity-table id="ConceptRelationshipInTable" type="ConceptRelationship" search-field="source.name.value"
             default-query="{ _viewModel: 'reverseRelationship', targetConcept: scopedObject.id }" 
             i18n-prefix="'ui.model.conceptRelationship.'" no-deleted="true" 
             item-actions="[ 

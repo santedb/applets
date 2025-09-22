@@ -63,4 +63,10 @@ angular.module('santedb')
                 $scope.editObject = angular.copy(n);
             }
         });
+
+        $scope.filterManagedFacilities = function (data) {
+            const facilities = $scope.editObject.relationship.DedicatedServiceDeliveryLocation.map((loc) => { return loc.target });
+            
+            return facilities.includes(data.id);
+        }
     }]);

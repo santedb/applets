@@ -66,12 +66,12 @@
             ng-if="panel.view == 'Edit'" name="panel.editForm" novalidate="novalidate" autocomplete="off">
             <div class="form-group row">
                 <label for="roles"
-                    class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityRole.title' | i18n }}</label>
+                    class="col-xs-12 col-md-3 control-label required">{{ 'ui.model.securityRole.title' | i18n }}</label>
                 <div class="col-xs-12 col-md-9">
                     <entity-search name="roles" type="'SecurityRole'" filter="{ obsoletionTime: 'null'}" key="'name'"
                         selector="'entity'" ng-model="scopedObject.role" search-field="'name'" class="form-control"
                         multiple="multiple" required="required" />
-                    <div ng-show="panel.editForm.roles.$error['required'] &amp;&amp; panel.editForm.$submitted"
+                    <div ng-show="panel.editForm.roles.$error['required']"
                         class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>
@@ -79,11 +79,11 @@
             </div>
             <div class="form-group row">
                 <label for="email"
-                    class="col-xs-12 col-md-3 control-label">{{ 'ui.model.securityUser.email' | i18n }}</label>
+                    class="col-xs-12 col-md-3 control-label required">{{ 'ui.model.securityUser.email' | i18n }}</label>
                 <div class="col-xs-12 col-md-9">
                     <input name="email" type="email" required="required" class="form-control"
                         ng-model="scopedObject.entity.email" />
-                    <div ng-show="panel.editForm.email.$error['required'] &amp;&amp; panel.editForm.$submitted"
+                    <div ng-show="panel.editForm.email.$error['required']"
                         class="text-danger">
                         <i class="fa fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
                     </div>

@@ -179,7 +179,7 @@ angular.module('santedb')
                 if (e.$type == "DetectedIssueException" && userForm.newPassword) { // Error with password?
                     $timeout(() => {
                         userForm.newPassword.$error = {};
-                        e.rules.filter(r=>r.priority == "Error").forEach(r => {
+                        e.rules.filter(r=>r.priority == "Error").forEach(d => {
                             switch(d.id) {
                                 case "password.complexity":
                                     userForm.newPassword.$error[d.id] = true;

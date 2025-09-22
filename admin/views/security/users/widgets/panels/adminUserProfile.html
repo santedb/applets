@@ -36,11 +36,11 @@
         <div ng-if="panel.view != 'Edit'">
             <div class="row">
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.name' | i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     {{ scopedObject.name | name }}
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.address' | i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     <span ng-if="scopedObject.address">
                         {{ scopedObject.address | address }}
                     </span>
@@ -49,7 +49,7 @@
                     </span>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.telecom' | i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     <ul class="list-unstyled mt-0">
                         <li ng-if="!scopedObject.telecom">{{ 'ui.unknown' | i18n }} </li>
                         <li ng-repeat="(k,tel) in scopedObject.telecom">
@@ -60,14 +60,14 @@
                 </div>
                 <label class="col-md-3 control-label" ng-if="scopedObject.language">{{ 'ui.model.entity.language' | i18n
                     }}</label>
-                <div class="col-md-9 p-2" ng-repeat="lang in scopedObject.language track by $index"
+                <div class=" col-md-8 p-2" ng-repeat="lang in scopedObject.language track by $index"
                     ng-class="{ 'offset-md-3': $index > 0 }">
                     {{ 'ui.locale.' + lang.languageCode | i18n }} <span class="badge badge-pill badge-info"
                         ng-if="lang.isPreferred"><i class="fas fa-check"></i> {{ 'ui.model.entity.language.preferred' | i18n
                         }}</span>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.Employer' | i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     <span ng-if="scopedObject.relationship.Employee">{{
                         scopedObject.relationship.Employee[0].targetModel.name | name }}</span>
                     <span ng-if="!scopedObject.relationship.Employee">
@@ -76,7 +76,7 @@
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.entity.relationship.DedicatedServiceDeliveryLocation' |
                     i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     <ul class="list-unstyled mt-0">
                         <li ng-repeat="sdl in scopedObject.relationship.DedicatedServiceDeliveryLocation track by $index">
                             {{ sdl.targetModel.name | name }}
@@ -87,7 +87,7 @@
                     </span>
                 </div>
                 <label class="col-md-3 control-label">{{ 'ui.model.userEntity.relationship.MaintainedEntity' | i18n }}</label>
-                <div class="col-md-9 p-2">
+                <div class=" col-md-8 p-2">
                     <ul class="list-unstyled mt-0">
                         <li ng-repeat="sdl in scopedObject.relationship.MaintainedEntity track by $index">
                             {{ sdl.targetModel.name | name }}
@@ -118,7 +118,7 @@
                 <label class="col-md-3 col-sm-12 control-label">
                     {{ 'ui.model.entity.telecom.Public' | i18n }}
                 </label>
-                <div class="col-md-9 col-sm-12">
+                <div class="col-md-8 col-sm-12">
                     <telecom-edit model="editObject.telecom" single-edit="'Public'" owner-form="panel.editForm"
                         no-label="true" />
                 </div>
@@ -128,7 +128,7 @@
             <div class="form-group row">
                 <label for="language" class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.language' | i18n
                     }}</label>
-                <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-8">
                     <select name="language" class="form-control" ng-model="editObject.preferredLanguage">
                         <option ng-repeat="lang in $root.system.locales" value="{{lang}}">{{ 'ui.locale.' + lang | i18n }}
                         </option>
@@ -138,45 +138,47 @@
             
             <!-- Employer -->
             <div class="form-group row">
-                <label for="familyName"
+                <label for="employer"
                     class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.Employee' | i18n }}
                     <hint-popover hint-title="ui.model.userEntity.relationship.Employee" /></label>
-                <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-8">
                     <entity-search type="'Organization'" filter="{ obsoletionTime: 'null' }"
                         class="form-control" ng-model="editObject.relationship.Employee"
                         value-property="'target'"
-                        />
+                        name="employer"/>
                 </div>
             </div>
 
             <!-- Facility -->
             <div class="form-group row">
-                <label for="familyName"
+                <label for="assignedFacilities"
                     class="col-sm-12 col-md-3 control-label">
                     {{ 'ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation' | i18n }}
                     <hint-popover hint-title="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation" />
                 </label>
-                <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-8">
                     <entity-search type="'Place'"
                         filter="{ obsoletionTime: 'null', classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
-                        class="form-control"
                         ng-model="editObject.relationship.DedicatedServiceDeliveryLocation"
+                        name="assignedFacilities"
                         value-property="'target'"
+                        class="form-control"
                         multiple="multiple" />
                 </div>
             </div>
-
+            
             <!-- Managed Facilities -->
             <div class="form-group row">
-                <label for="familyName"
+                <label for="managedFacilities"
                     class="col-sm-12 col-md-3 control-label">{{ 'ui.model.userEntity.relationship.MaintainedEntity' | i18n }}
                     <hint-popover hint-title="ui.model.userEntity.relationship.MaintainedEntity" /></label>
-                <div class="col-sm-12 col-md-9">
-                    <entity-search type="'Place'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].source': editObject.id, classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
+                <div class="col-sm-12 col-md-8">
+                    <entity-search type="'Place'" filter="{ classConcept: 'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c' }"
+                        js-filter="filterManagedFacilities"
                         class="form-control" ng-model="editObject.relationship.MaintainedEntity"
                         value-property="'target'"
-                        multiple="multiple"
-                        />
+                        name="managedFacilities"
+                        multiple="multiple"/>
                 </div>
             </div>
 

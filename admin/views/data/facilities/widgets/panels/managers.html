@@ -47,9 +47,9 @@
         <div id="assignManagerDiv">
             <form name="assignManagerForm" novalidate="novalidate" ng-submit="assignManager(assignManagerForm)">
                 <div class="input-group">
-                    <div class="h-100" style="width:85%; max-width: 85%">
+                    <div class="h-100">
                     <entity-search type="'UserEntity'" ng-model="assignUser.id" search-field="'securityUser.userName'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : scopedObject.id, 'relationship[MaintainedEntity].target' : '!' + scopedObject.id }"
-                        class="form-control h-100" required="required" />
+                        style="width: 15em" required="required"/>
                     </div>
                     <div class="input-group-append">
                         <button type="submit" id="btnAssignManager" class="btn btn-primary" ng-disabled="assignManagerForm.$invalid" title="{{ 'ui.action.assign' | i18n }}">

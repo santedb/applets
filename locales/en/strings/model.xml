@@ -940,6 +940,7 @@
   <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
   <string name="ui.model.observation.interpretationConcept.high">High</string>
   <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
+
   
   <!-- Care Pathway Definitions -->
    <string name="ui.model.carePathwayDefinition.description">Description</string>

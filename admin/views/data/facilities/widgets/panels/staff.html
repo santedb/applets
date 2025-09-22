@@ -46,10 +46,10 @@
 
         <div id="assignStaffDiv">
             <form name="assignStaffForm" novalidate="novalidate" ng-submit="assignStaff(assignStaffForm)">
-                <div class="input-group">
-                    <div class="h-100" style="width:85%; max-width: 85%">
-                    <entity-search type="'UserEntity'" ng-model="assignUser.id" search-field="'securityUser.userName'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : '!' + scopedObject.id }"
-                        class="form-control h-100"  required="required" />
+                <div class="input-group d-flex">
+                    <div class="h-100 flex-grow-1" >
+                        <entity-search type="'UserEntity'" ng-model="assignUser.id" search-field="'securityUser.userName'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : '!' + scopedObject.id }"
+                            required="required" style="width: 15em" />
                     </div>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-primary" id="btnAssignStaff" ng-disabled="assignStaffForm.$invalid" title="{{ 'ui.action.assign' | i18n }}">

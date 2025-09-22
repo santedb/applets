@@ -27,7 +27,7 @@
 
     <div ng-controller="ConceptWidgetController">
 
-        <entity-table id="ConceptRelationshipTable" type="ConceptRelationship" search-field="targetConcept.name.value"
+        <entity-table id="ConceptRelationshipOutTable" type="ConceptRelationship" search-field="targetConcept.name.value"
             default-query="{ _viewModel: 'relationship', source: scopedObject.id }" 
             i18n-prefix="'ui.model.conceptRelationship.'" no-deleted="true" actions="[ 
                 { name: 'add', action: 'addConceptRelationship', className: 'btn-primary', icon: 'fas fa-plus-circle', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.7', hint: 'ui.admin.concept.conceptSet.addConcept' }

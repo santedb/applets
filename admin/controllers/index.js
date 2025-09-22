@@ -68,11 +68,11 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
 
     // Watch the session and load menus accordingly (in case user elevates)
     $rootScope.$watch('session', function (nv, ov) {
-        if (nv && nv.user) {
+        if (nv && nv.user && (!ov || nv.username != ov.username)) {
             // Add menu items
             loadMenus();
         }
-        else if(ov && !nv) {
+        else if(ov && (!nv || !nv.user)) {
             $scope.menuItems = null;
             // Redirect to login
             $state.go('login');
