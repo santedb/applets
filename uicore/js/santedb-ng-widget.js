@@ -39,6 +39,21 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/widgetTab.html',
             controller: ['$scope', '$timeout',
                 function ($scope, $timeout) {
+                    
+                    const _evalGuard = {};
+
+                    $scope.query = function(type, query) {
+                        var guardKey = `${type}.${JSON.stringify(query)}`;
+                        if(!_evalGuard[guardKey]) {
+                            SanteDB.resources[type.toCamelCase()].findAsync(query, "min").then(r => _evalGuard[guardKey] = r).catch(e => $rootScope.errorHandler(e));
+                            return false;
+                        }
+                        else {
+                            return _evalGuard[guardKey];
+                        }
+                        
+                    };
+
                 }
             ],
             link: function (scope, element, attrs) {
@@ -149,6 +164,21 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/widgetPanel.html',
             controller: ['$scope', '$rootScope', '$state', '$transitions',
                 function ($scope, $rootScope, $state, $transitions) {
+
+                    const _evalGuard = {};
+
+                    $scope.query = function(type, query) {
+                        var guardKey = `${type}.${JSON.stringify(query)}`;
+                        if(!_evalGuard[guardKey]) {
+                            SanteDB.resources[type.toCamelCase()].findAsync(query, "min").then(r => _evalGuard[guardKey] = r).catch(e => $rootScope.errorHandler(e));
+                            return false;
+                        }
+                        else {
+                            return _evalGuard[guardKey];
+                        }
+                        
+                    };
+
 
                     function checkNavigateAway(e) {
                         if ($scope.widgetGroups) {
