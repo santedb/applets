@@ -453,6 +453,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
         $interval(ivlFn, 15000);
 
 
+        $rootScope.display = SanteDB.display;
         // Set locale for sleect2
         $.fn.select2.defaults.set('language', SanteDB.locale.getLocale());
 
