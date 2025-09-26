@@ -547,9 +547,17 @@
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another act</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends performing this action based on the inputs provided on another input</string>
+  <string name="ui.model.act.relationship.RefersTo">Refers To</string>
+  <string name="ui.model.act.relationship.RefersTo.hint">Select the action which this event references or is the suspected cause of this entry</string>
   <string name="ui.model.act.relationship.Fulfills">Fulfills</string>
   <string name="ui.model.act.relationship.Fulfills.target.startTime">Scheduled Start</string>
   <string name="ui.model.act.relationship.Fulfills.target.actTime">Scheduled Date</string>
+  <string name="ui.model.act.relationship.HasManifestation">Reaction / Manifestation</string>
+  <string name="ui.model.act.relationship.HasManifestation.startTime">Onset Time</string>
+  <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time that the reaction first occurred / started occurring</string>
+  <string name="ui.model.act.relationship.HasManifestation.stopTime">Completion Time</string>
+  <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time that the reaction stopped</string>
+  <string name="ui.model.act.relationship.HasManifestation.hasStopped">Reaction Finished</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
   <string name="ui.model.act.participation.Authororiginator">Author / Reporter</string>
   <string name="ui.model.act.participation.Performer">Performer(s)</string>
