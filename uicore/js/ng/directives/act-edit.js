@@ -152,6 +152,7 @@ angular.module('santedb-lib')
                         $timeout(() => {
                             itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
                             itm.targetModel.statusConcept = StatusKeys.Completed;
+                            itm.targetModel.moodConcept = ActMoodKeys.Eventoccurrence;
                             itm.targetModel.participation = itm.targetModel.participation || {};
                             itm.targetModel.participation.Performer = itm.targetModel.participation.Performer || [];
 
