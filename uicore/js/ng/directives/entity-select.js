@@ -66,7 +66,7 @@ angular.module('santedb-lib')
                         }
                         filter._count = 30;
                         filter._includeTotal = false;
-                        var results = await api.findAsync(filter, attrs.viewModel || "fastload");
+                        var results = await api.findAsync(filter, attrs.viewModel || "fastview");
 
                         // are there any item supplements
                         if(scope.itemSupplement) {

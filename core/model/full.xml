@@ -1091,7 +1091,7 @@
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
-    <property name="statusConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="moodConceptModel" behavior="never" />
     <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
