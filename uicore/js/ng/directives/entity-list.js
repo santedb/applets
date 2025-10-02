@@ -83,7 +83,7 @@ angular.module('santedb-lib')
                         return scope.results;
                     }
                     return [];
-                }
+                };
             }
             $.fn.extend({
                 entityList : function(scope) {
