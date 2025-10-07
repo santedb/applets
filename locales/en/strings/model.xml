@@ -570,6 +570,7 @@
   <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
   <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>
   <string name="ui.model.act.tag.isBackentryTrue">Back-Entry</string>
+  <string name="ui.model.act.notes">Notes</string>
   
   <!-- Help Text -->
   <string name="ui.model.act.template.help">Identifies the type of event</string>
