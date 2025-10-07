@@ -426,7 +426,7 @@ function copyObject(fromObject, deepCopy) {
             });
         return obj;
     }
-    return obj;
+    return fromObject;
 }
 
 
