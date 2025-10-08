@@ -54,7 +54,8 @@
     <icon>fas fa-tachometer-alt</icon>
     <text lang="en">Dashboard</text>
   </menuItem>
-  <menuItem context="org.santedb.admin" order="-50">
+  <menuItem context="org.santedb.admin" order="-50" launch="santedb-admin.system.index"
+    asset="/org.santedb.admin/views/system/index.html">
     <icon>fas fa-tools</icon>
     <text lang="en">System</text>
     <menuItem launch="santedb-admin.system.applets"

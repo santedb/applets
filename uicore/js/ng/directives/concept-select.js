@@ -43,6 +43,8 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs, ngModel) {
 
+                var useShortestName = attrs["shortestName"];
+
                 if (scope.excludeConcepts && !Array.isArray(scope.excludeConcepts))
                     scope.excludeConcepts = [scope.excludeConcepts];
 
@@ -71,6 +73,11 @@ angular.module('santedb-lib')
                             if(scope.excludeConcepts) {
                                 setValues = setValues.filter(o => scope.excludeConcepts.indexOf(o.id) === -1)
                             }
+
+                            if(useShortestName) {
+                                setValues.forEach(sv => sv.name.en = sv.name.en.sort((a,b) => a?.length < b?.length ? -1 : a?.length > b?.length ? 1 : 0));
+                            }
+
                             $timeout(function() {
                                 scope.setValues = setValues;
                                 loaded[setName].callme.forEach((r) => r(scope.setValues));

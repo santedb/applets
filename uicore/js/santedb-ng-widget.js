@@ -39,6 +39,21 @@ angular.module('santedb-lib')
             templateUrl: './org.santedb.uicore/directives/widgetTab.html',
             controller: ['$scope', '$timeout',
                 function ($scope, $timeout) {
+
+                    const _evalGuard = {};
+
+                    $scope.query = function (type, query) {
+                        var guardKey = `${type}.${JSON.stringify(query)}`;
+                        if (!_evalGuard[guardKey]) {
+                            SanteDB.resources[type.toCamelCase()].findAsync(query, "min").then(r => _evalGuard[guardKey] = r).catch(e => $rootScope.errorHandler(e));
+                            return false;
+                        }
+                        else {
+                            return _evalGuard[guardKey];
+                        }
+
+                    };
+
                 }
             ],
             link: function (scope, element, attrs) {
@@ -66,7 +81,7 @@ angular.module('santedb-lib')
      * <widget-panel context-name="'org.santedb.patient'"/>
     */
     .directive('widgetPanels', ["$timeout", function ($timeout) {
-        
+
         var _userPreferences = undefined;
 
         function WidgetConfig(view, canCustomize, contextName) {
@@ -80,7 +95,7 @@ angular.module('santedb-lib')
             try {
                 var widgets = await SanteDB.application.getWidgetsAsync(settings.contextName, "Panel");
 
-                if(!_userPreferences) {
+                if (!_userPreferences) {
                     var userSettings = (settings.canCustomize ?
                         (scope.$root.session ? scope.$root.session.userSettings : await SanteDB.configuration.getUserSettingsAsync()) : [])
                         || [];
@@ -108,12 +123,12 @@ angular.module('santedb-lib')
                 }
 
                 // Small are combined 2 per group
-                var widgetGroups = [];
+                // var widgetGroups = [];
                 renderWidgets.forEach(function (w) {
                     w.id = w.name.replaceAll(".", "_");
                     w.view = settings.view;
                     w.isVisible = true;
-                    widgetGroups.push({ size: w.size, widgets: [w] });
+                    // widgetGroups.push({ size: w.size, widgets: [w] });
 
                     if (scope.editForm && !w.editForm) {
                         w.editForm = scope.editForm;
@@ -122,7 +137,7 @@ angular.module('santedb-lib')
                 });
 
                 $timeout(() => {
-                    scope.widgetGroups = widgetGroups;
+                    scope.renderWidgets = renderWidgets;
                     scope.availableWidgets = renderWidgets;
                     widgets.forEach(wd => {
                         if (!scope.availableWidgets.find(aw => aw.name == wd.name)) {
@@ -150,17 +165,28 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope', '$state', '$transitions',
                 function ($scope, $rootScope, $state, $transitions) {
 
+                    const _evalGuard = {};
+
+                    $scope.query = function (type, query) {
+                        var guardKey = `${type}.${JSON.stringify(query)}`;
+                        if (!_evalGuard[guardKey]) {
+                            SanteDB.resources[type.toCamelCase()].findAsync(query, "min").then(r => _evalGuard[guardKey] = r).catch(e => $rootScope.errorHandler(e));
+                            return false;
+                        }
+                        else {
+                            return _evalGuard[guardKey];
+                        }
+
+                    };
+
+
                     function checkNavigateAway(e) {
-                        if ($scope.widgetGroups) {
-                            $scope.widgetGroups.forEach((group) => {
-                                if (group.widgets) {
-                                    group.widgets.forEach((panel) => {
-                                        if (panel.view == 'Edit' && panel.editForm && !panel.editForm.$pristine) {
-                                            e.returnValue = SanteDB.locale.getString("ui.action.abandon.confirm");
-                                        }
-                                    });
+                        if ($scope.renderWidgets) {
+                            $scope.renderWidgets.forEach((panel) => {
+                                if (panel.view == 'Edit' && panel.editForm && !panel.editForm.$pristine) {
+                                    e.returnValue = SanteDB.locale.getString("ui.action.abandon.confirm");
                                 }
-                            })
+                            });
                         }
                         return e.returnValue;
                     }
@@ -184,7 +210,7 @@ angular.module('santedb-lib')
                             var view = panel.views.find(o => o.type == viewName);
 
                             // Guard?
-                            if(!view || !view.guard || view.guard.length == 0 || $scope.$eval(view.guard[0])) {
+                            if (!view || !view.guard || view.guard.length == 0 || $scope.$eval(view.guard[0])) {
                                 return view != null;
                             }
                             else {
@@ -258,7 +284,7 @@ angular.module('santedb-lib')
                     }
 
                     $scope.closeView = async function (panel) {
-                        switch(panel.view) {
+                        switch (panel.view) {
                             case 'Edit':
                                 if (panel.editForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
                                     if ($scope.scopedObject.$type) {
@@ -274,18 +300,18 @@ angular.module('santedb-lib')
                                         $scope.scopedObject = $scope.original;
                                         delete (panel.view);
                                         $scope.altView = false;
-        
+
                                     })
                                 }
                                 break;
                             case 'Settings':
                                 if (panel.settingsForm.$pristine || confirm(SanteDB.locale.getString("ui.action.abandon.confirm"))) {
-                                    
+
                                     $timeout(() => {
                                         $scope.scopedObject = $scope.original;
                                         delete (panel.view);
                                         $scope.altView = false;
-        
+
                                     })
                                 }
                                 break;
@@ -296,12 +322,12 @@ angular.module('santedb-lib')
                                 });
                                 break;
                         }
-                        
+
                     }
 
                     $scope.submitForm = async function (panel) {
 
-                        switch(panel.view) {
+                        switch (panel.view) {
                             case 'Edit':
                             case 'Add':
                                 if (panel.editForm) {
@@ -313,7 +339,7 @@ angular.module('santedb-lib')
                                             panel.view = null;
                                             $scope.altView = false;
                                         });
-    
+
                                     }
                                 }
                                 else
@@ -335,7 +361,7 @@ angular.module('santedb-lib')
                                     panel.view = null;
                                 break;
                         }
-                        
+
                     }
 
                     $scope.customizePanels = async function (form) {

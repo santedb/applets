@@ -2081,19 +2081,33 @@ function SanteDBWrapper() {
                                         var target = k.substring(6);
                                         var source = object.tag[k];
 
+                                        if(Array.isArray(source))
+                                        {
+                                            source = source[0];
+                                        }
                                         // Analyze
                                         var scopedValue = object;
                                         source.split('.').forEach(function (s) { if (scopedValue) scopedValue = scopedValue[s]; });
 
-                                        object[target] = copyObject(scopedValue, true);
+                                        var targetObject = object;
+                                        var targetParts = target.split('.');
+                                        for(var i = 0; i < targetParts.length - 1; i++) {
+                                            if(targetObject) {
+                                                targetObject = targetObject[targetParts[i]];
+                                            }
+                                        };
 
+                                        scopedValue = copyObject(scopedValue, true);
+                                        targetObject[targetParts[targetParts.length - 1]] = scopedValue;
                                     })
                                 }
 
                                 if (object.relationship)
                                     object.relationship = await getSubTemplates(object.relationship, parms);
-
-                                if (rel.playerModel) {
+                                if (object.participation)
+                                    object.participation = await getSubTemplates(object.participation, parms);
+                                
+                                if (rel.playerModel || rel.$type == "ActParticipation") {
                                     rel.playerModel = object;
                                     Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] || targetProperty[subKey]);
                                 }

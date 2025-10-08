@@ -26,14 +26,14 @@
                     <div class="m-1 flex-grow-1">
                         <div class="btn-group globalActions" ng-if="actions">
                             <div ng-repeat="action in actions track by $index" class="btn-group">
-                                <button type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" class="btn"
+                                <button ng-if="filterAction(action)" type="button" data-toggle="{{ action.children ? 'dropdown' : '' }}" class="btn"
                                     ng-class="[ action.className, { 'dropdown-toggle' : action.children }]" ng-click="doAction(action)" demand="{{action.demand}}" id="{{::$$eleId}}actionList_button_{{$index}}">
                                     <i class="fas fa-fw" ng-class="action.icon"></i>
                                     {{ action.label || 'ui.action.' + action.name | i18n }}
                                 </button>
                                 <div class="dropdown-menu overflow-auto" id="{{::$$eleId}}actionList_{{$index}}" ng-if="action.children" data-display="static">
                                     <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
-                                        ng-repeat="child in action.children track by $index" >
+                                        ng-repeat="child in action.children track by $index"  ng-if="filterAction(child)">
                                         <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name | i18n }}
 
                                     </button>

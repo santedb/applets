@@ -38,7 +38,8 @@ angular.module('santedb-lib')
                 filter: '<',
                 excludeEntities: '=',
                 key: "<",
-                autoSelectSingles: "<"
+                autoSelectSingles: "<",
+                itemSupplement: "<"
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
             }],
@@ -54,7 +55,6 @@ angular.module('santedb-lib')
                     else {
                         return SanteDB.display.renderEntityName(i.name);
                     }
-
                 }
                 
                 // Load Entities
@@ -66,7 +66,18 @@ angular.module('santedb-lib')
                         }
                         filter._count = 30;
                         filter._includeTotal = false;
-                        var results = await api.findAsync(filter, attrs.viewModel || "fastload");
+                        var results = await api.findAsync(filter, attrs.viewModel || "fastview");
+
+                        // are there any item supplements
+                        if(scope.itemSupplement) {
+                            results.resource = await Promise.all(results.resource.map(async (item) => {
+                                for(var i in scope.itemSupplement) {
+                                    item = await scope.itemSupplement[i](item);
+                                }
+                                return item;
+                            }))
+                        };
+                        
                         $timeout(() => {
                             if(!ngModel.$viewValue && scope.autoSelectSingles && results.resource?.length == 1) {
                                 if(scope.key) {

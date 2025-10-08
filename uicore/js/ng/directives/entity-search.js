@@ -72,7 +72,7 @@ angular.module('santedb-lib')
 
             // Clearing text breaks  grouping display - ensure that there are no children before clearing text
             // Also need to preserve placeholder and preserve the loading 
-            if(!selection.children && !selection.loading && selection.id != "") {
+            if(!selection.children && !selection.loading && selection.id != "" && !selection.title) {
                 selection.text = '';
             }
             
@@ -200,12 +200,10 @@ angular.module('santedb-lib')
                 type: '=', // The type of object to be searched
                 childResource: '<', // The child resource to query on
                 childResourceScope: '=', // The child resource to query on
-                display: '<', // The expression which dictates the display
                 searchField: '<', // The field on the server to search results for
                 defaultResults: '=', // The default results to show
                 groupBy: '<', // If grouping results (by country, by state, etc.) the grouping expression
                 filter: '=', // The filter to apply in addition to the searchField
-                groupDisplay: '<', // The group display field expression
                 key: '<', // When the default value is provided by the ng-model - this is the property where the resolution should occur (i.e. if the current value is CA and the key is identifier[ISO3166].value then the server will be searched for that filter field)
                 selector: '<', // When values are returned from the server - this is the expression to use to extract the value of the <options>
                 valueProperty: '<', // If the object on ng-model is bound to a complex object instead of a string, this is the path on that object to fetch the value from
@@ -220,7 +218,8 @@ angular.module('santedb-lib')
                 withRelationshipSourceClass: '=', // The class concept of the source object
                 withRelationshipTargetClass: '=', // The class concept of the target object
                 jsFilter: '<',
-                upstream: '<'
+                upstream: '<',
+                viewModel: "<"
             },
             restrict: 'E',
             require: 'ngModel',
@@ -264,11 +263,11 @@ angular.module('santedb-lib')
                                     if ($scope.key && $scope.key != "id") {
                                         var query = angular.copy($scope.filter || {});
                                         query[$scope.key] = v;
-                                        query._viewModel = "dropdown";
+                                        query._viewModel = $scope.viewModel || "dropdown";
                                         query._upstream = $scope.upstream;
                                         var res = null;
                                         if ($scope.childResource) {
-                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, "dropdown", $scope.upstream);
+                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, $scope.viewModel || "dropdown", $scope.upstream);
                                         }
                                         else {
                                             res = await api.findAsync(query);
@@ -290,10 +289,10 @@ angular.module('santedb-lib')
                                         var res = null;
 
                                         if ($scope.childResource) {
-                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: "dropdown" }, $scope.upstream);
+                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: $scope.viewModel || "dropdown" }, $scope.upstream);
                                         }
                                         else {
-                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: "dropdown", _upstream: $scope.upstream });
+                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: $scope.viewModel || "dropdown", _upstream: $scope.upstream });
                                         }
 
                                         if ($(selectControl).find(`option[value='${v}']`).length == 0) {
@@ -348,10 +347,10 @@ angular.module('santedb-lib')
 
                 $timeout(function () {
                     var filter = scope.filter || { statusConcept: [StatusKeys.Active, StatusKeys.New] };;
-                    var displayString = scope.display;
+                    var displayString = attrs.display;
                     var searchProperty = scope.searchField;
                     var groupString = scope.groupBy;
-                    var groupDisplayString = scope.groupDisplay;
+                    var groupDisplayString = attrs.groupDisplay;
                     var resultProperty = scope.valueSelector || scope.key || "id";
                     var selector = scope.selector;
                     var valueProperty = scope.valueProperty;
@@ -425,7 +424,7 @@ angular.module('santedb-lib')
                             method: "GET",
                             headers: {
                                 "Accept": "application/x.santedb.rim.viewModel+json", // "application/json+sdb-viewmodel",
-                                "X-SDB-ViewModel": "dropdown"
+                                "X-SDB-ViewModel": scope.viewModel || "dropdown"
                             },
                             data: function (params) {
 
@@ -442,7 +441,7 @@ angular.module('santedb-lib')
                                 }
                                 filter["_count"] = 25;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
-                                filter["_viewModel"] = "dropdown";
+                                filter["_viewModel"] = scope.viewModel || "dropdown";
 
                                 if(scope.upstream) {
                                     filter["_upstream"] = true;
@@ -479,7 +478,7 @@ angular.module('santedb-lib')
 
                                             var text = "";
                                             if (displayString) {
-                                                text = scope.$eval(displayString, { scope: o });
+                                                text = scope.$eval(displayString, { item: o, display: SanteDB.display });
                                             }
                                             else if (o.name !== undefined) {
                                                 text = renderObject(o, scope.minRender);
@@ -515,10 +514,10 @@ angular.module('santedb-lib')
                                             try {
                                                 var groupDisplay = null;
                                                 if (Array.isArray(groupString)) {
-                                                    groupDisplay = groupString.map(o => scope.$eval('scope.' + o, { scope: data[itm] })).find(o => o != null);
+                                                    groupDisplay = groupString.map(o => scope.$eval('scope.' + o, { item: data[itm], display: SanteDB.display })).find(o => o != null);
                                                 }
                                                 else {
-                                                    groupDisplay = scope.$eval('scope.' + groupString, { scope: data[itm] });
+                                                    groupDisplay = scope.$eval('scope.' + groupString, { item: data[itm], display: SanteDB.display });
                                                 }
 
                                                 if (!groupDisplay)

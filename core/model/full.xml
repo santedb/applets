@@ -95,6 +95,7 @@
     <property name="player"/>
     <property name="playerModel" all="true" ref="$type" behavior="always" />
     <property name="participationRole" all="true" />
+    <property name="participationRoleModel" all="true" behavior="always" ref="ConceptNested"/>
     <property name="key" all="true" />
     <property name="quantity" all="true" />
     <property name="classification" behavior="always" />
@@ -831,7 +832,7 @@
         <property name="player" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
-      <property name="*" ref="ActParticipation" all="true" />
+      <property name="*" ref="ActParticipation" all="true"/>
     </property>
   </type>
 
@@ -926,13 +927,7 @@
         <property name="relationshipTypeModel" behavior="always" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
-      <property name="*" all="false">
-        <property name="actModel" behavior="never" />
-        <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
-        <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" behavior="never" />
+      <property name="*" all="false" ref="ActParticipation">
       </property>
     </property>
   </type>
@@ -1001,14 +996,7 @@
       <property name="SecondaryPerformer" all="true">
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
-      <property name="*" all="false">
-        <property name="actModel" behavior="never" />
-        <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
-        <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" behavior="never" />
-      </property>
+      <property name="*" all="false" ref="ActParticipation" />
     </property>
   </type>
 
@@ -1062,14 +1050,8 @@
           <property name="participation" behavior="never" />
         </property>
       </property>
-      <property name="*" all="false">
-        <property name="actModel" behavior="never" />
-        <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
-        <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" behavior="never" />
-      </property>
+      <property name="*" all="false" ref="ActParticipation" />
+
     </property>
   </type>
 
@@ -1091,7 +1073,7 @@
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
-    <property name="statusConceptModel" behavior="never" />
+    <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="moodConceptModel" behavior="never" />
     <property name="interpretationConceptModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
@@ -1114,14 +1096,23 @@
           <property name="participation" behavior="never" />
         </property>
       </property>
-      <property name="*" all="false">
+      <property name="Performer">
         <property name="actModel" behavior="never" />
         <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
         <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" behavior="never" />
+        <property name="playerModel" all="false" behavior="always">
+          <property name="id" />
+          <property name="version" />
+          <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
+          <property name="identifier" all="true" />
+          <property name="name" all="true" behavior="always" />
+          <property name="tag" all="true" />
+          <property name="extension" all="true" />
+          <property name="participation" behavior="never" />
+        </property>
       </property>
+      <property name="*" all="false" ref="ActParticipation" />
+
     </property>
   </type>
 
@@ -1167,14 +1158,8 @@
           <property name="participation" behavior="never" />
         </property>
       </property>
-      <property name="*" all="false">
-        <property name="actModel" behavior="never" />
-        <property name="sourceModel" behavior="never" />
-        <property name="act" all="true" />
-        <property name="participationRoleModel" behavior="never" />
-        <property name="player" all="true" />
-        <property name="playerModel" behavior="never" />
-      </property>
+      <property name="*" all="false" ref="ActParticipation" />
+
     </property>
   </type>
 
@@ -1255,6 +1240,8 @@
         <property name="relationshipTypeModel" behavior="always" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
+      <property name="*" all="false" ref="ActParticipation" />
+      
     </property>
   </type>
 

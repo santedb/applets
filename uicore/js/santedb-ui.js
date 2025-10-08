@@ -97,6 +97,17 @@ SanteDBWrapper.prototype.display = new function () {
             return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
         }
     }
+
+    /**
+     * 
+     * @param {*} extension Render the extension type
+     * @param {*} targetType The target type
+     * @returns The rendered extension
+     */
+    this.renderExtension = function(extension, targetType) {
+        return extension;
+    }
+
     /**
      * @method
      * @memberof SanteDBWrapper.display

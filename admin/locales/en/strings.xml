@@ -127,6 +127,9 @@
     <string name="ui.admin.security.applications.count">Application management</string>
     <string name="ui.admin.security.audits">Audit Snapshot</string>
     <!-- System Information -->
+    <string name="ui.admin.system.dashboard.title">System Administration</string>
+    <string name="ui.admin.system.info.manage.title">Server Status</string>
+    <string name="ui.admin.system.info.manage.carddescription">View system information and status of components.</string>
     <string name="ui.admin.system.info.local.title">Local Server</string>
     <string name="ui.admin.system.info.realm.title">Realm Server</string>
     <string name="ui.admin.system.info.coreInfo">Core Info</string>
@@ -142,6 +145,7 @@
         <i class="fas fa-info-circle"></i> This screen is used to update or remove applet solutions from the iCDR instance. An applet is a 
         packaged and digitally signed file which contains new features and functions in SanteDB.
         ]]></string>
+    <string name="ui.admin.system.applets.manage.carddescription">Manage applets installed in this realm.</string>
     <string name="ui.admin.system.applet.manage.solutionapplets">Solution Applets</string>
     <string name="ui.admin.system.applet.remove.confirm">Are you sure you want to remove the applet {id} from the server?</string>
     <string name="ui.admin.system.applet.upload.success">Applet solution was uploaded successfully</string>
@@ -156,6 +160,8 @@
     <string name="ui.admin.system.services.state">Status</string>
     <string name="ui.admin.system.applets.signed">Digitally Signed</string>
     <string name="ui.admin.system.applets.uploadNew">Upload New Version</string>
+    <string name="ui.admin.system.logs.manage.title">System Logs</string>
+    <string name="ui.admin.system.logs.carddescription">View and download log files produced by the system.</string>
     <string name="ui.admin.system.logs.show">Show Logs From</string>
     <string name="ui.admin.system.logs.local">Local Service</string>
     <string name="ui.admin.system.logs.remote">Realm Service</string>
@@ -164,6 +170,8 @@
     <string name="ui.admin.system.confirm.serviceChange">The specified service change has been made. You may need to restart the gateway for this change to take effect.</string>
 
     <string name="ui.admin.system.probe.show">Show Probes From</string>
+    <string name="ui.admin.system.probes.manage.title">Probes</string>
+    <string name="ui.admin.system.probes.manage.carddescription">View diagnostic probes for system health monitoring.</string>
 
     <!-- Mail  -->
     <string name="ui.admin.mail">Messages</string>
@@ -254,6 +262,8 @@
     <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the identity domain?</string>
     <string name="ui.admin.domain.saveSuccess">Identity domain has been updated successfully</string>
     <!-- Job Screen Page -->
+    <string name="ui.admin.system.jobs.manage.title">Scheduled Jobs</string>
+    <string name="ui.admin.system.jobs.manage.carddescription">Manage job definitions and schedules.</string>
     <string name="ui.admin.job.neverRun">Never Run</string>
     <string name="ui.admin.job.runJob.confirm">Are you sure you want to manually run this job?</string>
     <string name="ui.admin.job.runJob.success">Job was successfully started</string>
@@ -306,12 +316,16 @@
     <string name="ui.admin.bug.onlineOnly">You must be online to submit a bug</string>
 
     <!-- Queue Management -->
+    <string name="ui.admin.system.queue.manage.title">Dispatch Queues</string>
+    <string name="ui.admin.system.queue.manage.carddescription">Message queues for audits and other system components.</string>
     <string name="ui.admin.queue.resubmit.confirm">Are you sure you want to resubmit all objects in {queue} for re-dispatch?</string>
     <string name="ui.admin.queue.purge.confirm">Are you sure you want to PURGE all objects in {queue}? These messages will be erased forever.</string>
     <string name="ui.admin.queue.contents.name">Queue Path</string>
     <string name="ui.admin.queue.contents.size">Waiting Messages</string>
 
     <!-- Pub/Sub Management -->
+    <string name="ui.admin.system.pubsub.manage.title">Pub/Sub Management</string>
+    <string name="ui.admin.system.pubsub.manage.carddescription">Publish and subscribe integrations with external systems.</string>
     <string name="ui.admin.pubsub.disable.confirm">Are you sure you want to disable this subscription? The remote endpoint will stop receiving notifications from this instance of SanteDB</string>
     <string name="ui.admin.pubsub.enable.confirm">Are you sure you want to enable this subscription? The remote endpoint will begin receiving notifications from this instance of SanteDB</string>
     <string name="ui.admin.pubsub.delete.confirm">Are you sure you want to delete this subscription?</string>

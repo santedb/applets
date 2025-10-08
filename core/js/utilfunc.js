@@ -426,7 +426,7 @@ function copyObject(fromObject, deepCopy) {
             });
         return obj;
     }
-    return obj;
+    return fromObject;
 }
 
 
@@ -595,7 +595,11 @@ function applyCascadeInstructions(source) {
             searchRelationship = [searchRelationship];
 
         searchRelationship
-            .filter(o => o.targetModel != null && (o.targetModel.templateModel != null && o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*"))
+            .filter(o => 
+                o.targetModel != null && 
+                ((o.targetModel.templateModel != null && o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*")) &&
+                o.classification != RelationshipClassKeys.ContainedObjectLink
+            )
             .forEach(function (relationship) {
 
                 if (!relationship.targetModel.participation)
