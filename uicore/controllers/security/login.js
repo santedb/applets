@@ -86,6 +86,9 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                     });
                     return;
                 case "password_expired":
+                    //Reset strength meter when showing dialog.
+                    delete $scope.strength;
+
                     $scope.reset = {
                         username: $scope.login.userName,
                         challenge: { challenge: EmptyGuid },
