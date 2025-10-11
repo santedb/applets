@@ -116,7 +116,7 @@
     </property>
     <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="classConcept" behavior="always" />
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="determinerConceptModel" behavior="never" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="createdBy" behavior="always" all="true" />
@@ -389,7 +389,7 @@
     <property name="identifier" all="true" behavior="always">
       <property name="*" ref="EntityIdentifier" />
     </property>
-    <property name="classConceptModel" behavior="always" all="false">
+    <property name="classConceptModel" behavior="always" all="false" ref="ConceptNested">
       <property name="id" />
       <property name="mnemonic" />
       <property name="name" all="true" />
@@ -445,7 +445,7 @@
     <property name="identifier" all="true" behavior="always">
       <property name="*" ref="EntityIdentifier" />
     </property>
-    <property name="classConceptModel" behavior="always" all="false">
+    <property name="classConceptModel" behavior="always" all="false" ref="ConceptNested">
       <property name="id" />
       <property name="mnemonic" />
       <property name="name" all="true" />
@@ -682,7 +682,7 @@
       </property>
     <property name="valueModel" all="true" ref="ConceptNested" behavior="always" />
     <property name="classConcept" behavior="always" />
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always"  ref="ConceptNested"/>
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
@@ -849,7 +849,7 @@
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
@@ -944,7 +944,7 @@
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
@@ -1023,7 +1023,7 @@
     <property name="classConcept" behavior="always" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
 
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
@@ -1068,7 +1068,7 @@
     <property name="classConcept" behavior="always" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
 
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />
@@ -1130,7 +1130,7 @@
     <property name="classConcept" behavior="always" />
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
 
-    <property name="classConceptModel" behavior="always" />
+    <property name="classConceptModel" behavior="always" ref="ConceptNested" />
     <property name="protocol" behavior="always" />
     <property name="previousVersion" behavior="never" />
     <property name="previousVersionModel" behavior="always" ref="ActPreviousVersion" />

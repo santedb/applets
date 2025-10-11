@@ -626,8 +626,10 @@
   <string name="ui.model.act.reasonConcept.other.hint">Because you selected "other" as the reason
     for the action, you should enter description of the reason</string>
   <string name="ui.model.act.actTime">Timestamp</string>
+  <string name="ui.model.act.actTime.dateTime">Date/Time Performed</string>
+  <string name="ui.model.act.actTime.dateTime.hint">Select the date/time that this action was performed</string>
   <string name="ui.model.act.actTime.date">Date Performed</string>
-  <string name="ui.model.act.actTime.date.hint">The date when the immunization was administered.</string>
+  <string name="ui.model.act.actTime.date.hint">The date when the action was performed.</string>
   <string name="ui.model.act.startTime">Started</string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
