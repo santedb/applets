@@ -2072,9 +2072,13 @@ function SanteDBWrapper() {
 
                             var targetProperty = rel.playerModel || rel.targetModel;
 
-                            if (targetProperty && !targetProperty.classConcept && targetProperty.templateModel) {
+                            if (targetProperty && (!targetProperty.classConcept || targetProperty.tag?.$resolveSubTemplate) && targetProperty.templateModel) {
                                 var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, viewModel || "full", parms);
 
+                                if(targetProperty.id) {
+                                    object.id = targetProperty.id; // We already have an ID for this object so we want to keep that 
+                                }
+                                
                                 // Initialize the template 
                                 if (object.tag) {
                                     Object.keys(object.tag).filter(o => o.indexOf("$copy") == 0).forEach(function (k) {

@@ -142,6 +142,10 @@ angular.module('santedb-lib')
                     }
                 }
 
+                $scope.filterCurrentActions = function(templateId) {
+                    return $scope.currentActions.filter(a => a.template == templateId || a.targetModel?.template == templateId);
+                }
+
                 $scope.markComplete = async function (index) {
 
                     try {
