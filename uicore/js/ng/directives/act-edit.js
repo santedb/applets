@@ -142,8 +142,15 @@ angular.module('santedb-lib')
                     }
                 }
 
-                $scope.filterCurrentActions = function(templateId) {
-                    return $scope.currentActions.filter(a => a.template == templateId || a.targetModel?.template == templateId).map(o=>o.targetModel || o);
+                $scope.filterCurrentActions = function (templateId) {
+                    return $scope.currentActions.filter(a => a.template == templateId || a.targetModel?.template == templateId).map(o => o.targetModel || o);
+                }
+
+                function markActComplete(act) {
+                    act.statusConcept = StatusKeys.Completed;
+                    act.moodConcept = ActMoodKeys.Eventoccurrence;
+                    act.actTime = act.actTime || new Date();
+                    act.relationship?.HasComponent?.filter(cmp => cmp.targetModel).forEach(cmp => markActComplete(cmp.targetModel));
                 }
 
                 $scope.markComplete = async function (index) {
@@ -155,21 +162,23 @@ angular.module('santedb-lib')
                         var thisUser = await SanteDB.resources.userEntity.getAsync(userEntityId, "dropdown");
                         $timeout(() => {
                             itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
-                            itm.targetModel.statusConcept = StatusKeys.Completed;
-                            itm.targetModel.moodConcept = ActMoodKeys.Eventoccurrence;
+                            markActComplete(itm.targetModel);
                             itm.targetModel.participation = itm.targetModel.participation || {};
                             itm.targetModel.participation.Performer = itm.targetModel.participation.Performer || [];
 
                             // Ensure that the performer doesn't already exist on this object
-                            if(!itm.targetModel.participation.Performer.find(p => p.player == thisUser.id)) {
+                            if (!itm.targetModel.participation.Performer.find(p => p.player == thisUser.id)) {
                                 itm.targetModel.participation.Performer.push(new ActParticipation({
                                     player: thisUser.id,
                                     playerModel: thisUser
                                 }));
                             }
+
+                            // Indicate all sub-components as complete
+
                         });
                     }
-                    catch(e) {
+                    catch (e) {
                         console.error(e);
                     }
                     finally {
@@ -297,7 +306,7 @@ angular.module('santedb-lib')
                             $(".actBackEntry", element).removeClass('d-none');
                             $(".actMoveToHistory", element).removeClass('d-none');
                         }
-                        
+
                         if (_mode == "view") {
                             $(".editOnly", element).remove();
                             $(".viewOnly", element).removeClass("d-none");
@@ -306,7 +315,7 @@ angular.module('santedb-lib')
                             $(".viewOnly", element).remove();
                             $(".editOnly", element).removeClass("d-none");
                         }
-                        
+
                     }, 500);
                 }
                 scope.applyVisibilityAttributes();
@@ -314,13 +323,13 @@ angular.module('santedb-lib')
                 _noCdss = attrs.disableCdss;
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
-                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False').sort((a,b) => a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
+                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False').sort((a, b) => a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
                     scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && (a.targetModel.tag.isBackEntry[0] == 'True' || a.targetModel.tag.isBackEntry[0] == 'true'))
                         .groupBy(
                             o => o.targetModel.templateModel.mnemonic,
                             o => o.targetModel
                         );
-                    
+
                     // Bind utility functions
                     scope.model.relationship.HasComponent.forEach(comp => {
                         comp.targetModel._getEncounter = () => scope.model;
