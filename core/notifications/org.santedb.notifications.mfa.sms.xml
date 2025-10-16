@@ -16,9 +16,19 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<NotificationTemplate xmlns="http://santedb.org/notification" id="org.santedb.notifications.mfa.sms">
-    <content lang="en">
+<NotificationTemplate xmlns="http://santedb.org/notification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <id>BB6D6FD5-1E0E-4C10-BAFA-B22909FFD16C</id>
+    <status>c8064cbd-fa06-4530-b430-1a52f1530c27</status><!-- Active -->
+    <mnemonic>org.santedb.notifications.mfa.sms</mnemonic>
+    <name>MFA SMS Template</name>
+    <tags>MFA SMS</tags>
+    <contents>
+        <lang xsi:nil="true" />
         <subject>Your SanteDB TFA Code</subject>
-    <![CDATA[Your SanteDB TFA Code is ${code}]]>
-    </content>
+        <![CDATA[Your SanteDB TFA Code is ${code}]]>
+    </contents>
+    <parameters>
+        <name>code</name>
+        <description>The code that the user will enter during login.</description>
+    </parameters>
 </NotificationTemplate>
