@@ -165,7 +165,7 @@ angular.module('santedb-lib')
             else if (selection.text)
                 retVal += selection.text;
             
-            if(selection.expiryDate) {
+            if(selection.expiryDate && selection.expiryDate.getYear() > 0) {
                 retVal += ` <span class="badge badge-warning">EXP: ${moment(selection.expiryDate).format("YYYY-MM-DD")}</span>`;
             }
 

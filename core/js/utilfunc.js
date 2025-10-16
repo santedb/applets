@@ -24,12 +24,12 @@
  * @param {Function} valueSelector The function predicate that returns the value for the groupin
  * @returns {Object} An object whose keys represent the delegate returned by {keySelector}
  */
-Object.defineProperty(Array.prototype, 'groupBy', { 
-    value: function(keySelector, valueSelector) {
+Object.defineProperty(Array.prototype, 'groupBy', {
+    value: function (keySelector, valueSelector) {
         var retVal = {};
         this.forEach(itm => {
             var keyValue = keySelector(itm);
-            if(retVal[keyValue]) {
+            if (retVal[keyValue]) {
                 retVal[keyValue].push(valueSelector(itm));
             }
             else {
@@ -37,21 +37,21 @@ Object.defineProperty(Array.prototype, 'groupBy', {
             }
         });
         return retVal;
-    }, 
-    enumerable: false 
+    },
+    enumerable: false
 });
 
 
 /**
  * @summary Select distinct objects from the array
  */
-Object.defineProperty(Array.prototype, 'distinct', { 
-    value: function() {
+Object.defineProperty(Array.prototype, 'distinct', {
+    value: function () {
         var rv = [];
         this.forEach(v => !rv.includes(v) ? rv.push(v) : null);
         return rv;
-    }, 
-    enumerable: false 
+    },
+    enumerable: false
 });
 
 /**
@@ -59,7 +59,7 @@ Object.defineProperty(Array.prototype, 'distinct', {
  * @param {String} keySelector The selector of the sub-property
  */
 Object.defineProperty(Array.prototype, 'selectField', {
-    value: function(keySelector) {
+    value: function (keySelector) {
         return this.map(e => e[keySelector])
     },
     enumerable: false
@@ -70,14 +70,14 @@ Object.defineProperty(Array.prototype, 'selectField', {
  * @memberof Exception
  * @summary Get the root cause of the exception
  */
-Exception.prototype.getRootCause = function() {
+Exception.prototype.getRootCause = function () {
 
     var retVal = this;
-    while(retVal.cause) {
-        retVal = retVal.cause; 
+    while (retVal.cause) {
+        retVal = retVal.cause;
     }
     return retVal;
-    
+
 }
 
 /**
@@ -85,7 +85,7 @@ Exception.prototype.getRootCause = function() {
  * @memberof Number
  * @summary Determines if the number is a whole number
  */
-Number.prototype.isWholeNumber = function() {
+Number.prototype.isWholeNumber = function () {
     return Math.trunc(this) == this;
 }
 /**
@@ -145,7 +145,7 @@ Date.prototype.addDays = function (days) {
  * @param {string} measure The unit of measure
  * @returns The difference between the date and this date
  */
-Date.prototype.age = function(measure) {
+Date.prototype.age = function (measure) {
     return moment().diff(this, measure || 'years', false);
 }
 
@@ -153,7 +153,7 @@ Date.prototype.age = function(measure) {
  * @summary Gets the ISO week number 
  * @returns {number} The current week number
  */
-Date.prototype.isoWeek = function() {
+Date.prototype.isoWeek = function () {
     return moment(this).isoWeek();
 }
 
@@ -260,7 +260,7 @@ Date.prototype.lastWeekDay = function (month, year) {
  * @param {String} formatString The formatting string for the date
  * @returns {String} The formatted date
  */
-Date.prototype.format = function(formatString) {
+Date.prototype.format = function (formatString) {
     formatString = SanteDB.locale.dateFormats[formatString] || formatString;
     return moment(this).format(formatString);
 }
@@ -272,52 +272,51 @@ Date.prototype.format = function(formatString) {
  * @param {String} formatString The formatting string for the date
  * @returns {String} The formatted date
  */
-Date.prototype.formatHuman = function(formatString) {
+Date.prototype.formatHuman = function (formatString) {
     formatString = SanteDB.locale.dateFormats.human[formatString] || formatString;
     return moment(this).format(formatString);
 }
 
-Date.prototype.greaterOf = function(...otherDates) {
-    return [this, ...otherDates].sort((a,b) => a > b ? -1 : 1)[0];
+Date.prototype.greaterOf = function (...otherDates) {
+    return [this, ...otherDates].sort((a, b) => a > b ? -1 : 1)[0];
 }
 
-Date.prototype.lesserOf = function(...otherDates) {
-    return [this, ...otherDates].sort((a,b) => a > b ? 1 : -1)[0];
+Date.prototype.lesserOf = function (...otherDates) {
+    return [this, ...otherDates].sort((a, b) => a > b ? 1 : -1)[0];
 }
 
 /**
  * @returns The decoded base64 data as a JSON object
  */
-String.prototype.b64DecodeJson = function() {
+String.prototype.b64DecodeJson = function () {
     return JSON.parse(atob(this));
 }
 
 /**
  * @summary Parses a string from base64 into a buffer
  */
-String.prototype.b64DecodeBuffer = function(isUrlEncoded) {
+String.prototype.b64DecodeBuffer = function (isUrlEncoded) {
     var source = this;
-    while(source.length % 4 != 0) source += '='; // re-add padding
-    var e={},i,b=0,c,x,l=0,a,w=String.fromCharCode,L=source.length, oi=0;
+    while (source.length % 4 != 0) source += '='; // re-add padding
+    var e = {}, i, b = 0, c, x, l = 0, a, w = String.fromCharCode, L = source.length, oi = 0;
     var r = new Uint8Array(L);
-    var A= isUrlEncoded ?
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-    : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+    var A = isUrlEncoded ?
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+        : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    for (i = 0; i < 64; i++) { e[A.charAt(i)] = i; }
 
-    for(x=0;x<L;x++){
-        c=e[source.charAt(x)];
-        b=(b<<6)+c;
-        l+=6;
-        while(l>=8)
-        {
-            if((a=(b>>>(l-=8)) & 0xff) || (x < (L-2))) {
+    for (x = 0; x < L; x++) {
+        c = e[source.charAt(x)];
+        b = (b << 6) + c;
+        l += 6;
+        while (l >= 8) {
+            if ((a = (b >>> (l -= 8)) & 0xff) || (x < (L - 2))) {
                 r[oi++] = a;
             }
         }
     }
     var retVal = new Uint8Array(oi);
-    for(var i = 0; i < oi; i++) {
+    for (var i = 0; i < oi; i++) {
         retVal[i] = r[i];
     }
     return retVal.buffer;
@@ -445,7 +444,7 @@ function scrubModelProperties(source) {
         Object.keys(object).forEach(function (key) {
 
             // Hidden properties
-            if(key.indexOf("_") == 0) {
+            if (key.indexOf("_") == 0) {
                 delete object[key];
                 return;
             }
@@ -481,11 +480,11 @@ function scrubModelProperties(source) {
  */
 function ensureIsArray(objectToMakeArray) {
 
-    if(objectToMakeArray === null || objectToMakeArray === undefined) {
+    if (objectToMakeArray === null || objectToMakeArray === undefined) {
         return null;
     }
-    else if(!Array.isArray(objectToMakeArray)) {
-        if(objectToMakeArray[0]) // not an array but has a '0' element so we convert
+    else if (!Array.isArray(objectToMakeArray)) {
+        if (objectToMakeArray[0]) // not an array but has a '0' element so we convert
         {
             var arr = [];
             Object.keys(objectToMakeArray).forEach(k => arr.push(objectToMakeArray[k]));
@@ -495,7 +494,7 @@ function ensureIsArray(objectToMakeArray) {
             return [objectToMakeArray];
         }
     }
-    else 
+    else
         return objectToMakeArray;
 }
 
@@ -506,18 +505,36 @@ function ensureIsArray(objectToMakeArray) {
 async function prepareActForSubmission(act) {
 
     // Convert AngularJS' odd identifier.0.value to identifier[0].value (i.e. make it an array)
-    if(act.identifier) {
-        Object.keys(act.identifier).forEach(function(k) {
+    if (act.identifier) {
+        Object.keys(act.identifier).forEach(function (k) {
             var id = ensureIsArray(act.identifier[k]);
-            id = id.filter(o=>o.value && o.value !== "");
+            id = id.filter(o => o.value && o.value !== "");
             act.identifier[k] = id;
         });
     }
- 
+
+    // Remove and correct keys on participations
+    if (act.participation) {
+        Object.keys(act.participation).forEach((k) => {
+            act.participation[k] = ensureIsArray(act.participation[k]);
+            act.participation[k] = act.participation[k].map((p) => {
+                if (p.playerModel) {
+                    p.player = p.playerModel.id = p.playerModel.id || p.player || SanteDB.application.newGuid();
+                }
+                if (p.actModel) {
+                    p.act = p.actModel.id = p.actModel.id || p.act || SanteDB.application.newGuid();
+                }
+                delete p.participationRoleModel;
+                delete p.classificationModel;
+                return p;
+            }).filter(r => r && (r.act || r.player || r.source));
+        });
+    }
+
     // Remove and correct identifiers on the relationships and participations
     if (act.relationship) {
         Object.keys(act.relationship).forEach((k) => {
-           
+
             act.relationship[k] = ensureIsArray(act.relationship[k]);
             act.relationship[k] = act.relationship[k].map((r) => {
                 if (r.targetModel) {
@@ -536,24 +553,6 @@ async function prepareActForSubmission(act) {
         });
     }
 
-    // Remove and correct keys on participations
-    if(act.participation) {
-        Object.keys(act.participation).forEach((k) => {
-            act.participation[k] = ensureIsArray(act.participation[k]);
-            act.participation[k] = act.participation[k].map((p) => {
-                if(p.playerModel) {
-                    p.player = p.playerModel.id = p.playerModel.id || p.player || SanteDB.application.newGuid();
-                }
-                if(p.actModel) {
-                    p.act = p.actModel.id = p.actModel.id || p.act || SanteDB.application.newGuid();
-                }
-                delete p.participationRoleModel;
-                delete p.classificationModel;
-                return p;
-            }).filter(r => r && (r.act || r.player || r.source));
-        });
-    }
-
     return applyCascadeInstructions(act);
 }
 
@@ -562,12 +561,12 @@ async function prepareActForSubmission(act) {
  * @param {Act} source The act on which the cascade instructions should be applied
  */
 function applyCascadeInstructions(source) {
-    
+
     // If the act has cascade instructions for context conduction then enforce them
     source.tag = source.tag || {};
-    source.tag["$cascade:*:*"] = ["Location","Authororiginator","RecordTarget"];
+    source.tag["$cascade:*:*"] = ["Location", "Authororiginator", "RecordTarget"];
     source.relationship = source.relationship || {};
-    
+
     var cascadeInstructions = Object.keys(source.tag).filter(o => o.indexOf("$cascade:") == 0);
 
     cascadeInstructions.forEach(function (instruction) {
@@ -578,6 +577,7 @@ function applyCascadeInstructions(source) {
             console.error("Cascade control tag should be in format: $cascade:RelationshipType:template-id");
             return;
         }
+
         // Find the participation with that template
         if (targetTemplate[1] == "*") {
             searchRelationship = Object.keys(source.relationship).map(key => source.relationship[key]).flat();
@@ -595,10 +595,10 @@ function applyCascadeInstructions(source) {
             searchRelationship = [searchRelationship];
 
         searchRelationship
-            .filter(o => 
-                o.targetModel != null && 
+            .filter(o =>
+                o.targetModel != null &&
                 ((o.targetModel.templateModel != null && o.targetModel.templateModel.mnemonic == targetTemplate[2] || targetTemplate[2] == "*")) &&
-                o.classification != RelationshipClassKeys.ContainedObjectLink
+                (targetTemplate[2] != "*" || o.classification != RelationshipClassKeys.ContainedObjectLink) // for specific cascade instructions we cascade all
             )
             .forEach(function (relationship) {
 
@@ -613,26 +613,36 @@ function applyCascadeInstructions(source) {
                         return { sourceRole: data[1], targetRole: data[0] };
                 })
                     .forEach(function (instruction) {
-                        
-                        var sourcePlayer = source.participation[instruction.sourceRole];
-                        if(!sourcePlayer) return;
+
                         // Apply the cascade for actTime, startTime, stopTime
-                        if(relationship.targetModel.statusConcept == StatusKeys.Completed) {
+                        if (relationship.targetModel.statusConcept == StatusKeys.Completed) {
                             relationship.targetModel.actTime = relationship.targetModel.actTime || source.actTime;
                         }
                         relationship.targetModel.moodConcept = relationship.targetModel.moodConcept || source.moodConcept;
 
-                        if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
+                        if (instruction.sourceRole === "null") // Delete the participations
                         {
-                            relationship.targetModel.participation[instruction.targetRole] = sourcePlayer.map(ptcpt => {
-                                ptcpt = angular.copy(ptcpt);
-                                ptcpt.act = relationship.targetModel.id;
-                                return ptcpt;
-                            });
+                            delete relationship.targetModel.participation[instruction.targetRole];
                         }
-                        else if(!relationship.targetModel.participation[instruction.targetRole][0].player) {
-                            relationship.targetModel.participation[instruction.targetRole][0].player = sourcePlayer[0].player;
-                            delete relationship.targetModel.participation[instruction.targetRole][0].playerModel;
+                        else {
+                            var sourcePlayer = source.participation[instruction.sourceRole];
+                            if (!sourcePlayer) return;
+
+                            if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
+                            {
+                                relationship.targetModel.participation[instruction.targetRole] = sourcePlayer.map(ptcpt => {
+                                    if (ptcpt.playerModel) { // In case there is a player model identifier then set otherwise generate
+                                        ptcpt.player = ptcpt.playerModel.id = ptcpt.playerModel.id || ptcpt.player || SanteDB.application.newGuid();
+                                    }
+                                    ptcpt = angular.copy(ptcpt);
+                                    ptcpt.act = relationship.targetModel.id;
+                                    return ptcpt;
+                                });
+                            }
+                            else if (!relationship.targetModel.participation[instruction.targetRole][0].player) {
+                                relationship.targetModel.participation[instruction.targetRole][0].player = sourcePlayer[0].player;
+                                delete relationship.targetModel.participation[instruction.targetRole][0].playerModel;
+                            }
                         }
                     });
             });
@@ -665,7 +675,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
             try {
                 var addr = ensureIsArray(entity.address[k]);
 
-                var intlPromises = addr.map(async function (addrItem) {                    
+                var intlPromises = addr.map(async function (addrItem) {
                     if (addrItem.useModel) // have to load use
                         addrItem.use = addrItem.useModel.id;
                     if (!addrItem.use)
@@ -674,18 +684,17 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
 
                     if (addrItem.component) {
                         // If the component contains a reference to a place copy the place data elements
-                        if(addrItem.component.PlaceRef && addrItem.component.PlaceRef.length > 0 &&
-                            addrItem.component.PlaceRef[0] !== "")
-                        {
+                        if (addrItem.component.PlaceRef && addrItem.component.PlaceRef.length > 0 &&
+                            addrItem.component.PlaceRef[0] !== "") {
                             try {
                                 var pr = await SanteDB.resources.place.getAsync(addrItem.component.PlaceRef[0], 'fastview');
-                                
+
                                 var copyAddress = pr.address.Direct || pr.address.PhysicalVisit;
                                 Object.keys(copyAddress[0].component).forEach(k => {
                                     addrItem.component[k] = copyAddress[0].component[k];
                                 });
                             }
-                            catch(e) {
+                            catch (e) {
                                 console.warn("Error cascading address place reference ", e);
                             }
                         }
@@ -719,7 +728,7 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
         // Ensure that the addresses are placed back in the correct paths
         entity.address = {};
         addressList.forEach(addr => {
-            var useKey = Object.keys(AddressUseKeys).find(o=>AddressUseKeys[o] == addr.use) || '$other';
+            var useKey = Object.keys(AddressUseKeys).find(o => AddressUseKeys[o] == addr.use) || '$other';
             entity.address[useKey] = entity.address[useKey] || [];
             entity.address[useKey].push(addr);
         });
@@ -750,12 +759,12 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
                             }
                         }
 
-                        if(splitCompoundNames) {
+                        if (splitCompoundNames) {
                             var compoundArray = [];
                             nameItem.component[o].forEach(name => {
-                                name.split(' ').forEach(c=>compoundArray.push(c));
+                                name.split(' ').forEach(c => compoundArray.push(c));
                             });
-                            nameItem.component[o] = compoundArray; 
+                            nameItem.component[o] = compoundArray;
                         }
                     });
                 }
@@ -764,18 +773,18 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
             })
 
         });
-        entity.name = { };
+        entity.name = {};
         nameList.forEach(name => {
-            var useKey = Object.keys(NameUseKeys).find(o=>NameUseKeys[o] == name.use) || '$other';
+            var useKey = Object.keys(NameUseKeys).find(o => NameUseKeys[o] == name.use) || '$other';
             entity.name[useKey] = entity.name[useKey] || [];
             entity.name[useKey].push(name);
         });
     }
-    if(entity.identifier) // strip out empty identifiers
+    if (entity.identifier) // strip out empty identifiers
     {
-        Object.keys(entity.identifier).forEach(function(k) {
+        Object.keys(entity.identifier).forEach(function (k) {
             var id = ensureIsArray(entity.identifier[k]);
-            id = id.filter(o=>o.value && o.value !== "");
+            id = id.filter(o => o.value && o.value !== "");
             entity.identifier[k] = id;
         });
     }
@@ -895,59 +904,61 @@ function deleteModelProperties(objectToRemove) {
  * @param {Bundle} existingBundle If the results should be added to an existing bundle
  */
 function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
-    
+
     ignoreRelations = ignoreRelations || [];
-    if(!Array.isArray(ignoreRelations)) {
+    if (!Array.isArray(ignoreRelations)) {
         ignoreRelations = [ignoreRelations];
     }
 
     //object = angular.copy(object);
-    var retVal = existingBundle || new Bundle({ resource: [ object ], focal: [ object.id ], correlationId: object.id });
+    var retVal = existingBundle || new Bundle({ resource: [object], focal: [object.id], correlationId: object.id });
 
-    if(object.relationship) {
+    if (object.relationship) {
 
-        Object.keys(object.relationship).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
+        Object.keys(object.relationship).filter(k => ignoreRelations.indexOf(k) == -1).forEach(k => {
             var relationship = object.relationship[k] = ensureIsArray(object.relationship[k]);
-            relationship.filter(r=> r && r.operation != BatchOperationType.IgnoreInt && r.operation != BatchOperationType.Ignore).forEach(rel => {
-                if(rel.targetModel) {
+            relationship.filter(r => r && r.operation != BatchOperationType.IgnoreInt && r.operation != BatchOperationType.Ignore).forEach(rel => {
+                if (rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
                     rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
                     retVal.resource.push(relatedObject);
                     bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
                 }
-                if(rel.holderModel) {
+                if (rel.holderModel) {
                     var relatedObject = angular.copy(rel.holderModel);
                     rel.holder = rel.source = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
                     retVal.resource.push(relatedObject);
                     delete rel.holderModel;
                 }
-                
+
                 rel.holder = rel.holder || object.id;
             });
-            object.relationship[k] = relationship.filter(o=>o && (o.target || o.holder || o.source));
+            object.relationship[k] = relationship.filter(o => o && (o.target || o.holder || o.source));
         });
     }
 
-    if(object.participation) {
-        Object.keys(object.participation).filter(k=>ignoreRelations.indexOf(k) == -1).forEach(k => {
+    if (object.participation) {
+        Object.keys(object.participation).filter(k => ignoreRelations.indexOf(k) == -1).forEach(k => {
             var participations = object.participation[k] = ensureIsArray(object.participation[k]);
-            participations.filter(p=>p && p.operation != BatchOperationType.IgnoreInt && p.operation != BatchOperationType.Ignore).forEach(ptcpt => {
-                if(ptcpt.playerModel) {
+            participations.filter(p => p && p.operation != BatchOperationType.IgnoreInt && p.operation != BatchOperationType.Ignore).forEach(ptcpt => {
+                if (ptcpt.playerModel) {
                     var relatedObject = angular.copy(ptcpt.playerModel);
                     ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
 
-                    if(!relatedObject.version) {
+                    if (!relatedObject.version ||
+                        [BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
+                    ) {
                         retVal.resource.push(relatedObject);
                     }
 
                     delete ptcpt.playerModel;
                 }
-                if(ptcpt.actModel) {
+                if (ptcpt.actModel) {
                     var relatedObject = angular.copy(ptcpt.actModel);
                     ptcpt.act = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
 
-                    if(!relatedObject.version) {
+                    if (!relatedObject.version) {
                         retVal.resource.push(relatedObject);
                     }
 
@@ -956,11 +967,11 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
 
                 ptcpt.act = ptcpt.act || object.id;
             });
-            object.participation[k] = participations.filter(o=>o && (o.player || o.act));
+            object.participation[k] = participations.filter(o => o && (o.player || o.act));
         })
     }
 
-    if(!existingBundle) {
+    if (!existingBundle) {
         retVal.resource.forEach(res => deleteModelProperties(res));
     }
     return retVal;
@@ -970,12 +981,12 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
  * Validate check digit using the a simple Mod-97 check digit algorithm
  */
 function validateMod97CheckDigit(value, checkDigit) {
-    if(!value || !checkDigit) return false;
+    if (!value || !checkDigit) return false;
 
     // Compute the mod97 - extract digits
     var source = value.match(/[0-9]/g);
     source.splice(0, 0, 0);
-    var seed = source.map(o=>parseInt(o)).reduce(function (a, v, i) { return ((a + v) * 10) % 97; });
+    var seed = source.map(o => parseInt(o)).reduce(function (a, v, i) { return ((a + v) * 10) % 97; });
     seed *= 10; seed %= 97;
     var expectedCheckDigit = (97 - seed + 1) % 97;
     return expectedCheckDigit == checkDigit;
@@ -985,7 +996,7 @@ function validateMod97CheckDigit(value, checkDigit) {
  * Validate check digit using the standard ISO/IEC 7064 Check Digit Algorithm
  */
 function validateIso7064Mod97CheckDigit(value, checkDigit) {
-    if(!value || !checkDigit) return false;
+    if (!value || !checkDigit) return false;
 
     // Compute the mod97 - extract digits
     var source = value.match(/[0-9]/g);
