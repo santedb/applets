@@ -662,7 +662,7 @@
   <string name="ui.model.act.participation.ResponsibleParty">Responsible Party</string>
   <string name="ui.model.act.isNegated">Not Performed</string>
   <string name="ui.model.act.isNegated.reason">Reason for Not Performing</string>
-  <string name="ui.model.act.tag.isBackentryFalse">Performing Today</string>
+  <string name="ui.model.act.tag.isBackentryFalse">Visit Actions</string>
   <string name="ui.model.act.tag.isBackentryTrue">Back-Entry</string>
   <string name="ui.model.act.notes">Notes</string>
 

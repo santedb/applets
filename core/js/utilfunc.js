@@ -946,7 +946,9 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                     var relatedObject = angular.copy(ptcpt.playerModel);
                     ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
 
-                    if (!relatedObject.version) {
+                    if (!relatedObject.version ||
+                        [BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
+                    ) {
                         retVal.resource.push(relatedObject);
                     }
 

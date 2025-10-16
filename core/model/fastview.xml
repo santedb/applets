@@ -448,7 +448,7 @@
     <property name="siteModel" behavior="always" ref="Concept" />
     <property name="reasonConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">
-      <property name="*" all="false">
+      <property name="*" all="true">
         <property name="target" />
         <property name="source" />
       </property>
