@@ -41,6 +41,21 @@ angular.module('santedb-lib')
                   var library = cdssInteractiveConfig?.libraries;
                   var targetObject = cdssInteractiveConfig?.target || cdssInteractiveConfig;
 
+                  // Load the RCT if the supplied target has none
+                  if(targetObject.id && ( !targetObject.participation || !targetObject.participation.RecordTarget)) {
+
+                     var rct = await SanteDB.resources.entity.findAsync({"participation[RecordTarget].act.relationship[HasComponent].target||participation[RecordTarget].act.relationship[HasComponent].target.relationship[HasComponent].target" : targetObject.id, _includeTotal: false, _count: 1 }, "min");
+                     if(rct.resource) {
+                        targetObject.participation = targetObject.participation || {};
+                        targetObject.participation.RecordTarget = [
+                           new ActParticipation({
+                              playerModel: rct.resource[0]
+                           })
+                        ];
+                     }
+
+                  }
+
                   var val = $(element).val();
                   if(val !== "") {
                      var proposals = [];

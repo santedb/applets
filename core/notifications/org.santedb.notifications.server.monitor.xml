@@ -16,16 +16,45 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<NotificationTemplate xmlns="http://santedb.org/notification"
-    id="org.santedb.notifications.server.monitor">
-    <content lang="en">
+<NotificationTemplate xmlns="http://santedb.org/notification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <id>D7B0B68D-8BEE-46C2-ADD9-2EB9458A51AF</id>
+    <status>c8064cbd-fa06-4530-b430-1a52f1530c27</status><!-- Active -->
+    <mnemonic>org.santedb.notifications.server.monitor</mnemonic>
+    <name>Server Event Template</name>
+    <tags>server event</tags>
+    <contents>
+        <lang xsi:nil="true" />
         <subject>SanteDB Server Event on ${sourceHost} - ${event}</subject>
-    <![CDATA[
-    The SanteDB server running on ${sourceMachine} has raised an event ${event}:
+        <![CDATA[
+        The SanteDB server running on ${sourceMachine} has raised an event ${event}:
 
-    Service: ${sender}
-    Event Type: ${type}
-    Summary: ${summary}
-    ]]>
-    </content>
+        Service: ${sender}
+        Event Type: ${type}
+        Summary: ${summary}
+        ]]>
+    </contents>
+    <parameters>
+        <name>sourceHost</name>
+        <description>The host</description>
+    </parameters>
+    <parameters>
+        <name>event</name>
+        <description>The event mnemonic</description>
+    </parameters>
+    <parameters>
+        <name>sourceMachine</name>
+        <description>The host</description>
+    </parameters>
+    <parameters>
+        <name>sender</name>
+        <description>The sending component</description>
+    </parameters>
+    <parameters>
+        <name>type</name>
+        <description>The type of event</description>
+    </parameters>
+    <parameters>
+        <name>summary</name>
+        <description>A summary description.</description>
+    </parameters>
 </NotificationTemplate>

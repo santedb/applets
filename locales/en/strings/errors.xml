@@ -36,7 +36,7 @@
       <string name="ui.error.minValue">Entered value is below minimum value {min}</string>
       <string name="ui.error.duplicateDestination">Duplicate destination detected</string>
       <string name="error.http.403">Access Denied</string>
-      <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporary authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
+      <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporarily authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
       <string name="error.http.404">The requested resource could not be found</string>
       <string name="error.http.405">Method not supported</string>
       <string name="error.http.0">Fatal Error</string>
@@ -45,7 +45,7 @@
       <string name="error.http.500">General Error</string>
       <string name="error.http.501">Method not implemented</string>
       <string name="error.http.502">Proxy Error</string>
-      <string name="error.actEdit.incomplete">Please complete all required fields</string>
+      <string name="error.actEdit.incomplete">You must complete all required fields before ending the visit</string>
       <string name="error.svrp.noRegisteredViewerForType">The QR code scanned is valid, however this application cannot display the data which the QR code points to</string>
       <string name="error.type.DetectedIssueException">Business Rules Violation</string>
       <string name="error.type.ResetPasswordException">Password Reset Failure</string>
@@ -66,8 +66,8 @@
       <string name="invalid_grant">Invalid username or password</string>
       <string name="invalid_scope">Unknown authentication permission requested</string>
       <string name="error.login.invalidPassword">Invalid username or password</string>
-      <string name="error.invalidBrowser.title">Invalid Browser</string>
-      <string name="error.invalidBrowser.text">SanteDB won\'t work on this browser. Supported browsers including: &lt;ul&gt;&lt;li&gt;Google Chrome&lt;/li&gt;&lt;li&gt;Mozilla Firefox&lt;/li&gt;&lt;li&gt;Microsoft Edge&lt;/li&gt;&lt;li&gt;Android 5.0 or higher&lt;/li&gt;&lt;/ul&gt;</string>
+      <string name="error.invalidBrowser.title">Unsupported Browser</string>
+      <string name="error.invalidBrowser.text">SanteDB won\'t work on this browser. Supported browsers include: &lt;ul&gt;&lt;li&gt;Google Chrome&lt;/li&gt;&lt;li&gt;Microsoft Edge&lt;/li&gt;&lt;li&gt;Android 5.0 or higher&lt;/li&gt;&lt;/ul&gt;</string>
       <string name="error.type.ArgumentNullException">Argument Null or Empty</string> 
       <string name="error.type.ArgumentNullException.userMessage">Value cannot be null or empty</string> 
       <string name="error.messaging.fhir.match.operation">Error running match operation on {param}</string>
