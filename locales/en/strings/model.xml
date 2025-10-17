@@ -1096,11 +1096,11 @@
   <string name="ui.model.observation.unitOfMeasure">Unit</string>
   <string name="ui.model.observation.interpretationConcept">Interpretation</string>
   <string name="ui.model.observation.interpretationConcept.unknown">No Information</string>
-  <string name="ui.model.observation.interpretationConcept.lowlow">Very Low</string>
+  <string name="ui.model.observation.interpretationConcept.lowlow">Danger/Low</string>
   <string name="ui.model.observation.interpretationConcept.low">Low</string>
   <string name="ui.model.observation.interpretationConcept.normal">Normal</string>
   <string name="ui.model.observation.interpretationConcept.high">High</string>
-  <string name="ui.model.observation.interpretationConcept.highhigh">Very High</string>
+  <string name="ui.model.observation.interpretationConcept.highhigh">Danger/High</string>
 
 
   <!-- Care Pathway Definitions -->
