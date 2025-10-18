@@ -66,7 +66,7 @@ angular.module('santedb-lib')
                         });
 
                         $timeout(() => {
-                            $scope.availableTemplates = _masterTemplateList;
+                            $scope.availableTemplates = _masterTemplateList.sort((a,b) => a.name < b.name ? -1 : 1);
                         })
                     }
                     catch (e) {
