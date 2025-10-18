@@ -24,7 +24,7 @@ angular.module('santedb-lib')
    * @summary Display and sets the result of a CDSS validation event
    * @memberof Angular
    */
-   .directive('cdssInteractive', ['$timeout', function ($timeout) {
+   .directive('cdssInteractive', ['$timeout', '$stateParams', function ($timeout, $stateParams) {
 
 
       return {
@@ -42,9 +42,14 @@ angular.module('santedb-lib')
                   var targetObject = cdssInteractiveConfig?.target || cdssInteractiveConfig;
 
                   // Load the RCT if the supplied target has none
-                  if(targetObject.id && ( !targetObject.participation || !targetObject.participation.RecordTarget)) {
-
-                     var rct = await SanteDB.resources.entity.findAsync({"participation[RecordTarget].act.relationship[HasComponent].target||participation[RecordTarget].act.relationship[HasComponent].target.relationship[HasComponent].target" : targetObject.id, _includeTotal: false, _count: 1 }, "min");
+                  if (!targetObject.participation || !targetObject.participation.RecordTarget) {
+                     var rct = null;
+                     if(targetObject.version) { // has been saved - load direct
+                        rct = await SanteDB.resources.entity.findAsync({"participation[RecordTarget].act.relationship[HasComponent].target||participation[RecordTarget].act.relationship[HasComponent].target.relationship[HasComponent].target" : targetObject.id, _includeTotal: false, _count: 1 }, "min");
+                     }
+                     else { // has not been saved get from parent 
+                        rct = await SanteDB.resources.entity.findAsync({"participation[RecordTarget].act" : targetObject._getEncounter ? targetObject._getEncounter().id : $stateParams.id, _includeTotal: false, _count: 1 }, "min");
+                     }
                      if(rct.resource) {
                         targetObject.participation = targetObject.participation || {};
                         targetObject.participation.RecordTarget = [
@@ -53,7 +58,6 @@ angular.module('santedb-lib')
                            })
                         ];
                      }
-
                   }
 
                   var val = $(element).val();
