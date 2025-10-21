@@ -947,7 +947,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                     ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
 
                     if (!relatedObject.version ||
-                        [BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
+                        [BatchOperationType.Delete, BatchOperationType.DeleteInt, BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
                     ) {
                         retVal.resource.push(relatedObject);
                     }

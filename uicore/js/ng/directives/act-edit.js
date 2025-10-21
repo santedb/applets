@@ -231,6 +231,7 @@ angular.module('santedb-lib')
                             $scope.currentActions.push(ar);
                             content.tag = content.tag || {};
                             content.tag.$userAdded = [true];
+                            content.statusConcept = StatusKeys.Active;
                             $scope.applyVisibilityAttributes();
                         });
                     }
@@ -346,7 +347,13 @@ angular.module('santedb-lib')
                     }
 
                 }
-
+                // Is there reference
+                if(scope.model.relationship?.RefersTo) {
+                    scope.referenceActions = scope.model.relationship.RefersTo.groupBy(
+                        o=>o.targetModel.templateModel.mnemonic,
+                        o=>o.targetModel
+                    );
+                }
                 // Monitor for form touches - needs to be done after initialization
                 if (!scope.model.$templateUrl) {
                     setTimeout(() => {

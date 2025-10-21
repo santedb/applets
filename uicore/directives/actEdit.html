@@ -126,8 +126,13 @@
                         <i class="fas fa-fw fa-list-check"></i> {{ 'ui.model.act.tag.isBackentryFalse' | i18n }}
                     </button>
                 </li>
-
-                <li class="nav-item actBackEntry">
+                <li class="nav-item" ng-if="referenceActions.length > 0">
+                    <button class="nav-link" data-toggle="tab" data-target="#referenceDataTab">
+                        <i class="fas fa-fw fa-notes-medical"></i> 
+                        {{ 'ui.model.act.relationship.RefersTo' | i18n }}
+                    </button>
+                </li>
+                <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
                     <button class="nav-link" data-toggle="tab" data-target="#historyActionTab">
                         <i class="fas fa-fw fa-clock-rotate-left"></i> 
                         {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}
@@ -275,6 +280,14 @@
                     </ul>
                 </div>
 
+                <div class="tab-pane fade" id="referenceDataTab" role="tabpanel" aria-labelledby="reference-link-tab">
+                     <ul class="overflow-auto list-group">
+                        <li class="list-group-item" ng-repeat="(tpl, acts) in referenceActions track by $index">
+                            <ng-include src="resolveViewTemplate(tpl)"></ng-include>
+                        </li>
+                    </ul>
+                </div>
+
                 <div id="historyActionTab" class="tab-pane editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
@@ -282,6 +295,7 @@
                         </li>
                     </ul>
                 </div>
+                
             </div>
 
             <!-- Errors -->
