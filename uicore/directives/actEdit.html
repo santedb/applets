@@ -33,7 +33,7 @@
 
                         <div class="col-sm-12 col-md-9 col-xl-4 pt-2">
                             <i class="fas fa-fw fa-table-cells"></i>
-                            {{ model.templateModel.name }} 
+                            {{ model.templateModel.name }}
                             <span class="badge badge-primary">{{ model.typeConceptModel | concept }}</span>
                         </div>
 
@@ -128,32 +128,38 @@
                 </li>
                 <li class="nav-item" ng-if="referenceActions.length > 0">
                     <button class="nav-link" data-toggle="tab" data-target="#referenceDataTab">
-                        <i class="fas fa-fw fa-notes-medical"></i> 
+                        <i class="fas fa-fw fa-notes-medical"></i>
                         {{ 'ui.model.act.relationship.RefersTo' | i18n }}
                     </button>
                 </li>
                 <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
                     <button class="nav-link" data-toggle="tab" data-target="#historyActionTab">
-                        <i class="fas fa-fw fa-clock-rotate-left"></i> 
+                        <i class="fas fa-fw fa-clock-rotate-left"></i>
                         {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}
                     </button>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="current-actions" role="tabpanel" aria-labelledby="current-actions-tab">
+                <div class="tab-pane fade show active" id="current-actions" role="tabpanel"
+                    aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
                         <li class="my-2 list-group-item d-flex flex-column border-top"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
                             ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-success text-dark bg-lighten-75' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4', 'bg-light' : $index % 2 == 1 }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
-                                <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss' | i18n }}
+                                <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
+                                | i18n }}
+                            </div>
+                            <div class="templateInfoDiv">
+                                <i class="fas fa-fw"
+                                    ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
+                                {{ ::comp.targetModel.templateModel.mnemonic | i18n }}
                             </div>
 
                             <div class="d-flex justify-content-left mb-2">
                                 <!-- PROPOSE Should allow users to select an override -->
-                                <div class="actProposeControl editOnly d-none"
-                                    ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
+                                <div class="actProposeControl editOnly d-none" ng-if="!comp.targetModel.tag.isBackEntry &amp;&amp; 
                                         (
                                             !comp.targetModel.tag.$userAdded &amp;&amp; comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' &amp;&amp; 
                                             (
@@ -175,16 +181,19 @@
                                     <div ng-if="!comp.targetModel.isNegated" class="editOnly"
                                         ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
-                                            <ng-include src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
+                                        <ng-include
+                                            src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
                                     </div>
 
                                     <div ng-if="comp.targetModel.isNegated">
                                         <div class="input-group mb-0">
                                             <label class="control-label mr-2">
-                                                {{ ::comp.targetModel.typeConceptModel | concept }} 
+                                                {{ ::comp.targetModel.typeConceptModel | concept }}
 
                                                 <span ng-if="comp.targetModel.participation.Product[0].playerModel">
-                                                    : {{ comp.targetModel.participation.Product[0].playerModel.name.Assigned | name }}
+                                                    : {{
+                                                    comp.targetModel.participation.Product[0].playerModel.name.Assigned
+                                                    | name }}
                                                 </span>
                                             </label>
 
@@ -200,8 +209,10 @@
                                                 ng-change="loadReasonConcept(comp.targetModel)" />
                                         </div>
 
-                                        <div class="text-danger" ng-if="ownerForm['violationReason' + $index].$error['required']">
-                                            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
+                                        <div class="text-danger"
+                                            ng-if="ownerForm['violationReason' + $index].$error['required']">
+                                            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' |
+                                            i18n }}
                                         </div>
                                     </div>
                                 </div>
@@ -218,28 +229,32 @@
 
                             <!-- Performer -->
                             <div class="row justify-content-center">
-                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'" 
+                                <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'"
                                     class="alert alert-secondary d-flex my-auto p-2">
-                                        <h5 class="align-self-center text-success my-auto"><i class="m-auto fas fa-fw fa-check-circle"></i></h5>
-                                        <div class="d-flex flex-column my-auto">
-                                            <div>
-                                                <i class="fas fa-fw fa-user-doctor"></i> {{
-                                                comp.targetModel.participation.Performer[0].playerModel.name | name }}
-                                            </div>
-                                            <div
-                                                ng-repeat="sec in comp.targetModel.participation.SecondaryPerformer track by $index">
-                                                <i class="fas fa-fw fa-user-nurse"></i> {{ sec.playerModel.name | name }}
-                                            </div>
+                                    <h5 class="align-self-center text-success my-auto"><i
+                                            class="m-auto fas fa-fw fa-check-circle"></i></h5>
+                                    <div class="d-flex flex-column my-auto">
+                                        <div>
+                                            <i class="fas fa-fw fa-user-doctor"></i> {{
+                                            comp.targetModel.participation.Performer[0].playerModel.name | name }}
                                         </div>
+                                        <div
+                                            ng-repeat="sec in comp.targetModel.participation.SecondaryPerformer track by $index">
+                                            <i class="fas fa-fw fa-user-nurse"></i> {{ sec.playerModel.name | name }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Buttons -->
-                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'" class="d-flex my-2 justify-content-end col-10 offset-1">
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'"
+                                class="d-flex my-2 justify-content-end col-10 offset-1">
                                 <div class="editOnly btn-group d-none">
                                     <!-- Complete -->
-                                    <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry" id="action_{{$index}}complete" type="button" ng-click="markComplete($index)" class="btn btn-primary mr-2">
-                                        <i class="fas fa-fw fa-check"></i> 
+                                    <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry"
+                                        id="action_{{$index}}complete" type="button" ng-click="markComplete($index)"
+                                        class="btn btn-primary mr-2">
+                                        <i class="fas fa-fw fa-check"></i>
                                         <span class="d-lg-inline">
                                             {{ 'ui.action.complete' | i18n }}
                                         </span>
@@ -249,30 +264,34 @@
                                     <button type="button" ng-click="moveHistory($index)"
                                         ng-disabled="comp.operation == 4"
                                         class="btn btn-dark actMoveToHistory mr-2 d-none"
-                                        ng-if="!comp.targetModel.tag.$userAdded &amp;&amp; !comp.targetModel.isNegated">
-                                            <i class="fas fa-fw" ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i> 
-                                            <span class="d-lg-inline">
-                                                <span ng-if="comp.targetModel.tag.isBackEntry">{{  'ui.action.undo' | i18n }} </span>{{ 'ui.action.historical' | i18n }}
-                                            </span>
+                                        ng-if="!comp.targetModel.tag.$userAdded &amp;&amp; !comp.targetModel.isNegated &amp;&amp; canBackEnter(comp.targetModel.template || comp.targetModel.templateModel.mnemonic)">
+                                        <i class="fas fa-fw"
+                                            ng-class="{ 'fa-clock-rotate-left' : !comp.targetModel.tag.isBackEntry, 'fa-arrow-rotate-right' : comp.targetModel.tag.isBackEntry}"></i>
+                                        <span class="d-lg-inline">
+                                            <span ng-if="comp.targetModel.tag.isBackEntry">{{ 'ui.action.undo' | i18n }}
+                                            </span>{{ 'ui.action.historical' | i18n }}
+                                        </span>
                                     </button>
 
                                     <div ng-if="!(comp.targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079' || comp.targetModel.relationship.Fulfills[0].targetModel.moodConcept == 'acf7baf2-221f-4bc2-8116-ceb5165be079')"
                                         class="actRemoveItem editOnly btn-group d-none">
-                                            <!-- Remove -->
-                                            <button type="button" ng-click="removeItem($index)" class="btn btn-danger" ng-if="comp.operation != '4'">
-                                                <i class="fas fa-fw fa-times-circle"></i> 
-                                                <span class="d-lg-inline">
-                                                    {{ 'ui.action.remove' | i18n }}
-                                                </span>
-                                            </button>
+                                        <!-- Remove -->
+                                        <button type="button" ng-click="removeItem($index)" class="btn btn-danger"
+                                            ng-if="comp.operation != '4'">
+                                            <i class="fas fa-fw fa-times-circle"></i>
+                                            <span class="d-lg-inline">
+                                                {{ 'ui.action.remove' | i18n }}
+                                            </span>
+                                        </button>
 
-                                            <!-- Undo -->
-                                            <button type="button" ng-click="comp.operation = undefined" class="btn btn-success" ng-if="comp.operation == '4'">
-                                                <i class="fa-solid fa-arrow-rotate-left"></i> 
-                                                <span class="d-lg-inline">
-                                                    {{ 'ui.action.undo' | i18n }} {{ 'ui.action.remove' | i18n }}
-                                                </span>
-                                            </button>
+                                        <!-- Undo -->
+                                        <button type="button" ng-click="comp.operation = undefined"
+                                            class="btn btn-success" ng-if="comp.operation == '4'">
+                                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                                            <span class="d-lg-inline">
+                                                {{ 'ui.action.undo' | i18n }} {{ 'ui.action.remove' | i18n }}
+                                            </span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +300,7 @@
                 </div>
 
                 <div class="tab-pane fade" id="referenceDataTab" role="tabpanel" aria-labelledby="reference-link-tab">
-                     <ul class="overflow-auto list-group">
+                    <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in referenceActions track by $index">
                             <ng-include src="resolveViewTemplate(tpl)"></ng-include>
                         </li>
@@ -295,25 +314,26 @@
                         </li>
                     </ul>
                 </div>
-                
+
             </div>
 
             <!-- Errors -->
             <div ng-if="ownerForm.$invalid" class="text-danger font-weight-bold">
                 <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'error.actEdit.incomplete' | i18n }}
             </div>
-            
+
             <div class="btn-group col-12 p-0 mt-3">
                 <div class="dropup btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem d-none" data-display="static"
-                        data-toggle="dropdown" data-target="#addActionDropdown" aria-haspopup="true" id="btnAddAction">
-                            <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                    <button type="button" class="btn btn-dark dropdown-toggle editOnly actAddItem d-none"
+                        data-display="static" data-toggle="dropdown" data-target="#addActionDropdown"
+                        aria-haspopup="true" id="btnAddAction">
+                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
 
                     <div class="dropdown-menu overflow-auto" style="max-height: 50vh;" id="addActionDropdown">
                         <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
                             ng-repeat="tpl in availableTemplates track by $index">
-                                <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
+                            <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
                         </button>
 
                         <div class="dropdown-divider"></div>
@@ -326,24 +346,24 @@
                     </div>
                 </div>
 
-                <div ng-repeat="action in actions track by $index" ng-if="filterAction(action)" class="btn-group float-right"
-                    ng-class="{ 'dropup' : action.children }">
-                        <button class="btn" ng-click="action.children ? null : doAction(action)"
-                            ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
-                            data-toggle="{{ action.children ? 'dropdown' : null }}" demand="{{action.demand}}"
-                            type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}"
-                            ng-disabled="action.validOnly &amp;&amp; ownerForm.$invalid">
-                                <i class="fas fa-fw" ng-class="action.icon"></i>
-                                {{ action.label || 'ui.action.' + action.name | i18n }} 
-                        </button>
+                <div ng-repeat="action in actions track by $index" ng-if="filterAction(action)"
+                    class="btn-group float-right" ng-class="{ 'dropup' : action.children }">
+                    <button class="btn" ng-click="action.children ? null : doAction(action)"
+                        ng-class="[{ 'dropdown-toggle' : action.children }, action.className]"
+                        data-toggle="{{ action.children ? 'dropdown' : null }}" demand="{{action.demand}}"
+                        type="{{ action.type || 'button' }}" id="btnActEdit{{action.name}}"
+                        ng-disabled="action.validOnly &amp;&amp; ownerForm.$invalid">
+                        <i class="fas fa-fw" ng-class="action.icon"></i>
+                        {{ action.label || 'ui.action.' + action.name | i18n }}
+                    </button>
 
-                        <div class="dropdown-menu" data-display="static">
-                            <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
-                                ng-repeat="child in action.children track by $index">
-                                    <i class="fas fa-fw" ng-class="child.icon"></i> 
-                                        {{ child.label || 'ui.action.' + child.name | i18n }}
-                            </button>
-                        </div>
+                    <div class="dropdown-menu" data-display="static">
+                        <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
+                            ng-repeat="child in action.children track by $index">
+                            <i class="fas fa-fw" ng-class="child.icon"></i>
+                            {{ child.label || 'ui.action.' + child.name | i18n }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

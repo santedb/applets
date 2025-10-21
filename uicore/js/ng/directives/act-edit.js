@@ -50,7 +50,9 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', '$state', function ($scope, $rootScope, $state) {
 
-                var _masterTemplateList;
+                var _applicableTemplateList;
+                var _canBackenter;
+                var _templateData;
 
                 async function initializeView() {
                     try {
@@ -60,13 +62,17 @@ angular.module('santedb-lib')
                         }
                         scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
 
-                        _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
+                        _applicableTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
                             scope: scopeArr,
                             public: true
                         });
 
+                        // Those which cannot be back-entered
+                        _templateData =  await SanteDB.application.getTemplateDefinitionsAsync();
+                        _canBackenter = _templateData.filter(o => o.backEntry);
+
                         $timeout(() => {
-                            $scope.availableTemplates = _masterTemplateList.sort((a,b) => a.name < b.name ? -1 : 1);
+                            $scope.availableTemplates = _applicableTemplateList.sort((a, b) => a.name < b.name ? -1 : 1);
                         })
                     }
                     catch (e) {
@@ -79,6 +85,9 @@ angular.module('santedb-lib')
                         initializeView();
                     }
                 });
+
+                $scope.getTemplateInfo = (templateId) => _templateData.find(o=>o.mnemonic == templateId || o.uuid == templateId);
+                $scope.canBackEnter = (templateId) => _canBackenter.find(o=>o.mnemonic == templateId || o.uuid == templateId) !== undefined;
 
                 $scope.loadReasonConcept = async function (entry) {
                     if (entry && entry._reasonConcept != entry.reasonConcept) {
@@ -100,6 +109,8 @@ angular.module('santedb-lib')
                         }
                     }
                 }
+
+
                 $scope.resolveBackentryTemplate = function (templateId) {
 
                     var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateBackentry(templateId) : SanteDB.application.resolveTemplateView(templateId);
@@ -120,10 +131,10 @@ angular.module('santedb-lib')
 
                 $scope.doFilter = function (n) {
                     if (n) {
-                        $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                        $scope.availableTemplates = _applicableTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
                     else {
-                        $scope.availableTemplates = _masterTemplateList;
+                        $scope.availableTemplates = _applicableTemplateList;
                     }
                 }
 
@@ -185,6 +196,7 @@ angular.module('santedb-lib')
                         SanteDB.display.buttonWait(`#action_${index}complete`, false);
                     }
                 }
+
                 $scope.moveHistory = function (index) {
                     try {
                         var itm = $scope.currentActions[index];
@@ -269,7 +281,19 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
 
                 // Are we viewing or editing?
-                _mode = attrs.readonly === "true" ? 'view' : 'edit';
+                _mode = attrs.readonly === "true"
+                    ? 'view' : 'edit';
+
+                if (_mode === 'edit') {
+                    SanteDB.authentication.getCurrentFacilityId().then((r) => {
+                        var actLocation = scope.model.participation?.Location[0]?.player;
+                        if (actLocation && actLocation != r) {
+                            _mode = 'view';
+                            $(".editOnly", element).remove();
+                            $(".viewOnly", element).removeClass("d-none");
+                        }
+                    });
+                }
 
                 scope.applyVisibilityAttributes = function () {
                     setTimeout(() => { // allow the DOM to catch up 
@@ -348,10 +372,10 @@ angular.module('santedb-lib')
 
                 }
                 // Is there reference
-                if(scope.model.relationship?.RefersTo) {
+                if (scope.model.relationship?.RefersTo) {
                     scope.referenceActions = scope.model.relationship.RefersTo.groupBy(
-                        o=>o.targetModel.templateModel.mnemonic,
-                        o=>o.targetModel
+                        o => o.targetModel.templateModel.mnemonic,
+                        o => o.targetModel
                     );
                 }
                 // Monitor for form touches - needs to be done after initialization
