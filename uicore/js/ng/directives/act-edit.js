@@ -155,9 +155,9 @@ angular.module('santedb-lib')
                         itm.operation = BatchOperationType.DeleteInt;
                     }
                     else {
-                        var hidx = $scope.model.relationship.HasComponent.indexOf(itm);
+                        var hidx = $scope.model.relationship.HasComponent.findIndex(o=>o.target == itm.target || o.targetModel.id == itm.targetModel.id);
                         $scope.model.relationship.HasComponent.splice(hidx, 1);
-                        $scope.currentActions.splice(index, 1);
+                        $scope.currentActions[index] = null;
                     }
                 }
 

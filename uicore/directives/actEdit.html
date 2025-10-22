@@ -147,6 +147,7 @@
                         <li class="my-2 list-group-item d-flex flex-column border-top"
                             id="action{{ comp.targetModel.id }}"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
+                            ng-if="comp !== null"
                             ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-success text-dark bg-lighten-75' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4', 'bg-light' : $index % 2 == 1 }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
