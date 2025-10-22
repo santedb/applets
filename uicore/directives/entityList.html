@@ -31,7 +31,7 @@
                                     <i class="fas fa-fw" ng-class="action.icon"></i>
                                     {{ action.label || 'ui.action.' + action.name | i18n }}
                                 </button>
-                                <div class="dropdown-menu overflow-auto" id="{{::$$eleId}}actionList_{{$index}}" ng-if="action.children" data-display="static">
+                                <div class="dropdown-menu overflow-auto" style="max-height: 10em;" id="{{::$$eleId}}actionList_{{$index}}" ng-if="action.children" data-display="static">
                                     <button class="dropdown-item" type="button" ng-click="doAction(child, { id: child.id }, $index)"
                                         ng-repeat="child in action.children track by $index"  ng-if="filterAction(child)">
                                         <i class="fas fa-fw" ng-class="child.icon"></i> {{ child.label || 'ui.action.' + child.name | i18n }}

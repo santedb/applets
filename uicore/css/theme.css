@@ -500,11 +500,12 @@ table.dataTable tbody > tr > td {
 .templateInfoDiv {
     position: absolute;
     right: 0px;
-    border: solid 1px #dee2e6 !important;
-    background-color: #dee2e6aa;
+    border-bottom: solid 1px #96989b !important;
+    border-left: solid 1px #96989b !important;
+    background-color: #dee2e699;
     color: black;
     z-index: 10;
-    padding: 0.25em;
+    padding: 0.25em 0.5em;
     border-radius: 0em 0em 0em 1em;
     margin-top: calc(-1em + 1px);
 }

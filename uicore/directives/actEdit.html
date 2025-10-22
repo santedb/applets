@@ -16,7 +16,7 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml">
-    <div class="actEntryForm w-100">
+    <div class="actEntryForm w-100" ng-if="initialized">
         <div ng-if="::model.$templateUrl" ng-init="act = model">
             <ng-include src="model.$templateUrl" />
         </div>
@@ -145,6 +145,7 @@
                     aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
                         <li class="my-2 list-group-item d-flex flex-column border-top"
+                            id="action{{ comp.targetModel.id }}"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
                             ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-success text-dark bg-lighten-75' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4', 'bg-light' : $index % 2 == 1 }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
@@ -247,9 +248,9 @@
                             </div>
 
                             <!-- Buttons -->
-                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3'"
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' "
                                 class="d-flex my-2 justify-content-end col-10 offset-1">
-                                <div class="editOnly btn-group d-none">
+                                <div class="editOnly btn-group">
                                     <!-- Complete -->
                                     <button ng-if="comp.operation == '4' || !comp.targetModel.tag.isBackEntry"
                                         id="action_{{$index}}complete" type="button" ng-click="markComplete($index)"
