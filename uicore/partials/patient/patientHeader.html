@@ -60,6 +60,9 @@
                                 <button ng-if="startVisit" class="btn btn-sm btn-outline-success" ng-click="startVisit()">
                                     <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
                                 </button>
+                                <button ng-if="viewVisit" class="btn btn-sm btn-outline-dark" ng-click="viewVisit()">
+                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.visit' | i18n }}</span>
+                                </button>
                             </div>
                         </h5>
                     </div>

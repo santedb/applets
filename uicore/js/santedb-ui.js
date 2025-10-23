@@ -237,7 +237,10 @@ SanteDBWrapper.prototype.display = new function () {
 
         if (Array.isArray(retVal)) {
             var name = retVal[0];
-            return name[0].toUpperCase() + name.substring(1);
+            if((language || SanteDB.locale.getLanguage()).indexOf('en') !== -1) {
+                return name[0].toUpperCase() + name.substring(1);
+            }
+            return name;
         }
         else
             return retVal;
