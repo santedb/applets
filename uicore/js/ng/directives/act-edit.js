@@ -256,6 +256,7 @@ angular.module('santedb-lib')
                         // Next we want to set the performer on the action
                         content.operation = BatchOperationType.InsertInt;
                         content.id = content.id || SanteDB.application.newGuid();
+                        content._getEncounter = () => $scope.model;
                         $timeout(() => {
                             $scope.model.relationship = $scope.model.relationship || {};
                             $scope.model.relationship.HasComponent = $scope.model.relationship.HasComponent || [];

@@ -303,6 +303,11 @@
     <property name="identifier" all="true">
       <property name="*" ref="EntityIdentifier" />
     </property>
+    <property name="relationship" behavior="always" all="false">
+      <property name="UsedEntity" behavior="always" all="true">
+        <property name="targetModel" behavior="always" all="true" ref="Material" />
+      </property>
+    </property>
     <property name="classConceptModel" behavior="always" ref="Concept" />
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />

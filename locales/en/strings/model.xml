@@ -1192,6 +1192,7 @@
   <!-- Substance Administrations -->
   <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
   <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+  <string name="ui.model.substanceAdministration.Product">Substance Administered</string>
   <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
   <string name="ui.model.substanceAdministration.site">Administration Site</string>
 
