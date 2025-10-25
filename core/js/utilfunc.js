@@ -41,7 +41,6 @@ Object.defineProperty(Array.prototype, 'groupBy', {
     enumerable: false
 });
 
-
 /**
  * @summary Select distinct objects from the array
  */
@@ -535,21 +534,26 @@ async function prepareActForSubmission(act) {
     if (act.relationship) {
         Object.keys(act.relationship).forEach((k) => {
 
-            act.relationship[k] = ensureIsArray(act.relationship[k]);
-            act.relationship[k] = act.relationship[k].map((r) => {
-                if (r.targetModel) {
-                    r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
-                    r.targetModel = applyCascadeInstructions(r.targetModel);
-                }
-                if (r.holderModel && r.holderModel.id) {
-                    r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
-                }
-                delete r.relationshipTypeModel;
-                delete r.relationshipRoleModel;
-                delete r.classificationModel;
+            if (!act.relationship[k]) {
+                delete act.relationship[k]
+            }
+            else {
+                act.relationship[k] = ensureIsArray(act.relationship[k]);
+                act.relationship[k] = act.relationship[k].map((r) => {
+                    if (r.targetModel) {
+                        r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
+                        r.targetModel = applyCascadeInstructions(r.targetModel);
+                    }
+                    if (r.holderModel && r.holderModel.id) {
+                        r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
+                    }
+                    delete r.relationshipTypeModel;
+                    delete r.relationshipRoleModel;
+                    delete r.classificationModel;
 
-                return r;
-            }).filter(r => r && (r.source || r.holder || r.target));
+                    return r;
+                }).filter(r => r && (r.source || r.holder || r.target));
+            }
         });
     }
 

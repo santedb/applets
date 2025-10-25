@@ -235,6 +235,7 @@ angular.module('santedb-lib')
                             userEntityId: await SanteDB.authentication.getCurrentUserEntityId()
                         });
 
+                        content.statusConcept = StatusKeys.Active;
                         // Is this a status observation?
                         if (_patientStatusConcepts.includes(content.typeConcept)) {
                             // Existing 
@@ -268,7 +269,6 @@ angular.module('santedb-lib')
                             $scope.currentActions.push(ar);
                             content.tag = content.tag || {};
                             content.tag.$userAdded = [true];
-                            content.statusConcept = StatusKeys.Active;
                             $scope.applyVisibilityAttributes();
                         });
                     }
@@ -318,6 +318,9 @@ angular.module('santedb-lib')
                         scope.applyVisibilityAttributes();
                         $timeout(() => scope.initialized = true);
                     });
+                }
+                else {
+                    scope.initialized = true;
                 }
 
                 scope.applyVisibilityAttributes = function () {

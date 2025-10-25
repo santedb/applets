@@ -509,3 +509,14 @@ table.dataTable tbody > tr > td {
     border-radius: 0em 0em 0em 1em;
     margin-top: calc(-1em + 1px);
 }
+
+.empty-act-edit-instructions {
+    margin: auto;
+    text-align: center;
+    padding: 1rem;
+    width: fit-content;
+    font-size: 1.2rem;
+    color: #909496;
+    border: dashed 0.5rem #909496;
+    border-radius: 1.5em;
+}

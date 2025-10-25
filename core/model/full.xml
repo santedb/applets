@@ -1219,7 +1219,7 @@
     <property name="dischargeDispositionModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
-        <property name="targetModel" behavior="always" />
+        <property name="targetModel" behavior="always" ref="Act" />
       </property>
       <property name="Fulfills" all="true">
         <property name="targetModel" behavior="always" />

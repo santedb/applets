@@ -141,9 +141,15 @@
             </ul>
 
             <div class="tab-content">
+                
                 <div class="tab-pane fade show active" id="current-actions" role="tabpanel"
                     aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
+                        <li ng-if="currentActions.length == 0">
+                            <div class="m-auto empty-act-edit-instructions">
+                                <i class="fas fa-fw fa-info-circle"></i> {{ 'ui.model.patientEncounter.empty' | i18n }}
+                            </div>
+                        </li>
                         <li class="my-2 list-group-item d-flex flex-column border-top"
                             id="action{{ comp.targetModel.id }}"
                             ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"

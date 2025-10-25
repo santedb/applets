@@ -1198,4 +1198,8 @@
 
   <!-- Search for concept -->
   <string name="ui.table.search.field.mnemonic||name.value">Name or Mnemonic</string>
+  
+    <string name="ui.model.patientEncounter.empty">
+        <![CDATA[This visit has no actions. You can add them using the <strong>Add</strong> option below]]>
+    </string>
 </resources>
