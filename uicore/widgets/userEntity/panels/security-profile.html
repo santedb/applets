@@ -196,21 +196,22 @@
                             </div>
                             <div class="container-fluid" ng-show="tfaSetup">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col mb-2">
                                         <p>{{ tfaSetup.helpText | i18n }}</p>
                                         <img class="m-auto d-none" id="tfaImageSetup" />
                                         <strong class="m-auto d-none" id="tfaTextSetup"></strong>
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <label class="col-5 control-label">{{ 'ui.login.input.tfa' | i18n }}</label>
-                                    <div class="col-7">
-                                        <input type="password" ng-model="tfaSetup.code" class="form-control"
-                                            maxlength="6" required="required" name="tfaCodeInput" />
-                                        <div ng-if="setupTfaForm.tfaCodeInput.$error['required']">
-                                            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' |
-                                            i18n
-                                            }}
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="tfaCodeInput">{{ 'ui.login.input.tfa' | i18n }}</label>
+                                            <input type="password" ng-model="tfaSetup.code" class="form-control"
+                                                required="required" name="tfaCodeInput" />
+                                            <div ng-if="setupTfaForm.tfaCodeInput.$error['required']" class="text-danger">
+                                                <i class="fas fa-fw fa-exclamation-triangle"></i>
+                                                    {{ 'ui.error.required' | i18n }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
