@@ -550,7 +550,6 @@ async function prepareActForSubmission(act) {
                     delete r.relationshipTypeModel;
                     delete r.relationshipRoleModel;
                     delete r.classificationModel;
-
                     return r;
                 }).filter(r => r && (r.source || r.holder || r.target));
             }
@@ -560,6 +559,19 @@ async function prepareActForSubmission(act) {
     return applyCascadeInstructions(act);
 }
 
+// Cascade the batch operation
+function cascadeBatchOperationInstruction(source, batchOperation) {
+    batchOperation = (batchOperation || source.operation);
+    if ([BatchOperationType.Delete, BatchOperationType.DeleteInt].includes(batchOperation) && source.relationship) {
+        Object.keys(source.relationship).map(o=>source.relationship[o]).flat().filter(o => o.classification == RelationshipClassKeys.ContainedObjectLink).forEach(o => {
+            o.operation = batchOperation;
+            if (o.targetModel) {
+                o.targetModel.operation = batchOperation;
+                cascadeBatchOperationInstruction(o.targetModel, batchOperation);                
+            }
+        })
+    }
+}
 /**
  * @summary Apply any act cascade instructions
  * @param {Act} source The act on which the cascade instructions should be applied
@@ -570,6 +582,8 @@ function applyCascadeInstructions(source) {
     source.tag = source.tag || {};
     source.tag["$cascade:*:*"] = ["Location", "Authororiginator", "RecordTarget"];
     source.relationship = source.relationship || {};
+
+    cascadeBatchOperationInstruction(source);
 
     var cascadeInstructions = Object.keys(source.tag).filter(o => o.indexOf("$cascade:") == 0);
 
@@ -630,7 +644,7 @@ function applyCascadeInstructions(source) {
                         }
                         else {
                             var sourcePlayer = source.participation[instruction.sourceRole];
-                            if (!sourcePlayer) return;
+                            if (!sourcePlayer || [BatchOperationType.Delete, BatchOperationType.DeleteInt].includes(sourcePlayer[0].operation)) return;
 
                             if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
                             {
@@ -913,6 +927,8 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     if (!Array.isArray(ignoreRelations)) {
         ignoreRelations = [ignoreRelations];
     }
+
+    cascadeBatchOperationInstruction(object);
 
     //object = angular.copy(object);
     var retVal = existingBundle || new Bundle({ resource: [object], focal: [object.id], correlationId: object.id });

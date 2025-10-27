@@ -155,7 +155,7 @@ angular.module('santedb-lib')
                         itm.operation = BatchOperationType.DeleteInt;
                     }
                     else {
-                        var hidx = $scope.model.relationship.HasComponent.findIndex(o=>o.target == itm.target || o.targetModel.id == itm.targetModel.id);
+                        var hidx = $scope.model.relationship.HasComponent.findIndex(o => o.target == itm.target || o.targetModel.id == itm.targetModel.id);
                         $scope.model.relationship.HasComponent.splice(hidx, 1);
                         $scope.currentActions[index] = null;
                     }
@@ -240,16 +240,16 @@ angular.module('santedb-lib')
                         if (_patientStatusConcepts.includes(content.typeConcept)) {
                             // Existing 
                             var existing = $scope.model.relationship.HasComponent.find(o => o.targetModel?.typeConcept === content.typeConcept);
-                            if(existing) // Already added - so allow the user to edit
+                            if (existing) // Already added - so allow the user to edit
                             {
                                 $timeout(() => {
                                     existing.targetModel.statusConcept = StatusKeys.Active;
                                     var firstInput = $(`#action${existing.targetModel.id} input, #action${existing.targetModel.id} select`);
                                     $('html, body').animate({
                                         scrollTop: firstInput.offset().top
-                                    }, 500); 
+                                    }, 500);
                                     firstInput?.focus();
-                                    
+
                                 });
                                 return;
                             }
@@ -305,6 +305,7 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                attrs.noBackEntry = "true";
                 // Are we viewing or editing?
                 _mode = attrs.readonly === "true"
                     ? 'view' : 'edit';
@@ -410,14 +411,16 @@ angular.module('santedb-lib')
                 if (!scope.model.$templateUrl) {
                     setTimeout(() => {
 
-                        $("input,select", element).each((i, e) => {
-                            $(e).on("blur", function (evt) {
+                        $("input,select,textarea", element).each((i, e) => {
+                            $(e).on("change", function (evt) {
                                 var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
                                 if (scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
                                     SanteDB.authentication.getCurrentUserEntityId().then(result => {
-                                        var targetAct = scope.currentActions[eventIndexChanged].targetModel;
-                                        scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
-                                        targetAct.statusConcept = StatusKeys.Active;
+                                        $timeout(() => {
+                                            var targetAct = scope.currentActions[eventIndexChanged].targetModel;
+                                            scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
+                                            targetAct.statusConcept = StatusKeys.Active;
+                                        });
                                     });
                                 }
                             });
