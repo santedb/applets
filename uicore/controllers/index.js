@@ -405,7 +405,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 if (bugCallList)
                     $rootScope.error.fileBug = function () {
                         for (var i in bugCallList)
-                            if (bugCallList[i]()) return;
+                            if (bugCallList[i]($state)) return;
                     }
                 $("#errorModal").modal({ backdrop: 'static' });
             })
