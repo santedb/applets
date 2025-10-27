@@ -60,6 +60,9 @@
                                 <button ng-if="startVisit" class="btn btn-sm btn-outline-success" ng-click="startVisit()">
                                     <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
                                 </button>
+                                <button ng-if="viewVisit" class="btn btn-sm btn-outline-dark" ng-click="viewVisit()">
+                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.visit' | i18n }}</span>
+                                </button>
                             </div>
                         </h5>
                     </div>
@@ -108,7 +111,12 @@
                             {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
                                 class="badge badge-dark" ng-if="patient.deceasedDate">{{
                                 'ui.model.patient.deceasedIndicator' | i18n }}</span>
-                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }} )
+                                
+                                <span ng-if="!patient.deceasedDate">
+                                    {{ patient.dateOfBirth | age: 'y' }}
+                                </span>
+                                <span ng-if="patient.deceasedDate &gt;= patient.dateOfBirth">
+                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }}</span> )
                         </div>
 
                         <!-- Telecom -->

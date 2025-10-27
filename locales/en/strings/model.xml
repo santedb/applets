@@ -1192,9 +1192,14 @@
   <!-- Substance Administrations -->
   <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
   <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+  <string name="ui.model.substanceAdministration.Product">Substance Administered</string>
   <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
   <string name="ui.model.substanceAdministration.site">Administration Site</string>
 
   <!-- Search for concept -->
   <string name="ui.table.search.field.mnemonic||name.value">Name or Mnemonic</string>
+  
+    <string name="ui.model.patientEncounter.empty">
+        <![CDATA[This visit has no actions. You can add them using the <strong>Add</strong> option below]]>
+    </string>
 </resources>

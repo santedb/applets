@@ -1211,12 +1211,15 @@
   <!-- Encounters -->
   <type type="PatientEncounter" all="true">
     <property name="templateModel" behavior="always" />
+    <property name="protocol" behavior="always" all="true">
+      <property name="protocolModel" behavior="always" />
+      </property>
     <property name="typeConceptModel" behavior="always" ref="ConceptNested" />
     <property name="statusConceptModel" behavior="always" ref="ConceptNested" />
     <property name="dischargeDispositionModel" behavior="always" ref="ConceptNested" />
     <property name="relationship" all="true" behavior="always">
       <property name="HasComponent" all="true">
-        <property name="targetModel" behavior="always" />
+        <property name="targetModel" behavior="always" ref="Act" />
       </property>
       <property name="Fulfills" all="true">
         <property name="targetModel" behavior="always" />

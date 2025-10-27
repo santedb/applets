@@ -50,7 +50,10 @@ angular.module('santedb-lib')
             },
             controller: ['$scope', '$rootScope', '$state', function ($scope, $rootScope, $state) {
 
-                var _masterTemplateList;
+                var _applicableTemplateList;
+                var _canBackenter;
+                var _templateData;
+                var _patientStatusConcepts;
 
                 async function initializeView() {
                     try {
@@ -60,13 +63,24 @@ angular.module('santedb-lib')
                         }
                         scopeArr.push(`:(nocase)${$scope.model.typeConcept}`);
 
-                        _masterTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
+                        _applicableTemplateList = await SanteDB.application.getTemplateDefinitionsAsync({
                             scope: scopeArr,
                             public: true
                         });
 
+                        // Those which cannot be back-entered
+                        _templateData = await SanteDB.application.getTemplateDefinitionsAsync();
+                        _canBackenter = _templateData.filter(o => o.backEntry);
+
+                        // Get the status concepts
+                        _patientStatusConcepts = (await SanteDB.resources.conceptSet.getAsync("b73e6dbc-890a-11f0-8959-c764088c39f9", "min"))?.concept;
+
+                        var rct = $scope.model.participation?.RecordTarget[0].playerModel;
+
                         $timeout(() => {
-                            $scope.availableTemplates = _masterTemplateList.sort((a,b) => a.name < b.name ? -1 : 1);
+                            $scope.availableTemplates = _applicableTemplateList
+                                .filter(o => !o.guard || $scope.$eval(o.guard, { recordTarget: rct }))
+                                .sort((a, b) => a.name < b.name ? -1 : 1);
                         })
                     }
                     catch (e) {
@@ -79,6 +93,9 @@ angular.module('santedb-lib')
                         initializeView();
                     }
                 });
+
+                $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
+                $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
 
                 $scope.loadReasonConcept = async function (entry) {
                     if (entry && entry._reasonConcept != entry.reasonConcept) {
@@ -100,6 +117,8 @@ angular.module('santedb-lib')
                         }
                     }
                 }
+
+
                 $scope.resolveBackentryTemplate = function (templateId) {
 
                     var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateBackentry(templateId) : SanteDB.application.resolveTemplateView(templateId);
@@ -120,10 +139,10 @@ angular.module('santedb-lib')
 
                 $scope.doFilter = function (n) {
                     if (n) {
-                        $scope.availableTemplates = _masterTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
+                        $scope.availableTemplates = _applicableTemplateList.filter(f => f.name.toLowerCase().indexOf(n.toLowerCase()) > -1);
                     }
                     else {
-                        $scope.availableTemplates = _masterTemplateList;
+                        $scope.availableTemplates = _applicableTemplateList;
                     }
                 }
 
@@ -136,9 +155,9 @@ angular.module('santedb-lib')
                         itm.operation = BatchOperationType.DeleteInt;
                     }
                     else {
-                        var hidx = $scope.model.relationship.HasComponent.indexOf(itm);
+                        var hidx = $scope.model.relationship.HasComponent.findIndex(o=>o.target == itm.target || o.targetModel.id == itm.targetModel.id);
                         $scope.model.relationship.HasComponent.splice(hidx, 1);
-                        $scope.currentActions.splice(index, 1);
+                        $scope.currentActions[index] = null;
                     }
                 }
 
@@ -185,6 +204,7 @@ angular.module('santedb-lib')
                         SanteDB.display.buttonWait(`#action_${index}complete`, false);
                     }
                 }
+
                 $scope.moveHistory = function (index) {
                     try {
                         var itm = $scope.currentActions[index];
@@ -199,7 +219,6 @@ angular.module('santedb-lib')
                             // Relationship
                             itm.targetModel.actTime = itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime || itm.targetModel.startTime;
                         }
-
                         $scope.applyVisibilityAttributes();
                     }
                     catch (e) {
@@ -216,10 +235,29 @@ angular.module('santedb-lib')
                             userEntityId: await SanteDB.authentication.getCurrentUserEntityId()
                         });
 
-
+                        content.statusConcept = StatusKeys.Active;
+                        // Is this a status observation?
+                        if (_patientStatusConcepts.includes(content.typeConcept)) {
+                            // Existing 
+                            var existing = $scope.model.relationship.HasComponent.find(o => o.targetModel?.typeConcept === content.typeConcept);
+                            if(existing) // Already added - so allow the user to edit
+                            {
+                                $timeout(() => {
+                                    existing.targetModel.statusConcept = StatusKeys.Active;
+                                    var firstInput = $(`#action${existing.targetModel.id} input, #action${existing.targetModel.id} select`);
+                                    $('html, body').animate({
+                                        scrollTop: firstInput.offset().top
+                                    }, 500); 
+                                    firstInput?.focus();
+                                    
+                                });
+                                return;
+                            }
+                        }
                         // Next we want to set the performer on the action
                         content.operation = BatchOperationType.InsertInt;
                         content.id = content.id || SanteDB.application.newGuid();
+                        content._getEncounter = () => $scope.model;
                         $timeout(() => {
                             $scope.model.relationship = $scope.model.relationship || {};
                             $scope.model.relationship.HasComponent = $scope.model.relationship.HasComponent || [];
@@ -268,7 +306,22 @@ angular.module('santedb-lib')
             link: function (scope, element, attrs) {
 
                 // Are we viewing or editing?
-                _mode = attrs.readonly === "true" ? 'view' : 'edit';
+                _mode = attrs.readonly === "true"
+                    ? 'view' : 'edit';
+
+                if (_mode === 'edit') {
+                    SanteDB.authentication.getCurrentFacilityId().then((r) => {
+                        var actLocation = scope.model.participation?.Location[0]?.player;
+                        if (actLocation && actLocation != r) {
+                            _mode = 'view';
+                        }
+                        scope.applyVisibilityAttributes();
+                        $timeout(() => scope.initialized = true);
+                    });
+                }
+                else {
+                    scope.initialized = true;
+                }
 
                 scope.applyVisibilityAttributes = function () {
                     setTimeout(() => { // allow the DOM to catch up 
@@ -346,18 +399,25 @@ angular.module('santedb-lib')
                     }
 
                 }
-
+                // Is there reference
+                if (scope.model.relationship?.RefersTo) {
+                    scope.referenceActions = scope.model.relationship.RefersTo.groupBy(
+                        o => o.targetModel.templateModel.mnemonic,
+                        o => o.targetModel
+                    );
+                }
                 // Monitor for form touches - needs to be done after initialization
                 if (!scope.model.$templateUrl) {
                     setTimeout(() => {
 
-                        $("input", element).each((i, e) => {
+                        $("input,select", element).each((i, e) => {
                             $(e).on("blur", function (evt) {
                                 var eventIndexChanged = $(evt.currentTarget).closest("[data-actindex]").attr('data-actindex');
                                 if (scope.currentActions[eventIndexChanged] && scope.currentActions[eventIndexChanged].targetModel) {
                                     SanteDB.authentication.getCurrentUserEntityId().then(result => {
                                         var targetAct = scope.currentActions[eventIndexChanged].targetModel;
                                         scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
+                                        targetAct.statusConcept = StatusKeys.Active;
                                     });
                                 }
                             });
@@ -366,5 +426,6 @@ angular.module('santedb-lib')
                     }, 1000);
                 }
             }
+
         }
     }]);

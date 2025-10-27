@@ -95,8 +95,8 @@ angular.module('santedb-lib')
      *      <div class="col-md-2">{{ patient.genderConceptModel | concept }}</div>
      */
     .filter('concept', function () {
-        return function (modelValue) {
-            return SanteDB.display.renderConcept(modelValue);
+        return function (modelValue, language) {
+            return SanteDB.display.renderConcept(modelValue, language);
         }
     })
     /**

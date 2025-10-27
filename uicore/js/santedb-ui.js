@@ -216,27 +216,31 @@ SanteDBWrapper.prototype.display = new function () {
      * @summary Renders the specified concept name
      * @returns The appropriate display name for the concept
      * @param {SanteDBModel.Concept} concept The concept to be rendered
+     * @param {String} language The language to render
      */
-    this.renderConcept = function (concept) {
+    this.renderConcept = function (concept, language) {
         var retVal = "";
         if (!concept)
             retVal = "";
         else if (typeof (concept) === "string")
             retVal = concept;
-        else if (concept.name && concept.name[SanteDB.locale.getLanguage()])
-            retVal = concept.name[SanteDB.locale.getLanguage()];
+        else if (concept.name && concept.name[language || SanteDB.locale.getLanguage()])
+            retVal = concept.name[language || SanteDB.locale.getLanguage()] || concept.name[SanteDB.locale.getLanguage()]; // specified language or fallback
         else if (concept.name)
             retVal = concept.name[Object.keys(concept.name)[0]];
         else if (concept.mnemonic)
             retVal = concept.mnemonic;
-        else if (concept[SanteDB.locale.getLanguage()])
-            retVal = concept[SanteDB.locale.getLanguage()];
+        else if (concept[language || SanteDB.locale.getLanguage()])
+            retVal = concept[language || SanteDB.locale.getLanguage()] || concept[SanteDB.locale.getLanguage()];
         else
             retVal = concept[Object.keys(concept)[0]];
 
         if (Array.isArray(retVal)) {
             var name = retVal[0];
-            return name[0].toUpperCase() + name.substring(1);
+            if((language || SanteDB.locale.getLanguage()).indexOf('en') !== -1) {
+                return name[0].toUpperCase() + name.substring(1);
+            }
+            return name;
         }
         else
             return retVal;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
  - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -41,11 +41,11 @@
     <icon>/org.santedb.core/img/icon.png</icon>
     <name lang="en">SanteDB User Interface Core</name>
     <author>SanteSuite Community Partners (see: santesuite.org)</author>
-    <dependency id="org.santedb.core"/>
+    <dependency id="org.santedb.core" />
   </info>
 
   <settings>
-    <add name="oauth2.login" value="/org.santedb.uicore/oauth/"/>
+    <add name="oauth2.login" value="/org.santedb.uicore/oauth/" />
   </settings>
 
   <asset name="js/santedb-ng-directives.js" mimeType="text/javascript">
@@ -54,11 +54,18 @@
     </virtual>
   </asset>
 
-  <!-- Allow other plugins to expose raw HTML into an include place -->  
+  <!-- Allow other plugins to expose raw HTML into an include place -->
   <dynamicHtml name="PatientHeaderExtensions.html">
     <include>partials/patient/extensions/.*\.html</include>
   </dynamicHtml>
   <dynamicHtml name="EntityHeaderExtensions.html">
     <include>partials/entity/extensions/.*\.html</include>
   </dynamicHtml>
+
+  <locales>
+    <locale code="zxx"/>
+  </locales>
+  <strings lang="en">
+    <string key="ui.locale.zxx">System</string>
+  </strings>
 </AppletManifest>

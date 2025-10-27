@@ -46,7 +46,7 @@
                     <div class="col-md-9 col-sm-12">
                         <entity-search is-required="true" class="form-control" type="'ConceptSet'" required="required"
                             child-resource="'_members'" child-resource-scope="'a53ffda7-531c-46ce-85bc-f7ca2e07666d'"
-                            ng-model="entity.typeConcept" search-field="'name.value'"
+                            ng-model="entity.typeConcept" search-field="'name.value||referenceTerm.term.mnemonic'"
                             name="typeConcept"></entity-search>
                         <div class="text-danger" ng-if="materialForm.typeConcept.$error['required']">
                             <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}

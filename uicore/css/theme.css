@@ -495,3 +495,28 @@ table.dataTable tbody > tr > td {
 .nav-tabs {
     border: none;
 }
+
+
+.templateInfoDiv {
+    position: absolute;
+    right: 0px;
+    border-bottom: solid 1px #96989b !important;
+    border-left: solid 1px #96989b !important;
+    background-color: #dee2e699;
+    color: black;
+    z-index: 10;
+    padding: 0.25em 0.5em;
+    border-radius: 0em 0em 0em 1em;
+    margin-top: calc(-1em + 1px);
+}
+
+.empty-act-edit-instructions {
+    margin: auto;
+    text-align: center;
+    padding: 1rem;
+    width: fit-content;
+    font-size: 1.2rem;
+    color: #909496;
+    border: dashed 0.5rem #909496;
+    border-radius: 1.5em;
+}
