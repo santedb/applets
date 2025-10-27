@@ -115,16 +115,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                     var instructionDoc = await SanteDB.authentication.setupTfaSecretAsync(n, null, $scope.editObject.isUpstreamUser);
                     switch (instructionDoc.mime) {
                         case "image/png":
-                            $("#tfaImageSetup").removeClass("d-none");
-                            $("#tfaImageSetup").addClass("d-block");
-                            $("#tfaTextSetup").addClass("d-none");
-                            $("#tfaImageSetup").attr("src", `data:image/png;base64,${instructionDoc.text}`);
+                            $("#tfaTextSetup").removeClass("d-block").addClass("d-none").html('');
+                            $("#tfaImageSetup").removeClass("d-none").addClass("d-block").attr("src", `data:image/png;base64,${instructionDoc.text}`);
                             break;
                         case "text/plain":
-                            $("#tfaImageSetup").addClass("d-none");
-                            $("#tfaTextSetup").addClass("d-block");
-                            $("#tfaTextSetup").removeClass("d-none");
-                            $("#tfaTextSetup").html(SanteDB.locale.getString(instructionDoc.text));
+                            $("#tfaImageSetup").removeClass("d-block").addClass("d-none");
+                            $("#tfaTextSetup").removeClass("d-none").addClass("d-block").html(SanteDB.locale.getString(atob(instructionDoc.text))); //The narrative is always base-64 encoded.
                             break;
                     }
                     $timeout(() => {
