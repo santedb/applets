@@ -729,6 +729,7 @@
       <string name="ui.job.run">Running job {jobName}</string>
 
       <!-- Backup -->
+      <string name="ui.app.backup.start">System backup has started…</string>
       <string name="ui.app.backup.complete">System backup is completed successfully</string>
       <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
 
