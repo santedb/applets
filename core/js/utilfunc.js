@@ -64,6 +64,23 @@ Object.defineProperty(Array.prototype, 'selectField', {
     enumerable: false
 });
 
+
+/**
+ * @summary Order by a basic HDSI expression inline for Angular
+ */
+Object.defineProperty(Array.prototype, 'orderBy', {
+    value: function(orderSelector) {
+        return this.sort((a,b) => {
+            var aValue = a;
+            var bValue = b;
+            orderSelector.split('.').forEach(p => {
+                aValue = aValue ? aValue[p] : null;
+                bValue = bValue ? bValue[p] : null;
+            });
+            return aValue < bValue ? -1 : 1
+        })
+    }
+})
 /**
  * @method
  * @memberof Exception
