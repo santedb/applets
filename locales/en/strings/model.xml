@@ -560,10 +560,10 @@
   <string name="ui.model.manufacturedMaterial.expiry">Expiry Date</string>
   <string name="ui.model.manufacturedMaterial.expiry.hint">The latest date where the material
     maintains its potentcy</string>
-  <string name="ui.model.manufacturedMaterial.relationship.Instance">Batches/Lots</string>
-  <string name="ui.model.manufacturedMaterial.relationship.Instance.hint">Select the product which
+  <string name="ui.model.manufacturedMaterial.relationship.instance">Batches/Lots</string>
+  <string name="ui.model.manufacturedMaterial.relationship.instance.hint">Select the product which
     this lot number is an instance of</string>
-  <string name="ui.model.manufacturedMaterial.relationship.Instance.reverse">Product</string>
+  <string name="ui.model.manufacturedMaterial.relationship.instance.reverse">Product</string>
   <string name="ui.admin.facilities.edit.core.title">Facility</string>
   <string name="ui.model.facility.id">Unique Identifier</string>
   <string name="ui.model.place.isMobile">Is Mobile</string>
