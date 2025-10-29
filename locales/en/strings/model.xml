@@ -649,7 +649,7 @@
   <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time
     that the reaction first occurred / started occurring</string>
   <string name="ui.model.act.relationship.HasManifestation.stopTime">Completion Time</string>
-  <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time
+  <string name="ui.model.act.relationship.HasManifestation.stopTime.hint">Select the date and time
     that the reaction stopped</string>
   <string name="ui.model.act.relationship.HasManifestation.hasStopped">Reaction Finished</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
