@@ -39,7 +39,8 @@ angular.module('santedb-lib')
                 excludeEntities: '=',
                 key: "<",
                 autoSelectSingles: "<",
-                itemSupplement: "<"
+                itemSupplement: "<",
+                returnObject: "<"
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
             }],
@@ -83,6 +84,9 @@ angular.module('santedb-lib')
                                 if(scope.key) {
                                     ngModel.$setViewValue(results.resource[0][scope.key]);
                                 }
+                                else if(scope.returnObject) {
+                                    ngModel.$setViewValue(results.resource[0]);
+                                }
                                 else {
                                     ngModel.$setViewValue(results.resource[0].id);
                                 }
@@ -103,17 +107,22 @@ angular.module('santedb-lib')
                     }
                 });
 
+                
                 // Element has changed
                 element.on('change', function (e) {
                     var val = $(element).val();
-
+                    var modelValue = null;
                     if(val === "") {
                         scope.$apply(() => ngModel.$setViewValue(null));
                     }
-                    else if (scope.key)
-                        scope.$apply(() => ngModel.$setViewValue(scope.values.find(o => o.id == val)[scope.key]));
-                    else if (scope._complexValue)
-                        scope.$apply(() => ngModel.$setViewValue(scope.values.find(o => o.id == val)));
+                    else if (scope.key) {
+                        modelValue = scope.values.find(o => o.id == val);
+                        scope.$apply(() => ngModel.$setViewValue(modelValue[scope.key]));
+                    }
+                    else if (scope._complexValue || scope.returnObject) {
+                        modelValue = scope.values.find(o => o.id == val);
+                        scope.$apply(() => ngModel.$setViewValue(modelValue));
+                    }
                     else 
                         scope.$apply(() => ngModel.$setViewValue(val));
 

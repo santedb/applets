@@ -303,6 +303,11 @@
     <property name="identifier" all="true">
       <property name="*" ref="EntityIdentifier" />
     </property>
+    <property name="relationship" behavior="always" all="false">
+      <property name="UsedEntity" behavior="always" all="true">
+        <property name="targetModel" behavior="always" all="true" ref="Material" />
+      </property>
+    </property>
     <property name="classConceptModel" behavior="always" ref="Concept" />
     <property name="classConcept" behavior="always" />
     <property name="determinerConceptModel" behavior="never" />
@@ -448,6 +453,9 @@
     <property name="siteModel" behavior="always" ref="Concept" />
     <property name="reasonConceptModel" behavior="always" ref="Concept" />
     <property name="relationship" all="true" behavior="always">
+      <property name="HasComponent" all="true">
+        <property name="targetModel" behavior="always" all="true" ref="Act" />
+      </property>
       <property name="*" all="true">
         <property name="target" />
         <property name="source" />
@@ -759,19 +767,7 @@
     <property name="protocolModel" behavior="always" />
     <property name="relationship" behavior="always">
       <property name="HasComponent" all="true">
-        <property name="targetModel" all="true" behavior="always">
-          <property name="templateModel" behavior="always" />
-          <property name="participation" behavior="always">
-            <property name="Product">
-              <property name="playerModel" behavior="always" ref="Material" />
-            </property>
-            <property name="Baby">
-              <property name="playerModel" behavior="always" ref="Patient" />
-              </property>
-          </property>
-          <property name="tag" behavior="always" />
-
-        </property>
+        <property name="targetModel" all="true" behavior="always" ref="Act" />
       </property>
     </property>
     <property name="participation" behavior="always" all="true">

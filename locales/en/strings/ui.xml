@@ -358,6 +358,7 @@
       <string name="ui.table.search.field.name||oid">Search by name or OID</string>
       <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <string name="ui.table.search.field.name.component.value||securityUser.userName">Search by name or username</string>
+      <string name="ui.table.search.field.name.value||referenceTerm.term.mnemonic">Search by name or reference code</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -728,6 +729,8 @@
       <string name="ui.job.run">Running job {jobName}</string>
 
       <!-- Backup -->
+      <string name="ui.app.backup.create">System backup has been created!</string>
+      <string name="ui.app.backup.start">System backup has started…</string>
       <string name="ui.app.backup.complete">System backup is completed successfully</string>
       <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
 

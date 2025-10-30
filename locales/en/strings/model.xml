@@ -649,7 +649,7 @@
   <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time
     that the reaction first occurred / started occurring</string>
   <string name="ui.model.act.relationship.HasManifestation.stopTime">Completion Time</string>
-  <string name="ui.model.act.relationship.HasManifestation.startTime.hint">Select the date and time
+  <string name="ui.model.act.relationship.HasManifestation.stopTime.hint">Select the date and time
     that the reaction stopped</string>
   <string name="ui.model.act.relationship.HasManifestation.hasStopped">Reaction Finished</string>
   <string name="ui.model.act.participation.Location">Location(s)</string>
@@ -1093,6 +1093,7 @@
   <string name="ui.model.container.expiryDate">Expires</string>
   <string name="ui.model.container.expiryDate.hint">That last date that the container can be used</string>
 
+  <string name="ui.model.observation.actTime">Time</string>
   <string name="ui.model.observation.unitOfMeasure">Unit</string>
   <string name="ui.model.observation.interpretationConcept">Interpretation</string>
   <string name="ui.model.observation.interpretationConcept.unknown">No Information</string>
@@ -1192,9 +1193,14 @@
   <!-- Substance Administrations -->
   <string name="ui.model.substanceAdministration.doseSequence">Dose #</string>
   <string name="ui.model.substanceAdministration.typeConcept">Type</string>
+  <string name="ui.model.substanceAdministration.Product">Substance Administered</string>
   <string name="ui.model.substanceAdministration.Consumable.lotNumber">Lot #</string>
   <string name="ui.model.substanceAdministration.site">Administration Site</string>
 
   <!-- Search for concept -->
   <string name="ui.table.search.field.mnemonic||name.value">Name or Mnemonic</string>
+  
+    <string name="ui.model.patientEncounter.empty">
+        <![CDATA[This visit has no actions. You can add them using the <strong>Add</strong> option below]]>
+    </string>
 </resources>

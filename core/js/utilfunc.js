@@ -41,7 +41,6 @@ Object.defineProperty(Array.prototype, 'groupBy', {
     enumerable: false
 });
 
-
 /**
  * @summary Select distinct objects from the array
  */
@@ -65,6 +64,23 @@ Object.defineProperty(Array.prototype, 'selectField', {
     enumerable: false
 });
 
+
+/**
+ * @summary Order by a basic HDSI expression inline for Angular
+ */
+Object.defineProperty(Array.prototype, 'orderBy', {
+    value: function(orderSelector) {
+        return this.sort((a,b) => {
+            var aValue = a;
+            var bValue = b;
+            orderSelector.split('.').forEach(p => {
+                aValue = aValue ? aValue[p] : null;
+                bValue = bValue ? bValue[p] : null;
+            });
+            return aValue < bValue ? -1 : 1
+        })
+    }
+})
 /**
  * @method
  * @memberof Exception
@@ -145,8 +161,8 @@ Date.prototype.addDays = function (days) {
  * @param {string} measure The unit of measure
  * @returns The difference between the date and this date
  */
-Date.prototype.age = function (measure) {
-    return moment().diff(this, measure || 'years', false);
+Date.prototype.age = function (measure, other) {
+    return moment(other).diff(this, measure || 'years', false);
 }
 
 /**
@@ -535,27 +551,44 @@ async function prepareActForSubmission(act) {
     if (act.relationship) {
         Object.keys(act.relationship).forEach((k) => {
 
-            act.relationship[k] = ensureIsArray(act.relationship[k]);
-            act.relationship[k] = act.relationship[k].map((r) => {
-                if (r.targetModel) {
-                    r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
-                    r.targetModel = applyCascadeInstructions(r.targetModel);
-                }
-                if (r.holderModel && r.holderModel.id) {
-                    r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
-                }
-                delete r.relationshipTypeModel;
-                delete r.relationshipRoleModel;
-                delete r.classificationModel;
-
-                return r;
-            }).filter(r => r && (r.source || r.holder || r.target));
+            if (!act.relationship[k]) {
+                delete act.relationship[k]
+            }
+            else {
+                act.relationship[k] = ensureIsArray(act.relationship[k]);
+                act.relationship[k] = act.relationship[k].map((r) => {
+                    if (r.targetModel) {
+                        r.target = r.targetModel.id = r.targetModel.id || r.target || SanteDB.application.newGuid();
+                        r.targetModel = applyCascadeInstructions(r.targetModel);
+                    }
+                    if (r.holderModel && r.holderModel.id) {
+                        r.holder = r.holderModel.id = r.holderModel.id || r.holder || SanteDB.application.newGuid();
+                    }
+                    delete r.relationshipTypeModel;
+                    delete r.relationshipRoleModel;
+                    delete r.classificationModel;
+                    return r;
+                }).filter(r => r && (r.source || r.holder || r.target));
+            }
         });
     }
 
     return applyCascadeInstructions(act);
 }
 
+// Cascade the batch operation
+function cascadeBatchOperationInstruction(source, batchOperation) {
+    batchOperation = (batchOperation || source.operation);
+    if ([BatchOperationType.Delete, BatchOperationType.DeleteInt].includes(batchOperation) && source.relationship) {
+        Object.keys(source.relationship).map(o=>source.relationship[o]).flat().filter(o => o.classification == RelationshipClassKeys.ContainedObjectLink).forEach(o => {
+            o.operation = batchOperation;
+            if (o.targetModel) {
+                o.targetModel.operation = batchOperation;
+                cascadeBatchOperationInstruction(o.targetModel, batchOperation);                
+            }
+        })
+    }
+}
 /**
  * @summary Apply any act cascade instructions
  * @param {Act} source The act on which the cascade instructions should be applied
@@ -566,6 +599,8 @@ function applyCascadeInstructions(source) {
     source.tag = source.tag || {};
     source.tag["$cascade:*:*"] = ["Location", "Authororiginator", "RecordTarget"];
     source.relationship = source.relationship || {};
+
+    cascadeBatchOperationInstruction(source);
 
     var cascadeInstructions = Object.keys(source.tag).filter(o => o.indexOf("$cascade:") == 0);
 
@@ -626,7 +661,7 @@ function applyCascadeInstructions(source) {
                         }
                         else {
                             var sourcePlayer = source.participation[instruction.sourceRole];
-                            if (!sourcePlayer) return;
+                            if (!sourcePlayer || [BatchOperationType.Delete, BatchOperationType.DeleteInt].includes(sourcePlayer[0].operation)) return;
 
                             if (!relationship.targetModel.participation[instruction.targetRole]) // Only cascade if not specified
                             {
@@ -910,6 +945,8 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
         ignoreRelations = [ignoreRelations];
     }
 
+    cascadeBatchOperationInstruction(object);
+
     //object = angular.copy(object);
     var retVal = existingBundle || new Bundle({ resource: [object], focal: [object.id], correlationId: object.id });
 
@@ -947,7 +984,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                     ptcpt.player = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
 
                     if (!relatedObject.version ||
-                        [BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
+                        [BatchOperationType.Delete, BatchOperationType.DeleteInt, BatchOperationType.InsertOrUpdate, BatchOperationType.Update, BatchOperationType.UpdateInt, BatchOperationType.InsertOrUpdateInt].includes(relatedObject.operation)
                     ) {
                         retVal.resource.push(relatedObject);
                     }

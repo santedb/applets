@@ -253,7 +253,6 @@
     <string name="org.santedb.widget.admin.panel.facility.profile.telecom">Telecom</string>
     <string name="org.santedb.widget.admin.panel.facility.profile.services">Services</string>
 
-
     <!-- Edit Identity Domain -->
     <string name="ui.admin.domain.edit.core.title">Identity Domain Properties</string>
     <string name="ui.admin.domain.edit.scope.title"><![CDATA[Authority &amp; Scope]]></string>
