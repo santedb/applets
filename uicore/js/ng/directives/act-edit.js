@@ -377,7 +377,8 @@ angular.module('santedb-lib')
                 _noCdss = attrs.disableCdss;
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
-                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False').sort((a, b) => a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
+                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False')
+                        .sort((a, b) => a.targetModel.actTime < b.targetModel.actTime ? -1 : 1); // a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
                     scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && (a.targetModel.tag.isBackEntry[0] == 'True' || a.targetModel.tag.isBackEntry[0] == 'true'))
                         .groupBy(
                             o => o.targetModel.templateModel.mnemonic,
