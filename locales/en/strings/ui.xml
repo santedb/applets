@@ -146,6 +146,7 @@
 
       <!-- Synchornization -->
       <string name="ui.sync">Synchronization</string>
+      <string name="ui.sync.new">New</string>
       <string name="ui.sync.clear">No Conflicts</string>
       <string name="ui.sync.conflict">Conflicts</string>
       <string name="ui.sync.out">Outbox Queue</string>
