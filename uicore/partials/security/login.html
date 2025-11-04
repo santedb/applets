@@ -77,7 +77,7 @@
         <div class="col">
             {{ 'ui.elevate.scope' | i18n }}
             <ul class="ml-5">
-                <li style="list-style-type: square;" ng-repeat="scope in login.scope">{{ scope | i18n }}</li>
+                <li style="list-style-type: square;" ng-repeat="scope in login.scope track by $index" ng-if="scope !== '*'">{{ scope.policyName | i18n }} ({{ scope.policyId }})</li>
             </ul>
         </div>
     </div>

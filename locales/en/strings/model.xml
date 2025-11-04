@@ -619,6 +619,8 @@
   <string name="ui.model.job.schedule.interval.05m">5 minutes</string>
   <string name="ui.model.act.template">Template</string>
   <string name="ui.model.act.typeConcept">Type</string>
+  <string name="ui.model.act.reasonConcept.masked.title">Confidential/Restricted Record</string>
+  <string name="ui.model.act.reasonConcept.masked.description"><![CDATA[ This record has been marked <strong>Confidential</strong> or <strong>Restricted</strong> and access to the record requires additional authentication (break the glass condition)]]></string>
   <string name="ui.model.act.reasonConcept">Reason</string>
   <string name="ui.model.act.reasonConcept.hint">Select a reason for the action you're taking. This
     will help provide context for an administrator or reviewer of the information</string>

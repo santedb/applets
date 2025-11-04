@@ -23,16 +23,17 @@
  * @param {function():void} continueWith The function to continue with when login is successful
  * @param {string} purposeOfUse The purpose of use to assign
  */
-function SanteDBElevator(continueWith, purposeOfUse) {
+function SanteDBElevator(continueWith, purposeOfUse, extraClaims) {
 
     var _token = null;
     var _onCloseFunction = null;
-
+    var _session = null;
+    var _sessionIvl = null;
     // Focus function
-    var _focusFunction = function() {};
-    $("#loginModal").on("shown.bs.modal", function() { _focusFunction(); });
-    $("#loginModal").on("hidden.bs.modal", function() {
-        if(_onCloseFunction)
+    var _focusFunction = function () { };
+    $("#loginModal").on("shown.bs.modal", function () { _focusFunction(); });
+    $("#loginModal").on("hidden.bs.modal", function () {
+        if (_onCloseFunction)
             _onCloseFunction(_token != null);
         $("#loginModal").off("shown.bs.modal");
         $("#loginModal").off("hidden.bs.modal");
@@ -42,7 +43,7 @@ function SanteDBElevator(continueWith, purposeOfUse) {
      * @summary Sets a special function to be called when the modal is closed regardless of outcome
      * @param {function():void} closeCallback The callback to be alled
      */
-    this.setCloseCallback = function(closeCallback) {
+    this.setCloseCallback = function (closeCallback) {
         _onCloseFunction = closeCallback;
     }
 
@@ -51,8 +52,17 @@ function SanteDBElevator(continueWith, purposeOfUse) {
      * @returns {String} The current elevation token
      * @summary Gets the elevation token
      */
-    this.getToken = function() {
+    this.getToken = function () {
         return _token;
+    }
+
+    /**
+     * @method
+     * @summary Gets the elevated session
+     * @returns The elevated session
+     */
+    this.getSession = function () {
+        return _session;
     }
 
     /**
@@ -60,43 +70,71 @@ function SanteDBElevator(continueWith, purposeOfUse) {
      * @summary Shows the elevation dialog and then performs the continueWith
      * @param {any} useSession The current session, passed when and if a pou is required and not a change of login
      */
-    this.elevate = function(sessionToUse, scope) {
+    this.elevate = function (sessionToUse, scope) {
 
-        angular.element("#loginModal").scope().login = {
-            userName: sessionToUse ? sessionToUse.user.userName : null,
-            enablePin: sessionToUse != null,
-            requirePou: purposeOfUse === false ? false : purposeOfUse || scope && scope.filter(o=>o.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.600") == 0).length == 0,
-            _lockUserName: sessionToUse != null,
-            scope: scope,
-            purposeOfUse: purposeOfUse,
-            noSession: true,
-            grant_type: "password",
-            onLogin: function(s) {
-                _token = s.access_token || s.token;
-                continueWith(s);
+        var claims = extraClaims || {};
+
+        SanteDB.authentication.getCurrentFacilityId().then((facilityId) => {
+            var $scope = angular.element("#loginModal").scope();
+            if (facilityId) {
+                claims["urn:oasis:names:tc:xspa:1.0:subject:facility"] = facilityId;
             }
-        };
+            if (sessionToUse) {
+                claims["urn:santedb:org:claim:override"] = sessionToUse;
+            }
 
-        // Try to refresh scope
-        try {
-            angular.element("#loginModal").scope().$apply();
-        }
-        catch (e) {
+            $scope.login = {
+                userName: sessionToUse ? sessionToUse.user.userName : null,
+                enablePin: sessionToUse != null,
+                requirePou: purposeOfUse === false ? false : purposeOfUse || scope && scope.filter(o => o.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.600") == 0).length == 0,
+                _lockUserName: sessionToUse != null,
+                scope: scope,
+                purposeOfUse: purposeOfUse,
+                noSession: true,
+                claim: claims,
+                grant_type: "password",
+                onLogin: function (s) {
+                    _token = s.access_token || s.token;
+                    if (s.id_token) {
+                        _session = SanteDB.authentication.parseJwt(s.id_token);
+                    }
+                    else {
+                        _session = s;
+                    }
+                    _sessionIvl = setInterval(() => {
+                        if (_session && _session.exp - (new Date().getTime() / 1000) < 0) {
+                            _token = retVal = _session = null;
+                        }
+                        if(!_session) {
+                            clearInterval(_sessionIvl);
+                        }
+                    }, 1000)
+                    continueWith(s);
 
-        }
+                }
+            };
 
-        __SanteDBAppService.GetStatus().then(o=>{
-            $("#loginModal").modal({
-                backdrop:'static'
+            // Try to refresh scope
+            try {
+                $scope.$apply();
+            }
+            catch (e) {
+
+            }
+
+            _focusFunction = function () {
+                if (sessionToUse)
+                    $("#authUserPinInput").focus();
+                else
+                    $("#authUserNameInput").focus();
+            }
+
+            __SanteDBAppService.GetStatus().then(o => {
+                $("#loginModal").modal({
+                    backdrop: 'static'
+                });
             });
         });
-
-        _focusFunction = function() {
-            if(sessionToUse) 
-                $("#authUserPinInput").focus();
-            else 
-                $("#authUserNameInput").focus();
-        }
     }
 }
 
