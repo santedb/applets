@@ -880,6 +880,7 @@ function ResourceWrapper(_config) {
         * @param {any} parms Extra parameters to pass to the get function
         * @param {any} state A unique state object which is passed back to the caller
         * @param {boolean} upstream True if the get should be directly submitted to the upstream iCDR server
+        * @param {any} headers Extra headers to be added to the request
         * @returns {Promise} The promise for the operation
         * @example Fetch a patient by ID
         *   async function fetchPatient(id) {
@@ -895,11 +896,10 @@ function ResourceWrapper(_config) {
         *       }
         *   }
         */
-    this.getAsync = function (id, viewModel, query, upstream, state) {
+    this.getAsync = function (id, viewModel, query, upstream, state, headers) {
 
-        var headers = {
-            Accept: _config.accept
-        };
+        headers = headers || {};
+        headers.Accept =  headers.Accept || _config.accept;
 
         // Prepare query
         var url = null;
@@ -965,11 +965,10 @@ function ResourceWrapper(_config) {
         *       }
         *   }
         */
-    this.findAsync = function (query, viewModel, upstream, state) {
+    this.findAsync = function (query, viewModel, upstream, state, headers) {
 
-        var headers = {
-            Accept: _config.accept
-        };
+        headers = headers || {};
+        headers.Accept =  headers.Accept || _config.accept;
         query = query || {};
 
         if (viewModel)
@@ -1052,14 +1051,15 @@ function ResourceWrapper(_config) {
         *   }
         * }
         */
-    this.insertAsync = function (data, upstream, state, dontReturnObject) {
+    this.insertAsync = function (data, upstream, state, dontReturnObject, headers) {
 
+        
         if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info` && data.$type !== `${_config.resource}Definition`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
-        var headers = {
-            Accept: _config.accept
-        };
+        headers = headers || {};
+        headers.Accept = _config.accept;
+
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
@@ -1104,11 +1104,13 @@ function ResourceWrapper(_config) {
      * @description The patching operation is used to update a portion of the resource without subimtting the entirety of the object to the dCDR or iCDR 
      *               server ({@link https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/patching})
      */
-    this.patchAsync = function (id, etag, patch, force, upstream, state, dontReturnObject) {
+    this.patchAsync = function (id, etag, patch, force, upstream, state, dontReturnObject, headers) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
+        
+        headers = headers || {};
+        headers.Accept = _config.accept;
 
-        var headers = {};
         if (etag) {
             headers['If-Match'] = etag;
         }
@@ -1151,7 +1153,7 @@ function ResourceWrapper(_config) {
         * @param {boolean} upstream True if the update should be directly submitted to the upstream iCDR server
         * @returns {Promise} The promise for the operation
         */
-    this.updateAsync = function (id, data, upstream, state, dontReturnObject) {
+    this.updateAsync = function (id, data, upstream, state, dontReturnObject, headers) {
 
         if (data.id && data.id !== id)
             throw new Exception("ArgumentException", "error.invalidValue", `Identifier mismatch, PUT identifier  ${id} doesn't match ${data.id}`);
@@ -1160,10 +1162,10 @@ function ResourceWrapper(_config) {
             delete (data.updatedBy);
         if (data.updatedTime)
             delete (data.updatedTime);
+        
+        headers = headers || {};
+        headers.Accept = _config.accept;
 
-        var headers = {
-            Accept: _config.accept
-        };
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
@@ -1195,11 +1197,11 @@ function ResourceWrapper(_config) {
     * @param {boolean} upstream True if the delete should be directly submitted to the upstream iCDR server
     * @returns {Promise} The promise for the operation
     */
-    this.deleteAsync = function (id, upstream, state, dontReturnObject) {
+    this.deleteAsync = function (id, upstream, state, dontReturnObject, headers) {
 
-        var headers = {
-            Accept: _config.accept
-        };
+        headers = headers || {};
+        headers.Accept = _config.accept;
+
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
@@ -1881,7 +1883,7 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [pve.policyId, "*"]);
+                    _elevator.elevate(angular.copy(_session), [pve, "*"]);
                 else
                     _elevator.elevate(null);
                 return true;
@@ -4403,6 +4405,14 @@ function SanteDBWrapper() {
         this.setElevator = function (elevator) {
             _elevator = elevator;
         }
+
+        /**
+         * @summary Gets the current elevator if assigned
+         * @returns {SanteDBElevator} The assigned elevation handler
+         */
+        this.getElevator = function() {
+            return _elevator;
+        }
         /**
             * @method getSessionInfoAsync
             * @memberof SanteDBWrapper.AuthenticationApi
@@ -5159,7 +5169,6 @@ function SanteDBWrapper() {
         $.ajaxSetup({
             cache: false,
             beforeSend: function (data, settings) {
-
                 if (!settings.noAuth) {
                     var elevatorToken = _elevator ? _elevator.getToken() : null;
                     if (elevatorToken) {

@@ -38,14 +38,14 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
                 $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getAssignedFacilityId();
             }
             
-            var pouKey = $scope.login.purposeOfUse ? $scope.login.purposeOfUse.id : null;
+            var pouKey = $scope.login.purposeOfUse ? ($scope.login.purposeOfUse.id || $scope.login.purposeOfUse) : null;
             var sessionResult = null;
             switch ($scope.login.grant_type) {
                 case "password":
-                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope || "*", $scope.login.claim);
+                    sessionResult = await SanteDB.authentication.passwordLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, pouKey, $scope.login.scope?.map(s => s.policyId || s) || "*", $scope.login.claim);
                     break;
                 case "pin":
-                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope || "*", $scope.login.claim);
+                    sessionResult = await SanteDB.authentication.pinLoginAsync($scope.login.userName, $scope.login.password, $scope.login.tfaSecret, $scope.login.noSession, $scope.login.scope?.map(s => s.policyId || s) || "*", $scope.login.claim);
                     break;
                 default:
                     throw { "message": "ui.login.invalidMethod" };

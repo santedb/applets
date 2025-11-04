@@ -75,13 +75,15 @@ angular.module('santedb-lib')
                         // Get the status concepts
                         _patientStatusConcepts = (await SanteDB.resources.conceptSet.getAsync("b73e6dbc-890a-11f0-8959-c764088c39f9", "min"))?.concept;
 
-                        var rct = $scope.model.participation?.RecordTarget[0].playerModel;
+                        if ($scope.model.participation?.RecordTarget) {
+                            var rct = $scope.model.participation?.RecordTarget[0].playerModel;
 
-                        $timeout(() => {
-                            $scope.availableTemplates = _applicableTemplateList
-                                .filter(o => !o.guard || $scope.$eval(o.guard, { recordTarget: rct }))
-                                .sort((a, b) => a.name < b.name ? -1 : 1);
-                        })
+                            $timeout(() => {
+                                $scope.availableTemplates = _applicableTemplateList
+                                    .filter(o => !o.guard || $scope.$eval(o.guard, { recordTarget: rct }))
+                                    .sort((a, b) => a.name < b.name ? -1 : 1);
+                            });
+                        }
                     }
                     catch (e) {
                         console.error(e);

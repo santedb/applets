@@ -411,8 +411,15 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             })
         }
 
+
+        $rootScope.elevatedSession = function() {
+            return SanteDB.authentication.getElevator()?.getSession()
+        }
+
+        $rootScope.outstandingApiCalls = () => jQuery.active;
+
         function prepareErrorForDisplay(e) {
-            var userMessageKey = `error.type.${e.$type}.userMessage`;
+            var userMessageKey = `error.type.${e.type}.userMessage`;
             var userMessage = SanteDB.locale.getString(userMessageKey);
             if (userMessage == userMessageKey) // no special user message - show default
             {
@@ -422,7 +429,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     userMessage: e.userMessage ? e.userMessage : userMessage != userMessageKey ? userMessage : null,
                     details: e.detail || e,
                     message: e.message || 'ui.error.title',
-                    type: e.$type,
+                    type: e.type,
                     rules: e.rules,
                     cause: []
                 };
@@ -431,14 +438,14 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     retVal.cause.push({
                         detail: cause.detail || cause,
                         message: cause.message || 'ui.error.title',
-                        type: cause.$type
+                        type: cause.type
                     });
                     cause = cause.cause;
                 }
                 return retVal;
             }
             else {
-                e.type = e.$type;
+                e.type = e.type;
                 e.userMessage = userMessage;
                 return e;
             }
