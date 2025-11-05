@@ -70,7 +70,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
     }]).controller("RootIndexController", ["$scope", function ($scope) {
 
     }])
-    .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout) {
+    .run(['$rootScope', '$state', '$templateCache', '$transitions', '$ocLazyLoad', '$interval', '$timeout', "$stateParams", 
+        function ($rootScope, $state, $templateCache, $transitions, $ocLazyLoad, $interval, $timeout, $stateParams) {
 
         function applyDarkMode(session) {
             if (session && session.userSettings) {
@@ -346,11 +347,22 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $(".modal").modal('hide');
             $('.popover').popover('hide');
 
-            // Clear out elevator
-            SanteDB.authentication.setElevator(null);
-
-            if (transition._targetState._definition.self.name != transition._targetState._definition.self.name != $state.$current.name)
+         
+            if (transition._targetState._definition.self.name != $state.$current.name ||
+                transition._targetState._params.id != $stateParams.id
+            ) {
                 $("#pageTransitioner").show();
+                   // Clear out elevator and the elevated session if one exists
+                try {
+                    var session = SanteDB.authentication.getElevator()?.getSession();
+                    if(session?.id_token) {
+                        SanteDB.authentication.logoutAsync(session.id_token);
+                    }
+                }
+                finally {
+                    SanteDB.authentication.setElevator(null);
+                }
+            }
         });
 
         $transitions.onSuccess({}, function (transition) {

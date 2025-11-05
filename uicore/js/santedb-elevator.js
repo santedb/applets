@@ -31,6 +31,9 @@ function SanteDBElevator(continueWith, purposeOfUse, extraClaims) {
     var _sessionIvl = null;
     // Focus function
     var _focusFunction = function () { };
+    $("#loginModal").off("shown.bs.modal");
+    $("#loginModal").off("hidden.bs.modal");
+    
     $("#loginModal").on("shown.bs.modal", function () { _focusFunction(); });
     $("#loginModal").on("hidden.bs.modal", function () {
         if (_onCloseFunction)
@@ -97,6 +100,7 @@ function SanteDBElevator(continueWith, purposeOfUse, extraClaims) {
                     _token = s.access_token || s.token;
                     if (s.id_token) {
                         _session = SanteDB.authentication.parseJwt(s.id_token);
+                        _session.id_token = s.id_token;
                     }
                     else {
                         _session = s;
@@ -105,7 +109,7 @@ function SanteDBElevator(continueWith, purposeOfUse, extraClaims) {
                         if (_session && _session.exp - (new Date().getTime() / 1000) < 0) {
                             _token = retVal = _session = null;
                         }
-                        if(!_session) {
+                        if(!_session || SanteDB.authentication.getElevator() == null) {
                             clearInterval(_sessionIvl);
                         }
                     }, 1000)

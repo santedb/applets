@@ -219,6 +219,7 @@
       <string name="ui.action.dismiss">Dismiss</string>
       <string name="ui.action.show">Show</string>
       <string name="ui.action.cancel">Cancel</string>
+      <string name="ui.action.elevate">Elevate</string>
       <string name="ui.action.clear">Clear</string>
       <string name="ui.action.complete">Complete</string>
       <string name="ui.action.customize">Customize View</string>

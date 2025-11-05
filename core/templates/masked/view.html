@@ -1,0 +1,11 @@
+<span xmlns="http://www.w3.org/1999/xhtml"
+    oc-lazy-load="{ name : 'SanteDBOverrideOneTimeController', files: [ '/org.santedb.core/templates/masked/controller.js'] }">
+    <span ng-controller="SanteDBOverrideOneTimeController">
+        <span class="text-danger font-weight-bold p-2">{{ 'ui.model.act.reasonConcept.masked.title' | i18n }}
+            <button class="btn btn-sm btn-danger" type="button" ng-click="consentOverride(act.$type, act.id)" ng-disabled="isLoading">
+                <span ng-if="!isLoading"><i class="fas fa-shield-alt"></i> {{ 'ui.action.elevate' | i18n }}</span>
+                <span ng-if="isLoading"><i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}</span>
+            </button>
+        </span>
+    </span>
+</span>
