@@ -691,7 +691,7 @@ function applyCascadeInstructions(source) {
  * @param {Entity} entity The entity to be corrected
  * @param {boolean} splitCompoundNames When true, instructs the function to split any compound names like "John Jacob Jinglehiemer" into an array
  */
-async function prepareEntityForSubmission(entity, splitCompoundNames) {
+async function prepareEntityForSubmission(entity) {
 
     if (entity.tag && entity.tag["$generated"]) {
         entity.tag["$mdm.type"] = "T"; // Set a ROT tag
@@ -794,13 +794,13 @@ async function prepareEntityForSubmission(entity, splitCompoundNames) {
                             }
                         }
 
-                        if (splitCompoundNames) {
-                            var compoundArray = [];
-                            nameItem.component[o].forEach(name => {
-                                name.split(' ').forEach(c => compoundArray.push(c));
-                            });
-                            nameItem.component[o] = compoundArray;
-                        }
+                        // if (splitCompoundNames) {
+                        //     var compoundArray = [];
+                        //     nameItem.component[o].forEach(name => {
+                        //         name.split(' ').forEach(c => compoundArray.push(c));
+                        //     });
+                        //     nameItem.component[o] = compoundArray;
+                        // }
                     });
                 }
                 delete (nameItem.useModel);
@@ -1011,6 +1011,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     if (!existingBundle) {
         retVal.resource.forEach(res => deleteModelProperties(res));
     }
+    retVal.resource.forEach(r => delete(r.policy));
     return retVal;
 }
 

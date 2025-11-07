@@ -1751,7 +1751,7 @@ function ResourceWrapper(_config) {
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
         var headers = {
-            Accept: _config.accept
+            Accept: contentType || _config.accept
         };
         if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
@@ -4403,7 +4403,12 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.AuthenticationApi
          */
         this.setElevator = function (elevator) {
-            _elevator = elevator;
+            if(elevator && _elevator && _elevator.getSession()) {
+                console.warn("Ignoring setElevator since an authenticated elevated session already exists");
+            }
+            else {
+                _elevator = elevator;
+            }
         }
 
         /**
@@ -4881,9 +4886,10 @@ function SanteDBWrapper() {
             * @summary Abandons the current SanteDB session
             * @returns {Promise} The promise representing the fulfillment or rejection of the logout request
             */
-        this.logoutAsync = function () {
+        this.logoutAsync = function (id_token_hint) {
             return new Promise(function (fulfill, reject) {
                 try {
+                    
                     if (!_session || _session === undefined)
                     {
                         resetSessionVariables();
@@ -4900,12 +4906,15 @@ function SanteDBWrapper() {
                         resource: "signout",
                         contentType: 'application/x-www-form-urlencoded',
                         data: {
+                            id_token_hint: id_token_hint,
                             logout_hint: _session.username,
                             client_id: SanteDB.configuration.getClientId()
                         }
                     })
                         .then(function (d) {
-                            resetSessionVariables();
+                            if(!id_token_hint || id_token_hint == _session.jti) {
+                                resetSessionVariables();
+                            }
                             if (fulfill) fulfill(d);
                         })
                         .catch(reject);
