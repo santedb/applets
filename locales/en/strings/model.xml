@@ -66,6 +66,7 @@
   <string name="ui.model.securityRole.obsoletedBy">Deleted By</string>
   <string name="ui.model.securityRole.description">Description</string>
   <string name="ui.model.securityPolicy.name">Name</string>
+  <string name="ui.model.securityPolicy.isPublic">Public - Allow users to apply the policy to objects</string>
   <string name="ui.model.securityPolicy.oid">OID</string>
   <string name="ui.model.securityPolicy.id">UUID</string>
   <string name="ui.model.securityPolicy.handler">C# Handler</string>
