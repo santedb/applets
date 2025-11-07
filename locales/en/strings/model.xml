@@ -634,6 +634,7 @@
   <string name="ui.model.act.actTime.date">Date Performed</string>
   <string name="ui.model.act.actTime.date.hint">The date when the action was performed.</string>
   <string name="ui.model.act.startTime">Started</string>
+  <string name="ui.model.act.statusConcept.nullified"><![CDATA[This record was <strong>Entered in Error</strong>]]></string>
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>

@@ -99,6 +99,55 @@ angular.module('santedb-lib')
                 $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
                 $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
 
+                $scope.nullifyItem = async function(entry, index) {
+                    if(confirm(SanteDB.locale.getString("ui.action.nullify.confirm"))) {
+                        try {
+                            SanteDB.display.buttonWait(`#btnNullify${index}`, true);
+                            var entryCopy = angular.copy(entry);
+                            delete entryCopy.version;
+                            delete entryCopy.sequence;
+
+                            entryCopy.statusConcept = StatusKeys.Nullified;
+                            entryCopy.participation = entryCopy.participation || {};
+                            entryCopy.participation.Verifier = [];
+                            entryCopy.participation.Verifier.push(new ActParticipation({
+                                player: await SanteDB.authentication.getCurrentUserEntityId()
+                            }));
+
+                            // Update the data
+                            entry.operation = BatchOperationType.Update;
+                            await SanteDB.resources.act.updateAsync(entryCopy.id, entryCopy, null, null, true);
+                            $state.reload();
+                        }
+                        catch(e) {
+                            $rootScope.errorHandler(e);
+                        }
+                        finally{
+                            SanteDB.display.buttonWait(`#btnNullify${index}`, false);
+                        }
+                    }
+                }
+
+                $scope.editItem = function(entry, index) {
+                    var entryCopy = angular.copy(entry);
+                    delete entryCopy.version;
+                    delete entryCopy.id;
+                    delete entryCopy.previousVersion;
+                    delete entryCopy.sequence;
+                    entryCopy.id = SanteDB.application.newGuid();
+                    entryCopy.relationship = entryCopy.relationship || {};
+                    entryCopy.relationship.Appends = [
+                        new ActRelationship({
+                            target: entry.id
+                        })
+                    ];
+                    entryCopy.tag = {
+                        $editIndex: index
+                    };
+                    $scope.editEntry = entryCopy;
+
+                }
+
                 $scope.loadReasonConcept = async function (entry) {
                     if (entry && entry._reasonConcept != entry.reasonConcept) {
                         entry._reasonConcept = entry.reasonConcept;
@@ -131,8 +180,21 @@ angular.module('santedb-lib')
                 }
 
                 $scope.resolveTemplate = function (templateId) {
+                    if(_mode !== 'edit' && !$scope.editEntry) {
+                        return;
+                    }
+                    
+                    var templateValue = SanteDB.application.resolveTemplateForm(templateId);
+                    if (templateValue == null) {
+                        return "/org.santedb.uicore/partials/act/noTemplate.html"
+                    }
+                    return templateValue;
+                }
 
-                    var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateForm(templateId) : SanteDB.application.resolveTemplateView(templateId);
+                
+                $scope.resolveView = function (templateId) {
+
+                    var templateValue = SanteDB.application.resolveTemplateView(templateId);
                     if (templateValue == null) {
                         return "/org.santedb.uicore/partials/act/noTemplate.html"
                     }

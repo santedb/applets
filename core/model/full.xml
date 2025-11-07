@@ -839,6 +839,11 @@
         <property name="player" />
         <property name="playerModel" ref="UserEntityNested" behavior="always" />
       </property>
+      <property name="Verifier" all="true">
+        <property name="relationshipTypeModel" behavior="always" />
+        <property name="player" />
+        <property name="playerModel" ref="UserEntityNested" behavior="always" />
+      </property>
       <property name="*" ref="ActParticipation" all="true" />
     </property>
   </type>

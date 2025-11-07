@@ -141,7 +141,7 @@
             </ul>
 
             <div class="tab-content">
-                
+
                 <div class="tab-pane fade show active" id="current-actions" role="tabpanel"
                     aria-labelledby="current-actions-tab">
                     <ul class="overflow-auto list-group">
@@ -151,9 +151,8 @@
                             </div>
                         </li>
                         <li class="my-2 list-group-item d-flex flex-column border-top"
-                            id="action{{ comp.targetModel.id }}"
-                            ng-repeat="comp in currentActions track by $index" data-actindex="{{$index}}"
-                            ng-if="comp !== null"
+                            id="action{{ comp.targetModel.id }}" ng-repeat="comp in currentActions track by $index"
+                            data-actindex="{{$index}}" ng-if="comp !== null"
                             ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-success text-dark bg-lighten-75' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4', 'bg-light' : $index % 2 == 1 }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
@@ -162,9 +161,11 @@
                             <div class="templateInfoDiv">
                                 <i class="fas fa-fw"
                                     ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
-                                {{ ::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).name | i18n }}
+                                {{ ::getTemplateInfo(comp.targetModel.template ||
+                                comp.targetModel.templateModel.mnemonic).name | i18n }}
 
-                                <i class="fas fa-fw fa-shield ml-2 text-danger" ng-if="comp.targetModel.policy.length &gt; 0"></i>
+                                <i class="fas fa-fw fa-shield ml-2 text-danger"
+                                    ng-if="comp.targetModel.policy.length &gt; 0"></i>
                             </div>
 
                             <div class="d-flex justify-content-left mb-2">
@@ -187,14 +188,12 @@
                                 </div>
 
                                 <!-- Render the main act entry content -->
-                                <div class="flex-grow-1 actEntryComponent my-auto">
-                                    <div ng-if="!comp.targetModel.isNegated" class="editOnly"
-                                        ng-init="act = comp.targetModel"
+                                <div class="flex-grow-1 actEntryComponent my-auto editOnly">
+                                    <div ng-if="!comp.targetModel.isNegated" ng-init="act = comp.targetModel"
                                         ng-class="{ 'actEntryComponentRemoved' : comp.operation == '4' }">
                                         <ng-include
                                             src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
                                     </div>
-
                                     <div ng-if="comp.targetModel.isNegated">
                                         <div class="input-group mb-0">
                                             <label class="control-label mr-2">
@@ -227,18 +226,52 @@
                                     </div>
                                 </div>
 
-                                <div class="actEditItem viewOnly d-none"
-                                    ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'">
-                                    <button type="button" ng-click="editItem($index)" class="btn btn-primary"
-                                        ng-disabled="comp.targetModel.actTime.age('hour') &gt; 24">
+                                <div class="viewOnly actEntryComponent my-auto flex-grow-1">
+                                    <div ng-if="editEntry.tag.$editIndex !== $index"
+                                        ng-class="{ 'actEntryComponentRemoved' : comp.targetModel.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'}">
+                                        <ng-include
+                                            src="::resolveView(comp.targetModel.templateModel.mnemonic)"></ng-include>
+                                    </div>
+                                    <div ng-if="editEntry.tag.$editIndex === $index">
+                                        <form name="ownerForm" novalidate="novalidate" ng-init="act = editEntry" class="d-flex flex-column">
+                                            <ng-include
+                                                src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="btn-group">
+                                                    <button type="submit" class="btn btn-primary" id="saveAmendment"
+                                                        ng-disabled="ownerForm.$invalid">
+                                                        <i class="fas fa-fw fa-check"></i> <span class="d-none d-lg-inline">{{
+                                                            'ui.action.save' | i18n }}</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger" id="cancelAmendment" ng-click="editEntry = null">
+                                                        <i class="fas fa-fw fa-times"></i> {{ 'ui.action.cancel' | i18n }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="viewOnly d-none btn-group"
+                                    ng-if="comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3' &amp;&amp; !comp.targetModel.tag['$pep.masked']">
+                                    <button type="button" id="btnEdit{{$index}}"
+                                        ng-click="editItem(comp.targetModel, $index)" class="btn btn-primary"
+                                        ng-if="!editEntry"
+                                        ng-disabled="comp.targetModel.creationTime.greaterOf(model.stopTime || model.creationTime).age('hour') &gt; 24">
                                         <i class="fas fa-fw fa-pencil"></i> <span class="d-none d-lg-inline">{{
                                             'ui.action.edit' | i18n }}</span>
                                     </button>
+                                    <button type="button" id="btnNullify{{$index}}"
+                                        ng-click="nullifyItem(comp.targetModel, $index)" class="btn btn-danger"
+                                        ng-if="!editEntry">
+                                        <i class="fas fa-fw fa-ban"></i> <span class="d-none d-lg-inline">{{
+                                            'ui.action.nullify' | i18n }}</span>
+                                    </button>
+
                                 </div>
                             </div>
 
                             <!-- Performer -->
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center" ng-if="editEntry.tag.$editIndex !== $index">
                                 <div ng-if="comp.targetModel.participation.Performer &amp;&amp; comp.targetModel.statusConcept == 'afc33800-8225-4061-b168-bacc09cdbae3'"
                                     class="alert alert-secondary d-flex my-auto p-2">
                                     <h5 class="align-self-center text-success my-auto"><i
@@ -254,6 +287,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div ng-if="comp.targetModel.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5'"
+                                    class="alert alert-danger d-flex my-auto p-2">
+                                    <h5 class="align-self-center text-danger my-auto"><i
+                                            class="m-auto fas fa-fw fa-ban"></i></h5>
+                                    <div class="d-flex flex-column my-auto">
+                                        <span>{{ 'ui.model.act.statusConcept.nullified' | i18n}}</span>
+                                        <div ng-repeat="de in comp.targetModel.participation.Verifier track by $index">
+                                            <i class="fas fa-fw fa-user"></i> {{
+                                            de.playerModel.name | name }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Amendment -->
+                            <div class="row viewOnly"
+                                ng-repeat="amendment in comp.targetModel.relationship.Appends track by $index">
+                                TODO: Amendment View
                             </div>
 
                             <!-- Buttons -->
