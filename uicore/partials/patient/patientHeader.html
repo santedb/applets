@@ -16,8 +16,8 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="mb-1 scroll-sticky object-header" style="top: 0 !important;">
-    
-    
+
+
     <div class="card">
         <div class="card-body" ng-if="!patient">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
@@ -28,10 +28,11 @@
                 <div class="col-12 d-flex justify-content-between">
                     <div class="flex-grow-1">
                         <h5 class="m-0 p-0">{{ patient.name | name }} <div class="p-2 d-inline">
-                            <button ng-if="setState" id="btnSetState"
-                                    type="button" data-toggle="dropdown" class="btn  btn-sm"
+                                <button ng-if="setState" id="btnSetState" type="button" data-toggle="dropdown"
+                                    class="btn  btn-sm"
                                     ng-class="{ 'btn-primary' : patient.statusConcept == 'c8064cbd-fa06-4530-b430-1a52f1530c27' , 'btn-success' : patient.statusConcept == 'c34fcbf1-e0fe-4989-90fd-0dc49e1b9685' , 'btn-warning' : patient.statusConcept == '0bbec253-21a1-49cb-b376-7fe4d0592cda', 'btn-danger' : patient.statusConcept == 'cd4aa3c4-02d5-4cc9-9088-ef8f31e321c5', 'btn-dark' : patient.statusConcept == 'bdef5f90-5497-4f26-956c-8f818cce2bd2' }">
-                                    {{ patient.statusConceptModel | concept }} <i class="fas fa-fw mr-1 fa-chevron-down"></i>
+                                    {{ patient.statusConceptModel | concept }} <i
+                                        class="fas fa-fw mr-1 fa-chevron-down"></i>
                                     <div class="dropdown-menu">
                                         <a class="btn btn-link dropdown-item"
                                             ng-if="patient.statusConcept != 'c8064cbd-fa06-4530-b430-1a52f1530c27'"
@@ -51,17 +52,23 @@
                                                 class="fas fa-circle text-danger"></i> Nullify</a>
                                     </div>
                                 </button>
-                                <button ng-if="printPage" class="btn btn-sm btn-outline-secondary" ng-click="printPage()">
-                                    <i class="fas fa-fw fa-print"></i> <span class="d-none d-md-inline">{{ 'ui.action.print' | i18n }}</span>
+                                <button ng-if="printPage" class="btn btn-sm btn-outline-secondary"
+                                    ng-click="printPage()">
+                                    <i class="fas fa-fw fa-print"></i> <span class="d-none d-md-inline">{{
+                                        'ui.action.print' | i18n }}</span>
                                 </button>
                                 <button ng-if="printCard" class="btn btn-sm btn-outline-primary" ng-click="printCard()">
-                                    <i class="fas fa-fw fa-qrcode"></i> <span class="d-none d-md-inline">{{ 'ui.action.print.vrp' | i18n }}</span>
+                                    <i class="fas fa-fw fa-qrcode"></i> <span class="d-none d-md-inline">{{
+                                        'ui.action.print.vrp' | i18n }}</span>
                                 </button>
-                                <button ng-if="startVisit" class="btn btn-sm btn-outline-success" ng-click="startVisit()">
-                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
+                                <button ng-if="startVisit" class="btn btn-sm btn-outline-success"
+                                    ng-click="startVisit()">
+                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span
+                                        class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
                                 </button>
                                 <button ng-if="viewVisit" class="btn btn-sm btn-outline-dark" ng-click="viewVisit()">
-                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span class="d-none d-md-inline">{{ 'ui.action.visit' | i18n }}</span>
+                                    <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span
+                                        class="d-none d-md-inline">{{ 'ui.action.visit' | i18n }}</span>
                                 </button>
                             </div>
                         </h5>
@@ -111,12 +118,12 @@
                             {{ patient.dateOfBirth | extDate: patient.dateOfBirthPrecision }} ( <span
                                 class="badge badge-dark" ng-if="patient.deceasedDate">{{
                                 'ui.model.patient.deceasedIndicator' | i18n }}</span>
-                                
-                                <span ng-if="!patient.deceasedDate">
-                                    {{ patient.dateOfBirth | age: 'y' }}
-                                </span>
-                                <span ng-if="patient.deceasedDate &gt;= patient.dateOfBirth">
-                            {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }}</span> )
+
+                            <span ng-if="!patient.deceasedDate">
+                                {{ patient.dateOfBirth | age: 'y' }}
+                            </span>
+                            <span ng-if="patient.deceasedDate &gt;= patient.dateOfBirth">
+                                {{ patient.dateOfBirth | age: 'y':patient.deceasedDate }}</span> )
                         </div>
 
                         <!-- Telecom -->
@@ -132,11 +139,13 @@
                 </div>
                 <div class="col-12 hide-when-sticky">
                     <div class="d-flex flex-wrap justify-content-between">
-                        <div class="mx-2" ng-repeat="(k, rel) in patient.relationship" ng-if="$root.refValues.FamilyMember.indexOf(k) &gt; -1">
+                        <div class="mx-2" ng-repeat="(k, rel) in patient.relationship"
+                            ng-if="$root.refValues.FamilyMember.indexOf(k) &gt; -1">
                             <div ng-repeat="r in rel track by $index">
                                 <i class="fas fa-fw fa-people-arrows"></i>
-                                <span class="badge badge-primary m-2">{{ rel.relationshipTypeModel || k | concept }} </span>
-                                {{ r.targetModel.name | name }} 
+                                <span class="badge badge-primary m-2">{{ rel.relationshipTypeModel || k | concept }}
+                                </span>
+                                {{ r.targetModel.name | name }}
                                 <a ng-if="r.targetModel.telecom">
                                     <i class="fas fa-fw fa-phone"></i> {{ r.targetModel.telecom | telecom }}
                                 </a>
@@ -147,6 +156,6 @@
 
             </div>
         </div>
-    </div>    
+    </div>
     <ng-include src="'/_dynamic/PatientHeaderExtensions.html'" />
 </div>

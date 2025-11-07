@@ -1751,7 +1751,7 @@ function ResourceWrapper(_config) {
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
         var headers = {
-            Accept: _config.accept
+            Accept: contentType || _config.accept
         };
         if (viewModel)
             headers["X-SanteDB-ViewModel"] = viewModel;
