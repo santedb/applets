@@ -163,6 +163,8 @@
                                 <i class="fas fa-fw"
                                     ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
                                 {{ ::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).name | i18n }}
+
+                                <i class="fas fa-fw fa-shield ml-2 text-danger" ng-if="comp.targetModel.policy.length &gt; 0"></i>
                             </div>
 
                             <div class="d-flex justify-content-left mb-2">
