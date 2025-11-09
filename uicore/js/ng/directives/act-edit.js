@@ -99,6 +99,167 @@ angular.module('santedb-lib')
                 $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
                 $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
 
+                $scope.nullifyItem = async function (entry, index) {
+                    if (confirm(SanteDB.locale.getString("ui.action.nullify.confirm"))) {
+                        try {
+                            SanteDB.display.buttonWait(`#btnNullify${index}`, true);
+                            var entryCopy = angular.copy(entry);
+                            delete entryCopy.version;
+                            delete entryCopy.sequence;
+
+                            entryCopy.statusConcept = StatusKeys.Nullified;
+                            entryCopy.participation = entryCopy.participation || {};
+                            entryCopy.participation.Verifier = [];
+                            entryCopy.participation.Verifier.push(new ActParticipation({
+                                player: await SanteDB.authentication.getCurrentUserEntityId()
+                            }));
+
+                            // Update the data
+                            entry.operation = BatchOperationType.Update;
+                            await SanteDB.resources.act.updateAsync(entryCopy.id, entryCopy, null, null, true);
+                            $state.reload();
+                        }
+                        catch (e) {
+                            $rootScope.errorHandler(e);
+                        }
+                        finally {
+                            SanteDB.display.buttonWait(`#btnNullify${index}`, false);
+                        }
+                    }
+                }
+
+                $scope.cancelEdit = async function () {
+                    try {
+                        SanteDB.display.buttonWait("#cancelAmendment", true);
+                        await SanteDB.resources.act.checkinAsync($scope.editEntry.id);
+                        $timeout(() => $scope.editEntry = null);
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait("#cancelAmendment", false);
+
+                    }
+                }
+
+                function createAmendmentAct(/** @type {Act} */ existingAct) {
+                    var entryCopy = angular.copy(existingAct);
+                    delete entryCopy.version;
+                    delete entryCopy.id;
+                    delete entryCopy.previousVersion;
+                    delete entryCopy.sequence;
+                    entryCopy.operation = BatchOperationType.Insert;
+                    entryCopy.id = SanteDB.application.newGuid();
+                    entryCopy.relationship = entryCopy.relationship || {};
+
+                    // Original copy obsoleted
+                    var obsoletedOldCopy = angular.copy(existingAct);
+
+                    // The exiting operation should UPDATE the existing entry and set it to obsolete
+                    obsoletedOldCopy.operation = BatchOperationType.Update;
+                    obsoletedOldCopy.statusConcept = StatusKeys.Obsolete;
+                    entryCopy.relationship.Replaces = [
+                        new ActRelationship({
+                            target: existingAct.id,
+                            targetModel: obsoletedOldCopy
+                        })
+                    ];
+
+                    // Erase the source and identifiers off the act's participations and relationships
+                    const relationshipParse = [entryCopy.participation, entryCopy.relationship, entryCopy.identifier, entryCopy.extension].filter(o => o != null);
+                    relationshipParse.forEach(relObj => {
+                        Object.keys(relObj).forEach(key => {
+                            relObj[key].forEach(ptcpt => {
+                                ptcpt.id = SanteDB.application.newGuid();
+                                ptcpt.source = entryCopy.id;
+                                ptcpt.operation = BatchOperationType.Insert;
+                            })
+                        });
+                    })
+
+                    // For each of the components or subjects create a new act which modifies the original 
+                    entryCopy.relationship.HasSubject?.forEach(hs => {
+                        hs.id = SanteDB.application.newGuid();
+                        hs.targetModel = createAmendmentAct(hs.targetModel);
+                        hs.target = hs.targetModel.id;
+                        hs.source = entryCopy.id;
+                    });
+                    entryCopy.relationship.HasComponent?.forEach(hs => {
+                        hs.id = SanteDB.application.newGuid();
+                        hs.targetModel = createAmendmentAct(hs.targetModel);
+                        hs.target = hs.targetModel.id;
+                        hs.source = entryCopy.id;
+                    });
+
+                    return entryCopy;
+                }
+
+                $scope.editItem = async function (entry, index) {
+
+                    try {
+                        // Attempt to lock
+                        SanteDB.display.buttonWait(`#btnEdit${index}`, true);
+                        await SanteDB.resources.act.checkoutAsync(entry.id);
+
+                        var entryCopy = createAmendmentAct(entry);
+                        entryCopy.participation = entryCopy.participation || {};
+                        entryCopy.participation.Authororiginator = [new ActParticipation({
+                            player: await SanteDB.authentication.getCurrentUserEntityId()
+                        })];;
+                        entryCopy.$editIndex = index;
+
+                        $timeout(() => $scope.editEntry = entryCopy);
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait(`#btnEdit${index}`, false);
+                    }
+                }
+
+                $scope.saveAmendment = async function (form) {
+                    if (form.$invalid) return;
+
+                    try {
+                        SanteDB.display.buttonWait("#saveAmendment", true);
+
+                        // Prepare the act for submission 
+                        var actSubmission = await prepareActForSubmission($scope.editEntry);
+                        var submissionBundle = bundleRelatedObjects(actSubmission);
+                        actSubmission = scrubModelProperties(actSubmission);
+
+                        // Find the old entry in the visit and replace it with the new encounter
+                        var oldEntry = $scope.editEntry.relationship.Replaces[0].target;
+                        var visitRelationship = angular.copy($scope.model.relationship.HasComponent.find(o => o.target == oldEntry));
+                        visitRelationship.operation = BatchOperationType.Delete;
+                        delete (visitRelationship.targetModel);
+                        submissionBundle.resource.push(visitRelationship);
+
+                        // Add the replacement into the visit
+                        submissionBundle.resource.push(new ActRelationship({
+                            operation: BatchOperationType.Insert,
+                            id: SanteDB.application.newGuid(),
+                            classification: RelationshipClassKeys.ContainedObjectLink,
+                            relationshipType: ActRelationshipTypeKeys.HasComponent,
+                            source: $scope.model.id,
+                            target: actSubmission.id
+                        }));
+
+                        // Submit the bundle
+                        await SanteDB.resources.bundle.insertAsync(submissionBundle);
+                        await SanteDB.resources.act.checkinAsync(actSubmission.id);
+                        $state.reload();
+                    }
+                    catch (e) {
+                        $rootScope.errorHandler(e);
+                    }
+                    finally {
+                        SanteDB.display.buttonWait("#saveAmendment", false);
+                    }
+                }
+
                 $scope.loadReasonConcept = async function (entry) {
                     if (entry && entry._reasonConcept != entry.reasonConcept) {
                         entry._reasonConcept = entry.reasonConcept;
@@ -131,8 +292,21 @@ angular.module('santedb-lib')
                 }
 
                 $scope.resolveTemplate = function (templateId) {
+                    if (_mode !== 'edit' && !$scope.editEntry) {
+                        return;
+                    }
 
-                    var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateForm(templateId) : SanteDB.application.resolveTemplateView(templateId);
+                    var templateValue = SanteDB.application.resolveTemplateForm(templateId);
+                    if (templateValue == null) {
+                        return "/org.santedb.uicore/partials/act/noTemplate.html"
+                    }
+                    return templateValue;
+                }
+
+
+                $scope.resolveView = function (templateId) {
+
+                    var templateValue = SanteDB.application.resolveTemplateView(templateId);
                     if (templateValue == null) {
                         return "/org.santedb.uicore/partials/act/noTemplate.html"
                     }
@@ -312,6 +486,7 @@ angular.module('santedb-lib')
                 _mode = attrs.readonly === "true"
                     ? 'view' : 'edit';
 
+                // Turn off actions on view only mode
                 if (_mode === 'edit') {
                     SanteDB.authentication.getCurrentFacilityId().then((r) => {
                         var actLocation = scope.model.participation?.Location[0]?.player;

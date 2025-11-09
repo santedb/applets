@@ -21,7 +21,7 @@
  * @summary Provides helper functions for the CDSS
  */
 function SanteDBCdssWrapper() {
- 
+
     const _promoteFields = [
         "interpretationConcept",
         "interpretationConceptModel",
@@ -51,12 +51,12 @@ function SanteDBCdssWrapper() {
      * @remarks The ${object} is updated with selected fields such as interpretationConcept, etc.
      */
     this.analyzeAsync = async function (object, replaceValues, libraryIds, outProposals) {
-       
+
         try {
 
             // Submission needs to clear fields
             var api = null;
-            if(object.$type == Bundle.name || object.resource) {
+            if (object.$type == Bundle.name || object.resource) {
                 object.resource.forEach(o => delete o.interpretationConcept);
                 api = SanteDB.resources.bundle;
             }
@@ -71,19 +71,18 @@ function SanteDBCdssWrapper() {
             // Analysis issues 
             var issues = analysis.issue;
             var objectReturn = await api.invokeOperationAsync(null, "expand", { object: analysis.submission }, null, "noModelProperties");
-            if(analysis.propose  && Array.isArray(outProposals)) {
+            if (analysis.propose && Array.isArray(outProposals)) {
                 // Expand the data 
                 var proposals = await Promise.all(analysis.propose.map(async action => {
                     return await SanteDB.resources.act.invokeOperationAsync(null, "expand", { object: action }, null, "full");
                 }));
-                proposals.forEach(p =>
-                {
+                proposals.forEach(p => {
                     // If the proposal is replacing an existing component, find the component and replace it
-                    if(object.$type !== Bundle.name && p.tag && p.tag["$cdss.overwriteComponent"]) {
+                    if (object.$type !== Bundle.name && p.tag && p.tag["$cdss.overwriteComponent"]) {
                         object.relationship = object.relationship || {};
                         object.relationship.HasComponent = object.relationship.HasComponent || [];
                         var idx = object.relationship.HasComponent.findIndex(o => (o.target || o.targetModel.id) == p.tag["$cdss.overwriteComponent"]);
-                        if(idx == -1) // not found push
+                        if (idx == -1) // not found push
                         {
                             object.relationship.HasComponent.push(p);
                         }
@@ -98,10 +97,10 @@ function SanteDBCdssWrapper() {
             }
 
             // We want to update any item in the submitted object with any interpretation concept or fields that have changed 
-            objectReturn.resource = objectReturn.resource || [ objectReturn ];
+            objectReturn.resource = objectReturn.resource || [objectReturn];
 
             objectReturn.resource.forEach(r => {
-                var originalObject = object.resource?.find(o=>o.id == r.id) || object;
+                var originalObject = object.resource?.find(o => o.id == r.id) || object;
                 if (!originalObject) return;
 
                 // Copy any non-model fields over to 
@@ -109,15 +108,22 @@ function SanteDBCdssWrapper() {
                     var originalValue = originalObject[k];
                     var cdssValue = r[k];
 
-                    if(!cdssValue) return;
-                    else if(!originalValue) {
+                    if (!cdssValue) return;
+                    else if (!originalValue) {
                         originalObject[k] = cdssValue;
                     }
-                    else if(Array.isArray(originalValue)) {
+                    else if (Array.isArray(originalValue)) {
                         originalObject[k].push(cdssValue);
                     }
-                    else if(replaceValues) {
-                        originalObject[k] = cdssValue;
+                    else if (replaceValues) {
+                        if (typeof cdssValue === 'object') {
+                            Object.keys(cdssValue).forEach(sk => {
+                                originalValue[sk] = cdssValue[sk];
+                            })
+                        }
+                        else {
+                            originalObject[k] = cdssValue;
+                        }
                     }
                 })
             });

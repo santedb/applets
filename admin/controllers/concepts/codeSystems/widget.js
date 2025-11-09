@@ -132,7 +132,6 @@ angular.module('santedb').controller('CodeSystemWidgetController', ["$scope", "$
             var refTerm = angular.copy($scope.edit.referenceTerm);
             refTerm.id = refTerm.id || SanteDB.application.newGuid();
             submissionBundle.resource.push(refTerm);
-
             // Remove old concept maps 
             if (refTerm._originalConcepts) {
                 refTerm._originalConcepts.filter(c => c.id).forEach(c => submissionBundle.resource.push(new ConceptReferenceTerm({ id: c.id, operation: BatchOperationType.DeleteInt })));

@@ -72,10 +72,10 @@ angular.module('santedb-lib')
 
             // Clearing text breaks  grouping display - ensure that there are no children before clearing text
             // Also need to preserve placeholder and preserve the loading 
-            if(!selection.children && !selection.loading && selection.id != "" && !selection.title) {
+            if (!selection.children && !selection.loading && selection.id != "" && !selection.title) {
                 selection.text = '';
             }
-            
+
             if (selection.text)
                 return selection.text;
 
@@ -129,10 +129,10 @@ angular.module('santedb-lib')
                     retVal += "<i class='fa fa-fw fa-certificate'></i>";
                     break;
                 default:
-                    if(selection.icon) {
+                    if (selection.icon) {
                         retVal += `<i class='${selection.icon}'></i> `;
                     }
-                    else if(selection.text && selection.text != "") {
+                    else if (selection.text && selection.text != "") {
                         retVal += "<i class='fa fa-fw fa-box'></i> ";
                     }
                     break;
@@ -140,7 +140,7 @@ angular.module('santedb-lib')
 
             retVal += "&nbsp;";
 
-            if(selection.lotNumber) {
+            if (selection.lotNumber) {
                 retVal += `${selection.lotNumber} - `;
             }
 
@@ -164,15 +164,15 @@ angular.module('santedb-lib')
                 retVal += selection.element.innerText.trim();
             else if (selection.text)
                 retVal += selection.text;
-            
-            if(selection.expiryDate && selection.expiryDate.getYear() > 0) {
+
+            if (selection.expiryDate && selection.expiryDate.getYear() > 0) {
                 retVal += ` <span class="badge badge-warning">EXP: ${moment(selection.expiryDate).format("YYYY-MM-DD")}</span>`;
             }
 
             retVal += "&nbsp;";
-            
+
             if (!minRender) {
-                if(selection.securityUserModel) 
+                if (selection.securityUserModel)
                     retVal += `<span class='d-non d-sm-inline'><i class='fas fa-fw fa-shield-alt'></i> ${selection.securityUserModel.userName}</span> `;
                 if (selection.address)
                     retVal += "<small class='d-none d-sm-inline'>- (<i class='fa fa-map-marker'></i> " + SanteDB.display.renderEntityAddress(selection.address) + ")</small>";
@@ -181,7 +181,7 @@ angular.module('santedb-lib')
                 else if (selection.mnemonic)
                     retVal += `<small class='d-none d-sm-inline ml-2'>(${selection.mnemonic})</small>`;
             }
-            
+
             if (selection.classConceptModel && !selection.typeConceptModel)
                 retVal += ` <span class='badge badge-secondary ml-1'>${SanteDB.display.renderConcept(selection.classConceptModel)}</span>`;
             else if (selection.typeConceptModel) {
@@ -229,7 +229,7 @@ angular.module('santedb-lib')
             controller: ['$scope', '$rootScope',
                 function ($scope, $rootScope) {
 
-                    $scope.setValue = (selectControl, resource, value) => {
+                    $scope.setValue = (selectControl, resource, value, displayString) => {
                         if (!value || Array.isArray(value) && value.length == 0) {
                             $(selectControl).find('option').remove();
                             $(selectControl).trigger('change.select2');
@@ -280,7 +280,17 @@ angular.module('santedb-lib')
                                             var obj = results[0];
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            var option = new Option(renderObject(results[0], $scope.minRender), v, false, true);
+
+                                            var text = "";
+
+                                            if (displayString) {
+                                                text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
+                                            }
+                                            else if (obj.name !== undefined) {
+                                                text = renderObject(obj, $scope.minRender);
+                                            }
+
+                                            var option = new Option(text, v, false, true);
                                             option.title = renderTitle(results[0]);
                                             $(selectControl)[0].add(option);
                                         }
@@ -299,7 +309,16 @@ angular.module('santedb-lib')
                                             var obj = res;
                                             if ($scope.selector)
                                                 obj = obj[$scope.selector] || obj;
-                                            var option = new Option(renderObject(obj, $scope.minRender), v, false, true);
+
+                                            var text = "";
+                                            if (displayString) {
+                                                text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
+                                            }
+                                            else if (obj.name !== undefined) {
+                                                text = renderObject(obj, $scope.minRender);
+                                            }
+
+                                            var option = new Option(text, v, false, true);
                                             option.title = renderTitle(obj);
                                             $(selectControl)[0].add(option);
                                         }
@@ -315,9 +334,11 @@ angular.module('santedb-lib')
 
                             });
 
-                            var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
-                            if(form && form[selectControl[0].name]) {
-                                form[selectControl[0].name].$setValidity("required", true);
+                            if (selectControl[0].form) {
+                                var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
+                                if (form && form[selectControl[0].name]) {
+                                    form[selectControl[0].name].$setValidity("required", true);
+                                }
                             }
                         }
                     }
@@ -443,7 +464,7 @@ angular.module('santedb-lib')
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = scope.viewModel || "dropdown";
 
-                                if(scope.upstream) {
+                                if (scope.upstream) {
                                     filter["_upstream"] = true;
                                 }
                                 return filter;
@@ -454,9 +475,9 @@ angular.module('santedb-lib')
                                 var retVal = { results: [], pagination: { more: data.totalResults > data.count } };
                                 var data = (data.$type == "Bundle" ? data.resource : data.resource || data) || [];
 
-                                if(scope.jsFilter) {
+                                if (scope.jsFilter) {
 
-                                    if(typeof scope.jsFilter === "string") {
+                                    if (typeof scope.jsFilter === "string") {
                                         scope.jsFilter = SanteDB.display.getParentScopeVariable(scope, scope.jsFilter);
                                     }
                                     data = data.filter(flt => scope.jsFilter(flt));
@@ -554,7 +575,7 @@ angular.module('santedb-lib')
                     });
 
                     // On change
-                    element.on('change', function (e) {                        
+                    element.on('change', function (e) {
                         var val = $(element).select2("val");
 
                         // Remove loading indicator
@@ -598,17 +619,17 @@ angular.module('santedb-lib')
                     ngModel.$render = function () {
                         if (valueProperty) {
                             if (Array.isArray(ngModel.$viewValue))
-                                scope.setValue(element, scope.type, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }));
+                                scope.setValue(element, scope.type, ngModel.$viewValue.map(function (e) { return e[valueProperty]; }), displayString);
                             else
-                                scope.setValue(element, scope.type, ngModel.$viewValue[valueProperty]);
+                                scope.setValue(element, scope.type, ngModel.$viewValue[valueProperty], displayString);
                         }
                         else
-                            scope.setValue(element, scope.type, ngModel.$viewValue);
+                            scope.setValue(element, scope.type, ngModel.$viewValue, displayString);
                     };
 
                     // HACK: Screw Select2 , it is so random
                     if (ngModel.$viewValue) {
-                        scope.setValue(element, scope.type, ngModel.$viewValue);
+                        scope.setValue(element, scope.type, ngModel.$viewValue, displayString);
                     }
                 });
             }

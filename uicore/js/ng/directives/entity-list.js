@@ -203,7 +203,6 @@ angular.module('santedb-lib')
                             $scope.$$queryId = SanteDB.application.newGuid();
                         }
                         $scope.queryControl.currentPage = 1;
-
                         refreshItems($scope);
                     }
                 });
