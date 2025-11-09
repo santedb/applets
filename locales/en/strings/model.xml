@@ -638,6 +638,7 @@
   <string name="ui.model.act.stopTime">Completed</string>
   <string name="ui.model.act.typeConcept">Event Type</string>
   <string name="ui.model.act.relationship.IsDerivedFrom">Derived From</string>
+  <string name="ui.model.act.relationship.Replaces.source">Amends / Replaces</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.hint">This action was derived from another
     act</string>
   <string name="ui.model.act.relationship.IsDerivedFrom.cdss">The decision support system recommends
