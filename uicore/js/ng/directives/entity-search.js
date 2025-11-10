@@ -70,9 +70,13 @@ angular.module('santedb-lib')
 
         function renderObject(selection, minRender) {
 
+            
             // Clearing text breaks  grouping display - ensure that there are no children before clearing text
             // Also need to preserve placeholder and preserve the loading 
-            if (!selection.children && !selection.loading && selection.id != "" && !selection.title) {
+            if (!selection.children &&
+                !selection.loading &&
+                selection.id != "" &&
+                !selection.title) {
                 selection.text = '';
             }
 
@@ -235,110 +239,118 @@ angular.module('santedb-lib')
                             $(selectControl).trigger('change.select2');
                         }
                         else {
-                            var api = SanteDB.resources[resource.toCamelCase()];
+                            try {
+                                var api = SanteDB.resources[resource.toCamelCase()];
 
-                            if (!Array.isArray(value))
-                                value = [value];
+                                if (!Array.isArray(value))
+                                    value = [value];
 
-                            $(selectControl).find('option').each((idx, ele) => {
-                                var val = $(ele).val();
-                                if (val == 'loading' ||
-                                    /\?.*\?/i.test(val))
-                                    $(ele).remove();
-                            });
-                            $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
+                                $(selectControl).find('option').each((idx, ele) => {
+                                    var val = $(ele).val();
+                                    if (val == 'loading' ||
+                                        /\?.*\?/i.test(val))
+                                        $(ele).remove();
+                                });
+                                if ($(selectControl)[0].length == 0) {
+                                    $(selectControl)[0].add(new Option(`<i class='fa fa-circle-notch fa-spin'></i> ${SanteDB.locale.getString("ui.wait")}`, "loading", true, true));
+                                }
 
-                            value.filter(o => o).forEach(async function (v) {
-                                try {
+                                value.filter(o => o).forEach(async function (v) {
+                                    try {
 
-                                    if ($scope.valueProperty) {
-                                        if (v[$scope.valueProperty]) {
-                                            v = v[$scope.valueProperty];
+                                        if ($scope.valueProperty) {
+                                            if (v[$scope.valueProperty]) {
+                                                v = v[$scope.valueProperty];
+                                            }
+                                            else {
+                                                return;
+                                            }
+                                        }
+
+                                        if ($scope.key && $scope.key != "id") {
+                                            var query = angular.copy($scope.filter || {});
+                                            query[$scope.key] = v;
+                                            query._viewModel = $scope.viewModel || "dropdown";
+                                            query._upstream = $scope.upstream;
+                                            var res = null;
+                                            if ($scope.childResource) {
+                                                res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, $scope.viewModel || "dropdown", $scope.upstream);
+                                            }
+                                            else {
+                                                res = await api.findAsync(query);
+                                            }
+
+                                            var results = Array.isArray(res) ? res : res.resource;
+
+                                            // Matching item
+                                            if (results.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
+                                                var obj = results[0];
+                                                if ($scope.selector)
+                                                    obj = obj[$scope.selector] || obj;
+
+                                                var text = "";
+
+                                                if (displayString) {
+                                                    text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
+                                                }
+                                                else if (obj.name !== undefined) {
+                                                    text = renderObject(obj, $scope.minRender);
+                                                }
+
+                                                var option = new Option(text, v, false, true);
+                                                option.title = renderTitle(results[0]);
+                                                $(selectControl)[0].add(option);
+                                            }
                                         }
                                         else {
-                                            return;
+                                            var res = null;
+
+                                            if ($scope.childResource) {
+                                                res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: $scope.viewModel || "dropdown" }, $scope.upstream);
+                                            }
+                                            else {
+                                                res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: $scope.viewModel || "dropdown", _upstream: $scope.upstream });
+                                            }
+
+                                            if ($(selectControl).find(`option[value='${v}']`).length == 0) {
+                                                var obj = res;
+                                                if ($scope.selector)
+                                                    obj = obj[$scope.selector] || obj;
+
+                                                var text = "";
+                                                if (displayString) {
+                                                    text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
+                                                }
+                                                else if (obj.name !== undefined) {
+                                                    text = renderObject(obj, $scope.minRender);
+                                                }
+
+                                                var option = new Option(text, v, false, true);
+                                                option.title = renderTitle(obj);
+                                                $(selectControl)[0].add(option);
+                                            }
                                         }
                                     }
-
-                                    if ($scope.key && $scope.key != "id") {
-                                        var query = angular.copy($scope.filter || {});
-                                        query[$scope.key] = v;
-                                        query._viewModel = $scope.viewModel || "dropdown";
-                                        query._upstream = $scope.upstream;
-                                        var res = null;
-                                        if ($scope.childResource) {
-                                            res = await api.findAssociatedAsync($scope.childResourceScope, $scope.childResource, query, $scope.viewModel || "dropdown", $scope.upstream);
-                                        }
-                                        else {
-                                            res = await api.findAsync(query);
-                                        }
-
-                                        var results = Array.isArray(res) ? res : res.resource;
-
-                                        // Matching item
-                                        if (results.length == 1 && $(selectControl).find(`option[value='${v}']`).length == 0) {
-                                            var obj = results[0];
-                                            if ($scope.selector)
-                                                obj = obj[$scope.selector] || obj;
-
-                                            var text = "";
-
-                                            if (displayString) {
-                                                text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
-                                            }
-                                            else if (obj.name !== undefined) {
-                                                text = renderObject(obj, $scope.minRender);
-                                            }
-
-                                            var option = new Option(text, v, false, true);
-                                            option.title = renderTitle(results[0]);
-                                            $(selectControl)[0].add(option);
-                                        }
+                                    catch (e) {
+                                        console.warn(`Could not fetch object ${e}`);
                                     }
-                                    else {
-                                        var res = null;
+                                    finally {
+                                        $(selectControl).find("option[value='loading']").remove();
+                                        $(selectControl).trigger('change.select2');
+                                    }
 
-                                        if ($scope.childResource) {
-                                            res = await api.getAssociatedAsync($scope.childResourceScope, $scope.childResource, v.id || v, { _viewModel: $scope.viewModel || "dropdown" }, $scope.upstream);
-                                        }
-                                        else {
-                                            res = await api.getAsync({ id: v && v.id ? v.id : v, viewModel: $scope.viewModel || "dropdown", _upstream: $scope.upstream });
-                                        }
+                                });
 
-                                        if ($(selectControl).find(`option[value='${v}']`).length == 0) {
-                                            var obj = res;
-                                            if ($scope.selector)
-                                                obj = obj[$scope.selector] || obj;
-
-                                            var text = "";
-                                            if (displayString) {
-                                                text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
-                                            }
-                                            else if (obj.name !== undefined) {
-                                                text = renderObject(obj, $scope.minRender);
-                                            }
-
-                                            var option = new Option(text, v, false, true);
-                                            option.title = renderTitle(obj);
-                                            $(selectControl)[0].add(option);
-                                        }
+                                if (selectControl[0].form) {
+                                    var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
+                                    if (form && form[selectControl[0].name]) {
+                                        form[selectControl[0].name].$setValidity("required", true);
                                     }
                                 }
-                                catch (e) {
-                                    console.warn(`Could not fetch object ${e}`);
-                                }
-                                finally {
-                                    $(selectControl).find("option[value='loading']").remove();
-                                    $(selectControl).trigger('change.select2');
-                                }
+                            }
+                            finally {
+                                $(selectControl).find("option[value='loading']").remove();
 
-                            });
-
-                            if (selectControl[0].form) {
-                                var form = SanteDB.display.getParentScopeVariable($scope, selectControl[0].form.name);
-                                if (form && form[selectControl[0].name]) {
-                                    form[selectControl[0].name].$setValidity("required", true);
-                                }
                             }
                         }
                     }
