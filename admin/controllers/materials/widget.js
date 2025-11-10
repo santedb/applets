@@ -228,6 +228,10 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             else {
                 product.relationship.ManufacturedProduct = [];
             }
+            
+            // Remove the instances from this view
+            delete product.relationship?.Instance;
+
             $timeout(() => {
                 $scope.editProduct = product;
 

@@ -585,6 +585,7 @@ angular.module('santedb-lib')
                         o => o.targetModel
                     );
                 }
+
                 // Monitor for form touches - needs to be done after initialization
                 if (!scope.model.$templateUrl) {
                     setTimeout(() => {
