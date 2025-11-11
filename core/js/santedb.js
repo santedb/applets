@@ -1882,8 +1882,14 @@ function SanteDBWrapper() {
                 // Was the response a security policy exception where the back end is asking for elevation on the same user account?
                 if (data.responseJSON &&
                     pve &&
-                    data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1)
-                    _elevator.elevate(angular.copy(_session), [pve, "*"]);
+                    data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1) {
+                    var policies = [ pve, "*" ];
+                    if(pve.policyId?.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.1") == -1)
+                    {
+                        policies.push({ policyId: "1.3.6.1.4.1.33349.3.1.5.9.2.999", policyName: "Override Disclosure (BTG)" })
+                    }
+                    _elevator.elevate(angular.copy(_session), policies);
+                }
                 else
                     _elevator.elevate(null);
                 return true;
