@@ -580,7 +580,7 @@ angular.module('santedb-lib')
                 }
                 // Is there reference
                 if (scope.model.relationship?.RefersTo) {
-                    scope.referenceActions = scope.model.relationship.RefersTo.groupBy(
+                    scope.referenceActions = scope.model.relationship.RefersTo.filter(o=>o.targetModel).groupBy(
                         o => o.targetModel.templateModel.mnemonic,
                         o => o.targetModel
                     );
