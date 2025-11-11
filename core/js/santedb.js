@@ -915,11 +915,11 @@ function ResourceWrapper(_config) {
         else
             url = _config.resource;
 
-        if (id && id._upstream !== undefined) {
+        if (id && id._upstream !== undefined && id._upstream !== null) {
             headers["X-SanteDB-Upstream"] = id._upstream;
         }
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1073,7 +1073,7 @@ function ResourceWrapper(_config) {
         if (data.creationTime)
             delete (data.creationTime);
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1115,7 +1115,7 @@ function ResourceWrapper(_config) {
             headers['If-Match'] = etag;
         }
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1169,7 +1169,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1205,7 +1205,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
         
@@ -1239,7 +1239,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1268,7 +1268,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1323,7 +1323,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1352,7 +1352,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1434,7 +1434,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1464,7 +1464,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1496,7 +1496,7 @@ function ResourceWrapper(_config) {
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1561,7 +1561,7 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1606,7 +1606,7 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1654,7 +1654,7 @@ function ResourceWrapper(_config) {
         else
             url = `${_config.resource}/${id}/${property}`;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1705,7 +1705,7 @@ function ResourceWrapper(_config) {
         else
             url += `/${encodeURI(associatedId)}`;
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
@@ -1768,7 +1768,7 @@ function ResourceWrapper(_config) {
             url = `${_config.resource}/${id}/$${operation}`;
 
 
-        if (upstream !== undefined) {
+        if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
