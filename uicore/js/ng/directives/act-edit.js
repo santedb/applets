@@ -281,7 +281,6 @@ angular.module('santedb-lib')
                     }
                 }
 
-
                 $scope.resolveBackentryTemplate = function (templateId) {
 
                     var templateValue = _mode == 'edit' ? SanteDB.application.resolveTemplateBackentry(templateId) : SanteDB.application.resolveTemplateView(templateId);
@@ -386,14 +385,20 @@ angular.module('santedb-lib')
                         var itm = $scope.currentActions[index];
                         itm.targetModel.tag = itm.targetModel.tag || {};
 
+                        itm.targetModel.operation = BatchOperationType.InsertOrUpdateInt;
+                        itm.targetModel.moodConcept = ActMoodKeys.Eventoccurrence;
                         if (itm.targetModel.tag.isBackEntry) {
                             delete itm.targetModel.tag.isBackEntry;
+                            itm.targetModel.statusConcept = StatusKeys.Active;
                         }
                         else {
                             itm.targetModel.tag.isBackEntry = [true];
+                            itm.targetModel.statusConcept = StatusKeys.Completed;
 
                             // Relationship
-                            itm.targetModel.actTime = itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime || itm.targetModel.startTime;
+                            itm.targetModel.actTime = itm.targetModel.actTime || 
+                                itm.targetModel.tag?.$originalDate ? new Date(itm.targetModel.tag?.$originalDate) :
+                                itm.targetModel.relationship?.Fulfills ? itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime :  itm.targetModel.startTime;
                         }
                         $scope.applyVisibilityAttributes();
                     }
@@ -531,12 +536,13 @@ angular.module('santedb-lib')
 
                         if (attrs.noBackEntry === "true") {
                             $(".actBackEntry", element).remove();
-                            $(".actMoveToHistory", element).remove();
+                            // $(".actMoveToHistory", element).remove();
                         }
                         else {
                             $(".actBackEntry", element).removeClass('d-none');
-                            $(".actMoveToHistory", element).removeClass('d-none');
+                            // $(".actMoveToHistory", element).removeClass('d-none');
                         }
+                        $(".actMoveToHistory", element).removeClass('d-none');
 
                         if (_mode == "view") {
                             $(".editOnly", element).remove();
@@ -554,14 +560,14 @@ angular.module('santedb-lib')
                 _noCdss = attrs.disableCdss;
 
                 if (scope.model && scope.model.relationship && scope.model.relationship.HasComponent) {
-                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False')
+
+                    scope.currentActions = scope.model.relationship.HasComponent.filter(a => !a.targetModel.tag || !a.targetModel.tag.isBackEntry || a.targetModel.tag.isBackEntry[0] == 'False' || attrs.noBackEntry == "true")
                         .sort((a, b) => a.targetModel.actTime < b.targetModel.actTime ? -1 : 1); // a.targetModel.classConcept < b.targetModel.classConcept ? -1 : 1);
                     scope.backEntryActions = scope.model.relationship.HasComponent.filter(a => a.targetModel.tag && a.targetModel.tag.isBackEntry && (a.targetModel.tag.isBackEntry[0] == 'True' || a.targetModel.tag.isBackEntry[0] == 'true'))
                         .groupBy(
                             o => o.targetModel.templateModel.mnemonic,
                             o => o.targetModel
                         );
-
                     // Bind utility functions
                     scope.model.relationship.HasComponent.forEach(comp => {
                         comp.targetModel._getEncounter = () => scope.model;
@@ -580,7 +586,7 @@ angular.module('santedb-lib')
                 }
                 // Is there reference
                 if (scope.model.relationship?.RefersTo) {
-                    scope.referenceActions = scope.model.relationship.RefersTo.filter(o=>o.targetModel).groupBy(
+                    scope.referenceActions = scope.model.relationship.RefersTo.filter(o => o.targetModel).groupBy(
                         o => o.targetModel.templateModel.mnemonic,
                         o => o.targetModel
                     );
@@ -598,7 +604,9 @@ angular.module('santedb-lib')
                                         $timeout(() => {
                                             var targetAct = scope.currentActions[eventIndexChanged].targetModel;
                                             scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
-                                            targetAct.statusConcept = StatusKeys.Active;
+                                            if (!targetAct.tag?.isBackEntry) {
+                                                targetAct.statusConcept = StatusKeys.Active;
+                                            }
                                         });
                                     });
                                 }

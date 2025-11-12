@@ -120,6 +120,7 @@
             </div>
 
             <!-- START CURRENT ENTRY -->
+             
             <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
                     <button class="nav-link active" data-toggle="tab" data-target="#current-actions">
@@ -132,12 +133,12 @@
                         {{ 'ui.model.act.relationship.RefersTo' | i18n }}
                     </button>
                 </li>
-                <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
+                <!-- <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
                     <button class="nav-link" data-toggle="tab" data-target="#historyActionTab">
                         <i class="fas fa-fw fa-clock-rotate-left"></i>
                         {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}
                     </button>
-                </li>
+                </li> -->
             </ul>
 
             <div class="tab-content">
@@ -346,7 +347,7 @@
                             </div>
 
                             <!-- Buttons -->
-                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' "
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' || comp.targetModel.tag.isBackEntry"
                                 class="d-flex my-2 justify-content-end col-10 offset-1">
                                 <div class="editOnly btn-group">
                                     <!-- Complete -->
@@ -406,13 +407,13 @@
                     </ul>
                 </div>
 
-                <div id="historyActionTab" class="tab-pane editOnly d-none">
+                <!-- <div id="historyActionTab" class="tab-pane editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
                             <ng-include src="resolveBackentryTemplate(tpl)"></ng-include>
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
 
