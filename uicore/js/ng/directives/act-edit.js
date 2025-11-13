@@ -604,7 +604,7 @@ angular.module('santedb-lib')
                                         $timeout(() => {
                                             var targetAct = scope.currentActions[eventIndexChanged].targetModel;
                                             scope.currentActions[eventIndexChanged].operation = targetAct.operation = BatchOperationType.InsertOrUpdate;
-                                            if (!targetAct.tag?.isBackEntry) {
+                                            if (!targetAct.tag?.isBackEntry && targetAct.version) {
                                                 targetAct.statusConcept = StatusKeys.Active;
                                             }
                                         });
