@@ -36,7 +36,7 @@ angular.module('santedb-lib')
     */
     .directive('actEdit', ['$timeout', function ($timeout) {
 
-        var _mode = 'edit', _noCdss = false;
+        var _mode = 'edit', _noCdss = false, _viewModel = 'full';
 
         return {
             restrict: 'E',
@@ -332,7 +332,8 @@ angular.module('santedb-lib')
                     else {
                         var hidx = $scope.model.relationship.HasComponent.findIndex(o => o.target == itm.target || o.targetModel.id == itm.targetModel.id);
                         $scope.model.relationship.HasComponent.splice(hidx, 1);
-                        $scope.currentActions[index] = null;
+                        //$scope.currentActions[index] = null;
+                        $scope.currentActions.splice(index, 1);
                     }
                 }
 
@@ -414,7 +415,7 @@ angular.module('santedb-lib')
                             recordTargetId: $scope.model.participation.RecordTarget[0].player,
                             facilityId: await SanteDB.authentication.getCurrentFacilityId(),
                             userEntityId: await SanteDB.authentication.getCurrentUserEntityId()
-                        });
+                        }, _viewModel);
 
                         content.statusConcept = StatusKeys.Active;
                         // Is this a status observation?
@@ -486,6 +487,7 @@ angular.module('santedb-lib')
             }],
             link: function (scope, element, attrs) {
 
+                _viewModel = attrs.viewModel || 'full';
                 attrs.noBackEntry = "true";
                 // Are we viewing or editing?
                 _mode = attrs.readonly === "true"
