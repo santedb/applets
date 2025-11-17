@@ -120,6 +120,7 @@
             </div>
 
             <!-- START CURRENT ENTRY -->
+             
             <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
                     <button class="nav-link active" data-toggle="tab" data-target="#current-actions">
@@ -132,12 +133,12 @@
                         {{ 'ui.model.act.relationship.RefersTo' | i18n }}
                     </button>
                 </li>
-                <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
+                <!-- <li class="nav-item actBackEntry" ng-if="backEntryActions.length > 0">
                     <button class="nav-link" data-toggle="tab" data-target="#historyActionTab">
                         <i class="fas fa-fw fa-clock-rotate-left"></i>
                         {{ 'ui.model.act.tag.isBackentryTrue' | i18n }}
                     </button>
-                </li>
+                </li> -->
             </ul>
 
             <div class="tab-content">
@@ -151,7 +152,7 @@
                             </div>
                         </li>
                         <li class="my-2 list-group-item d-flex flex-column border-top"
-                            id="action{{ comp.targetModel.id }}" ng-repeat="comp in currentActions track by $index"
+                            id="action{{ comp.targetModel.id }}" ng-repeat="comp in currentActions track by comp.target"
                             data-actindex="{{$index}}" ng-if="comp !== null"
                             ng-class="{ 'bg-secondary bg-lighten-50' : comp.targetModel.tag.isBackEntry, 'bg-success text-dark bg-lighten-75' : comp.targetModel.operation == '3' || comp.targetModel.operation == 'InsertOrUpdate', 'bg-danger bg-lighten-50 text-white' : comp.operation == '4', 'bg-light' : $index % 2 == 1 }">
                             <div class="alert alert-info" ng-if="comp.targetModel.relationship.IsDerivedFrom">
@@ -161,8 +162,7 @@
                             <div class="templateInfoDiv">
                                 <i class="fas fa-fw"
                                     ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
-                                {{ ::getTemplateInfo(comp.targetModel.template ||
-                                comp.targetModel.templateModel.mnemonic).name | i18n }}
+                                {{ comp.targetModel.templateModel.name | i18n }}
 
                                 <i class="fas fa-fw fa-shield ml-2 text-danger"
                                     ng-if="comp.targetModel.policy.length &gt; 0"></i>
@@ -346,7 +346,7 @@
                             </div>
 
                             <!-- Buttons -->
-                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' "
+                            <div ng-if="comp.targetModel.statusConcept != 'afc33800-8225-4061-b168-bacc09cdbae3' || comp.targetModel.tag.isBackEntry"
                                 class="d-flex my-2 justify-content-end col-10 offset-1">
                                 <div class="editOnly btn-group">
                                     <!-- Complete -->
@@ -406,13 +406,13 @@
                     </ul>
                 </div>
 
-                <div id="historyActionTab" class="tab-pane editOnly d-none">
+                <!-- <div id="historyActionTab" class="tab-pane editOnly d-none">
                     <ul class="overflow-auto list-group">
                         <li class="list-group-item" ng-repeat="(tpl, acts) in backEntryActions track by $index">
                             <ng-include src="resolveBackentryTemplate(tpl)"></ng-include>
                         </li>
                     </ul>
-                </div>
+                </div> -->
 
             </div>
 

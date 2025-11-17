@@ -6,12 +6,13 @@ angular.module("santedb").controller("SanteDBOverrideOneTimeController", [ "$sco
         async function loadActFn() {
             try {
                 
-                const act = await SanteDB.resources[objectType.toCamelCase()].getAsync(objectId, "full", null, null, null, {
-                "X-SanteDB-EmitPrivacyError" : "Redact,Nullify,Hash,Hide"
+                // Trigger elevation prompt
+                const act = await SanteDB.resources[objectType.toCamelCase()].getAsync(objectId, "min", null, null, null, {
+                    "X-SanteDB-EmitPrivacyError" : "Redact,Nullify,Hash,Hide"
                 });
                 $timeout(() => {
                     $scope.overrideAct = act;
-                    $state.reload();
+                    $state.reload(); // Reload the entire scope 
                 } );
             }
             catch(e) {

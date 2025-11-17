@@ -198,6 +198,7 @@
       <string name="ui.sync.onStart.begin">Synchronization has started, access to data may be slow and/or adversely impacted during this process</string>
       <string name="ui.sync.onStart.complete">Synchronization has completed - data services are restored</string>
 
+      <string name="ui.db.activity">Data Access Activity</string>
       <!-- Common Date -->
       <string name="ui.date.day.monday">Monday</string>
       <string name="ui.date.day.tuesday">Tuesday</string>
