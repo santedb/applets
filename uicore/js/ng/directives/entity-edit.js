@@ -415,9 +415,6 @@ angular.module('santedb-lib')
                                     scope.model[k][0].value = "tel:" + scope.model[k][0].editValue;
                                     break;
                             }
-                        } else if(scope.model[k][0].value){
-                            scope.model[k][0].editValue = scope.model[k][0].value.replace(/(tel:|mailto:)/i, '');
-
                         }
                     });
                 })
