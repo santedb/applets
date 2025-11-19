@@ -465,13 +465,7 @@ angular.module('santedb').controller('MatchConfigurationDetailController', ["$sc
                 if (resultCollection && resultCollection.length > 0) {
                     $timeout(() => {
                         $scope.scopedObject._test.results = resultCollection.sort((a, b) => b._match.strength - a._match.strength);
-
-                        $timeout(() =>
-                        {
-                            $scope.dtInit = $("#resultTable").DataTable();
-                            renderActualSummary($scope.scopedObject, test);
-
-                        }, 500);
+                        renderActualSummary($scope.scopedObject, test);
                     });
                 }
             }
