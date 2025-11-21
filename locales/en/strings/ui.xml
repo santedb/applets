@@ -738,7 +738,8 @@
       <string name="ui.app.updated">System has been updated!</string>
  
       <!-- Backup -->
-      <string name="ui.app.backup.create">System backup has been created!</string>
+      <string name="ui.app.backup.create">System backup is being created</string>
+      <string name="ui.app.certificate.trust">The certificate {cert} is not trusted. Do you want to trust it?</string>
       <string name="ui.app.backup.start">System backup has started…</string>
       <string name="ui.app.backup.complete">System backup is completed successfully</string>
       <string name="ui.app.backup.error">There was an error backing up system files :" {error}</string>
@@ -770,6 +771,8 @@
 
 
       <!-- dCDR Restart Page strings -->
+       <string name="ui.app.backup.restore">Restoring application backup</string>
+       <string name="ui.app.restart.required">{source} requires that the application be restarted</string>
        <string name="ui.app.restart.default.pageTitle">App Restart Required</string>
        <string name="ui.app.restart.default.titleLabel">App Restart Required</string>
        <string name="ui.app.restart.default.contentLabel">The App needs to be restarted. Click the Quit button below, and then re-launch the app.</string>
