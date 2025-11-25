@@ -40,7 +40,8 @@ angular.module('santedb-lib')
                 key: "<",
                 autoSelectSingles: "<",
                 itemSupplement: "<",
-                returnObject: "<"
+                returnObject: "<",
+                jsFilter: "<"
             },
             controller: ['$scope', '$rootScope', function ($scope, $rootScope) {
             }],
@@ -49,20 +50,20 @@ angular.module('santedb-lib')
                 if (scope.excludeEntities && !Array.isArray(scope.excludeEntities))
                     scope.excludeEntities = [scope.excludeEntities];
 
-                scope.render = function(i) {
-                    if(attrs.display) {
+                scope.render = function (i) {
+                    if (attrs.display) {
                         return scope.$eval(attrs.display, { item: i });
                     }
                     else {
                         return SanteDB.display.renderEntityName(i.name);
                     }
                 }
-                
+
                 // Load Entities
                 async function loadEntities(entityType, filter) {
                     try {
                         var api = SanteDB.resources[entityType.toCamelCase()];
-                        if(api == null) {
+                        if (api == null) {
                             throw "Invalid entity type " + entityType;
                         }
                         filter._count = 30;
@@ -70,27 +71,38 @@ angular.module('santedb-lib')
                         var results = await api.findAsync(filter, attrs.viewModel || "fastview");
 
                         // are there any item supplements
-                        if(scope.itemSupplement) {
+                        if (scope.itemSupplement) {
                             results.resource = await Promise.all(results.resource.map(async (item) => {
-                                for(var i in scope.itemSupplement) {
+                                for (var i in scope.itemSupplement) {
                                     item = await scope.itemSupplement[i](item);
                                 }
                                 return item;
                             }))
                         };
                         
+                        if (Array.isArray(results)) {
+                            results = new Bundle({ resource: results });
+                        }
+
+                        if (scope.jsFilter && results.resource) {
+                            if (typeof scope.jsFilter === "string") {
+                                scope.jsFilter = SanteDB.display.getParentScopeVariable(scope, scope.jsFilter);
+                            }
+                            results.resource = results.resource.filter(flt => scope.jsFilter(flt));
+                        }
+
                         $timeout(() => {
-                            if(!ngModel.$viewValue && scope.autoSelectSingles && results.resource?.length == 1) {
-                                if(scope.key) {
+                            if (!ngModel.$viewValue && scope.autoSelectSingles && results.resource?.length == 1) {
+                                if (scope.key) {
                                     ngModel.$setViewValue(results.resource[0][scope.key]);
                                 }
-                                else if(scope.returnObject) {
+                                else if (scope.returnObject) {
                                     ngModel.$setViewValue(results.resource[0]);
                                 }
                                 else {
                                     ngModel.$setViewValue(results.resource[0].id);
                                 }
-                            } 
+                            }
                             scope.values = results.resource;
                         });
                     }
@@ -101,18 +113,18 @@ angular.module('santedb-lib')
 
                 loadEntities(scope.entityType, scope.filter || {});
 
-                scope.$watch((s) => JSON.stringify(s.filter), function(n, o) {
-                    if(n != o && n) {
+                scope.$watch((s) => JSON.stringify(s.filter), function (n, o) {
+                    if (n != o && n) {
                         loadEntities(scope.entityType, scope.filter);
                     }
                 });
 
-                
+
                 // Element has changed
                 element.on('change', function (e) {
                     var val = $(element).val();
                     var modelValue = null;
-                    if(val === "") {
+                    if (val === "") {
                         scope.$apply(() => ngModel.$setViewValue(null));
                     }
                     else if (scope.key) {
@@ -123,7 +135,7 @@ angular.module('santedb-lib')
                         modelValue = scope.values.find(o => o.id == val);
                         scope.$apply(() => ngModel.$setViewValue(modelValue));
                     }
-                    else 
+                    else
                         scope.$apply(() => ngModel.$setViewValue(val));
 
                 });
@@ -132,13 +144,13 @@ angular.module('santedb-lib')
 
                         var value = ngModel.$viewValue;
 
-                        if(Array.isArray(value)) {
+                        if (Array.isArray(value)) {
                             value = value[0];
                         }
 
                         // is there a key? 
                         var valueKey = value;
-                        if(value.id) {
+                        if (value.id) {
                             scope._complexValue = true;
                             valueKey = value.id;
                         }
