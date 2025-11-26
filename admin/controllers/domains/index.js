@@ -38,6 +38,52 @@ angular.module('santedb').controller('IdentityDomainIndexController', ["$scope",
             return '<i class="fas fa-check"></i>';
     }
     
+    $scope.delete = async function(id, index) {
+        
+        var data = $("#IdentityDomainTable table").DataTable().row(index).data();
+        if (!data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.domain.confirmDelete", { domain: data.name }))) {
+            $("#action_grp_" + index + " a").addClass("disabled");
+            $("#action_grp_" + index + " a i.fa-trash").removeClass("fa-trash").addClass("fa-circle-notch fa-spin");
+            try {
+                await SanteDB.resources.identityDomain.deleteAsync(id);
+                $("#IdentityDomainTable").attr("newQueryId", true);
+                $("#IdentityDomainTable table").DataTable().draw();
+            } catch(e) { $rootScope.errorHandler(e); };
+
+        }
+        else if (data.obsoletionTime && confirm(SanteDB.locale.getString("ui.admin.domain.confirmUnDelete", { domain: data.name }))) {
+            $("#action_grp_" + index + " a").addClass("disabled");
+            $("#action_grp_" + index + " a i.fa-trash-restore").removeClass("fa-trash-restore").addClass("fa-circle-notch fa-spin");
+
+            // Patch the user
+            var patch = new Patch({
+                change: [
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletionTime',
+                        value: null
+                    }),
+                    new PatchOperation({
+                        op: PatchOperationType.Remove,
+                        path: 'obsoletedBy',
+                        value: null
+                    })
+                ]
+            });
+
+            try {
+                await  SanteDB.resources.identityDomain.patchAsync(id, null, patch);
+                $("#IdentityDomainTable").attr("newQueryId", true);
+                $("#IdentityDomainTable table").DataTable().draw();
+            } catch(e) {
+                    $("#action_grp_" + index + " a").removeClass("disabled");
+                    $("#action_grp_" + index + " a i.fa-circle-notch").removeClass("fa-circle-notch fa-spin").addClass("fa-trash-restore");
+                    $rootScope.errorHandler(e);
+            };
+        }
+    }
+
+
     // Download as a place
     $scope.download = async function () {
         if (confirm(SanteDB.locale.getString("ui.action.export.confirm"))) {

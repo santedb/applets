@@ -397,15 +397,41 @@ angular.module('santedb-lib')
                             itm.targetModel.statusConcept = StatusKeys.Completed;
 
                             // Relationship
-                            itm.targetModel.actTime = itm.targetModel.actTime || 
+                            itm.targetModel.actTime = itm.targetModel.actTime ||
                                 itm.targetModel.tag?.$originalDate ? new Date(itm.targetModel.tag?.$originalDate) :
-                                itm.targetModel.relationship?.Fulfills ? itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime :  itm.targetModel.startTime;
+                                itm.targetModel.relationship?.Fulfills ? itm.targetModel.relationship?.Fulfills[0]?.targetModel.startTime : itm.targetModel.startTime;
                         }
                         $scope.applyVisibilityAttributes();
                     }
                     catch (e) {
                         $rootScope.errorHandler(e);
                     }
+                }
+
+                $scope.severestInterpretation = function (...interpretations) {
+
+                    var highestInterpretationLevel = -1;
+                    var retVal = null;
+                    for (var interpretation of interpretations) {
+                        var thisLevel = 0;
+                        switch (interpretation) {
+                            case "41d42abf-17ad-4144-bf97-ec3fd907f57d":
+                                thisLevel = 0;
+                            case "a7159ba0-a9ec-4565-95b8-ed364794c0b8": // LOW INTERPRETATION
+                            case "6188f821-261f-420c-9520-0de240a05661":
+                                thisLevel = 1;
+                                break;
+                            case "3c4d6579-7496-4b44-aac1-18a714ff7a05": // HIGH INTERPRETATION
+                            case "8b553d58-6c8c-4d01-a534-83ba5780b41a":
+                                thisLevel = 2;
+                                break;
+                        }
+                        if (thisLevel >= highestInterpretationLevel) {
+                            retVal = interpretation;
+                            highestInterpretationLevel = thisLevel;
+                        }
+                    }
+                    return retVal;
                 }
 
                 $scope.addItem = async function (tpl) {

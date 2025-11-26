@@ -260,6 +260,8 @@
     <string name="ui.admin.domain.edit.validation.title">Validation</string>
     <string name="ui.admin.domain.reactivate.confirm">Are you sure you want to re-activate the identity domain?</string>
     <string name="ui.admin.domain.saveSuccess">Identity domain has been updated successfully</string>
+    <string name="ui.admin.domain.confirmDelete">Are you sure you want to delete the identity domain {domain}?</string>
+    <string name="ui.admin.domain.confirmUndelete">Are you sure you want to restore the identity domain {domain}?</string>
     <!-- Job Screen Page -->
     <string name="ui.admin.system.jobs.manage.title">Scheduled Jobs</string>
     <string name="ui.admin.system.jobs.manage.carddescription">Manage job definitions and schedules.</string>

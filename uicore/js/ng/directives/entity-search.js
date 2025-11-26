@@ -443,6 +443,7 @@ angular.module('santedb-lib')
                         language: {
                             searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
+                        minimumResultsForSearch: attrs.noSearch ? Infinity : 5,
                         dropdownParent: dropDownParent.length > 0 ? dropDownParent : null,
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
