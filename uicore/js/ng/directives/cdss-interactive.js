@@ -36,7 +36,7 @@ angular.module('santedb-lib')
                $(element).on('input', function () {
                   form[inputName].$setValidity("cdss", $(element).val() == ""); // Assume CDSS is not valid until run
                });
-               $(element).on('blur', async function () {
+               $(element).on('blur touchend', async function () {
                   try {
                      var cdssInteractiveConfig = (scope.$eval(attrs.cdssInteractive) || scope.$parent.$eval(attrs.cdssInteractive));
                      var library = cdssInteractiveConfig?.libraries;
