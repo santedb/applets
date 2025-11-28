@@ -401,7 +401,8 @@
   <string name="ui.model.person.occupation">Occupation</string>
   <string name="ui.model.person.occupation.hint">Select the most appropraite occupation code for the
     person</string>
-  <string name="ui.model.person.deceasedDate">Deceased</string>
+  <string name="ui.model.person.deceased">Deceased</string>
+  <string name="ui.model.person.deceased.hint">Indicates a person is a deceased</string>
   <string name="ui.model.person.deceasedInd">Known to be Deceased</string>
   <string name="ui.model.person.nationality">Nationality</string>
   <string name="ui.model.person.nationality.hint">Select the nationality of the person</string>
