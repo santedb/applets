@@ -93,8 +93,10 @@ SanteDBWrapper.prototype.display = new function () {
             return telecomValue;
         }
         else {
-            var firstKey = Object.keys(telecomValue);
-            return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
+            var firstKey = Object.keys(telecomValue).find(k => Array.isArray(telecomValue[k]) && telecomValue[k].length > 0);
+            if(firstKey) {
+                return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
+            }
         }
     }
 
