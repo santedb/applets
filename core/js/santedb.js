@@ -1871,6 +1871,9 @@ function SanteDBWrapper() {
      * @param {*} err 
      */
     var _globalErrorHandler = function (data, setting, err) {
+        if(data.readyState !== XMLHttpRequest.DONE) { // No prop of abort
+            return true;
+        }
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
             if (_session &&
                 _session.exp > Date.now() && // User has a session that is valid, but is still 401 hmm... elevation!!!
@@ -5178,16 +5181,38 @@ function SanteDBWrapper() {
 
     // Application magic 
     var _magic = null;
+    var _xhrs = [];
+
+    this._sysAbortAllRequests = function() {
+        // Abort any loading requests against the HTTP instance
+        const toAbort = _xhrs.filter(x => [XMLHttpRequest.OPENED, XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
+        console.info(`Aborting ${toAbort.length} requests`);
+        toAbort.forEach(x => x.abort());
+    }
 
     // Setup JQuery to send up authentication and cookies!
     if (jQuery) {
+        const jQueryXhr = jQuery.ajaxSettings.xhr;
         $.ajaxSetup({
             cache: false,
-            beforeSend: function (data, settings) {
+            xhr: function() {
+                var xhr = jQueryXhr();
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState === XMLHttpRequest.DONE) // Remove the XHR request
+                    {
+                        const idx = _xhrs.indexOf(xhr);
+                        _xhrs.splice(idx, 1);
+                    }
+                };
+                _xhrs.push(xhr);
+                return xhr;
+            },
+            beforeSend: function (xhr, settings) {
+
                 if (!settings.noAuth) {
                     var elevatorToken = _elevator ? _elevator.getToken() : null;
                     if (elevatorToken) {
-                        data.setRequestHeader("Authorization", "BEARER " +
+                        xhr.setRequestHeader("Authorization", "BEARER " +
                             elevatorToken);
                     }
                     // else if (window.sessionStorage.getItem('token'))
@@ -5197,8 +5222,10 @@ function SanteDBWrapper() {
                         _magic = __SanteDBAppService.GetMagic();
 
                 }
-                data.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
-                data.setRequestHeader("X-SdbMagic", _magic);
+                xhr.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
+                xhr.setRequestHeader("X-SdbMagic", _magic);
+
+               
             },
             converters: {
                 "text json": function (data) {
