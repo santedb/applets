@@ -1,0 +1,61 @@
+<div xmlns="http://www.w3.org/1999/xhtml" class="d-flex flex-column">
+    <form class="form" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)" autocomplete="off">
+        <div class="d-flex justify-content-between flex-wrap">
+            <div ng-repeat="parameter in ::report.parameterDefinitions track by $index" class="mx-1">
+                <report-parameter display="{
+                            label: 'font-weight-bold',
+                            input: 'd-block'
+                        }" parameter="parameter" values="parameterValues" />
+            </div>
+            <div class="flex-grow-1">
+                <button type="submit" ng-disabled="reportFilterForm.$invalid" id="btnApply" class="float-right btn btn-primary"><i class="fas fa-check"></i> {{
+                    'ui.action.apply' | i18n }}</button>
+            </div>
+        </div>
+    </form>
+    <div>
+        <ul class="nav nav-tabs" role="tablist" ng-if="report.hasRun">
+            <li id="{{viewDefinition.htmlId}}_tab" class="nav-item"
+                ng-repeat="viewDefinition in report.views track by $index">
+                <a role="tab" class="nav-link" data-target="#{{viewDefinition.htmlId}}" data-toggle="tab" ng-class="{ 'active' : $index === 0 }"><i class="fas"
+                        ng-class="{ 'fa-chart-pie' : viewDefinition.type == 'Chart' , 'fa-table' : viewDefinition.type == 'Tabular', 'fa-file-alt' : true }"></i>
+                    {{ viewDefinition.label | i18n }}</a>
+                    
+            </li>
+        </ul>
+        <div class="tab-content" ng-show="report.hasRun">
+            <div ng-repeat="viewDefinition in report.views track by $index" id="{{viewDefinition.htmlId}}" class="tab-pane fade" ng-class="{ 'active show' : $index === 0 }">
+                <div id="{{viewDefinition.htmlId}}view">
+                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                </div>
+            </div>
+            <!-- <div class="tab-pane report-view-container p-2"
+                ng-repeat="viewDefinition in report.views track by $index" 
+                id="{{htmlId}}_{{viewDefinition.name}}">
+                TAB COPNTENT
+                <div id="{{htmlId}}_{{viewDefinition.name}}view">
+                </div>
+            </div> -->
+        </div>
+        <div class="m-2 p-2"  ng-if="report.hasRun">
+            <div class="btn-group dropup float-right">
+                <button type="button" class="btn btn-secondary dropdown-toggle"
+                    ng-disabled="viewDefinition.noExport || viewDefinition.type == 'Chart'" aria-haspopup="true"
+                    data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i class="fas fa-save"></i> {{
+                    'ui.action.download' | i18n }}</button>
+                <button type="button" id="btnPrintReport_{{viewDefinition.name}}"
+                    ng-disabled="viewDefinition.noPrint || viewDefinition.type == 'Chart'"
+                    ng-click="printReport(viewDefinition)" class="btn btn-primary"><i class="fas fa-print"></i>
+                    {{
+                    'ui.action.print' | i18n }}</button>
+                <div class="dropdown-menu" aria-labelledby="btnDownloadReport_{{viewDefinition.name}}"
+                    style="z-index:100">
+                    <button class="dropdown-item" type="button" ng-repeat="fmt in formats"
+                        ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n
+                        }}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
