@@ -5185,7 +5185,7 @@ function SanteDBWrapper() {
 
     this._sysAbortAllRequests = function() {
         // Abort any loading requests against the HTTP instance
-        const toAbort = _xhrs.filter(x => [XMLHttpRequest.OPENED, XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
+        const toAbort = _xhrs.filter(x => [XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
         console.info(`Aborting ${toAbort.length} requests`);
         toAbort.forEach(x => x.abort());
     }
