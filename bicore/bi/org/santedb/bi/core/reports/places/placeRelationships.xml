@@ -33,7 +33,11 @@
                     information, dedicated service delivery, etc.)</p>
             </div>
         </annotation>
+        <policies>
+            <demand>1.3.6.1.4.1.33349.3.1.5.9.2.100.1</demand>
+        </policies>
         <public>true</public>
+
     </meta>
     <dataSources>
         <!-- Main Tabular dataset -->
