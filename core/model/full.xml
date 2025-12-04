@@ -166,7 +166,7 @@
     <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="nationalityModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="vipStatusModel" all="true" behavior="always" ref="ConceptNested" />
-
+    <property name="maritalStatusModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>

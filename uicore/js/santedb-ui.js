@@ -69,8 +69,10 @@ SanteDBWrapper.prototype.display = new function () {
 
         var source = otherDate ? moment(otherDate) : moment();
         var diff = source.diff(date, 'days');
-        if (units == 'D' || diff < 45)
+        if (units == 'D' || diff < 7)
             return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
+        if (units == 'W' || diff < 98)
+            return Math.round(diff / 7) + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.weeksOld');
         diff = source.diff(date, 'months');
         if (units == 'M' || diff < 18)
             return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
