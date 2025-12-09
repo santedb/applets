@@ -777,6 +777,7 @@
     <string name="org.santedb.material.admin.widget.panel.history">History</string>
     <string name="org.santedb.material.admin.widget.panel.regulation">Regulation &amp; Manufacture</string>
     <string name="org.santedb.material.admin.widget.panel.parts">Components &amp; Hierarchy</string>
+    <string name="org.santedb.material.admin.widget.panel.relationships">Relationships</string>
     <string name="ui.admin.material.confirmDelete">Are you sure you want to delete this material definition?</string>
     <string name="ui.admin.material.delete.success">Material definition has been successfully deleted</string>
     <string name="ui.admin.material.confirmUnDelete">Are you sure you wish to re-activate this material definition?</string>
