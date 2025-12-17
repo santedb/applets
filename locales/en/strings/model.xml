@@ -332,6 +332,7 @@
   <string name="ui.model.patient.address.component.postalcode">Zip/Postal Code</string>
   <string name="ui.model.patient.age.suffix.daysOld">d/o</string>
   <string name="ui.model.patient.age.suffix.monthsOld">m/o</string>
+  <string name="ui.model.patient.age.suffix.weeksOld">w/o</string>
   <string name="ui.model.patient.age.suffix.yearsOld">y/o</string>
   <string name="ui.model.patient.dateOfBirth">Date of Birth</string>
   <string name="ui.model.patient.dateOfBirth.hint"><![CDATA[The date on which the patient was born. If the exact date is unknown, or you wish to enter the age, use the <code>approx</code> checkbox]]></string>

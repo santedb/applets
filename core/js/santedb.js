@@ -5185,7 +5185,7 @@ function SanteDBWrapper() {
 
     this._sysAbortAllRequests = function() {
         // Abort any loading requests against the HTTP instance
-        const toAbort = _xhrs.filter(x => [XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
+        const toAbort = _xhrs.filter(x => x.readyState._canAbort || [XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
         console.info(`Aborting ${toAbort.length} requests`);
         toAbort.forEach(x => x.abort());
     }
@@ -5202,6 +5202,10 @@ function SanteDBWrapper() {
                     {
                         const idx = _xhrs.indexOf(xhr);
                         _xhrs.splice(idx, 1);
+                    }
+                    else if(xhr.readyState == XMLHttpRequest.OPENED) // Timeout and set the XHR request to be cancelable
+                    {
+                        setTimeout(() => xhr._canAbort = true, 1000);
                     }
                 };
                 _xhrs.push(xhr);
