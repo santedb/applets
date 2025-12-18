@@ -99,6 +99,8 @@ angular.module('santedb-lib')
                 $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
                 $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
 
+                $scope.getEncounter = () => $scope.model;
+                
                 $scope.nullifyItem = async function (entry, index) {
                     if (confirm(SanteDB.locale.getString("ui.action.nullify.confirm"))) {
                         try {
