@@ -295,6 +295,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                 relationship: {
                     HasGeneralization: [
                         {
+                            classification: "F77C13A9-1BFB-4353-93CD-C4AE1819AF28", // Perma
                             target: $scope.scopedObject.id,
                             quantity: 1
                         }
@@ -307,6 +308,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                     ],
                     Instance: [
                         {
+                            classification: "F77C13A9-1BFB-4353-93CD-C4AE1819AF28", // Perma
                             targetModel: {
 
                             }
@@ -470,6 +472,7 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                     Instance: [
                         {
                             holder: null,
+                            classification: "F77C13A9-1BFB-4353-93CD-C4AE1819AF28", // Perma
                             quantity: 1,
                             target: newId
                         }
