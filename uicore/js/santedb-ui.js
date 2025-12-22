@@ -593,8 +593,16 @@ SanteDBWrapper.prototype.display = new function () {
      */
     this.getParentScopeVariable = function (scope, nameOfVariable) {
         var retVal = null;
+        if(!Array.isArray(nameOfVariable)) {
+            nameOfVariable = [nameOfVariable];
+        }
         do {
-            retVal = scope[nameOfVariable] || scope.$eval(nameOfVariable);
+            for(var vn of nameOfVariable) {
+                retVal = scope[vn] || scope.$eval(vn);
+                if(retVal) {
+                    break;
+                }
+            }
             scope = scope.$parent;
         } while (!retVal && scope)
         return retVal;

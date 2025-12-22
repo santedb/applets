@@ -1142,6 +1142,8 @@
   <string name="ui.model.patientEncounter.dischargeDisposition">Discharge Reason</string>
   <string name="ui.model.patientEncounter.dischargeDisposition.hint">Indicate how the patient/person
     left the clinic</string>
+  <string name="ui.model.patientEncounter.startTime">Check-In Date/Time</string>
+  <string name="ui.model.patientEncounter.stopTime">Check-Out Date/Time</string>
 
   <!-- Data Templates -->
 
