@@ -159,7 +159,7 @@
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
                                 | i18n }}
                             </div>
-                            <div class="templateInfoDiv d-flex">
+                            <div class="templateInfoDiv d-flex justify-content-between">
 
                                 <div class="mx-2 py-1">
                                     <i class="fas fa-fw"
@@ -173,10 +173,10 @@
                                     <span
                                         ng-if="!comp.targetModel._overwriteActTime || comp.targetModel.statusConcept === 'afc33800-8225-4061-b168-bacc09cdbae3'">
                                         {{ comp.targetModel.actTime | humanDate: 'M' }}
-                                        <button type="button" class="btn btn-info p-1 text-center"
+                                        <button type="button" class="btn btn-primary p-1 text-center"
                                             ng-click="comp.targetModel._overwriteActTime = true"
                                             ng-disabled="comp.targetModel.statusConcept === 'afc33800-8225-4061-b168-bacc09cdbae3'">
-                                            <i class="fas fa-fw fa-clock"></i>
+                                            <i class="fas fa-fw fa-pencil"></i>
                                         </button>
                                     </span>
                                     <div class="input-group"
