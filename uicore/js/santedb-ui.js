@@ -69,8 +69,10 @@ SanteDBWrapper.prototype.display = new function () {
 
         var source = otherDate ? moment(otherDate) : moment();
         var diff = source.diff(date, 'days');
-        if (units == 'D' || diff < 45)
+        if (units == 'D' || diff < 7)
             return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.daysOld');
+        if (units == 'W' || diff < 98)
+            return Math.round(diff / 7) + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.weeksOld');
         diff = source.diff(date, 'months');
         if (units == 'M' || diff < 18)
             return diff + ' ' + SanteDB.locale.getString('ui.model.patient.age.suffix.monthsOld');
@@ -93,8 +95,10 @@ SanteDBWrapper.prototype.display = new function () {
             return telecomValue;
         }
         else {
-            var firstKey = Object.keys(telecomValue);
-            return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
+            var firstKey = Object.keys(telecomValue).find(k => Array.isArray(telecomValue[k]) && telecomValue[k].length > 0);
+            if(firstKey) {
+                return telecomValue[firstKey].map(o => telRegex.exec(o.value)[1]).join(" / ");
+            }
         }
     }
 
@@ -589,8 +593,16 @@ SanteDBWrapper.prototype.display = new function () {
      */
     this.getParentScopeVariable = function (scope, nameOfVariable) {
         var retVal = null;
+        if(!Array.isArray(nameOfVariable)) {
+            nameOfVariable = [nameOfVariable];
+        }
         do {
-            retVal = scope[nameOfVariable] || scope.$eval(nameOfVariable);
+            for(var vn of nameOfVariable) {
+                retVal = scope[vn] || scope.$eval(vn);
+                if(retVal) {
+                    break;
+                }
+            }
             scope = scope.$parent;
         } while (!retVal && scope)
         return retVal;

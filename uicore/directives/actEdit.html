@@ -120,7 +120,7 @@
             </div>
 
             <!-- START CURRENT ENTRY -->
-             
+
             <ul class="nav nav-tabs editOnly d-none">
                 <li class="nav-item">
                     <button class="nav-link active" data-toggle="tab" data-target="#current-actions">
@@ -159,13 +159,40 @@
                                 <i class="fas fa-fw fa-lightbulb"></i> {{ 'ui.model.act.relationship.IsDerivedFrom.cdss'
                                 | i18n }}
                             </div>
-                            <div class="templateInfoDiv">
-                                <i class="fas fa-fw"
-                                    ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
-                                {{ comp.targetModel.templateModel.name || comp.targetModel.templateModel.mnemonic || (getTemplateInfo(comp.targetModel.template).mnemonic) | i18n }}
+                            <div class="templateInfoDiv d-flex justify-content-between">
 
-                                <i class="fas fa-fw fa-shield ml-2 text-danger"
-                                    ng-if="comp.targetModel.policy.length &gt; 0"></i>
+                                <div class="mx-2 py-1">
+                                    <i class="fas fa-fw"
+                                        ng-class="::getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).icon"></i>
+                                    {{ getTemplateInfo(comp.targetModel.template || comp.targetModel.templateModel.mnemonic).name | i18n }}
+
+                                    <i class="fas fa-fw fa-shield ml-2 text-danger"
+                                        ng-if="comp.targetModel.policy.length &gt; 0"></i>
+                                </div>
+                                <div class="mx-2" ng-if="!(comp.targetModel.policy.length &gt; 0)">
+                                    <span
+                                        ng-if="!comp.targetModel._overwriteActTime || comp.targetModel.statusConcept === 'afc33800-8225-4061-b168-bacc09cdbae3'">
+                                        {{ comp.targetModel.actTime | humanDate: 'M' }}
+                                        <button type="button" class="btn btn-primary p-1 text-center"
+                                            ng-click="comp.targetModel._overwriteActTime = true"
+                                            ng-disabled="comp.targetModel.statusConcept === 'afc33800-8225-4061-b168-bacc09cdbae3'">
+                                            <i class="fas fa-fw fa-pencil"></i>
+                                        </button>
+                                    </span>
+                                    <div class="input-group"
+                                        ng-if="comp.targetModel._overwriteActTime &amp;&amp; comp.targetModel.statusConcept !== 'afc33800-8225-4061-b168-bacc09cdbae3'">
+                                        <input type="datetime-local" ng-model="comp.targetModel.actTime"
+                                            class="form-control"
+                                            max="{{ $root.page.maxEventTime | date: 'yyyy-MM-ddTHH:mm' }}"
+                                            min="{{ model.startTime | date: 'yyyy-MM-ddTHH:mm'}}" step="60"
+                                            required="required" />
+                                        <button type="button" class="btn btn-success text-center"
+                                            ng-click="comp.targetModel._overwriteActTime = false">
+                                            <i class="fas fa-fw fa-check-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="d-flex justify-content-left mb-2">
@@ -313,8 +340,9 @@
                                 ng-repeat="amendment in comp.targetModel.relationship.Replaces track by $index">
                                 <div class="col-12 pt-2">
                                     <div class="alert alert-info">
-                                        <button class="btn btn-link w-100 p-0 m-0" type="button" data-target="#amendment{{comp.target}}"
-                                            data-toggle="collapse" aria-expanded="false">
+                                        <button class="btn btn-link w-100 p-0 m-0" type="button"
+                                            data-target="#amendment{{comp.target}}" data-toggle="collapse"
+                                            aria-expanded="false">
                                             <h6 class="m-0 mx-1 px-1 p-0">
                                                 <div class="d-flex justify-content-start ">
                                                     <i class="fas fa-fw fa-pen-to-square"></i>

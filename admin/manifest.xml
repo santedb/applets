@@ -167,17 +167,17 @@
       <text lang="en">Data Quality Rules</text>
     </menuItem>
     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.match.index"
-      asset="/org.santedb.admin/views/cdr/match/index.html">
+      asset="/org.santedb.admin/views/cdr/match/index.html" order="80">
       <icon>fas fa-users-cog</icon>
       <text lang="en">Match Configuration</text>
     </menuItem>
     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.cdss.dashboard"
-      asset="/org.santedb.admin/views/cds/cdss/index.html">
+      asset="/org.santedb.admin/views/cdr/cdss/index.html" order="90">
       <icon>fas fa-swatchbook</icon>
       <text lang="en">Decision Support</text>
     </menuItem>
     <menuItem context="org.santedb.admin" launch="santedb-admin.cdr.ext.index"
-      asset="/org.santedb.admin/views/cdr/extensions/index.html" order="50">
+      asset="/org.santedb.admin/views/cdr/extensions/index.html" order="100">
       <icon>fas fa-square-up-right</icon>
       <text lang="en">Extensions</text>
     </menuItem>

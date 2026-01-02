@@ -498,15 +498,19 @@ table.dataTable tbody > tr > td {
 
 
 .templateInfoDiv {
-    position: absolute;
+    display:block;
+    position: relative;
+    width:100%;
     right: 0px;
     border-bottom: solid 1px #96989b !important;
     border-left: solid 1px #96989b !important;
+    border-right: solid 1px #96989b !important;
     background-color: #dee2e699;
     color: black;
     z-index: 10;
     padding: 0.25em 0.5em;
-    border-radius: 0em 0em 0em 1em;
+    margin-bottom: 0.25em;
+    border-radius: 0em 0em 1em 1em;
     margin-top: calc(-1em + 1px);
 }
 

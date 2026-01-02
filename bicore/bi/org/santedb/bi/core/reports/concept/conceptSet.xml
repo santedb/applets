@@ -37,17 +37,20 @@
  - User: Justin Fyfe
  - Date: 2019-12-16
  -->
-<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.concept.set" label="ui.bi.core.report.concept.set" status="active" >
+<BiReportDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.core.reports.concept.set" label="ui.bi.core.report.concept.set" status="active" name="Concept Set Members" >
   <meta>
-    <public>true</public>
     <authors>
       <add>Justin Fyfe (Fyfe Software Inc.) &lt;justin@fyfesoftware.ca></add>
     </authors>
     <annotation>
       <div xmlns="http://www.w3.org/1999/xhtml">
-        <p>Produces a list of all concepts in a concept set</p>
+        <span>Produces a list of all concepts in a concept set</span>
       </div>
     </annotation>
+    <policies>
+      <demand>1.3.6.1.4.1.33349.3.1.5.9.2.100.1</demand>
+    </policies>
+    <public>true</public>
   </meta>
   <dataSources>
     <query ref="#org.santedb.bi.core.query.concept.set" name="set-members" />

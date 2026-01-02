@@ -1,0 +1,90 @@
+<!--
+ - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
+ - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
+ - Portions Copyright (C) 2015-2018 Mohawk College of Applied Arts and Technology
+ - 
+ - Licensed under the Apache License, Version 2.0 (the "License"); you 
+ - may not use this file except in compliance with the License. You may 
+ - obtain a copy of the License at 
+ - 
+ - http://www.apache.org/licenses/LICENSE-2.0 
+ - 
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ - WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ - License for the specific language governing permissions and limitations under 
+ - the License.
+ -->
+<div xmlns="http://www.w3.org/1999/xhtml" class="card shadow">
+    <div class="card-header">
+        <h5 class="mb-0">{{ report.name | i18n }} {{ filter}}</h5>
+    </div>
+
+    <div class="tab-content">
+        <div ng-if="report.parameterDefinitions.length" class="tab-pane show active p-2" id="{{htmlId}}_parms">
+            <form class="form card-body" name="reportFilterForm" ng-submit="updateParameterValues(reportFilterForm)"
+                autocomplete="off">
+                <div class="container-fluid">
+                    <div ng-repeat="parm in ::report.parameterDefinitions track by $index">
+                        <div>
+                            <report-parameter  class="form-group row" values="parameterValues" display="{
+                                label: 'control-label col-sm-12 col-md-4',
+                                input: 'col-sm-12 col-md-8'
+                            }" parameter="parm" />
+                        </div>
+                    </div>
+                    <div class="float-right btn-group">
+                        <button ng-disabled="reportFilterForm.$invalid" type="submit" id="btnApply" class="btn btn-primary"><i class="fas fa-check"></i> {{
+                            'ui.action.apply' | i18n }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div ng-class="{ 'active show' : !report.parameterDefinitions.length }"
+            class="tab-pane report-view-container p-2" ng-repeat="viewDefinition in report.views"
+            id="{{htmlId}}_{{viewDefinition.name}}">
+            <div class="d-flex flex-column">
+                <div id="{{htmlId}}_{{viewDefinition.name}}view">
+                    <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
+                </div>
+                <div class="m-2 p-2">
+                    <div class="btn-group dropup float-right">
+                        <button type="button" class="btn btn-secondary dropdown-toggle"
+                            ng-disabled="viewDefinition.noExport || viewDefinition.type == 'Chart'" aria-haspopup="true"
+                            data-toggle="dropdown" id="btnDownloadReport_{{viewDefinition.name}}"><i
+                                class="fas fa-save"></i> {{
+                            'ui.action.download' | i18n }}</button>
+                        <button type="button" id="btnPrintReport_{{viewDefinition.name}}"
+                            ng-disabled="viewDefinition.noPrint || viewDefinition.type == 'Chart'"
+                            ng-click="printReport(viewDefinition)" class="btn btn-primary"><i class="fas fa-print"></i>
+                            {{
+                            'ui.action.print' | i18n }}</button>
+                        <div class="dropdown-menu" aria-labelledby="btnDownloadReport_{{viewDefinition.name}}"
+                            style="z-index:100">
+                            <button class="dropdown-item" type="button" ng-repeat="fmt in formats"
+                                ng-click="downloadReport(viewDefinition.name, fmt.extension)">{{ fmt.label | i18n
+                                }}</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card-footer">
+        <ul class="nav nav-pills">
+            <li ng-if="report.parameterDefinitions.length" id="{{htmlId}}_parms_tab" class="nav-item active">
+                <a class="nav-link" data-target="#{{htmlId}}_parms" data-toggle="tab"><i class="fas fa-filter"></i>
+                    {{ 'ui.bi.common.parameters' | i18n }}</a>
+            </li>
+            <li id="{{htmlId}}_{{viewDefinition.name}}_tab" class="nav-item" ng-repeat="viewDefinition in report.views"
+                ng-if="report.hasRun">
+                <a class="nav-link" data-target="#{{htmlId}}_{{viewDefinition.name}}" data-toggle="tab"><i class="fas"
+                        ng-class="{ 'fa-chart-pie' : viewDefinition.type == 'Chart' , 'fa-table' : viewDefinition.type == 'Tabular', 'fa-file-alt' : true }"></i>
+                    {{ viewDefinition.label | i18n }}</a>
+            </li>
+        </ul>
+
+    </div>
+</div>

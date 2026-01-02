@@ -40,6 +40,7 @@ angular.module('santedb-lib')
         return {
             scope: {
                 parameter: "<",
+                display: "<",
                 values: "="
             },
             restrict: "E",
@@ -82,6 +83,7 @@ angular.module('santedb-lib')
         return {
             scope: {
                 reportId: "=",
+                report: "=",
                 parameters: "=",
                 view: "="
             },
@@ -177,12 +179,10 @@ angular.module('santedb-lib')
                         var parms = jQuery.param(parameterValues);
                         parms += `&_download=true`; //&_sessionId=${window.sessionStorage.token}`;
 
-
                         var win = window.open(`/bis/Report/${format}/${$scope.report.id}?${parms}&_view=${view}`, '_blank');
                         win.onload = function (e) {
                             win.close();
                         };
-
 
                     }
                     catch (e) {
@@ -202,8 +202,8 @@ angular.module('santedb-lib')
                         await Promise.all($scope.report.views.map(async v => {
                             var parameters = angular.copy($scope.parameterValues);
                             parameters["_count"] = 1000;
-                            var html = await SanteDBBi.renderReportAsync($scope.reportId, v.name, "html", parameters);
-                            setReportContent(`${$scope.htmlId}_${v.name}view`, html);
+                            var html = await SanteDBBi.renderReportAsync($scope.report.id, v.name, "html", parameters);
+                            setReportContent(`${v.htmlId}view`, html);
                         }));
                         $timeout(() => {
                             $scope.report.hasRun = true;
@@ -227,10 +227,14 @@ angular.module('santedb-lib')
                     }
                 }
 
-                async function initialize() {
+                $scope.loadReport = async function () {
                     try {
                         var formats = await SanteDBBi.resources.format.findAsync();
-                        var report = await SanteDBBi.resources.report.getAsync($scope.reportId);
+
+                        var report = $scope.report;
+                        if($scope.reportId && report?.id !== $scope.reportId) {
+                            report = await SanteDBBi.resources.report.getAsync($scope.reportId);
+                        }
 
                         $timeout(() => {
 
@@ -257,10 +261,12 @@ angular.module('santedb-lib')
                                     });
                             });
 
-                            $scope.htmlId = $scope.reportId.replace(/\./g, "");
+                            $scope.htmlId = $scope.report.id.replace(/\./g, "");
                             $scope.report = report;
                             $scope.report.parameterDefinitions = parameters;
 
+                            // View definitions 
+                            $scope.report.views.forEach(o => o.htmlId = o.id?.replace(/\./g, "") || `${$scope.htmlId}${o.name}`);
                             if ($scope.report.parameterDefinitions == undefined ||
                                 $scope.report.parameterDefinitions.length == 0) {
                                 $scope.updateParameterValues();
@@ -272,13 +278,18 @@ angular.module('santedb-lib')
                     }
                 }
 
-                initialize();
-
-
             }],
             link: function (scope, element, attrs) {
 
+                if (attrs.type == 'inline') {
+                    $(".biReportInline", element).removeClass("d-none");
+                }
+                else {
+                    $(".biReportLegacy", element).removeClass("d-none");
+                }
 
+                scope.loadReport();
+                
             }
         }
     }])
