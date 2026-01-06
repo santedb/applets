@@ -68,7 +68,7 @@ Object.defineProperty(Array.prototype, 'selectField', {
 /**
  * @summary Order by a basic HDSI expression inline for Angular
  */
-Object.defineProperty(Array.prototype, 'orderBy', {
+Object.defineProperty(Array.prototype, 'ngOrderBy', {
     value: function(orderSelector) {
         return this.sort((a,b) => {
             var aValue = a;
@@ -80,7 +80,22 @@ Object.defineProperty(Array.prototype, 'orderBy', {
             return aValue < bValue ? -1 : 1
         })
     }
-})
+});
+
+
+/**
+ * @summary Find function which is compatible with angular
+ */
+Object.defineProperty(Array.prototype, 'ngFind', {
+    value: function(selector, findValue) {
+        return this.find((a) => {
+            var value = a;
+            selector.split('.').forEach(p => value = value ? value[p] : null);
+            return value == findValue;
+        });
+    }
+});
+
 /**
  * @method
  * @memberof Exception
