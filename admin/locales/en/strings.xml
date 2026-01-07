@@ -658,7 +658,9 @@
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer.true">PERSISTENCE LAYER - Blocking occurs against the persistence layer without using the data management pattern configured</string>
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer.false">REPOSITORY LAYER - Blocking occurs against the repository layer using the data management pattern configured</string>
     <string name="ui.model.matchConfiguration.blocking.useLowerLayer.set">Use PERSISTENCE LAYER blocking. This may result in better performance however generated properties or combined properties of the master may not be considered</string>
-
+    <string name="ui.model.userEntity.relationship.Employee.hint">Nurses employer</string>
+    <string name="ui.model.userEntity.relationship.DedicatedServiceDeliveryLocation.hintS">The user interacts with these facilities and therefore will have access to relevant information in the facility. This can include patients, encounters and local users as well as the devices and integrations of that facility.</string>
+    <string name="ui.model.userEntity.relationship.MaintainedEntity.hint">A facility which the user is responsible for managing. This user may be contacted about this facility</string>
     <!-- CDSS Editing-->
     <!-- Administration for CDSS rules -->
     <string name="ui.admin.cdss.master.title">CDSS Library</string>
