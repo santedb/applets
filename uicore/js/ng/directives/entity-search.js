@@ -380,7 +380,7 @@ angular.module('santedb-lib')
                         return r;
                     }
                     else {
-                        return scope.$eval(`scope.${path}`, { scope: object });
+                        return scope.$eval(`item.${path}`, { item: object });
                     }
                 }
 
@@ -449,7 +449,7 @@ angular.module('santedb-lib')
                         language: {
                             searching: function () { return `<i class="fa fa-circle-notch fa-spin"></i> ${SanteDB.locale.getString("ui.search")}`; }
                         },
-                        minimumResultsForSearch: attrs.noSearch ? Infinity : 5,
+                        minimumResultsForSearch: attrs.noSearch ? Infinity : 0,
                         dropdownParent: dropDownParent.length > 0 ? dropDownParent : null,
                         dataAdapter: $.fn.select2.amd.require('select2/data/extended-ajax'),
                         ajax: {
@@ -512,7 +512,7 @@ angular.module('santedb-lib')
                                                     o = o[selector];
                                                 }
                                                 else {
-                                                    o = scope.$eval(`scope.${selector}`, { scope: o });
+                                                    o = scope.$eval(`item.${selector}`, { item: o });
                                                 }
                                             }
 
@@ -554,10 +554,10 @@ angular.module('santedb-lib')
                                             try {
                                                 var groupDisplay = null;
                                                 if (Array.isArray(groupString)) {
-                                                    groupDisplay = groupString.map(o => scope.$eval('scope.' + o, { item: data[itm], display: SanteDB.display })).find(o => o != null);
+                                                    groupDisplay = groupString.map(o => scope.$eval('item.' + o, { item: data[itm], display: SanteDB.display })).find(o => o != null);
                                                 }
                                                 else {
-                                                    groupDisplay = scope.$eval('scope.' + groupString, { item: data[itm], display: SanteDB.display });
+                                                    groupDisplay = scope.$eval('item.' + groupString, { item: data[itm], display: SanteDB.display });
                                                 }
 
                                                 if (!groupDisplay)
