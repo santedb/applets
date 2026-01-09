@@ -183,6 +183,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         $rootScope.system.config.facility = SanteDB.configuration.getAssignedFacilityId();
                         $rootScope.system.config.owner = SanteDB.configuration.getOwnerId();
 
+                        $("#pageTransitioner").hide();
+
                         $rootScope.system.uniqueDomains = uqDomains;
                         $rootScope.system.conceptRelationshipTypes = conceptRelationshipTypes.resource;
                         // Make app settings easier to handle
@@ -195,8 +197,6 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         if ((!realmName || configuration && !configuration._isConfigured) && $state.$current.name != 'santedb-config.initial') {
                             $state.go('santedb-config.initial');
                         }
-
-                        $("#pageTransitioner").hide();
 
                     });
                 }

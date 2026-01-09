@@ -73,7 +73,7 @@
     <script src="~/js/santedb-ng-directives.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="~/js/santedb-ng-widget.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
 
-    <div ng-if="$root.page &amp;&amp; $root.system">
+    <div id="mainView" ng-if="$root.page &amp;&amp; $root.system.config">
         <ui-view>
         </ui-view>
     </div>
