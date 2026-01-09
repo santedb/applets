@@ -121,6 +121,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 // Get configuration
                 console.info("Initializing Root View");
                 try {
+                    $("#pageTransitioner").show();
+
                     await __SanteDBAppService.GetStatus();
 
                     _setLocaleData();
@@ -193,6 +195,9 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         if ((!realmName || configuration && !configuration._isConfigured) && $state.$current.name != 'santedb-config.initial') {
                             $state.go('santedb-config.initial');
                         }
+
+                        $("#pageTransitioner").hide();
+
                     });
                 }
                 catch (e) {

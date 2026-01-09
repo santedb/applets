@@ -36,7 +36,8 @@
     <script src="/org.santedb.core/lib/jquery.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="/org.santedb.core/lib/jquery.datefix.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="/org.santedb.core/lib/angular.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
-    <script src="/org.santedb.core/lib/angular-sanitize.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
+    <script src="/org.santedb.core/lib/angular-sanitize.min.js" nonce="{{ $csp_nonce }}"
+        type="text/javascript"></script>
     <script src="/org.santedb.core/lib/angular-route.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="~/lib/angular-ui-router.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="~/lib/ocLazyLoad.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
@@ -72,8 +73,10 @@
     <script src="~/js/santedb-ng-directives.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="~/js/santedb-ng-widget.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
 
-    <ui-view>
-    </ui-view>
+    <div ng-if="$root.page &amp;&amp; $root.system">
+        <ui-view>
+        </ui-view>
+    </div>
 
     <!-- #include virtual="~/views/dialogs/login.partial.html" -->
     <!-- #include virtual="~/views/dialogs/error.partial.html" -->
@@ -99,21 +102,21 @@
     <script src="~/js/santedb-elevator.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
     <script src="~/lib/bootstrap-tokenfield.min.js" nonce="{{ $csp_nonce }}" type="text/javascript"></script>
 
-    
+
     <noscript>
-            <div class="alert text-danger" ng-if="!asyncAvailable" style="z-index: 10000">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="fas fa-times fa-fw"></i></span>
-                    </button>
-                    <h4 class="alert-heading">
-                        <i class="fas fa-exclamation-triangle"></i> {{ 'error.noScript.title' | i18n }}
-                    </h4>
-                    <hr />
-            
-                    <p class="mb-0">{{ 'error.noScript.text' | i18n }} </p>
-                </div>
+        <div class="alert text-danger" ng-if="!asyncAvailable" style="z-index: 10000">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="fas fa-times fa-fw"></i></span>
+            </button>
+            <h4 class="alert-heading">
+                <i class="fas fa-exclamation-triangle"></i> {{ 'error.noScript.title' | i18n }}
+            </h4>
+            <hr />
+
+            <p class="mb-0">{{ 'error.noScript.text' | i18n }} </p>
+        </div>
     </noscript>
-    <div class="alert alert-warning d-none" id="noArrowFunc"  style="z-index: 10000">
+    <div class="alert alert-warning d-none" id="noArrowFunc" style="z-index: 10000">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true"><i class="fas fa-times fa-fw"></i></span>
         </button>
@@ -125,16 +128,16 @@
         <p class="mb-0">{{ 'error.invalidBrowser.text' | i18n }} </p>
     </div>
     <script type="text/javascript" nonce="{{ $csp_nonce }}">
-    //<![CDATA[    
+        //<![CDATA[    
         try {
             eval('async () => { }');
         }
-        catch(e) {
-            if(e instanceof SyntaxError) {
+        catch (e) {
+            if (e instanceof SyntaxError) {
                 $("#noArrowFunc").removeClass("d-none");
             }
         }
-            //]]>
+        //]]>
     </script>
 </body>
 
