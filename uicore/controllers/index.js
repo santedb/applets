@@ -97,6 +97,27 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 }
             }
 
+            /**
+             * @summary Ensures no select2 dropdowns remain rendered (possible disclosure)
+             */
+            function teardownSelect2Dropdowns() {
+                try {
+                    $('.select2-hidden-accessible').each(function () {
+                        var $select = $(this);
+                        try { $select.select2('close'); } catch (_) { }
+                        if ($select.data('select2')) {
+                            try { $select.select2('destroy'); } catch (_) { }
+                        }
+                    });
+                }
+                catch (e) {
+                    console.warn("Unable to teardown Select2 instances", e);
+                }
+                finally {
+                    $('.select2-container').remove();
+                }
+            }
+
             async function _setLocaleData() {
                 try {
                     var localeData = await SanteDB.resources.locale.findAsync();
@@ -249,6 +270,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                                 delete ($rootScope.session);
                                 toastr.clear();
                                 window.onbeforeunload = null;
+                                teardownSelect2Dropdowns();
                                 $state.go("login");
                             });
                         }
@@ -346,7 +368,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                     $rootScope._transition = transition._targetState._definition.self.name; //HACK: Used for transition back to this page when there is an ELEVATE on the auth interceptor
                 $(".modal").modal('hide');
                 $('.popover').popover('hide');
-
+                teardownSelect2Dropdowns();
 
                 if($state.$current.name) {
                     // Cancel all outstanding requests
