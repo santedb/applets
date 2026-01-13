@@ -457,7 +457,7 @@
                         <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
                     </button>
 
-                    <div class="dropdown-menu overflow-auto" style="max-height: 50vh;" id="addActionDropdown">
+                    <div class="dropdown-menu overflow-auto" style="max-height: 35vh;" id="addActionDropdown">
                         <button class="dropdown-item" type="button" ng-click="addItem(tpl)"
                             ng-repeat="tpl in availableTemplates track by $index">
                             <i ng-class="tpl.icon"></i> {{ tpl.name | i18n }}
@@ -467,6 +467,7 @@
 
                         <div class="dropdown-item">
                             <input type="search" ng-model="searchTemplateString"
+                                id="txtActEditSearch"
                                 ng-change="doFilter(searchTemplateString)" class="form-control"
                                 placeholder="{{ 'ui.action.search' | i18n }}" />
                         </div>

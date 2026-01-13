@@ -29,6 +29,7 @@
       <string name="ui.false">No</string>
       <string name="ui.barcode">Barcode Label</string>
 
+      
       <!-- Elevated Session Alert -->
        <string name="ui.authentication.elevatedSession">Elevated Session Enabled - Access to Restricted Information is Granted</string>
        <string name="ui.authentication.elevatedSession.end">End Elevated Access</string>

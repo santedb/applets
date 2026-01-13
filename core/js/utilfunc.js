@@ -69,8 +69,8 @@ Object.defineProperty(Array.prototype, 'selectField', {
  * @summary Order by a basic HDSI expression inline for Angular
  */
 Object.defineProperty(Array.prototype, 'ngOrderBy', {
-    value: function(orderSelector) {
-        return this.sort((a,b) => {
+    value: function (orderSelector) {
+        return this.sort((a, b) => {
             var aValue = a;
             var bValue = b;
             orderSelector.split('.').forEach(p => {
@@ -87,7 +87,7 @@ Object.defineProperty(Array.prototype, 'ngOrderBy', {
  * @summary Find function which is compatible with angular
  */
 Object.defineProperty(Array.prototype, 'ngFind', {
-    value: function(selector, findValue) {
+    value: function (selector, findValue) {
         return this.find((a) => {
             var value = a;
             selector.split('.').forEach(p => value = value ? value[p] : null);
@@ -595,11 +595,11 @@ async function prepareActForSubmission(act) {
 function cascadeBatchOperationInstruction(source, batchOperation) {
     batchOperation = (batchOperation || source.operation);
     if ([BatchOperationType.Delete, BatchOperationType.DeleteInt].includes(batchOperation) && source.relationship) {
-        Object.keys(source.relationship).map(o=>source.relationship[o]).flat().filter(o => o.classification == RelationshipClassKeys.ContainedObjectLink).forEach(o => {
+        Object.keys(source.relationship).map(o => source.relationship[o]).flat().filter(o => o.classification == RelationshipClassKeys.ContainedObjectLink).forEach(o => {
             o.operation = batchOperation;
             if (o.targetModel) {
                 o.targetModel.operation = batchOperation;
-                cascadeBatchOperationInstruction(o.targetModel, batchOperation);                
+                cascadeBatchOperationInstruction(o.targetModel, batchOperation);
             }
         })
     }
@@ -973,15 +973,29 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
                 if (rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
                     rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-                    retVal.resource.push(relatedObject);
+
+                    if (rel.$insertFirst) {
+                        retVal.resource.unshift(relatedObject);
+                    }
+                    else {
+                        retVal.resource.push(relatedObject);
+                    }
                     bundleRelatedObjects(relatedObject, ignoreRelations, retVal);
                     delete rel.targetModel;
                 }
-                if (rel.holderModel) {
-                    var relatedObject = angular.copy(rel.holderModel);
+                if (rel.holderModel || rel.sourceModel) {
+                    var relatedObject = angular.copy(rel.holderModel || rel.sourceModel);
                     rel.holder = rel.source = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
-                    retVal.resource.push(relatedObject);
+
+                    if (rel.$insertFirst) {
+                        retVal.resource.unshift(relatedObject);
+                    }
+                    else {
+                        retVal.resource.push(relatedObject);
+                    }
+
                     delete rel.holderModel;
+                    delete rel.sourceModel;
                 }
 
                 rel.holder = rel.holder || object.id;
@@ -1026,7 +1040,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
     if (!existingBundle) {
         retVal.resource.forEach(res => deleteModelProperties(res));
     }
-    retVal.resource.forEach(r => delete(r.policy));
+    retVal.resource.forEach(r => delete (r.policy));
     return retVal;
 }
 
