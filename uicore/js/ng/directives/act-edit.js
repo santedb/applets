@@ -72,6 +72,10 @@ angular.module('santedb-lib')
                         _templateData = await SanteDB.application.getTemplateDefinitionsAsync();
                         _canBackenter = _templateData.filter(o => o.backEntry);
 
+                        $("#addActionDropdown").on("shown.bs.dropdown", function() {
+                            $("#txtActEditSearch").scrollTop();
+                            $("#txtActEditSearch").focus();
+                        })
                         // Get the status concepts
                         _patientStatusConcepts = (await SanteDB.resources.conceptSet.getAsync("b73e6dbc-890a-11f0-8959-c764088c39f9", "min"))?.concept;
 
@@ -98,7 +102,7 @@ angular.module('santedb-lib')
 
                 $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
                 $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
-
+                
                 $scope.getEncounter = () => $scope.model;
                 
                 $scope.nullifyItem = async function (entry, index) {
@@ -359,6 +363,10 @@ angular.module('santedb-lib')
                         var thisUser = await SanteDB.resources.userEntity.getAsync(userEntityId, "dropdown");
                         $timeout(() => {
                             itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
+                            if(itm.targetModel.tag) {
+                                itm.targetModel.tag['emr.processed'] = ["false"];
+                            }
+                            
                             markActComplete(itm.targetModel);
                             itm.targetModel.participation = itm.targetModel.participation || {};
                             itm.targetModel.participation.Performer = itm.targetModel.participation.Performer || [];
