@@ -119,7 +119,11 @@ angular.module('santedb-lib')
                             entryCopy.participation.Verifier.push(new ActParticipation({
                                 player: await SanteDB.authentication.getCurrentUserEntityId()
                             }));
+                            
 
+                            if(entryCopy.tag && entryCopy.tag['emr.processed']) {
+                                entryCopy.tag['emr.processed'] = ["false"];
+                            }
                             // Update the data
                             entry.operation = BatchOperationType.Update;
                             await SanteDB.resources.act.updateAsync(entryCopy.id, entryCopy, null, null, true);
@@ -363,10 +367,10 @@ angular.module('santedb-lib')
                         var thisUser = await SanteDB.resources.userEntity.getAsync(userEntityId, "dropdown");
                         $timeout(() => {
                             itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
-                            if(itm.targetModel.tag) {
+                            if(itm.targetModel.tag && itm.targetModel.tag['emr.processed']) {
                                 itm.targetModel.tag['emr.processed'] = ["false"];
                             }
-                            
+
                             markActComplete(itm.targetModel);
                             itm.targetModel.participation = itm.targetModel.participation || {};
                             itm.targetModel.participation.Performer = itm.targetModel.participation.Performer || [];
