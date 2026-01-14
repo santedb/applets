@@ -18,6 +18,49 @@
  */
 angular.module('santedb')
     .controller('AdminUserProfileWidgetController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
+
+        /**
+         * Extracts the effective target key for a relationship
+         * @param {*} relationship The relationship to inspect
+         */
+        function getRelationshipTarget(relationship) {
+            return relationship ? (relationship.target || (relationship.targetModel && relationship.targetModel.id)) : null;
+        }
+
+        /**
+         * Adds delete operations for relationships removed in the editor
+         * @param {*} submissionObject The object being sent to the API
+         */
+        function markRemovedManagedFacilities(submissionObject) {
+            const original = $scope.originalManagedFacilities || [];
+            const current = (submissionObject.relationship && submissionObject.relationship.MaintainedEntity) || [];
+
+            const currentTargets = current.map(getRelationshipTarget).filter(o => o);
+            const removed = original.filter(rel => {
+                const target = getRelationshipTarget(rel);
+                return target && !currentTargets.includes(target);
+            });
+
+            if (!removed.length) {
+                return;
+            }
+
+            submissionObject.relationship = submissionObject.relationship || {};
+            submissionObject.relationship.MaintainedEntity = submissionObject.relationship.MaintainedEntity || [];
+
+            removed.forEach(rel => {
+                const target = getRelationshipTarget(rel);
+                if (!target) {
+                    return;
+                }
+                submissionObject.relationship.MaintainedEntity.push({
+                    id: rel.id,
+                    target: target,
+                    relationshipType: EntityRelationshipTypeKeys.MaintainedEntity,
+                    operation: BatchOperationType.Delete
+                });
+            });
+        }
         /**
          * Updates the user entity
          */
@@ -28,6 +71,7 @@ angular.module('santedb')
             // Now post the changed update object 
             try {
                 var submissionObject = angular.copy($scope.editObject);
+                markRemovedManagedFacilities(submissionObject);
                 await prepareEntityForSubmission(submissionObject);
 
                 submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
@@ -61,6 +105,7 @@ angular.module('santedb')
             if (n && n != null) {
                 delete ($scope.editObject); // Delete the current edit object
                 $scope.editObject = angular.copy(n);
+                $scope.originalManagedFacilities = angular.copy((n.relationship && n.relationship.MaintainedEntity) || []) || [];
             }
         });
 
