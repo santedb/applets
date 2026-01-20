@@ -504,5 +504,5 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
 // WARN ANY POOR NURSES OR USERS THAT THEY SHOULDN'T BE MESSING WITH THE DEVELOPER CONSOLE
 console.log("%c!!! WARNING !!!%c\n" + 
     "Using this console may allow attackers to impersonate you and steal information including Personal Health Information, security information and other data using an attack called Self-XSS. Do not enter or paste code that you do not understand.", 
-    'color: red; font-style: bold; font-size: 2em;', 
-    'color:black; font-style: normal; font-size:1em');
+    'color: red; font-style: bold; font-size: 2em; background: white; width:100%', 
+    'color:black; font-style: normal; font-size:1em; background: white; width:100%');
