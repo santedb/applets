@@ -48,7 +48,7 @@
                                     class="fas fa-external-link-alt"></i></sup></a>
                     </div>
                     <div ng-show="panel.view == 'Edit'">
-                        <entity-search type="'Place'"
+                        <entity-search type="'Place'" class="w-100 form-control" style="width:100%"
                             group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
                             ng-model="scopedObject.relationship.Parent[0].target" search-field="'name.component.value'"
                             for-relationship-type="'bfcbb345-86db-43ba-b47e-e7411276ac7c'"
@@ -71,7 +71,8 @@
                                     class="fas fa-external-link-alt"></i></sup></a>
                     </div>
                     <div ng-show="panel.view == 'Edit'">
-                        <entity-search type="'Place'"
+                        <entity-search type="'Place'" style="width:100%"
+                            class="w-100 form-control"
                             group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
                             ng-model="scopedObject.relationship.ReportTarget[0].target"
                             search-field="'name.component.value'"
