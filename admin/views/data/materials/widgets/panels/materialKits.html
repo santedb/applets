@@ -47,11 +47,12 @@
                     </tr>
                 </tbody>
                 <tbody ng-if="panel.view === 'Edit'">
-                    <tr ng-repeat="ue in editObject.relationship.UsedEntity track by $index">
+                    <tr ng-repeat="ue in editObject.relationship.UsedEntity track by $index"
+                        ng-if="ue.operation != 'Delete'">
                         <td>{{ ue.targetModel.name | name }}</td>
                         <td><input type="number" min="0" ng-model="ue.quantity" class="form-control" /></td>
                         <td><button class="btn btn-danger"
-                                ng-click="editObject.relationship.UsedEntity.splice($index, 1)">
+                                ng-click="ue.operation = 'Delete'">
                                 <i class="fas fa-fw fa-times"></i> {{ 'ui.action.remove' | i18n }}
                             </button>
                         </td>
