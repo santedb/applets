@@ -24,17 +24,23 @@
             <sdb:controller>LogIndexController</sdb:controller>
         </sdb:view>
     </sdb:state>
-    <table class="table table-striped" style="width:100%" id="logInfoTable">
-        <thead>
-            <tr>
-                <th>{{ 'ui.model.logFileInfo.name' | i18n }}</th>
-                <th>{{ 'ui.model.logFileInfo.modified' | i18n }}</th>
-                <th>{{ 'ui.model.logFileInfo.size' | i18n }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="row">
+        <div class="col mb-2">
+            <div class="container-fluid">
+                <table class="table table-striped" id="logInfoTable">
+                    <thead>
+                        <tr>
+                            <th>{{ 'ui.model.logFileInfo.name' | i18n }}</th>
+                            <th>{{ 'ui.model.logFileInfo.modified' | i18n }}</th>
+                            <th>{{ 'ui.model.logFileInfo.size' | i18n }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <div id="extraControls" class="input-group">
         <div class="input-group-prepend">
             <span class="input-group-text">{{ 'ui.admin.system.logs.show' | i18n }}</span>

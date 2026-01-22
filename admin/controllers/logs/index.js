@@ -28,6 +28,7 @@ angular.module('santedb').controller('LogIndexController', ["$scope", "$rootScop
     $scope.extern = 'false';
     var dt = $("#logInfoTable").DataTable({
         serverSide: true,
+        searching: false,
         buttons: [
             'reload'
         ],
