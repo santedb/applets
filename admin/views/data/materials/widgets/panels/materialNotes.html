@@ -42,10 +42,10 @@
         <form ng-if="panel.view === 'Edit'" novalidate="novalidate" name="panel.editForm" ng-submit="saveMaterial(panel.editForm)" autocomplete="off">
             <ul class="list-group overflow-auto" ng-init="editObject._noteLength = editObject.note.length || 0">
                 <li class="list-group-item" ng-repeat="note in editObject.note track by $index"
-                    ng-if="$index !== editObject._noteLength">
+                    ng-if="$index !== editObject._noteLength &amp;&amp; note.operation != 'Delete'">
                     <strong>{{ note.authorModel.name | name }}</strong>
                     <pre class="alert alert-warning mt-1 mb-0">{{ note.text }}</pre>
-                    <button class="btn btn-danger float-right" type="button" ng-click="editObject.note.splice($index, 1)"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
+                    <button class="btn btn-danger float-right" type="button" ng-click="note.operation = 'Delete'"><i class="fas fa-times"></i> {{ 'ui.action.remove' | i18n }}</button>
                     <div class="clearfix"></div>
                 </li>
                 <li class="list-group-item">
