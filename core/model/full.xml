@@ -482,7 +482,7 @@
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>
-    <property name="statusConceptModel" ref="ConceptNested" behavior="always" />
+    <property name="statusConceptModel" behavior="always" />
     <property name="address" all="true" behavior="always">
       <property name="*" ref="EntityAddress" />
     </property>

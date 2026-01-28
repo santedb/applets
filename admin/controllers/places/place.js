@@ -22,7 +22,7 @@ angular.module('santedb').controller('PlaceEditController', ["$scope", "$rootSco
     // Initialize the view
     async function initialize(id) {
         try {
-            var place = await SanteDB.resources.place.getAsync(id, "full");
+            var place = await SanteDB.resources.place.getAsync(id, "full", null, null, null, { "Cache-Control" : "no-cache" });
 
             if (place.classConcept == EntityClassKeys.ServiceDeliveryLocation) {
                 $state.go("santedb-admin.data.facility.view", { id: id });
