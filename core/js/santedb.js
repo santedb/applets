@@ -899,7 +899,7 @@ function ResourceWrapper(_config) {
     this.getAsync = function (id, viewModel, query, upstream, state, headers) {
 
         headers = headers || {};
-        headers.Accept =  headers.Accept || _config.accept;
+        headers.Accept = headers.Accept || _config.accept;
 
         // Prepare query
         var url = null;
@@ -968,7 +968,7 @@ function ResourceWrapper(_config) {
     this.findAsync = function (query, viewModel, upstream, state, headers) {
 
         headers = headers || {};
-        headers.Accept =  headers.Accept || _config.accept;
+        headers.Accept = headers.Accept || _config.accept;
         query = query || {};
 
         if (viewModel)
@@ -1053,7 +1053,7 @@ function ResourceWrapper(_config) {
         */
     this.insertAsync = function (data, upstream, state, dontReturnObject, headers) {
 
-        
+
         if (data.$type !== _config.resource && data.$type !== `${_config.resource}Info` && data.$type !== `${_config.resource}Definition`)
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
 
@@ -1077,7 +1077,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
-        if(dontReturnObject !== undefined) {
+        if (dontReturnObject !== undefined) {
             headers["X-SanteDB-NoEcho"] = true;
         }
 
@@ -1107,7 +1107,7 @@ function ResourceWrapper(_config) {
     this.patchAsync = function (id, etag, patch, force, upstream, state, dontReturnObject, headers) {
         if (patch.$type !== "Patch")
             throw new Exception("ArgumentException", "error.invalidType", `Invalid type, resource wrapper expects ${_config.resource} however ${data.$type} specified`);
-        
+
         headers = headers || {};
         headers.Accept = _config.accept;
 
@@ -1123,8 +1123,8 @@ function ResourceWrapper(_config) {
             headers['X-Patch-Force'] = true;
         }
 
-        
-        if(dontReturnObject !== undefined) {
+
+        if (dontReturnObject !== undefined) {
             headers["X-SanteDB-NoEcho"] = true;
         }
 
@@ -1162,7 +1162,7 @@ function ResourceWrapper(_config) {
             delete (data.updatedBy);
         if (data.updatedTime)
             delete (data.updatedTime);
-        
+
         headers = headers || {};
         headers.Accept = _config.accept;
 
@@ -1173,7 +1173,7 @@ function ResourceWrapper(_config) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
 
-        if(dontReturnObject !== undefined) {
+        if (dontReturnObject !== undefined) {
             headers["X-SanteDB-NoEcho"] = true;
         }
 
@@ -1208,8 +1208,8 @@ function ResourceWrapper(_config) {
         if (upstream !== undefined && upstream !== null) {
             headers["X-SanteDB-Upstream"] = upstream;
         }
-        
-        if(dontReturnObject !== undefined) {
+
+        if (dontReturnObject !== undefined) {
             headers["X-SanteDB-NoEcho"] = true;
         }
 
@@ -1871,7 +1871,7 @@ function SanteDBWrapper() {
      * @param {*} err 
      */
     var _globalErrorHandler = function (data, setting, err) {
-        if(data.readyState !== XMLHttpRequest.DONE) { // No prop of abort
+        if (data.readyState !== XMLHttpRequest.DONE) { // No prop of abort
             return true;
         }
         if (data.status == 401 && data.getResponseHeader("WWW-Authenticate")) {
@@ -1886,9 +1886,8 @@ function SanteDBWrapper() {
                 if (data.responseJSON &&
                     pve &&
                     data.getResponseHeader("WWW-Authenticate").indexOf("insufficient_scope") > -1) {
-                    var policies = [ pve, "*" ];
-                    if(pve.policyId?.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.1") == -1)
-                    {
+                    var policies = [pve, "*"];
+                    if (pve.policyId?.indexOf("1.3.6.1.4.1.33349.3.1.5.9.2.1") == -1) {
                         policies.push({ policyId: "1.3.6.1.4.1.33349.3.1.5.9.2.999", policyName: "Override Disclosure (BTG)" })
                     }
                     _elevator.elevate(angular.copy(_session), policies);
@@ -2086,18 +2085,17 @@ function SanteDBWrapper() {
                             if (targetProperty && (!targetProperty.classConcept || targetProperty.tag?.$resolveSubTemplate) && targetProperty.templateModel) {
                                 var object = await _resources.template.getAsync(`${targetProperty.templateModel.mnemonic}/skel`, viewModel || "full", parms);
 
-                                if(targetProperty.id) {
+                                if (targetProperty.id) {
                                     object.id = targetProperty.id; // We already have an ID for this object so we want to keep that 
                                 }
-                                
+
                                 // Initialize the template 
                                 if (object.tag) {
                                     Object.keys(object.tag).filter(o => o.indexOf("$copy") == 0).forEach(function (k) {
                                         var target = k.substring(6);
                                         var source = object.tag[k];
 
-                                        if(Array.isArray(source))
-                                        {
+                                        if (Array.isArray(source)) {
                                             source = source[0];
                                         }
                                         // Analyze
@@ -2106,8 +2104,8 @@ function SanteDBWrapper() {
 
                                         var targetObject = object;
                                         var targetParts = target.split('.');
-                                        for(var i = 0; i < targetParts.length - 1; i++) {
-                                            if(targetObject) {
+                                        for (var i = 0; i < targetParts.length - 1; i++) {
+                                            if (targetObject) {
                                                 targetObject = targetObject[targetParts[i]];
                                             }
                                         };
@@ -2121,7 +2119,7 @@ function SanteDBWrapper() {
                                     object.relationship = await getSubTemplates(object.relationship, parms);
                                 if (object.participation)
                                     object.participation = await getSubTemplates(object.participation, parms);
-                                
+
                                 if (rel.playerModel || rel.$type == "ActParticipation") {
                                     rel.playerModel = object;
                                     Object.keys(targetProperty).forEach(subKey => rel.playerModel[subKey] = rel.playerModel[subKey] || targetProperty[subKey]);
@@ -2872,7 +2870,7 @@ function SanteDBWrapper() {
          * @param {string} templateId The id of the template for which HTML input should be gathered
          * @description This method allows a plugin to resolve a template identifier (like: entity.tanzania.child) to an actual HTML input form
          */
-        this.resolveTemplateBackentry = function(templateId) {
+        this.resolveTemplateBackentry = function (templateId) {
             var entry = (_templateCache || []).find(o => o.mnemonic == templateId);
             if (entry) {
                 return entry.backEntry;
@@ -2963,7 +2961,7 @@ function SanteDBWrapper() {
             if (template.participation) {
                 template.participation = await getSubTemplates(template.participation, parms, viewModel);
             }
-            
+
             return template;
         }
         /**
@@ -3148,8 +3146,8 @@ function SanteDBWrapper() {
          * @summary Wrapper for entity extensions
          */
         this.entityExtension = new ResourceWrapper({
-            accept: "application/json", 
-            resource: "EntityExtension", 
+            accept: "application/json",
+            resource: "EntityExtension",
             api: _hdsi
         });
 
@@ -3171,7 +3169,7 @@ function SanteDBWrapper() {
         */
         this.dataTemplateDefinition = new ResourceWrapper({
             accept: "application/json",
-            resource: 'DataTemplateDefinition', 
+            resource: 'DataTemplateDefinition',
             api: _ami
         });
 
@@ -3186,7 +3184,7 @@ function SanteDBWrapper() {
             api: _hdsi
         });
 
-        
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
@@ -4181,6 +4179,27 @@ function SanteDBWrapper() {
         }
 
         /**
+         * @summary scanJoinRealmAsync
+         * @summary Show a barcode scanner and attempt to join the REALM using the information in the barcode
+         */
+        this.scanRealmConfiguration = async function () {
+            const realmDataRegex = /^([\w\d\.\-\_]+):(\d{1,5})\?tls=(True|False)$/i;
+            var scanData = await SanteDB.application.scanBarcodeAsync();
+
+            if (realmDataRegex.test(scanData)) {
+                scanData = realmDataRegex.exec(scanData);
+                return {
+                    address: scanData[1],
+                    port: scanData[2],
+                    tls: scanData[3] === 'True'
+                };
+            }
+            else {
+                throw new Exception("InvalidFormatException", "Scanned code does not contain valid configuration data");
+            }
+        }
+
+        /**
         * @method joinRealmAsync
         * @summary Instructs the current system to join a realm
         * @memberof SanteDBWrapper.ConfigurationApi
@@ -4412,7 +4431,7 @@ function SanteDBWrapper() {
          * @memberof SanteDBWrapper.AuthenticationApi
          */
         this.setElevator = function (elevator) {
-            if(elevator && _elevator && _elevator.getSession()) {
+            if (elevator && _elevator && _elevator.getSession()) {
                 console.warn("Ignoring setElevator since an authenticated elevated session already exists");
             }
             else {
@@ -4424,7 +4443,7 @@ function SanteDBWrapper() {
          * @summary Gets the current elevator if assigned
          * @returns {SanteDBElevator} The assigned elevation handler
          */
-        this.getElevator = function() {
+        this.getElevator = function () {
             return _elevator;
         }
         /**
@@ -4881,7 +4900,7 @@ function SanteDBWrapper() {
             });
         }
 
-        let resetSessionVariables = function(){
+        let resetSessionVariables = function () {
             _oauthSession = _session = null;
             window.sessionStorage.removeItem('token');
             window.sessionStorage.removeItem('refresh_token');
@@ -4898,9 +4917,8 @@ function SanteDBWrapper() {
         this.logoutAsync = function (id_token_hint) {
             return new Promise(function (fulfill, reject) {
                 try {
-                    
-                    if (!_session || _session === undefined)
-                    {
+
+                    if (!_session || _session === undefined) {
                         resetSessionVariables();
                         if (fulfill) fulfill();
                         return;
@@ -4921,7 +4939,7 @@ function SanteDBWrapper() {
                         }
                     })
                         .then(function (d) {
-                            if(!id_token_hint || id_token_hint == _session.jti) {
+                            if (!id_token_hint || id_token_hint == _session.jti) {
                                 resetSessionVariables();
                             }
                             if (fulfill) fulfill(d);
@@ -5183,7 +5201,7 @@ function SanteDBWrapper() {
     var _magic = null;
     var _xhrs = [];
 
-    this._sysAbortAllRequests = function() {
+    this._sysAbortAllRequests = function () {
         // Abort any loading requests against the HTTP instance
         const toAbort = _xhrs.filter(x => x.readyState._canAbort || [XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
         console.info(`Aborting ${toAbort.length} requests`);
@@ -5195,15 +5213,15 @@ function SanteDBWrapper() {
         const jQueryXhr = jQuery.ajaxSettings.xhr;
         $.ajaxSetup({
             cache: false,
-            xhr: function() {
+            xhr: function () {
                 var xhr = jQueryXhr();
-                xhr.onreadystatechange = function() {
-                    if(xhr.readyState === XMLHttpRequest.DONE) // Remove the XHR request
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) // Remove the XHR request
                     {
                         const idx = _xhrs.indexOf(xhr);
                         _xhrs.splice(idx, 1);
                     }
-                    else if(xhr.readyState == XMLHttpRequest.OPENED) // Timeout and set the XHR request to be cancelable
+                    else if (xhr.readyState == XMLHttpRequest.OPENED) // Timeout and set the XHR request to be cancelable
                     {
                         setTimeout(() => xhr._canAbort = true, 1000);
                     }
@@ -5229,7 +5247,7 @@ function SanteDBWrapper() {
                 xhr.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
                 xhr.setRequestHeader("X-SdbMagic", _magic);
 
-               
+
             },
             converters: {
                 "text json": function (data) {
