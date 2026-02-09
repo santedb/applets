@@ -429,6 +429,8 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
+       <string name="ui.config.realm.scanSettings">Scan Realm Settings</string>
+       <string name="ui.config.realm.scanSettings.confirm">Are you sure you want to attempt to the realm {address} (tls={tls},port={port}) as device name {device}?</string>
        <string name="ui.configuration.alreadyConfigured">This instance of SanteDB is already configured</string>
       <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
       <string name="ui.config.advancedMode.count">Tap this option {away} more times to enter advanced mode</string>
