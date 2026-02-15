@@ -1923,7 +1923,7 @@ function SanteDBWrapper() {
             if(key.endsWith("Model")) {
                 return undefined;
             }
-            else if(dateFields.includes(key) && value instanceof Date) {
+            else if(dateFields.includes(key) && (value instanceof Date || dateParse.test(value))) {
                 return moment(value).format("YYYY-MM-DD");
             }
             return value;
@@ -5282,7 +5282,9 @@ function SanteDBWrapper() {
                             var match = dateParse.exec(value);
                             if(match) {
                                 // This matching is important because it will ensure that 
-                                return match[4] ? new Date(value) : // Includes time - so full date parse
+                                var hasTime = parseInt(match[4] || 0) || parseInt(match[5] || 0) || parseInt(match[6] || 0) || parseInt(match[7] || 0);
+                                return hasTime || match[8] && (match[8] !== "+00:00" || match[8] !== 'Z')  ? new Date(value) : // Includes time - and isn't a logical date at midnight (i.e. it is a local time at midnight) 
+                                                                                                                    // for example: "actTime" : "2026-01-01T00:00:00.000000+00:00" indicates the day of 2026-01-01 simply serialization is the culprit of the "time" being added
                                     match[3] ? new Date(match[1], parseInt(match[2]) - 1, match[3]) : // Includes no time but a date to day
                                     match[2] ? new Date(match[1], parseInt(match[2]) - 1, 1) : // includes date to month
                                     new Date(match[1], 0, 1); // includes just a year
