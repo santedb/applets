@@ -135,7 +135,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'POST',
                 url: _config.base + configuration.resource,
-                data: configuration.data && configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.data && configuration.contentType.indexOf('json') != -1 ? SanteDB.serializeToJson(configuration.data) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -195,7 +195,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PUT',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? SanteDB.serializeToJson(configuration.data) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -315,7 +315,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'PATCH',
                 url: _config.base + configuration.resource + (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id),
-                data: configuration.contentType.indexOf('json') != -1 ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType.indexOf('json') != -1 ? SanteDB.serializeToJson(configuration.data) : configuration.data,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
                 headers: configuration.headers,
@@ -514,7 +514,7 @@ function APIWrapper(_config) {
             $.ajax({
                 method: 'DELETE',
                 url: _config.base + configuration.resource + (configuration.id ? (_config.idByQuery ? "?_id=" + configuration.id : "/" + configuration.id) : ""),
-                data: configuration.contentType == 'application/json' && configuration.data ? JSON.stringify(SanteDB._reorderProperties(configuration.data)) : configuration.data,
+                data: configuration.contentType == 'application/json' && configuration.data ? SanteDB.serializeToJson(configuration.data) : configuration.data,
                 headers: hdr,
                 dataType: configuration.dataType || 'json',
                 contentType: configuration.contentType || 'application/json',
@@ -1902,14 +1902,41 @@ function SanteDBWrapper() {
         return false;
     };
 
+    
+    /**
+     * Common serialization function which allows for the proper serialization of an object to JSON
+     * Rules:
+     *    1) $type must appear first 
+     *    2) Date fields should not carry timezones
+     */
+    const dateParse = /^(\d{4})(?:-(\d{2}))??(?:-(\d{2}))??(?:T(\d{2}):(\d{2})(?::(\d{2}))??(?:\.(\d+))??(([\+\-]{1}\d{2}:\d{2})|Z)??)??$/i;
+    const dateFields = [ "dateOfBirth", "deceasedDate", "expiryDate" ];
+    /**
+     * @private 
+     * @summary Serializes the object to JSON using the proper formatting for dates
+     * @param {any} object The object whos properties should be serialized
+     * @returns {string} The serialized object
+     */
+    function _serializeToJson(object) {
+        object = _reorderProperties(object); // Re-order the object properties so that $type appears as the first object
+        return JSON.stringify(object, (key, value) => {
+            if(key.endsWith("Model")) {
+                return undefined;
+            }
+            else if(dateFields.includes(key) && value instanceof Date) {
+                return moment(value).format("YYYY-MM-DD");
+            }
+            return value;
+        });
+    }
+
     /**
      * @private
      * @summary Re-orders the JSON object properties so that $type appears as the first property
      * @param {any} object The object whose properites should be reordered
      * @returns {any} The appropriately ordered object
      */
-    var _reorderProperties = function (object) {
-
+     function _reorderProperties(object) {
         // Object has $type and $type is not the first property
         if (object.$type) {
             var retVal = { $type: object.$type };
@@ -1929,7 +1956,7 @@ function SanteDBWrapper() {
         return object;
     };
 
-    this._reorderProperties = _reorderProperties;
+    this.serializeToJson = _serializeToJson;
     this._globalErrorHandler = _globalErrorHandler;
 
     // hdsi internal
@@ -5200,7 +5227,7 @@ function SanteDBWrapper() {
     // Application magic 
     var _magic = null;
     var _xhrs = [];
-
+    
     this._sysAbortAllRequests = function () {
         // Abort any loading requests against the HTTP instance
         const toAbort = _xhrs.filter(x => x.readyState._canAbort || [XMLHttpRequest.HEADERS_RECEIVED, XMLHttpRequest.LOADING].includes(x.readyState));
@@ -5208,6 +5235,7 @@ function SanteDBWrapper() {
         toAbort.forEach(x => x.abort());
     }
 
+    
     // Setup JQuery to send up authentication and cookies!
     if (jQuery) {
         const jQueryXhr = jQuery.ajaxSettings.xhr;
@@ -5246,12 +5274,27 @@ function SanteDBWrapper() {
                 }
                 xhr.setRequestHeader("X-SdbLanguage", SanteDB.locale.getLocale()); // Set the UI locale
                 xhr.setRequestHeader("X-SdbMagic", _magic);
-
-
             },
             converters: {
                 "text json": function (data) {
-                    return $.parseJSON(data, true);
+                    return JSON.parse(data, (key, value) => {
+                        if(dateParse.test(value)) { // MUST BE A DATE - IGNORE OTHERS
+                            var match = dateParse.exec(value);
+                            if(match) {
+                                // This matching is important because it will ensure that 
+                                return match[4] ? new Date(value) : // Includes time - so full date parse
+                                    match[3] ? new Date(match[1], parseInt(match[2]) - 1, match[3]) : // Includes no time but a date to day
+                                    match[2] ? new Date(match[1], parseInt(match[2]) - 1, 1) : // includes date to month
+                                    new Date(match[1], 0, 1); // includes just a year
+                            }
+                            else {
+                                return  new Date(value);
+                            }
+                        }
+                        else {
+                            return value;
+                        }
+                    }); //return $.parseJSON(data, true);
                 }
             }
         });
