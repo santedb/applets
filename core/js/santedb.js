@@ -1910,7 +1910,7 @@ function SanteDBWrapper() {
      *    2) Date fields should not carry timezones
      */
     const dateParse = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2}))??(?:\.(\d+))??(([\+\-]{1}\d{2}:\d{2})|Z)??)??$/i;
-    const dateFields = [ "dateOfBirth", "deceasedDate", "expiryDate" ];
+    const dateFields = [ "dateOfBirth", "deceasedDate", "expiryDate", "expires", "issued" ];
     /**
      * @private 
      * @summary Serializes the object to JSON using the proper formatting for dates
