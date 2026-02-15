@@ -1909,7 +1909,7 @@ function SanteDBWrapper() {
      *    1) $type must appear first 
      *    2) Date fields should not carry timezones
      */
-    const dateParse = /^(\d{4})(?:-(\d{2}))??(?:-(\d{2}))??(?:T(\d{2}):(\d{2})(?::(\d{2}))??(?:\.(\d+))??(([\+\-]{1}\d{2}:\d{2})|Z)??)??$/i;
+    const dateParse = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2}))??(?:\.(\d+))??(([\+\-]{1}\d{2}:\d{2})|Z)??)??$/i;
     const dateFields = [ "dateOfBirth", "deceasedDate", "expiryDate" ];
     /**
      * @private 
@@ -5278,7 +5278,7 @@ function SanteDBWrapper() {
             converters: {
                 "text json": function (data) {
                     return JSON.parse(data, (key, value) => {
-                        if(dateParse.test(value)) { // MUST BE A DATE - IGNORE OTHERS
+                        if(dateParse.test(value) && typeof value === 'string') { // MUST BE A DATE - IGNORE OTHERS
                             var match = dateParse.exec(value);
                             if(match) {
                                 // This matching is important because it will ensure that 
