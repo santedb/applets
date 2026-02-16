@@ -1920,10 +1920,7 @@ function SanteDBWrapper() {
     function _serializeToJson(object) {
         object = _reorderProperties(object); // Re-order the object properties so that $type appears as the first object
         return JSON.stringify(object, (key, value) => {
-            if(key.endsWith("Model")) {
-                return undefined;
-            }
-            else if(dateFields.includes(key) && (value instanceof Date || dateParse.test(value))) {
+            if(dateFields.includes(key) && (value instanceof Date || dateParse.test(value))) {
                 return moment(value).format("YYYY-MM-DD");
             }
             return value;
