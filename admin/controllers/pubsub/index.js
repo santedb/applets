@@ -32,6 +32,20 @@ angular.module('santedb').controller('PubSubIndexController', ["$scope", "$rootS
         }
     }
 
+    $scope.reprocess = async function(id, index) {
+
+        var data = $("#pubSubManager table").DataTable().row(index).data();
+        if(confirm(SanteDB.locale.getString("ui.admin.pubsub.reprocess.confirm", { name: data.name }))) {
+            try {
+                await SanteDB.resources.jobInfo.invokeOperationAsync("5A389F18-0170-4D73-A37A-EE99B2EB201E", "start", [data.name]);
+                toastr.success(SanteDB.locale.getString("ui.admin.job.runJob.success"));
+            }
+            catch(e) {
+                $rootScope.errorHandler(e);
+            }
+        }
+
+    }
     // Disable the subscription
     $scope.disableSubscription = async function (id) {
 

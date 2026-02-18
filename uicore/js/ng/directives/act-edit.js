@@ -72,7 +72,7 @@ angular.module('santedb-lib')
                         _templateData = await SanteDB.application.getTemplateDefinitionsAsync();
                         _canBackenter = _templateData.filter(o => o.backEntry);
 
-                        $("#addActionDropdown").on("shown.bs.dropdown", function() {
+                        $("#addActionDropdown").on("shown.bs.dropdown", function () {
                             $("#txtActEditSearch").scrollTop();
                             $("#txtActEditSearch").focus();
                         })
@@ -102,9 +102,9 @@ angular.module('santedb-lib')
 
                 $scope.getTemplateInfo = (templateId) => _templateData?.find(o => o.mnemonic == templateId || o.uuid == templateId);
                 $scope.canBackEnter = (templateId) => _canBackenter?.find(o => o.mnemonic == templateId || o.uuid == templateId) !== undefined;
-                
+
                 $scope.getEncounter = () => $scope.model;
-                
+
                 $scope.nullifyItem = async function (entry, index) {
                     if (confirm(SanteDB.locale.getString("ui.action.nullify.confirm"))) {
                         try {
@@ -119,9 +119,9 @@ angular.module('santedb-lib')
                             entryCopy.participation.Verifier.push(new ActParticipation({
                                 player: await SanteDB.authentication.getCurrentUserEntityId()
                             }));
-                            
 
-                            if(entryCopy.tag && entryCopy.tag['emr.processed']) {
+
+                            if (entryCopy.tag && entryCopy.tag['emr.processed']) {
                                 entryCopy.tag['emr.processed'] = ["false"];
                             }
                             // Update the data
@@ -153,6 +153,10 @@ angular.module('santedb-lib')
                     }
                 }
 
+                function lookupPolicy(key) {
+                    return $scope.availablePolicies.find(o => o.id == key)?.oid;    
+                }
+                
                 function createAmendmentAct(/** @type {Act} */ existingAct) {
                     var entryCopy = angular.copy(existingAct);
                     delete entryCopy.version;
@@ -270,6 +274,49 @@ angular.module('santedb-lib')
                     }
                 }
 
+                $scope.setPolicy = function (act, policy) {
+
+                    if (confirm(policy ? SanteDB.locale.getString("ui.action.seal.confirm") : SanteDB.locale.getString("ui.action.unseal.confirm"))) {
+                        const existingElevator = SanteDB.authentication.getElevator();
+                        // change policies logic
+                        async function changePolicies() {
+                            
+                            try {
+                                if (policy) {
+                                    await SanteDB.resources.act.invokeOperationAsync(act.id, "alter-policy", {
+                                        cascadePolicies: true,
+                                        add: [policy.oid],
+                                        remove: []
+                                    }, null, null, null, "application/json");
+                                }
+                                else {
+                                    await SanteDB.resources.act.invokeOperationAsync(act.id, "alter-policy", {
+                                        cascadePolicies: true,
+                                        add: [],
+                                        remove: act.policy.map(o => o.policyModel || lookupPolicy(o.policy))
+                                    }, null, null, null, "application/json");
+                                }
+
+                                SanteDB.authentication.setElevator(null);
+                                SanteDB.authentication.setElevator(existingElevator);
+
+                                $state.reload();
+                            }
+                            catch (e) {
+                                $rootScope.errorHandler(e);
+                            }
+                        }
+
+                        // Setup the policy elevator
+                        var elevator = new SanteDBElevator(changePolicies, true);
+                        elevator.setCloseCallback(() => SanteDB.authentication.setElevator(existingElevator));
+                        SanteDB.authentication.setElevator(null);
+                        SanteDB.authentication.setElevator(elevator);
+                        changePolicies();
+                    }
+
+                }
+
                 $scope.loadReasonConcept = async function (entry) {
                     if (entry && entry._reasonConcept != entry.reasonConcept) {
                         entry._reasonConcept = entry.reasonConcept;
@@ -367,7 +414,7 @@ angular.module('santedb-lib')
                         var thisUser = await SanteDB.resources.userEntity.getAsync(userEntityId, "dropdown");
                         $timeout(() => {
                             itm.operation = itm.targetModel.operation = BatchOperationType.InsertOrUpdate;
-                            if(itm.targetModel.tag && itm.targetModel.tag['emr.processed']) {
+                            if (itm.targetModel.tag && itm.targetModel.tag['emr.processed']) {
                                 itm.targetModel.tag['emr.processed'] = ["false"];
                             }
 
@@ -634,6 +681,11 @@ angular.module('santedb-lib')
                     );
                 }
 
+                SanteDB.resources.securityPolicy.findAsync({ isPublic: true }).then(result => {
+                    $timeout(() => {
+                        scope.availablePolicies = result.resource;
+                    })
+                }).catch(err => console.error(err));
                 // Monitor for form touches - needs to be done after initialization
                 if (!scope.model.$templateUrl) {
                     setTimeout(() => {

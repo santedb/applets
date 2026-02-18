@@ -257,6 +257,10 @@
       <string name="ui.action.open">Open</string>
       <string name="ui.action.upload">Upload</string>
       <string name="ui.action.backup">Backup Now</string>
+      <string name="ui.action.seal">Privacy</string>
+      <string name="ui.action.unseal">Unseal</string>
+      <string name="ui.action.seal.confirm">Are you sure you want to apply the privacy policy to this record? This record may be hidden from other users</string>
+      <string name="ui.action.unseal.confirm">Are you sure you want to remove the privacy policies from this record? This record may be viewed by clinicians without patient consent provided after this action.</string>
       <string name="ui.action.restore">Restore</string>
       <string name="ui.action.customize.view">Customize View</string>
       <string name="ui.action.nullify.confirm">Nullifying an object will indicate that the data was entered in error, this cannot be undone! Are you sure you want to mark this object as nullified?</string>
