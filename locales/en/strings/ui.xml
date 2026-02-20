@@ -371,6 +371,7 @@
       <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <string name="ui.table.search.field.name.component.value||securityUser.userName">Search by name or username</string>
       <string name="ui.table.search.field.name.value||referenceTerm.term.mnemonic">Search by name or reference code</string>
+      <string name="ui.table.search.field.name.component.value||identifier.value">Search by name or ID</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>

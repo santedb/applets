@@ -29,7 +29,11 @@
 
     <div ng-controller="PlaceFacilityWidgetController" ng-if="scopedObject">
         <entity-table id="facilityAssociationTable" type="Place" search-field="name.component.value" stateless="true"
-            default-query="{ 'obsoletionTime' : 'null', _viewModel: 'fastView', 'relationship[CommunityServiceDeliveryLocation].target' : scopedObject.id }"
+            default-query="{ 
+                'obsoletionTime' : 'null', 
+                _viewModel: 'fastView', 
+                'relationship[CommunityServiceDeliveryLocation].target' : scopedObject.id
+            }"
             render="{ name: 'renderName', classConcept: 'renderClass', typeConcept: 'renderType', statusConcept: 'renderStatus' }"
             i18n-prefix="'ui.model.entity.'" item-actions="[ 
                 { name: 'view', sref: 'santedb-admin.data.place.view', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.4', className: 'btn-info', icon: 'fa fa-eye' }, 
@@ -39,7 +43,19 @@
         <div id="addPlaceHeader" class="input-group ">
             <entity-search type="'Place'" class="form-control" style="width:60%"
                 group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']"
-                ng-model="newPlaceId" search-field="'name.component.value'"
+                ng-model="newPlaceId" search-field="'name.component.value||identifier.value'"
+                filter="{
+                'statusConcept' : [
+                    'C8064CBD-FA06-4530-B430-1A52F1530C27',
+                    'C34FCBF1-E0FE-4989-90FD-0DC49E1B9685'
+                ],
+                'classConcept' : [
+                    '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6',
+                    '6eefee7d-dff5-46d3-a6a7-171ef93879c7',
+                    'acafe0f2-e209-43bb-8633-3665fd7c90ba',
+                    '4d1a5c28-deb7-411e-b75f-d524f90dfa63'
+                ]
+                }"
                 for-relationship-type="'4AA573A0-D967-493A-BEA0-8BAD060E4264'"
                 with-relationship-target-class="'ff34dfa7-c6d3-4f8b-bc9f-14bcdc13ba6c'"></entity-search>
             <div class="input-group-appen">
