@@ -144,13 +144,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
             var result = await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
             $timeout(() => {
-                $scope.editObject.securityUserModel.twoFactorMechanism = result.entity.twoFactorMechanism;
                 $scope.editObject.securityUserModel.twoFactorEnabled = result.entity.twoFactorEnabled;
-
-                $scope.editObject.securityUserModel.phoneNumberConfirmed = result.entity.phoneNumberConfirmed;
+                $scope.editObject.securityUserModel.twoFactorMechanism = result.entity.twoFactorMechanism;
                 $scope.editObject.securityUserModel.emailConfirmed = result.entity.emailConfirmed;
-            })
-            toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));            
+                $scope.editObject.securityUserModel.phoneNumberConfirmed = result.entity.phoneNumberConfirmed;
+            });
+            toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
 
             $("#setupTfaModal").modal('hide');
         }
