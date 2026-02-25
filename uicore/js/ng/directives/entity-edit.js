@@ -416,6 +416,9 @@ angular.module('santedb-lib')
                                     break;
                             }
                         }
+                        else if(scope.model[k][0].value){
+                            scope.model[k][0].editValue = scope.model[k][0].value.replace(/(tel:|mailto:)/i, '');
+                        }
                     });
                 })
             }

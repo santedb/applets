@@ -46,7 +46,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                 $scope.scopedObject = await SanteDB.resources.userEntity.insertAsync(submissionObject);
             }
 
-            var refetch =  await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
+            var refetch = await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
             $timeout(() => {
                 $scope.scopedObject = refetch;
             })
@@ -62,7 +62,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 }]).controller("UserSecurityWidgetController", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
     $scope.$watch("editObject.id", async function (n, o) {
-        console.info(n);
         if (n && n != o && !o) {
             if ($scope.editObject.language) {
                 $scope.editObject.preferredLanguage = $scope.editObject.language.find(o => o.isPreferred);
@@ -136,20 +135,26 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
         }
     });
 
-
     $scope.completeTfaSetup = async function (tfaForm) {
         if (tfaForm.$invalid) return;
 
         try {
-            var userSubmission = {
-                $type: "SecurityUserInfo",
-                entity: $scope.editObject.securityUserModel
-            };
-
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
             await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
             toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
-            var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
+
+            // JF - Moved to API  
+            // if ($scope.tfaSetup.id?.toUpperCase() === 'D919457D-E015-435C-BD35-42E425E2C60C') {
+            //     $scope.editObject.securityUserModel.emailConfirmed = true;
+            // } else if ($scope.tfaSetup.id?.toUpperCase() === '08124835-6C24-43C9-8650-9D605F6B5BD6' || $scope.tfaSetup.id?.toUpperCase() === 'B94607B4-97A1-48A5-83B0-2F5C348299DC') {
+            //     $scope.editObject.securityUserModel.phoneNumberConfirmed = true;
+            // }
+            // var userSubmission = {
+            //     $type: "SecurityUserInfo",
+            //     entity: $scope.editObject.securityUserModel
+            // };
+
+            // var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
             $("#setupTfaModal").modal('hide');
         }
         catch (e) {
@@ -163,7 +168,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
      * Update security user
      */
     $scope.updateSecurity = async function (userForm) {
-
         if (userForm.$invalid) return;
         else if ($scope.editObject.isUpstreamUser &&
             ($rootScope.session.authType != 'OAUTH' || !SanteDB.application.getOnlineState())) {
@@ -211,7 +215,11 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             }
 
             result = await SanteDB.resources.securityUser.getAsync(result.entity.id);
-            $scope.scopedObject.securityUserModel = result.entity;
+            $timeout(() => {
+                $scope.scopedObject.securityUserModel = result.entity;
+                $scope.scopedObject.securityUserModel.role = result.role;
+                SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'securityUser'], $scope.scopedObject);
+            });
             toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
         }
         catch (e) {
@@ -265,10 +273,10 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             else {
                 var settings = await await SanteDB.configuration.getUserSettingsAsync();
                 $timeout(() => {
-                    var widgetPref = (settings.find(o=>o.key == "widgets") || {}).value;
+                    var widgetPref = (settings.find(o => o.key == "widgets") || {}).value;
                     n._preferences.widgets = widgetPref ? JSON.parse(widgetPref) : {};
-                    n._preferences.help = (settings.find(o=>o.key == "help") || {}).value;
-                    n._preferences.uimode = (settings.find(o=>o.key == "uimode") || {}).value;
+                    n._preferences.help = (settings.find(o => o.key == "help") || {}).value;
+                    n._preferences.uimode = (settings.find(o => o.key == "uimode") || {}).value;
                 });
             }
         }
