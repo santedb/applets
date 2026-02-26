@@ -218,6 +218,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             $timeout(() => {
                 $scope.scopedObject.securityUserModel = result.entity;
                 $scope.scopedObject.securityUserModel.role = result.role;
+                $scope.scopedObject.isUpstreamUser = $rootScope.session.authType == 'OAUTH' || !$scope.scopedObject._localOnly;
                 SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'securityUser'], $scope.scopedObject);
             });
             toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
