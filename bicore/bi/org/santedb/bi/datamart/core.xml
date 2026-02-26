@@ -255,6 +255,7 @@
       <column type="string" name="PRIMARY_LANGUAGE" />
       <column type="string" name="OCCUPATION" />
       <column type="string" name="VIP" />
+      <column type="string" name="MARITAL_STS" />
       <column type="string" name="NATIONALITY" />
       <parent ref="ENT_TBL" />
     </table>
@@ -293,7 +294,6 @@
       <column type="string" name="RELIGION" />
       <column type="string" name="ETHNICITY" />
       <column type="string" name="EDUCATION" />
-      <column type="string" name="MARITAL_STS" />
       <column type="ref" name="MOTHER">
         <otherTable ref="PSN_TBL" />
       </column>
@@ -301,6 +301,9 @@
         <otherTable ref="PSN_TBL" />
       </column>
       <column type="ref" name="GUARDIAN">
+        <otherTable ref="PSN_TBL" />
+      </column>
+      <column type="ref" name="SPOUSE">
         <otherTable ref="PSN_TBL" />
       </column>
       <column type="ref" name="REGISTRATION_FACILITY">
