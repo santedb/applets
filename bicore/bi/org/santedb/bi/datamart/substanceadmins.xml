@@ -1,0 +1,119 @@
+<?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.substance">
+    <parameters>
+        <ref name="input" />
+        <ref name="output" />
+    </parameters>
+    <pipeline>
+        <log name="log_start" priority="Verbose">Start mapping substance administrations</log>
+        <reader name="source_administrations">
+            <connection ref="input" />
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>npgsql</invariant>
+                        <invariant>FirebirdSQL</invariant>
+                    </providers>
+                <![CDATA[ 
+                    SELECT DISTINCT
+                        ste_cd_id AS site,
+                        rte_cd_id AS route,
+                        dos_qty AS dose,
+                        dos_unt_cd_id AS dose_unit,
+                        seq_id AS seq,
+                        prod.ent_id AS product,
+                        av.act_id
+                    FROM 
+                        sub_adm_tbl 
+                        INNER JOIN act_vrsn_tbl AV USING (act_vrsn_id)
+                        LEFT JOIN act_ptcpt_tbl PROD ON (prod.act_id = av.act_id AND prod.rol_cd_id = '99e77288-cb09-4050-a8cf-385513f32f0a' AND prod.obslt_vrsn_seq_id IS NULL)
+                    WHERE 
+                        av.cls_cd_id = '932a3c7e-ad77-450a-8a1f-030fc2855450'
+                        AND av.head
+                ]]>
+                </add>
+            </sql>
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>sqlite</invariant>
+                    </providers>
+                <![CDATA[ 
+                SELECT DISTINCT
+                    ste_cd_id AS site,
+                    rte_cd_id AS route,
+                    dos_qty AS dose,
+                    dos_unt_cd_id AS dose_unit,
+                    seq_id AS seq,
+                    prod.ent_id AS product,
+                    av.act_id
+                FROM 
+                    sub_adm_tbl 
+                    INNER JOIN act_vrsn_tbl AV USING (act_vrsn_id)
+                    LEFT JOIN act_ptcpt_tbl PROD ON (prod.act_id = av.act_id AND prod.rol_cd_id = x'8872E79909CB5040A8CF385513F32F0A' AND prod.obslt_vrsn_seq_id IS NULL)
+                WHERE 
+                    av.cls_cd_id = x'7E3C2A9377AD0A458A1F030FC2855450'
+                    AND av.head
+                ]]>
+                </add>
+            </sql>
+        </reader>
+        <transform name="map_administrations">
+            <input ref="source_administrations" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="ACT_ID" />
+            </map>
+            <map>
+                <source name="SITE">
+                    <concept />
+                </source>
+                <target name="SITE" />
+            </map>
+            <map>
+                <source name="ROUTE">
+                    <concept />
+                </source>
+                <target name="ROUTE" />
+            </map>
+            <map>
+                <source name="DOSE_UNIT">
+                    <concept />
+                </source>
+                <target name="DOSE_UNIT" />
+            </map>
+            <map>
+                <source name="DOSE" />
+                <target name="DOSE" />
+            </map>
+            <map>
+                <source name="SEQ" />
+                <target name="SEQUENCE" />
+            </map>
+            <map>
+                <source name="PRODUCT"/>
+                <target name="PRODUCT"/>
+            </map>
+            <map>
+                <source name="ACT_ID" />
+                <target name="ACT_ID" />
+            </map>
+        </transform>
+        <writer truncate="true" mode="insert" name="write_administrations">
+            <input ref="map_administrations" />
+            <connection ref="output" />
+            <target ref="SUB_ADM_TBL" />
+        </writer>
+        <filter name="filter_rejects">
+            <input ref="write_administrations" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <halt name="halt_rejects">
+            <input ref="filter_rejects" />
+        </halt>
+    </pipeline>
+</BiDataFlowDefinition>

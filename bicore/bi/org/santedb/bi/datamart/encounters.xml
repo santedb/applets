@@ -1,0 +1,103 @@
+<?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.encounters">
+    <parameters>
+        <ref name="input" />
+        <ref name="output" />
+    </parameters>
+    <pipeline>
+        <log name="log_start" priority="Verbose">Start mapping encounters</log>
+        <reader name="source_encounters">
+            <connection ref="input" />
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>npgsql</invariant>
+                        <invariant>FirebirdSQL</invariant>
+                    </providers>
+                <![CDATA[ 
+                SELECT 
+                    AV.act_id, 
+                    dsch_dsp_cd_id AS disposition,
+                    adm_src_cd_id  AS adm_source, 
+                    admitter.ent_id AS admitter,
+                    discharger.ent_id AS discharger
+                FROM
+                    pat_enc_tbl
+                    INNER JOIN act_vrsn_tbl AV USING (act_vrsn_id)
+                    LEFT JOIN act_ptcpt_tbl ADMITTER ON (admitter.act_id = AV.act_id AND admitter.obslt_vrsn_seq_id IS NULL AND admitter.rol_cd_id = 'a0174216-6439-4351-9483-a241a48029b7')
+                    LEFT JOIN act_ptcpt_tbl DISCHARGER ON (discharger.act_id = AV.act_id AND discharger.obslt_vrsn_seq_id IS NULL AND discharger.rol_cd_id = 'a2594e6e-e8fe-4c68-82a5-d3a46dbec87d')
+                WHERE 
+                    AV.cls_cd_id = '54b52119-1709-4098-8911-5df6d6c84140'
+                    AND AV.head	
+                ]]>
+                </add>
+            </sql>
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>sqlite</invariant>
+                    </providers>
+                <![CDATA[ 
+                SELECT 
+                    AV.act_id, 
+                    dsch_dsp_cd_id AS disposition,
+                    adm_src_cd_id  AS adm_source, 
+                    admitter.ent_id AS admitter,
+                    discharger.ent_id AS discharger
+                FROM
+                    pat_enc_tbl
+                    INNER JOIN act_vrsn_tbl AV USING (act_vrsn_id)
+                    LEFT JOIN act_ptcpt_tbl ADMITTER ON (admitter.act_id = AV.act_id AND admitter.obslt_vrsn_seq_id IS NULL AND admitter.rol_cd_id = x'164217A0396451439483A241A48029B7')
+                    LEFT JOIN act_ptcpt_tbl DISCHARGER ON (discharger.act_id = AV.act_id AND discharger.obslt_vrsn_seq_id IS NULL AND discharger.rol_cd_id = x'6E4E59A2FEE8684C82A5D3A46DBEC87D')
+                WHERE 
+                    AV.cls_cd_id = x'1921B5540917984089115DF6D6C84140'
+                    AND AV.head	
+                ]]>
+                </add>
+            </sql>
+        </reader>
+        <transform name="map_encounters">
+            <input ref="source_encounters" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="ACT_ID" />
+            </map>
+            <map>
+                <source name="DISPOSITION">
+                    <concept />
+                </source>
+                <target name="DISPOSITION" />
+            </map>
+            <map>
+                <source name="ADM_SOURCE">
+                    <concept />
+                </source>
+                <target name="ADM_SOURCE" />
+            </map>
+            <map>
+                <source name="ADMITTER" />
+                <target name="ADMITTER" />
+            </map>
+            <map>
+                <source name="DISCHARGER" />
+                <target name="DISCHARGER" />
+            </map>
+        </transform>
+        <writer truncate="true" mode="insert" name="write_encounters">
+            <input ref="map_encounters" />
+            <connection ref="output" />
+            <target ref="PAT_ENC_TBL" />
+        </writer>
+        <filter name="filter_rejects">
+            <input ref="write_encounters" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <halt name="halt_rejects">
+            <input ref="filter_rejects" />
+        </halt>
+    </pipeline>
+</BiDataFlowDefinition>
