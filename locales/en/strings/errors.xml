@@ -34,6 +34,8 @@
       <string name="ui.error.policy">You don't have access to this function. Contact your administrator</string>
       <string name="ui.error.maxValue">Entered value exceeds maximum value {max}</string>
       <string name="ui.error.minValue">Entered value is below minimum value {min}</string>
+      <string name="ui.error.minLength">Value is less than required minimum length of {length} characters</string>
+      <string name="ui.error.maxLength">Value exceeds the maximum length of {length} characters</string>
       <string name="ui.error.duplicateDestination">Duplicate destination detected</string>
       <string name="error.http.403">Access Denied</string>
       <string name="error.http.403.text">Your request has been denied and audited. In order to access this resource, you must first either elevate your current session, obtain appropriate authorization, or temporarily authenticate as someone else. You can attempt to elevate your session by selecting the override option below</string>
@@ -358,4 +360,8 @@
       <string name="error.signing.cert.duplicate">Signing certificate is already assigned to another device</string>
       <string name="error.session.facility.required">Please select the facility in which you are working for this session</string>
       <string name="error.data.notFound">{type} with ID {id} was not found</string>
+
+      <!-- Generic Observation -->
+      <string name="error.template.notFound.warning">There is no appropriate template for this type of data available, this indicates a potential software or configuration issue. Please contact SanteSuite support and indicate the missing template ID {templateId}</string>
+
 </resources>

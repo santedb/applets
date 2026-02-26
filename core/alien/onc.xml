@@ -66,6 +66,11 @@
           </map>
           <map required="false" whenTargetMissing="Warning">
             <source>GENDER</source>
+            <transform transformer="Expression">
+              <args>
+                <string>"M".Equals(input) ? "Male" : "F".Equals(input) ? "Female" : "Unknown"</string>
+              </args>
+            </transform>
             <transform transformer="EntityLookup">
               <args>
                 <string>Concept</string>

@@ -142,6 +142,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 // Get configuration
                 console.info("Initializing Root View");
                 try {
+                    $("#pageTransitioner").show();
+
                     await __SanteDBAppService.GetStatus();
 
                     _setLocaleData();
@@ -202,6 +204,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         $rootScope.system.config.facility = SanteDB.configuration.getAssignedFacilityId();
                         $rootScope.system.config.owner = SanteDB.configuration.getOwnerId();
 
+                        $("#pageTransitioner").hide();
+
                         $rootScope.system.uniqueDomains = uqDomains;
                         $rootScope.system.conceptRelationshipTypes = conceptRelationshipTypes.resource;
                         // Make app settings easier to handle
@@ -214,6 +218,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                         if ((!realmName || configuration && !configuration._isConfigured) && $state.$current.name != 'santedb-config.initial') {
                             $state.go('santedb-config.initial');
                         }
+
                     });
                 }
                 catch (e) {
@@ -495,7 +500,8 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             $rootScope.page = {
                 currentTime: new Date(),
                 maxEventTime: new Date().tomorrow().trunc().addSeconds(-1),
-                minEventTime: new Date().yesterday()
+                minEventTime: new Date().yesterday(),
+                today: moment(new Date()).format('YYYY-MM-DD')
             };
 
             $interval(ivlFn, 15000);
@@ -515,3 +521,10 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
             // Cascade an object across all scopes
 
         }]);
+
+
+// WARN ANY POOR NURSES OR USERS THAT THEY SHOULDN'T BE MESSING WITH THE DEVELOPER CONSOLE
+console.log("%c!!! WARNING !!!%c\n" + 
+    "Using this console may allow attackers to impersonate you and steal information including Personal Health Information, security information and other data using an attack called Self-XSS. Do not enter or paste code that you do not understand.", 
+    'color: red; font-style: bold; font-size: 2em; background: white; width:100%', 
+    'color:black; font-style: normal; font-size:1em; background: white; width:100%');

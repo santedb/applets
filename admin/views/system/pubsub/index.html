@@ -38,6 +38,7 @@
         actions="[ { name: 'create', action: 'createSubscription', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.14.1', className: 'btn-primary', icon: 'fa fa-plus-circle' } ]"
         item-actions="[ 
             { name: 'edit', sref: 'santedb-admin.system.pubsub.edit', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.14.4', className: 'btn-primary', icon: 'fa fa-pencil-alt' }, 
+            { name: 'resubmit', action: 'reprocess', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.22.1', className: 'btn-info', icon: 'fa-solid fa-arrow-down-up-across-line', when: 'r.active &amp;&amp; !r.obsoletionTime' },
             { name: 'disable', action: 'disableSubscription', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.14.2', className: 'btn-warning', icon: 'fa fa-arrow-down', when : 'r.active &amp;&amp; !r.obsoletionTime' }, 
             { name: 'enable', action: 'enableSubscription', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.14.2', className: 'btn-success', icon: 'fa fa-arrow-up', when : '!r.active &amp;&amp; !r.obsoletionTime' }, 
             { name: 'delete', action: 'deleteSubscription', demand: '1.3.6.1.4.1.33349.3.1.5.9.2.0.14.3', className: 'btn-danger', icon: 'fa fa-trash', when : '!r.obsoletionTime' },

@@ -93,7 +93,6 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
         }
         catch (e) {
             toastr.warning(SanteDB.locale.getString("ui.admin.mailError"));
-            console.error(e);
         }
     };
 

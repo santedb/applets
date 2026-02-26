@@ -180,25 +180,35 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
                         copyMaterialInstance(prod.targetModel, material, prod.statusConcept || StatusKeys.Active, true, true);
                         prod.target = prod.targetModel.id = prod.targetModel.id || SanteDB.application.newGuid();
                         submissionBundle.resource.push(new ManufacturedMaterial(prod.targetModel));
-                        delete prod.targetModel;
-
+                        submissionBundle.resource.push(new EntityRelationship({
+                            relationshipType: EntityRelationshipTypeKeys.Instance,
+                            source: prod.source || material.id,
+                            target: prod.target
+                        }));
                     }
                 });
             }
-            if (material.version) {
-                material.operation = BatchOperationType.Update;
-            }
 
             // Remove the manufacturer assocation
-            if(material.relationship && material.relationship.ManufacturedProduct) {
+            if (material.relationship && material.relationship.ManufacturedProduct) {
                 submissionBundle.resource.push(new EntityRelationship({
                     id: material.relationship.ManufacturedProduct[0].id,
                     source: material.relationship.ManufacturedProduct[0].holder,
                     relationshipType: EntityRelationshipTypeKeys.ManufacturedProduct,
                     target: material.id
                 }));
-                delete(material.relationship.ManufacturedProduct);
             }
+
+            if (material.version) {
+                material.operation = BatchOperationType.Update;
+                delete material.relationship;
+            }
+            else {
+                delete material.relationship.Instance;
+                delete material.relationship.ManufacturedProduct;
+            }
+
+            // Any lots we need to 
 
             await SanteDB.resources.bundle.insertAsync(submissionBundle);
             $("#MaterialProductTable").attr("newQueryId", true);
@@ -222,20 +232,20 @@ angular.module("santedb").controller("MaterialWidgetController", ["$scope", "$ro
             product.identifier = product.identifier || {};
             product.identifier.GTIN = product.identifier.GTIN || [{ value: "" }];
             var manufacturer = await SanteDB.resources.entityRelationship.findAsync({ "target": id, "relationshipType": EntityRelationshipTypeKeys.ManufacturedProduct, _count: 1, _includeTotal: 'false' }, "fastview");
-            if(manufacturer.resource) {
+            if (manufacturer.resource) {
                 product.relationship.ManufacturedProduct = [manufacturer.resource[0]];
             }
             else {
                 product.relationship.ManufacturedProduct = [];
             }
-            
+
             // Remove the instances from this view
             delete product.relationship?.Instance;
 
             $timeout(() => {
                 $scope.editProduct = product;
 
-                if(!product.relationship.Instance) {
+                if (!product.relationship.Instance) {
                     product.relationship.Instance = [];
                 }
                 $("#editProductModal").modal("show");

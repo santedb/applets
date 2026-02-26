@@ -15,6 +15,22 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<div class="alert alert-primary m-0 p-1" xmlns="http://www.w3.org/1999/xhtml">
-    <i class="fas fa-info-circle"></i> {{ 'ui.error.notFound' | i18n }} {{ act.templateModel.mnemonic }}
-</div>
+<span xmlns="http://www.w3.org/1999/xhtml">
+    <span class="mr-2">{{ act.typeConceptModel | concept }} <span class="text-muted">({{act.$type}})</span></span>
+    <strong class="ml-2" ng-switch="act.$type">
+        <span ng-switch-when="QuantityObservation">{{ act.value }} {{ act.quantityConceptModel | concept: 'xx' }}</span>
+        <span ng-switch-when="DateObservation">{{ act.value | humanDate: act.valuePrecision }}</span>
+        <span ng-switch-when="TextObservation">{{ act.value }}</span>
+        <span ng-switch-when="CodedObservation">{{ act.valueModel | concept }}</span>
+        <span ng-switch-when="SubstanceAdministration">
+            {{ act.participation.Product[0].playerModel.name | name: 'Assigned' }} # {{ act.doseSequence }} - {{ act.routeModel | concept }} / {{ act.siteModel | concept }} / {{ act.doseQuantity }} {{ act.doseUnitModel | concept }}
+        </span>
+        <span ng-switch-when="Procedure">
+            {{ act.participation.methodModel | concept }} / {{ act.participation.targetSiteModel | concept }} / {{ act.participation.approachSiteModel | concept }}
+        </span>
+    </strong>
+    <div class="alert alert-info p-1 m-1">
+        <i class="fas fa-fw fa-info-circle"></i>
+        {{ 'error.template.notFound.warning' | i18n: { templateId: act.templateModel.mnemonic } }}
+    </div>
+</span>

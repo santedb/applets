@@ -17,19 +17,10 @@
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
     <sdb:widget name="org.santedb.widget.admin.tab.facility.profile" type="Tab" context="org.santedb.facility.admin"
-        order="0">
+        order="-10">
         <sdb:icon>fas fa-building</sdb:icon>
         <sdb:description lang="en">Profile</sdb:description>
         <sdb:demand>1.3.6.1.4.1.33349.3.1.5.9.2.4</sdb:demand>
     </sdb:widget>
-    <div class="container-fluid border border-top-0 pb-2">
-        <div class="form-group mb-2">
-            <label for="id" class="form-label">{{ 'ui.model.facility.id' | i18n }}</label>
-            <div class="input-group">
-                <input readonly="readonly" ng-model="scopedObject.place.id" name="id" id="id" class="form-control" />
-                <input-copy-button button-class="'btn-outline-secondary'" source="scopedObject.place.id" />
-            </div>
-        </div>
-        <widget-panels context-name="'org.santedb.facility.admin.profile'" scoped-object="scopedObject"></widget-panels>
-    </div>
+    <widget-panels context-name="'org.santedb.facility.admin.profile'" scoped-object="scopedObject" can-customize="true"></widget-panels>
 </div>

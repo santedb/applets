@@ -16,9 +16,7 @@
  - the License.
  -->
 <div xmlns="http://www.w3.org/1999/xhtml" class="mb-1 scroll-sticky object-header" style="top: 0 !important;">
-
-
-    <div class="card">
+    <div class="card mb-0">
         <div class="card-body" ng-if="!patient">
             <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
         </div>
@@ -133,7 +131,7 @@
 
                         <!-- Address -->
                         <div class="p-2" ng-if="patient.address">
-                            <i class="fas fa-home"></i> {{ patient.address | address }}
+                            <i class="fas fa-home"></i> {{ (patient.address.HomeAddress || patient.address.TemporaryAddress) | address }}
                         </div>
                     </div>
                 </div>

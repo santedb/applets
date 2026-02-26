@@ -29,6 +29,7 @@
       <string name="ui.false">No</string>
       <string name="ui.barcode">Barcode Label</string>
 
+      
       <!-- Elevated Session Alert -->
        <string name="ui.authentication.elevatedSession">Elevated Session Enabled - Access to Restricted Information is Granted</string>
        <string name="ui.authentication.elevatedSession.end">End Elevated Access</string>
@@ -38,6 +39,7 @@
        <string name="ui.alert.prompt">Please Provide Input</string>
       <!-- Common Phrases -->
       <string name="ui.common.charsRemain">characters remain</string>
+      <string name="ui.common.charsNeeded">more characters required</string>
       <string name="ui.common.version">Version</string>
       <string name="ui.common.rows">Rows</string>
       <string name="ui.common.size">Size</string>
@@ -255,6 +257,10 @@
       <string name="ui.action.open">Open</string>
       <string name="ui.action.upload">Upload</string>
       <string name="ui.action.backup">Backup Now</string>
+      <string name="ui.action.seal">Privacy</string>
+      <string name="ui.action.unseal">Unseal</string>
+      <string name="ui.action.seal.confirm">Are you sure you want to apply the privacy policy to this record? This record may be hidden from other users</string>
+      <string name="ui.action.unseal.confirm">Are you sure you want to remove the privacy policies from this record? This record may be viewed by clinicians without patient consent provided after this action.</string>
       <string name="ui.action.restore">Restore</string>
       <string name="ui.action.customize.view">Customize View</string>
       <string name="ui.action.nullify.confirm">Nullifying an object will indicate that the data was entered in error, this cannot be undone! Are you sure you want to mark this object as nullified?</string>
@@ -365,6 +371,7 @@
       <string name="ui.table.search.field.source@UserEntity.securityUser.userName">Search by username</string>
       <string name="ui.table.search.field.name.component.value||securityUser.userName">Search by name or username</string>
       <string name="ui.table.search.field.name.value||referenceTerm.term.mnemonic">Search by name or reference code</string>
+      <string name="ui.table.search.field.name.component.value||identifier.value">Search by name or ID</string>
       <!-- Common --> 
       <string name="ui.common.interop.hl7v2">HL7v2</string>
       <string name="ui.common.interop.hl7v3">HL7v3/CDA</string>
@@ -427,6 +434,8 @@
       <string name="ui.subscription.act.PatientEncounter.me">Only patient encounters performed at my facility</string>
 
       <!-- Configuration Translations -->
+       <string name="ui.config.realm.scanSettings">Scan Realm Settings</string>
+       <string name="ui.config.realm.scanSettings.confirm">Are you sure you want to attempt to join the realm {address} (tls={tls},port={port}) as device name {device}?</string>
        <string name="ui.configuration.alreadyConfigured">This instance of SanteDB is already configured</string>
       <string name="ui.config.advancedMode.active">The configuration tooling has been placed into advanced mode. Additional options are now available</string>
       <string name="ui.config.advancedMode.count">Tap this option {away} more times to enter advanced mode</string>

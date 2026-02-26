@@ -170,7 +170,7 @@ angular.module("santedb").controller("MaterialViewEditController", ["$scope", "$
 
     // Save the material definition to the server
     $scope.saveMaterial = async function (form, materialToSave) {
-        if (form.$invalid || form.$pristine) {
+        if (form.$invalid) {
             return;
         }
 

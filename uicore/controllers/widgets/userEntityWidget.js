@@ -46,7 +46,7 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                 $scope.scopedObject = await SanteDB.resources.userEntity.insertAsync(submissionObject);
             }
 
-            var refetch =  await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
+            var refetch = await SanteDB.resources.userEntity.getAsync($scope.scopedObject.id, "full"); // re-fetch the entity
             $timeout(() => {
                 $scope.scopedObject = refetch;
             })
@@ -62,7 +62,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
 }]).controller("UserSecurityWidgetController", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 
     $scope.$watch("editObject.id", async function (n, o) {
-        console.info(n);
         if (n && n != o && !o) {
             if ($scope.editObject.language) {
                 $scope.editObject.preferredLanguage = $scope.editObject.language.find(o => o.isPreferred);
@@ -111,6 +110,8 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             var mechanism = $scope.tfaMechanisms.find(o => o.id == n);
             if (mechanism.setup) {
                 try {
+                    $scope.editObject.isUpstreamUser = $rootScope.session.authType == 'OAUTH' || !$scope.scopedObject._localOnly;
+                    
                     $("#setupTfaModal").modal({ backdrop: "static" });
                     var instructionDoc = await SanteDB.authentication.setupTfaSecretAsync(n, null, $scope.editObject.isUpstreamUser);
                     switch (instructionDoc.mime) {
@@ -136,20 +137,20 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
         }
     });
 
-
     $scope.completeTfaSetup = async function (tfaForm) {
         if (tfaForm.$invalid) return;
 
-        try {
-            var userSubmission = {
-                $type: "SecurityUserInfo",
-                entity: $scope.editObject.securityUserModel
-            };
-
+        try {            
             SanteDB.display.buttonWait("#btnCompleteTfaSetup", true);
-            await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
+            var result = await SanteDB.authentication.setupTfaSecretAsync($scope.tfaSetup.id, $scope.tfaSetup.code, $scope.editObject.isUpstreamUser);
+            $timeout(() => {
+                $scope.editObject.securityUserModel.twoFactorEnabled = result.entity.twoFactorEnabled;
+                $scope.editObject.securityUserModel.twoFactorMechanism = result.entity.twoFactorMechanism;
+                $scope.editObject.securityUserModel.emailConfirmed = result.entity.emailConfirmed;
+                $scope.editObject.securityUserModel.phoneNumberConfirmed = result.entity.phoneNumberConfirmed;
+            });
             toastr.success(SanteDB.locale.getString("ui.tfa.setup.success"));
-            var result = await SanteDB.resources.securityUser.updateAsync(userSubmission.entity.id, userSubmission);
+
             $("#setupTfaModal").modal('hide');
         }
         catch (e) {
@@ -163,7 +164,6 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
      * Update security user
      */
     $scope.updateSecurity = async function (userForm) {
-
         if (userForm.$invalid) return;
         else if ($scope.editObject.isUpstreamUser &&
             ($rootScope.session.authType != 'OAUTH' || !SanteDB.application.getOnlineState())) {
@@ -211,7 +211,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             }
 
             result = await SanteDB.resources.securityUser.getAsync(result.entity.id);
-            $scope.scopedObject.securityUserModel = result.entity;
+            $timeout(() => {
+                $scope.scopedObject.securityUserModel = result.entity;
+                $scope.scopedObject.securityUserModel.role = result.role;
+                $scope.scopedObject.isUpstreamUser = $rootScope.session.authType == 'OAUTH' || !$scope.scopedObject._localOnly;
+                SanteDB.display.cascadeScopeObject(SanteDB.display.getRootScope($scope), ['scopedObject', 'securityUser'], $scope.scopedObject);
+            });
             toastr.success(SanteDB.locale.getString("ui.admin.users.saveConfirm"));
         }
         catch (e) {
@@ -265,10 +270,10 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             else {
                 var settings = await await SanteDB.configuration.getUserSettingsAsync();
                 $timeout(() => {
-                    var widgetPref = (settings.find(o=>o.key == "widgets") || {}).value;
+                    var widgetPref = (settings.find(o => o.key == "widgets") || {}).value;
                     n._preferences.widgets = widgetPref ? JSON.parse(widgetPref) : {};
-                    n._preferences.help = (settings.find(o=>o.key == "help") || {}).value;
-                    n._preferences.uimode = (settings.find(o=>o.key == "uimode") || {}).value;
+                    n._preferences.help = (settings.find(o => o.key == "help") || {}).value;
+                    n._preferences.uimode = (settings.find(o => o.key == "uimode") || {}).value;
                 });
             }
         }
