@@ -113,6 +113,7 @@
       <column type="ref" name="OBSOLETE_BY">
         <otherTable ref="SEC_OBJ_TBL" />
       </column>
+      <column type="bool" name="MSK" />
     </table>
 
     <!-- Entity Identifiers Table storing ID value and issuer -->
@@ -134,7 +135,6 @@
       <column type="ref" index="true" name="ENT_ID">
         <otherTable ref="ENT_TBL"/>
       </column>
-      <column type="string" name="USE_TYPE" />
       <column type="string" name="ADDR_TYPE" />
       <column type="string" name="ADDR_STREET" />
       <column type="string" name="ADDR_PRECINCT" />
@@ -363,6 +363,7 @@
       <column type="ref" name="PERFORMER">
         <otherTable ref="ENT_TBL" />
       </column>
+      <column type="bool" name="MSK" />
     </table>
 
     <!-- Act External Identifier table with issuer and identifier value -->

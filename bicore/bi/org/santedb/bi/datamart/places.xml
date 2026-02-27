@@ -36,7 +36,7 @@
               ENT_VRSN_TBl.VRSN_SEQ_ID,
               ENT_TEL_TBL.TEL_VAL AS TEL,
               PARENT.TRG_ENT_ID AS PARENT,
-              RPT.TRG_ENT_ID AS REPORT_TARGET,
+              COALESCE(RPT.TRG_ENT_ID, PARENT.TRG_ENT_ID) AS REPORT_TARGET,
               MOB_IND AS IS_MOBILE,
               OWNER.SRC_ENT_ID AS OWNER
             FROM
@@ -61,7 +61,7 @@
               ENT_VRSN_TBl.VRSN_SEQ_ID,
               ENT_TEL_TBL.TEL_VAL AS TEL,
               PARENT.TRG_ENT_ID AS PARENT,
-              RPT.TRG_ENT_ID AS REPORT_TARGET,
+              COALESCE(RPT.TRG_ENT_ID, PARENT.TRG_ENT_ID) AS REPORT_TARGET,
               MOB_IND AS IS_MOBILE,
               OWNER.SRC_ENT_ID AS OWNER
             FROM

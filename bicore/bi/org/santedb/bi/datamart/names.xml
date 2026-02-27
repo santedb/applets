@@ -33,20 +33,20 @@
             <invariant>sqlite</invariant>
           </providers>
           <![CDATA[
-                        SELECT 
+                        SELECT DISTINCT
                             NAME_ID,
-                            ENT_ID, 
+                            ENT_NAME_TBL.ENT_ID, 
                             NT.MNEMONIC AS USE_TYPE,
                             COALESCE(PT.MNEMONIC, 'Other') AS PART_TYPE,
-                            VAL
+                            CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE VAL END AS VAL
                         FROM 
                             ENT_NAME_CMP_TBL
                             INNER JOIN ENT_NAME_TBL USING (NAME_ID)
                             LEFT JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_NAME_CMP_TBL.TYP_CD_ID) 
                             INNER JOIN CD_VRSN_TBL NT ON (NT.CD_ID = ENT_NAME_TBL.USE_CD_ID) 
+                            LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ENT_NAME_TBL.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
                         WHERE
                           ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL
-                          AND ENT_NAME_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
                         ORDER BY NAME_ID, ENT_ID
                         
                         ]]>

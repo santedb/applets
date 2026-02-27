@@ -30,14 +30,12 @@
         <add>
           <providers>
             <invariant>npgsql</invariant>
-            <invariant>FirebirdSQL</invariant>
-            <invariant>sqlite</invariant>
           </providers>
           <![CDATA[ 
                         SELECT 
                             ENT_ID_TBL.ENT_ID_ID AS ID_ID,
                             ENT_ID_TBL.ENT_ID,
-                            ID_VAL AS VALUE,
+                            CASE WHEN POL.POL_ID IS NOT NULL THEN REPEAT('*', LENGTH(ID_VAL) * 3/4) || SUBSTR(ID_VAL, LENGTH(ID_VAL) * 3/4) ELSE ID_VAL END AS VALUE,
                             ID_DMN_TBL.NSID AS ISSUER,
                             CHK_DGT AS CHECK_DIGIT,
                             ISS_DT AS ISSUED,
@@ -45,11 +43,32 @@
                         FROM
                             ENT_ID_TBL
                             INNER JOIN ID_DMN_TBL USING (DMN_ID)
+                            LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ENT_ID_TBL.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
                         WHERE
                             ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
                             AND ID_DMN_TBL.OBSLT_UTC IS NULL
-                            AND ENT_ID_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
-
+                        ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+                        SELECT 
+                            ENT_ID_TBL.ENT_ID_ID AS ID_ID,
+                            ENT_ID_TBL.ENT_ID,
+                            CASE WHEN POL.POL_ID IS NOT NULL THEN REPLICATE('*', LENGTH(ID_VAL) * 3/4) || SUBSTR(ID_VAL, LENGTH(ID_VAL) * 3/4) ELSE ID_VAL END AS VALUE,
+                            ID_DMN_TBL.NSID AS ISSUER,
+                            CHK_DGT AS CHECK_DIGIT,
+                            ISS_DT AS ISSUED,
+                            EXP_DT AS EXPIRY
+                        FROM
+                            ENT_ID_TBL
+                            INNER JOIN ID_DMN_TBL USING (DMN_ID)
+                            LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ENT_ID_TBL.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
+                        WHERE
+                            ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                            AND ID_DMN_TBL.OBSLT_UTC IS NULL
                         ]]>
         </add>
       </sql>

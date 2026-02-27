@@ -31,30 +31,29 @@
             <invariant>sqlite</invariant>
           </providers>
           <![CDATA[
-          SELECT DISTINCT
-	          ent_vrsn_tbl.ent_id,
-	          home.TEL_VAL AS tel_home,
-	          cell.TEL_VAL AS tel_cell,
-	          wrk.TEL_VAL AS tel_work,
-	          psn_tbl.DOB,
-	          psn_tbl.DCSD_UTC,
-	          gndr_cd_id AS gender,
-	          plt.LNG_CS AS primary_language,
-	          occ_cd_id AS occupation,
-	          vip_cd_id AS vip,
-	          nat_cd_id AS nationality,
-            mrtl_sts_cd_id AS MARITAL_STS
-          FROM 
-	          psn_tbl 
-	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
-	          LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = x'D8AFFAC490FC30438B4BE4E64C86B87B')
-	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D'))
-	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = x'8EF0A6EA8EBB57449DC03A1555FADF5C')
-	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND = 1)
-          WHERE 
-            ENT_VRSN_TBL.HEAD = TRUE AND
-            ENT_VRSN_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
-          
+            SELECT DISTINCT
+              ent_vrsn_tbl.ent_id,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE home.TEL_VAL END AS tel_home,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE cell.TEL_VAL END AS tel_cell,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE wrk.TEL_VAL END AS tel_work,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN unixepoch(strftime('%Y-%m-15', datetime(dob, 'unixepoch'))) ELSE psn_tbl.DOB END AS dob,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN unixepoch(strftime('%Y-%m-15', datetime(dob, 'unixepoch'))) ELSE psn_tbl.DCSD_UTC END AS DCSD_UTC,
+              (gndr_cd_id) AS gender,
+              (plt.LNG_CS) AS primary_language,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN x'12BF169B3E07A44EB6C5E1B93E8FD490' ELSE occ_cd_id END AS occupation,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN x'12BF169B3E07A44EB6C5E1B93E8FD490' ELSE vip_sts_cd_id END AS vip,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN x'12BF169B3E07A44EB6C5E1B93E8FD490' ELSE nat_cd_id END AS nationality,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN x'12BF169B3E07A44EB6C5E1B93E8FD490' ELSE mrtl_sts_cd_id END AS MARITAL_STS
+            FROM 
+              psn_tbl 
+              INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
+              LEFT JOIN ent_tel_tbl home ON (home.ent_id = ENT_VRSN_tbl.ENT_ID AND home.OBSLT_VRSN_SEQ_ID IS NULL AND home.USE_CD_ID = x'C02F13F3DDAAB740B875961C40695389')
+              LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D'))
+              LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = x'8EF0A6EA8EBB57449DC03A1555FADF5C')
+              LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
+              LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ent_vrsn_tbl.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
+            WHERE 
+              ENT_VRSN_TBL.HEAD = TRUE
 	           ]]>
         </add>
         <add>
@@ -64,17 +63,17 @@
           <![CDATA[
           SELECT DISTINCT
               ent_vrsn_tbl.ent_id,
-              (home.TEL_VAL) AS tel_home,
-              (cell.TEL_VAL) AS tel_cell,
-              (wrk.TEL_VAL) AS tel_work,
-              (psn_tbl.DOB) AS dob,
-              (psn_tbl.DCSD_UTC) AS DCSD_UTC,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE home.TEL_VAL END AS tel_home,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE cell.TEL_VAL END AS tel_cell,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN 'XXXX' ELSE wrk.TEL_VAL END AS tel_work,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN DATE_TRUNC('month', psn_tbl.dob) + '14 DAY'::INTERVAL ELSE psn_tbl.DOB END AS dob,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN DATE_TRUNC('month', psn_tbl.DCSD_UTC) + '14 DAY'::INTERVAL ELSE psn_tbl.DCSD_UTC END AS DCSD_UTC,
               (gndr_cd_id) AS gender,
               (plt.LNG_CS) AS primary_language,
-              (occ_cd_id) AS occupation,
-              (vip_sts_cd_id) AS vip,
-              (nat_cd_id) AS nationality,
-              (mrtl_sts_cd_id) AS MARITAL_STS
+              CASE WHEN POL.POL_ID IS NOT NULL THEN '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490' ELSE occ_cd_id END AS occupation,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490' ELSE vip_sts_cd_id END AS vip,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490' ELSE nat_cd_id END AS nationality,
+              CASE WHEN POL.POL_ID IS NOT NULL THEN '9b16bf12-073e-4ea4-b6c5-e1b93e8fd490' ELSE mrtl_sts_cd_id END AS MARITAL_STS
             FROM 
               psn_tbl 
               INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
@@ -82,10 +81,9 @@
               LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D'))
               LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
               LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
+              LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ent_vrsn_tbl.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
             WHERE 
-              ENT_VRSN_TBL.HEAD = TRUE AND
-              ENT_VRSN_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
-
+              ENT_VRSN_TBL.HEAD = TRUE
           ]]>
         </add>
       </sql>

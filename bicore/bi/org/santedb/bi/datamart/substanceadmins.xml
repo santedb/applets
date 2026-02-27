@@ -30,8 +30,6 @@
                     WHERE 
                         av.cls_cd_id = '932a3c7e-ad77-450a-8a1f-030fc2855450'
                         AND av.head
-                        AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
-
                 ]]>
                 </add>
             </sql>
@@ -56,8 +54,6 @@
                 WHERE 
                     av.cls_cd_id = x'7E3C2A9377AD0A458A1F030FC2855450'
                     AND av.head
-                    AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
-
                 ]]>
                 </add>
             </sql>
