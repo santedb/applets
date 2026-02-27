@@ -29,6 +29,8 @@
                 WHERE 
                     AV.cls_cd_id = '54b52119-1709-4098-8911-5df6d6c84140'
                     AND AV.head	
+                    AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL) -- WE WANT TO EXCLUDE PRIVATE VISITS FROM THE WAREHOUSE SINCE THEY CAN DISCLOSE A PARTICULAR CONDITION
+
                 ]]>
                 </add>
             </sql>
@@ -51,7 +53,9 @@
                     LEFT JOIN act_ptcpt_tbl DISCHARGER ON (discharger.act_id = AV.act_id AND discharger.obslt_vrsn_seq_id IS NULL AND discharger.rol_cd_id = x'6E4E59A2FEE8684C82A5D3A46DBEC87D')
                 WHERE 
                     AV.cls_cd_id = x'1921B5540917984089115DF6D6C84140'
-                    AND AV.head	
+                    AND AV.head	= TRUE
+                    AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
                 ]]>
                 </add>
             </sql>
@@ -88,6 +92,8 @@
             <connection ref="output" />
             <target ref="PAT_ENC_TBL" />
         </writer>
+        
+        
         <filter name="filter_rejects">
             <input ref="write_encounters" />
             <all>
@@ -96,8 +102,39 @@
                 </when>
             </all>
         </filter>
-        <halt name="halt_rejects">
+        <transform name="transform_rejects">
             <input ref="filter_rejects" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="RECORD_ID" />
+            </map>
+            <map>
+                <source>
+                    <fixed>PAT_ENC_TBL</fixed>
+                </source>
+                <target name="RECORD_TYP" />
+            </map>
+            <map>
+                <source name="$reject.reason" />
+                <target name="REASON" />
+            </map>
+        </transform>
+        <writer mode="insertUpdate" truncate="false" name="write_rejects">
+            <input ref="transform_rejects" />
+            <connection ref="output" />
+            <target ref="REJECT_TBL" />
+        </writer>
+        <filter name="filter_rejects2">
+            <input ref="write_rejects" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <halt name="halt_rejects">
+            <input ref="filter_rejects2" />
         </halt>
+
     </pipeline>
 </BiDataFlowDefinition>

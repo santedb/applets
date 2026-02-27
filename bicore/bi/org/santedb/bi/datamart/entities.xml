@@ -33,7 +33,7 @@
             <invariant>sqlite</invariant>
           </providers>
           <![CDATA[ 
-            SELECT 
+            SELECT DISTINCT
                 ENT_VRSN_TBL.ENT_ID,
                 ENT_VRSN_TBL.ENT_VRSN_ID AS VERSION,
                 CLS_CD_ID AS CLASS,
@@ -46,13 +46,15 @@
                 STS_CD_ID AS STATUS,
                 COALESCE(CRT_PROV_TBL.USR_ID, CRT_PROV_TBL.DEV_ID)  AS CREATED_BY,
                 ENT_VRSN_TBL.OBSLT_UTC AS OBSOLETE_TIME,
-                COALESCE(OBS_PROV_TBL.USR_ID, OBS_PROV_TBL.DEV_ID)  AS OBSOLETE_BY
+                COALESCE(OBS_PROV_TBL.USR_ID, OBS_PROV_TBL.DEV_ID)  AS OBSOLETE_BY,
+                POL.POL_ID IS NOT NULL AS MSK
             FROM
                 ENT_VRSN_TBL
                 INNER JOIN SEC_PROV_TBL CRT_PROV_TBL ON (ENT_VRSN_TBL.CRT_PROV_ID = CRT_PROV_TBL.PROV_ID)
                 LEFT JOIN SEC_PROV_TBL OBS_PROV_TBL ON (ENT_VRSN_TBL.OBSLT_PROV_ID = OBS_PROV_TBL.PROV_ID)
                 LEFT JOIN GEO_TBL ON (GEO_TBL.GEO_ID = ENT_VRSN_TBL.GEO_ID)
                 LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ENT_VRSN_TBL.TPL_ID)
+                LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ENT_VRSN_TBL.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
             WHERE
                 ENT_VRSN_TBL.HEAD = TRUE
                         ]]>
@@ -120,6 +122,10 @@
       <map>
         <source name="OBSOLETE_BY" />
         <target name="OBSOLETE_BY" />
+      </map>
+      <map>
+        <source name="MSK"/>
+        <target name="MSK"/>
       </map>
     </transform>
     <writer truncate="true" mode="insert" name="write_entities">

@@ -1,0 +1,192 @@
+<?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<BiDataFlowDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core.observation">
+    <parameters>
+        <ref name="input" />
+        <ref name="output" />
+    </parameters>
+    <pipeline>
+        <log name="log_start" priority="Verbose">Start mapping observations {{input}}</log>
+        <reader name="source_observations">
+            <connection ref="input" />
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>npgsql</invariant>
+                    </providers>
+                <![CDATA[ 
+                    SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        NULL AS value_str, 
+                        QTY AS value_qty,
+                        UOM_CD_ID AS unit_of_measure,
+                        act_id
+                    FROM 
+                        qty_obs_tbl 
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE                        
+                    UNION ALL 
+                    SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        mnemonic AS value_str, 
+                        NULL::NUMERIC AS value_qty,
+                        NULL::UUID AS unit_of_measure,
+                        act_id
+                    FROM 
+                        cd_obs_tbl
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN CD_VRSN_TBL C ON (C.CD_ID = CD_OBS_TBL.val_cd_id AND C.HEAD = TRUE)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE                        
+                    UNION ALL
+                    SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        CASE WHEN VAL_PREC IN ('Y','M','D') THEN 
+                            CAST(VAL_DT::DATE AS VARCHAR) 
+                        ELSE 
+                            CAST(VAL_DT AS VARCHAR) 
+                        END AS value_str, 
+                        NULL::NUMERIC AS value_qty,
+                        NULL::UUID AS unit_of_measure,
+                        act_id
+                    FROM 
+                        dt_obs_tbl
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE                                                
+                ]]>
+                </add>
+            </sql>
+            <sql>
+                <add>
+                    <providers>
+                        <invariant>sqlite</invariant>
+                    </providers>
+                <![CDATA[ 
+                SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        NULL AS value_str, 
+                        QTY AS value_qty,
+                        UOM_CD_ID AS unit_of_measure,
+                        act_id
+                    FROM 
+                        qty_obs_tbl 
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE
+                    UNION ALL 
+                    SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        mnemonic AS value_str, 
+                        NULL AS value_qty,
+                        NULL AS unit_of_measure,
+                        act_id
+                    FROM 
+                        cd_obs_tbl
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN CD_VRSN_TBL C ON (C.CD_ID = CD_OBS_TBL.val_cd_id AND C.HEAD = TRUE)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE
+                	UNION ALL
+                    SELECT DISTINCT
+                        int_cd_id AS interpretation, 
+                        CASE WHEN VAL_PREC IN ('Y','M','D') THEN 
+                            STRFTIME('%Y-%m-%d', DATETIME(VAL_DT, 'unixepoch'))  
+                        ELSE 
+							DATETIME(VAL_DT, 'unixepoch')
+                        END AS value_str, 
+                        NULL AS value_qty,
+                        NULL AS unit_of_measure,
+                        act_id
+                    FROM 
+                        dt_obs_tbl
+                        INNER JOIN obs_tbl USING (ACT_VRSN_ID)
+                        INNER JOIN act_vrsn_tbl USING (ACT_VRSN_ID)
+                    WHERE 
+                    	act_vrsn_tbl.HEAD = TRUE                        
+                ]]>
+                </add>
+            </sql>
+        </reader>
+        <transform name="map_observations">
+            <input ref="source_observations" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="ACT_ID" />
+            </map>
+            <map>
+                <source name="interpretation">
+                    <concept />
+                </source>
+                <target name="interpretation" />
+            </map>
+            <map>
+                <source name="value_str" />
+                <target name="value_str" />
+            </map>
+            <map>
+                <source name="value_qty" />
+                <target name="value_qty" />
+            </map>
+            <map>
+                <source name="unit_of_measure">
+                    <concept />
+                </source>
+                <target name="unit_of_measure" />
+            </map>
+        </transform>
+        <writer truncate="true" mode="insert" name="write_observations">
+            <input ref="map_observations" />
+            <connection ref="output" />
+            <target ref="OBS_TBL" />
+        </writer>
+
+        <filter name="filter_rejects">
+            <input ref="write_observations" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <transform name="transform_rejects">
+            <input ref="filter_rejects" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="RECORD_ID" />
+            </map>
+            <map>
+                <source>
+                    <fixed>OBS_TBL</fixed>
+                </source>
+                <target name="RECORD_TYP" />
+            </map>
+            <map>
+                <source name="$reject.reason" />
+                <target name="REASON" />
+            </map>
+        </transform>
+        <writer mode="insertUpdate" truncate="false" name="write_rejects">
+            <input ref="transform_rejects" />
+            <connection ref="output" />
+            <target ref="REJECT_TBL" />
+        </writer>
+        <filter name="filter_rejects2">
+            <input ref="write_rejects" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <halt name="halt_rejects">
+            <input ref="filter_rejects2" />
+        </halt>
+
+    </pipeline>
+</BiDataFlowDefinition>

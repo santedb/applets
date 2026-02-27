@@ -36,17 +36,22 @@
             <invariant>sqlite</invariant>
           </providers>
           <![CDATA[
-                        SELECT 
+                        SELECT DISTINCT
                             ADDR_ID,
-                            ENT_ID, 
+                            ENT_ADDR_TBL.ENT_ID, 
                             ADT.MNEMONIC AS USE_TYPE,
                             PT.MNEMONIC AS PART_TYPE,
-                            VAL
+                            CASE WHEN POL.POL_ID IS NOT NULL AND PT.MNEMONIC NOT IN ('Country','City','State','County', 'PlaceRef') THEN 
+                              'XXXX' 
+                            ELSE 
+                              VAL 
+                            END AS VAL -- MASK ANYTHING OTHER THAN STATE, COUNTY, CITY
                         FROM 
                             ENT_ADDR_CMP_TBL
                             INNER JOIN ENT_ADDR_TBL USING (ADDR_ID)
                             INNER JOIN CD_VRSN_TBL PT ON (PT.CD_ID = ENT_ADDR_CMP_TBL.TYP_CD_ID) 
                             INNER JOIN CD_VRSN_TBL ADT ON (ADT.CD_ID = ENT_ADDR_TBL.USE_CD_ID) 
+                            LEFT JOIN ENT_POL_ASSOC_TBL POL ON (POL.ENT_ID = ENT_ADDR_TBL.ENT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
                         WHERE
                           ENT_ADDR_TBL.OBSLT_VRSN_SEQ_ID IS NULL
                         ORDER BY ADDR_ID, ENT_ID
@@ -60,9 +65,10 @@
         <columns>
           <add>Country</add>
           <add>State</add>
-          <add>AddressLine</add>
-          <add>Precinct</add>
+          <add>County</add>
           <add>City</add>
+          <add>Precinct</add>
+          <add>StreetAddressLine</add>
           <add>PostalCode</add>
           <add>CensusTract</add>
           <add>PlaceRef</add>
@@ -81,7 +87,7 @@
       </map>
       <map>
         <source name="USE_TYPE" />
-        <target name="USE_TYPE" />
+        <target name="ADDR_TYPE" />
       </map>
       <map>
         <source name="Country" />
@@ -96,8 +102,8 @@
         <target name="ADDR_COUNTY" />
       </map>
       <map>
-        <source name="AddressLine" />
-        <target name="ADDR_STATE" />
+        <source name="StreetAddressLine" />
+        <target name="ADDR_STREET" />
       </map>
       <map>
         <source name="Precinct" />

@@ -104,6 +104,7 @@
             <connection ref="output" />
             <target ref="SUB_ADM_TBL" />
         </writer>
+        
         <filter name="filter_rejects">
             <input ref="write_administrations" />
             <all>
@@ -112,8 +113,39 @@
                 </when>
             </all>
         </filter>
-        <halt name="halt_rejects">
+        <transform name="transform_rejects">
             <input ref="filter_rejects" />
+            <map>
+                <source name="ACT_ID" />
+                <target name="RECORD_ID" />
+            </map>
+            <map>
+                <source>
+                    <fixed>SUB_ADM_TBL</fixed>
+                </source>
+                <target name="RECORD_TYP" />
+            </map>
+            <map>
+                <source name="$reject.reason" />
+                <target name="REASON" />
+            </map>
+        </transform>
+        <writer mode="insertUpdate" truncate="false" name="write_rejects">
+            <input ref="transform_rejects" />
+            <connection ref="output" />
+            <target ref="REJECT_TBL" />
+        </writer>
+        <filter name="filter_rejects2">
+            <input ref="write_rejects" />
+            <all>
+                <when field="$reject" op="eq">
+                    <bool>true</bool>
+                </when>
+            </all>
+        </filter>
+        <halt name="halt_rejects">
+            <input ref="filter_rejects2" />
         </halt>
+
     </pipeline>
 </BiDataFlowDefinition>
