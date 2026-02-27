@@ -45,7 +45,7 @@
             WHERE 
 	            OBSLT_UTC IS NULL
               AND ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
-
+              AND TAG_NAME NOT IN ('isBackEntry', 'emr.processed')
             ]]>
         </add>
       </sql>

@@ -53,7 +53,8 @@
                 AUT.ENT_ID AS AUTHOR,
                 PRF.ENT_ID AS PERFORMER,
 				        RCT.ENT_ID AS RECORD_TARGET,
-				        POL.POL_ID IS NOT NULL AS MSK
+				        POL.POL_ID IS NOT NULL AS MSK,
+                TG.TAG_ID IS NOT NULL AS BACK_ENTRY
             FROM
                 ACT_VRSN_TBL
                 INNER JOIN CD_VRSN_TBL CLS ON (ACT_VRSN_TBL.CLS_CD_ID = CLS.CD_ID AND CLS.HEAD)
@@ -69,6 +70,7 @@
                 LEFT JOIN GEO_TBL ON (GEO_TBL.GEO_ID = ACT_VRSN_TBL.GEO_ID)
                 LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ACT_VRSN_TBL.TPL_ID)
                 LEFT JOIN ACT_POL_ASSOC_TBL POL ON (POL.ACT_ID = ACT_VRSN_TBL.ACT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
+                LEFT JOIN ACT_TAG_TBL TG ON (TG.ACT_ID = ACT_VRSN_TBL.ACT_ID AND TG.TAG_NAME = 'isBackEntry' AND TG.TAG_VALUE IN ('true','True'))
             WHERE
                 ACT_VRSN_TBL.HEAD = TRUE
                         ]]>
@@ -100,7 +102,8 @@
                 AUT.ENT_ID AS AUTHOR,
 				        RCT.ENT_ID AS RECORD_TARGET,
 				        PRF.ENT_ID AS PERFORMER,
-				        CASE WHEN POL.POL_ID IS NOT NULL THEN 1 ELSE 0 END AS MSK
+				        POL.POL_ID IS NOT NULL AS MSK,
+                TG.TAG_ID IS NOT NULL AS BACK_ENTRY
             FROM
                 ACT_VRSN_TBL
                 INNER JOIN CD_VRSN_TBL CLS ON (ACT_VRSN_TBL.CLS_CD_ID = CLS.CD_ID AND CLS.HEAD = TRUE)
@@ -116,6 +119,7 @@
                 LEFT JOIN GEO_TBL ON (GEO_TBL.GEO_ID = ACT_VRSN_TBL.GEO_ID)
                 LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ACT_VRSN_TBL.TPL_ID)
                 LEFT JOIN ACT_POL_ASSOC_TBL POL ON (POL.ACT_ID = ACT_VRSN_TBL.ACT_ID AND POL.OBSLT_VRSN_SEQ_ID IS NULL) 
+                LEFT JOIN ACT_TAG_TBL TG ON (TG.ACT_ID = ACT_VRSN_TBL.ACT_ID AND TG.TAG_NAME = 'isBackEntry' AND TG.TAG_VALUE IN ('true','True'))
             WHERE
                 ACT_VRSN_TBL.HEAD = TRUE
                         ]]>

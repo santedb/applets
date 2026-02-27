@@ -363,6 +363,7 @@
       <column type="ref" name="PERFORMER">
         <otherTable ref="ENT_TBL" />
       </column>
+      <column type="bool" name="BACK_ENTRY" index="true" />
       <column type="bool" name="MSK" />
     </table>
 
@@ -489,6 +490,7 @@
     <flow name="patients" ref="#org.santedb.bi.datamart.core.patients" />
     <flow name="encounters" ref="#org.santedb.bi.datamart.core.encounters" />
     <flow name="substance_admins" ref="#org.santedb.bi.datamart.core.substance" />
+    <flow name="observations" ref="#org.santedb.bi.datamart.core.observation" />
     <flow name="main">
       <pipeline>
         <log name="log_hello" priority="Informational">
@@ -695,7 +697,19 @@
                 </ref>
               </args>
             </call>
-            
+
+            <call>
+              <dataFlow ref="observations" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
           </pipeline>
         </transaction>
       </pipeline>
