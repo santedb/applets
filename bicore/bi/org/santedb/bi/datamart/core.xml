@@ -230,6 +230,9 @@
         <otherTable ref="ORG_TBL" />
       </column>
       <column type="bool" name="IS_MOBILE" />
+      <column type="ref" name="REPORT_TARGET" >
+        <otherTable ref="PLC_TBL" />
+      </column>
       <parent ref="ENT_TBL" />
     </table>
 
@@ -255,6 +258,7 @@
       <column type="string" name="PRIMARY_LANGUAGE" />
       <column type="string" name="OCCUPATION" />
       <column type="string" name="VIP" />
+      <column type="string" name="MARITAL_STS" />
       <column type="string" name="NATIONALITY" />
       <parent ref="ENT_TBL" />
     </table>
@@ -293,7 +297,6 @@
       <column type="string" name="RELIGION" />
       <column type="string" name="ETHNICITY" />
       <column type="string" name="EDUCATION" />
-      <column type="string" name="MARITAL_STS" />
       <column type="ref" name="MOTHER">
         <otherTable ref="PSN_TBL" />
       </column>
@@ -301,6 +304,9 @@
         <otherTable ref="PSN_TBL" />
       </column>
       <column type="ref" name="GUARDIAN">
+        <otherTable ref="PSN_TBL" />
+      </column>
+      <column type="ref" name="SPOUSE">
         <otherTable ref="PSN_TBL" />
       </column>
       <column type="ref" name="REGISTRATION_FACILITY">
@@ -333,6 +339,7 @@
       <column type="string" notNull="true" name="MOOD" />
       <column type="string" notNull="true" name="STATUS" />
       <column type="bool" notNull="true" name="NEGATED" />
+      <column type="string" name="REASON" />
       <column type="string" name="TYPE" />
       <column type="date-time" name="ACT_TIME" />
       <column type="date-time" name="START_TIME" />
@@ -384,6 +391,12 @@
     <table name="PAT_ENC_TBL">
       <column type="string" name="DISPOSITION" />
       <column type="string" name="ADM_SOURCE" />
+      <column type="ref" name="ADMITTER">
+        <otherTable ref="ENT_TBL" />
+      </column>
+      <column type="ref" name="DISCHARGER">
+        <otherTable ref="ENT_TBL" />
+      </column>
       <parent ref="ACT_TBL" />
     </table>
 
@@ -428,7 +441,7 @@
         <otherTable ref="ACT_TBL" />
       </column>
       <column type="ref" name="CONSUMED">
-        <otherTable ref="MMAT_TBL" />
+        <otherTable ref="MMAT_LOT_TBL" />
       </column>
       <column type="decimal" name="QTY" />
     </table>
@@ -473,6 +486,8 @@
     <flow name="entity_ext" ref="#org.santedb.bi.datamart.core.entities.ext" />
     <flow name="act_ext" ref="#org.santedb.bi.datamart.core.acts.ext" />
     <flow name="patients" ref="#org.santedb.bi.datamart.core.patients" />
+    <flow name="encounters" ref="#org.santedb.bi.datamart.core.encounters" />
+    <flow name="substance_admins" ref="#org.santedb.bi.datamart.core.substance" />
     <flow name="main">
       <pipeline>
         <log name="log_hello" priority="Informational">
@@ -655,6 +670,31 @@
                 </ref>
               </args>
             </call>
+
+            <call>
+              <dataFlow ref="encounters" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+
+            <call>
+              <dataFlow ref="substance_admins" />
+              <args>
+                <ref name="input">
+                  <value ref="mainDatabase" />
+                </ref>
+                <ref name="output">
+                  <value ref="warehouseDatabase" />
+                </ref>
+              </args>
+            </call>
+            
           </pipeline>
         </transaction>
       </pipeline>

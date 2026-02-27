@@ -164,7 +164,7 @@
                                 <!-- Action Toolbar for the object-->
                                 <div class="mx-2 btn-group" ng-if="comp.targetModel.version">
                                     <div class="btn-group dropdown" ng-if="!comp.targetModel.policy.length">
-                                        <button class="btn btn-sm btn-dark" type="button" title="Seal Record"
+                                        <button ng-disabled="!$root.system.serviceState.hdsi" class="btn btn-sm btn-dark" type="button" title="Seal Record"
                                             data-toggle="dropdown" aria-haspopup="true">
                                             <span class="fa-stack">
                                                 <i class="fas fa-shield fa-stack-1x"></i>

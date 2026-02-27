@@ -42,7 +42,8 @@
 	          plt.LNG_CS AS primary_language,
 	          occ_cd_id AS occupation,
 	          vip_cd_id AS vip,
-	          nat_cd_id AS nationality
+	          nat_cd_id AS nationality,
+            mrtl_sts_cd_id AS MARITAL_STS
           FROM 
 	          psn_tbl 
 	          INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
@@ -68,7 +69,8 @@
               (plt.LNG_CS) AS primary_language,
               (occ_cd_id) AS occupation,
               (vip_sts_cd_id) AS vip,
-              (nat_cd_id) AS nationality
+              (nat_cd_id) AS nationality,
+              (mrtl_sts_cd_id) AS MARITAL_STS
             FROM 
               psn_tbl 
               INNER JOIN ent_vrsn_tbl USING (ent_vrsn_id)
@@ -134,6 +136,12 @@
           <concept />
         </source>
         <target name="nationality" />
+      </map>
+      <map>
+        <source name="marital_sts">
+          <concept />
+        </source>
+        <target name="marital_sts" />
       </map>
     </transform>
     <distinct name="input_psns">

@@ -212,10 +212,54 @@
       <connection ref="output"/>
       <target ref="MMAT_LOT_TBL"/>
     </writer>
+        <reader name="source_cons">
+      <connection ref="input"/>
+      <sql>
+        <add>
+          <providers>
+            <invariant>npgsql</invariant>
+            <invariant>FirebirdSQL</invariant>
+          </providers>
+          <![CDATA[ 
+          SELECT 
+            act_ptcpt_id AS REL_ID, 
+            act_id, 
+            ent_id AS consumed, 
+            CAST(qty AS NUMERIC) AS qty 
+          FROM act_ptcpt_tbl
+          WHERE 
+            rol_cd_id = 'a5cac7f7-e3b7-4dd8-872c-db0e7fcc2d84'
+            AND obslt_vrsn_seq_id IS NULL
+          ]]>
+        </add>
+        <add>
+          <providers>
+            <invariant>sqlite</invariant>
+          </providers>
+          <![CDATA[ 
+          SELECT 
+            act_ptcpt_id AS REL_ID, 
+            act_id, 
+            ent_id AS consumed, 
+            CAST(qty AS NUMERIC) AS qty
+          FROM act_ptcpt_tbl
+          WHERE 
+            rol_cd_id = x'F7C7CAA5B7E3D84D872CDB0E7FCC2D84'
+            AND obslt_vrsn_seq_id IS NULL
+          ]]>
+        </add>
+      </sql>
+    </reader>
+    <writer truncate="true" mode="insert" name="write_consumed">
+      <input ref="source_cons" />
+      <connection ref="output" />
+      <target ref="ACT_CONS_TBL" />
+    </writer>
     <union name="union_rejects">
       <input ref="write_mats" />
       <with ref="write_mmats" />
       <with ref="write_mmat_lots" />
+      <with ref="write_consumed" />
     </union>
     <filter name="filter_rejects">
       <input ref="union_rejects" />
