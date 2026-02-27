@@ -64,6 +64,7 @@
 	            LEFT JOIN ENT_REL_TBL SCP ON (SCP.SRC_ENT_ID = ENT_ID AND SCP.REL_TYP_CD_ID = X'5979D3FCC25BDB48BBB536AFD9EDF19A' AND SCP.OBSLT_VRSN_SEQ_ID IS NULL)
           WHERE 
             HEAD
+            AND ent_vrsn_tbl.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
             ]]>
         </add>
         <add>
@@ -103,6 +104,7 @@
 	            LEFT JOIN ENT_REL_TBL SCP ON (SCP.SRC_ENT_ID = ENT_ID AND SCP.REL_TYP_CD_ID = 'fcd37959-5bc2-48db-bbb5-36afd9edf19a' AND SCP.OBSLT_VRSN_SEQ_ID IS NULL)
           WHERE 
             HEAD
+            AND ent_vrsn_tbl.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
           ]]>
         </add>
       </sql>

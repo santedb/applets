@@ -51,6 +51,10 @@
 	          LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = x'E9A4C0C138424440B89B9C9798995B90' OR cell.USE_CD_ID = x'0EF961E139590E43861AF8E885CC353D'))
 	          LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = x'8EF0A6EA8EBB57449DC03A1555FADF5C')
 	          LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND = 1)
+          WHERE 
+            ENT_VRSN_TBL.HEAD = TRUE AND
+            ENT_VRSN_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
+          
 	           ]]>
         </add>
         <add>
@@ -78,6 +82,9 @@
               LEFT JOIN ent_tel_tbl cell ON (cell.ent_id = ENT_VRSN_TBL.ent_id AND cell.OBSLT_VRSN_SEQ_ID IS NULL AND (cell.TYP_CD_ID  = 'c1c0a4e9-4238-4044-b89b-9c9798995b90' OR cell.USE_CD_ID = 'E161F90E-5939-430E-861A-F8E885CC353D'))
               LEFT JOIN ent_tel_tbl wrk ON (wrk.ENT_ID = ENT_VRSN_TBL.ENT_ID AND wrk.OBSLT_VRSN_SEQ_ID IS NULL AND wrk.USE_CD_ID = 'EAA6F08E-BB8E-4457-9DC0-3A1555FADF5C')
               LEFT JOIN PSN_LNG_TBL PLT ON (plt.ent_id = ent_vrsn_tbl.ENT_ID AND plt.obslt_vrsn_Seq_id IS NULL AND plt.PREF_IND)
+            WHERE 
+              ENT_VRSN_TBL.HEAD = TRUE AND
+              ENT_VRSN_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
 
           ]]>
         </add>

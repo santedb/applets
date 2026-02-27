@@ -48,6 +48,8 @@
                         WHERE
                             ENT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
                             AND ID_DMN_TBL.OBSLT_UTC IS NULL
+                            AND ENT_ID_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
+
                         ]]>
         </add>
       </sql>
@@ -77,6 +79,8 @@
               WHERE
                   ACT_ID_TBL.OBSLT_VRSN_SEQ_ID IS NULL
                   AND ID_DMN_TBL.OBSLT_UTC IS NULL
+                  AND ACT_ID_TBL.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
           ]]>
         </add>
       </sql>

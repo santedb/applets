@@ -29,6 +29,8 @@
                 WHERE 
                     AV.cls_cd_id = '54b52119-1709-4098-8911-5df6d6c84140'
                     AND AV.head	
+                    AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
                 ]]>
                 </add>
             </sql>
@@ -51,7 +53,9 @@
                     LEFT JOIN act_ptcpt_tbl DISCHARGER ON (discharger.act_id = AV.act_id AND discharger.obslt_vrsn_seq_id IS NULL AND discharger.rol_cd_id = x'6E4E59A2FEE8684C82A5D3A46DBEC87D')
                 WHERE 
                     AV.cls_cd_id = x'1921B5540917984089115DF6D6C84140'
-                    AND AV.head	
+                    AND AV.head	= TRUE
+                    AND AV.ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
                 ]]>
                 </add>
             </sql>

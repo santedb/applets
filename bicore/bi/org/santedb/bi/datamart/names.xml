@@ -46,6 +46,7 @@
                             INNER JOIN CD_VRSN_TBL NT ON (NT.CD_ID = ENT_NAME_TBL.USE_CD_ID) 
                         WHERE
                           ENT_NAME_TBL.OBSLT_VRSN_SEQ_ID IS NULL
+                          AND ENT_NAME_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
                         ORDER BY NAME_ID, ENT_ID
                         
                         ]]>

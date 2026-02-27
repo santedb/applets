@@ -43,7 +43,9 @@
             FROM 
 	            ACT_TAG_TBL 
             WHERE 
-	            OBSLT_UTC IS NULL;
+	            OBSLT_UTC IS NULL
+              AND ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
             ]]>
         </add>
       </sql>
@@ -76,6 +78,8 @@
 	          INNER JOIN EXT_TYP_TBL USING (EXT_TYP_ID)
           WHERE 
             OBSLT_VRSN_SEQ_ID IS NULL
+            AND ACT_ID NOT IN (SELECT ACT_ID FROM ACT_POL_ASSOC_TBL WHERE OBSLT_VRSN_SEQ_ID IS NULL)
+
         ]]>
         </add>
       </sql>

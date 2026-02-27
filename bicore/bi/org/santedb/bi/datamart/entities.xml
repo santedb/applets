@@ -55,6 +55,8 @@
                 LEFT JOIN TPL_DEF_TBL ON (TPL_DEF_TBL.TPL_ID = ENT_VRSN_TBL.TPL_ID)
             WHERE
                 ENT_VRSN_TBL.HEAD = TRUE
+                AND ENT_VRSN_TBL.ent_id NOT IN (SELECT ent_id FROM ent_pol_assoc_tbl WHERE obslt_vrsn_seq_id IS NULL) -- EXCLUDE PATIENTS WITH A SECURITY POLICY APPLIED
+
                         ]]>
         </add>
       </sql>
