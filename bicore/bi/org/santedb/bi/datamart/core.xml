@@ -19,7 +19,8 @@
 <?xml-model href="../../../../../../.ref/schema/BusinessIntelligence.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <BiDatamartDefinition xmlns="http://santedb.org/bi" id="org.santedb.bi.datamart.core"
     status="active"
-    name="core-datamart" label="core-datamart">
+    name="core-datamart" 
+    label="core-datamart">
 
 
   <refreshFrequency>daily</refreshFrequency>
@@ -38,7 +39,6 @@
     </annotation>
     <public>true</public>
   </meta>
-
 
   <produces id="org.santedb.bi.dataSource.warehouse" name="warehouse"  status="active">
     <meta>
@@ -77,6 +77,7 @@
         <otherTable ref="SEC_OBJ_TBL" />
       </column>
     </table>
+
     <!-- Security User Reporting Table -->
     <table name="SEC_USR_TBL">
       <column type="ref" key="true" notNull="true" name="USR_ID">
