@@ -972,7 +972,7 @@ function bundleRelatedObjects(object, ignoreRelations, existingBundle) {
             relationship.filter(r => r && r.operation != BatchOperationType.IgnoreInt && r.operation != BatchOperationType.Ignore).forEach(rel => {
                 if (rel.targetModel) {
                     var relatedObject = angular.copy(rel.targetModel);
-                    rel.target = relatedObject.id = relatedObject.id || SanteDB.application.newGuid();
+                    rel.target = relatedObject.id = relatedObject.id || rel.target || SanteDB.application.newGuid();
 
                     if (rel.$insertFirst) {
                         retVal.resource.unshift(relatedObject);
