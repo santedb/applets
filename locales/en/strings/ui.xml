@@ -611,6 +611,10 @@
       <string name="ui.view.upstream">This record is sourced from an external system. Actions for this record may be disabled until you download a local copy</string>
       <!-- Patient is deleted -->
       <string name="ui.view.deletedRecord">This record is deleted and/or marked as inactive and is kept for referential integrity and reference only.</string>
+      <!-- Patient has been replaced -->
+       <string name="ui.view.replaced">This record has been replaced by another record. You should not edit or change this data</string>
+       <string name="ui.view.replaces">This replaces an older record. You may view the older record to find medical history information.</string>
+       <string name="ui.view.replaced.nav">View Record</string>
       <!-- Default applications -->
       <string name="org.santedb.debug">SanteDB SDK</string>
       <string name="org.santedb.administration">SanteDB Admin Console</string>
