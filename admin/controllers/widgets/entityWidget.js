@@ -28,8 +28,20 @@ angular.module('santedb').controller('EntityDemographicsController', ['$scope', 
         try {
             var submissionObject = angular.copy($scope.editObject);
             await prepareEntityForSubmission(submissionObject);
+
+            for (const telecomKey of Object.keys(submissionObject.telecom)) {
+                const telecoms = submissionObject.telecom[telecomKey];
+
+                for (const telecom of telecoms) {
+                    if (telecom.editValue === '') {
+                        telecom.operation = BatchOperationType.DeleteInt;
+                    }
+                }
+            }
+
             var bundle = new Bundle({ resource: [submissionObject] });
             await SanteDB.resources.bundle.insertAsync(bundle);
+
             var updated = await SanteDB.resources[submissionObject.$type.toCamelCase()].getAsync($scope.scopedObject.id, "full"); // re-fetch the place
          
             $timeout(() => {
