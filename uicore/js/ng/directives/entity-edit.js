@@ -416,7 +416,9 @@ angular.module('santedb-lib')
                                     break;
                             }
                         }
-                        else if(scope.model[k][0].value){
+                        else if(scope.model[k][0].value && 
+                            scope.ownerForm[`${scope.controlPrefix}tel${k}0`].$pristine) // HACK: This should really iterate over the tels in the type but the entire function only supports one
+                        {
                             scope.model[k][0].editValue = scope.model[k][0].value.replace(/(tel:|mailto:)/i, '');
                         }
                     });
