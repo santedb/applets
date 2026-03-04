@@ -62,8 +62,8 @@
                     group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" ng-model="addr.component.PlaceRef[0]"
                     search-field="'name.component.value'"  
                     name="{{::controlPrefix}}address{{$index}}target"
-                    filter="{ 'classConcept': '79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6', 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
-                    default-results="{ 'relationship[DedicatedServiceDeliveryLocation|CommunityServiceDeliveryLocation].target' : catchmentAreaFor }" />
+                    filter="{ 'classConcept': ['79dd4f75-68e8-4722-a7f5-8bc2e08f5cd6','acafe0f2-e209-43bb-8633-3665fd7c90ba','6eefee7d-dff5-46d3-a6a7-171ef93879c7'], 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }"
+                    default-results="{ 'relationship[DedicatedServiceDeliveryLocation|CommunityServiceDeliveryLocation].target||relationship[Parent].target.relationship[DedicatedServiceDeliveryLocation|CommunityServiceDeliveryLocation].target' : catchmentAreaFor }" />
 
                 <div class="text-danger" ng-if="ownerForm[controlPrefix + 'address' + $index + 'target'].$invalid">
                     <i class="fas fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n }}
@@ -220,7 +220,9 @@
     </div>
 
     <!-- Street -->
-    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.street'] != 'true'">
+     <!-- Hidden if hide.patient.address.street is true and not showing extra fields or if address is -->
+    <div class="form-group row" ng-if="(addr._showExtra &amp;&amp; $root.system.config.application.setting['hide.patient.address.street'] == 'true') ||
+         $root.system.config.application.setting['hide.patient.address.street'] != 'true' &amp;&amp; $root.system.config.application.setting['forbid.patient.address.street'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">
             {{ 'ui.model.entity.address.component.street' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.street" />
         </label>
@@ -242,7 +244,8 @@
     </div>
 
     <!-- Postal Code -->
-    <div class="form-group row" ng-if="$root.system.config.application.setting['forbid.patient.address.postalcode'] != 'true'">
+    <div class="form-group row" ng-if="(addr._showExtra &amp;&amp; $root.system.config.application.setting['hide.patient.address.postalcode'] == 'true') || 
+            $root.system.config.application.setting['hide.patient.address.postalcode'] != 'true' &amp;&amp; $root.system.config.application.setting['forbid.patient.address.postalcode'] != 'true'">
         <label class="col-sm-12 col-md-3 control-label">
             {{ 'ui.model.entity.address.component.postalcode' | i18n }} <hint-popover hint-title="ui.model.entity.address.component.postalcode" />
         </label>
