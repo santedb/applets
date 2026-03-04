@@ -34,7 +34,8 @@
                         <div class="input-group-append" ng-if="domain.checkDigitAlgorithm || id.checkDigit">
                             <hint-popover hint-title="ui.model.entityIdentifier.checkDigit" />
                             <span class="input-group-text d-none d-sm-inline">{{ 'ui.model.entityIdentifier.checkDigit.short' | i18n }}</span>
-                            <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="{{::controlPrefix}}cd{{domain.domainName}}{{$index}}" ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
+                            <input type="text" class="form-control w-25" ng-model="id.checkDigit" name="{{::controlPrefix}}cd{{domain.domainName}}{{$index}}" 
+                                ng-change="validateCheckDigit(domain, $index)" ng-readonly="id.id" maxlength="5" />
                         </div>
                         
                         <div class="input-group-apppend">

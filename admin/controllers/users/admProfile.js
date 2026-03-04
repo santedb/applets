@@ -18,6 +18,51 @@
  */
 angular.module('santedb')
     .controller('AdminUserProfileWidgetController', ["$scope", "$rootScope", "$timeout", function ($scope, $rootScope, $timeout) {
+
+        /**
+         * Extracts the effective target key for a relationship
+         * @param {*} relationship The relationship to inspect
+         */
+        function getRelationshipTarget(relationship) {
+            return relationship ? (relationship.target || (relationship.targetModel && relationship.targetModel.id)) : null;
+        }
+
+        /**
+         * Adds delete operations for relationships removed in the editor
+         * @param {*} submissionObject The object being sent to the API
+         */
+        function markRemovedFacilities(submissionObject) {
+            const processRelationship = (originalList, relationshipKey, typeKey) => {
+                originalList = originalList || [];
+                const currentList = (submissionObject.relationship && submissionObject.relationship[relationshipKey]) || [];
+                const currentTargets = currentList.map(getRelationshipTarget).filter(o => o);
+
+                const removedItems = originalList.filter(rel => {
+                    const target = getRelationshipTarget(rel);
+                    return target && !currentTargets.includes(target);
+                });
+
+                if (removedItems.length > 0) {
+                    submissionObject.relationship = submissionObject.relationship || {};
+                    submissionObject.relationship[relationshipKey] = submissionObject.relationship[relationshipKey] || [];
+
+                    removedItems.forEach(rel => {
+                        const target = getRelationshipTarget(rel);
+                        if (target) {
+                            submissionObject.relationship[relationshipKey].push({
+                                id: rel.id,
+                                target: target,
+                                relationshipType: typeKey,
+                                operation: BatchOperationType.Delete
+                            });
+                        }
+                    });
+                }
+            };
+
+            processRelationship($scope.originalDedicatedServiceDeliveryLocation, 'DedicatedServiceDeliveryLocation', EntityRelationshipTypeKeys.DedicatedServiceDeliveryLocation);
+            processRelationship($scope.originalManagedFacilities, 'MaintainedEntity', EntityRelationshipTypeKeys.MaintainedEntity);
+        }
         /**
          * Updates the user entity
          */
@@ -28,6 +73,7 @@ angular.module('santedb')
             // Now post the changed update object 
             try {
                 var submissionObject = angular.copy($scope.editObject);
+                markRemovedFacilities(submissionObject);
                 await prepareEntityForSubmission(submissionObject);
 
                 submissionObject.securityUser = submissionObject.securityUser || $rootScope.session.user.id;
@@ -61,6 +107,8 @@ angular.module('santedb')
             if (n && n != null) {
                 delete ($scope.editObject); // Delete the current edit object
                 $scope.editObject = angular.copy(n);
+                $scope.originalDedicatedServiceDeliveryLocation = angular.copy((n.relationship && n.relationship.DedicatedServiceDeliveryLocation) || []) || [];
+                $scope.originalManagedFacilities = angular.copy((n.relationship && n.relationship.MaintainedEntity) || []) || [];
             }
         });
 

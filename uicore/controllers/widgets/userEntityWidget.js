@@ -38,7 +38,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
                 if (!submissionObject.language.find(o => o.isPreferred)) {
                     submissionObject.language.push(personLanguage);
                 }
+            }            
+            
+            if(submissionObject.telecom.Public[0].editValue === '') {
+                submissionObject.telecom.Public[0].operation = BatchOperationType.Delete;
             }
+
             if (submissionObject.id) {
                 $scope.scopedObject = await SanteDB.resources.userEntity.updateAsync(submissionObject.id, submissionObject);
             }
@@ -58,6 +63,12 @@ angular.module('santedb').controller('UserProfileWidgetController', ['$scope', '
             form.$valid = false;
         }
     }
+
+    $scope.$watch("panel.view", async function (n, o) {
+        if (n == 'Edit') {            
+            $scope.editObject = $scope.scopedObject;
+        }
+    });
 
 }]).controller("UserSecurityWidgetController", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 

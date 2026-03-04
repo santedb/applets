@@ -158,15 +158,14 @@
       <property name="mnemonic" />
     </property>
     <property name="classConcept" behavior="always" />
-    <property name="createdBy" behavior="never" />
     <property name="creationActModel" behavior="always" ref="CreationAct" />
-    <property name="creationTime" behavior="never" />
     <property name="creationTimeModel" behavior="never" />
     <property name="version" />
     <property name="occupationModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="nationalityModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="vipStatusModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="maritalStatusModel" all="true" behavior="always" ref="ConceptNested" />
+    <property name="genderConceptModel" all="true" behavior="always" ref="ConceptNested" />
     <property name="name" all="true" behavior="always">
       <property name="*" ref="EntityName" />
     </property>

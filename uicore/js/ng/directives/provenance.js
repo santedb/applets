@@ -38,7 +38,8 @@ angular.module('santedb-lib')
                 provenanceTime: '<',
                 sessionfn: "<",
                 applicationProvenance: "<",
-                hintOnly: "<"
+                hintOnly: "<",
+                noHint: "<"
             },
             link: function (scope, element, attrs) {
 
