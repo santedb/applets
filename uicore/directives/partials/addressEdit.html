@@ -110,7 +110,8 @@
                         search-field="'name.component.value'" 
                         style="width:100%"
                         name="{{::controlPrefix}}address{{$index}}state" 
-                        key="'name.OfficialRecord[0].component.$other[0]'"
+                        key="'name[OfficialRecord].component.value'"
+                        value-selector="'name.OfficialRecord[0].component.$other[0]'"
                         change-clear="{ 'scope': addr.component, values: [ 'County', 'City', 'Precinct' ], resetTo: [] }"
                         filter="{ 'classConcept': '4d1a5c28-deb7-411e-b75f-d524f90dfa63', 'address[PhysicalVisit].component[Country].value': addr.component.Country, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
@@ -139,7 +140,8 @@
                         group-by="['address.PhysicalVisit[0].component.State[0]','address.Direct[0].component.State[0]']" name="{{::controlPrefix}}address{{$index}}county"
                         style="width:100%"
                         ng-model="addr.component.County[0]" search-field="'name.component.value'" 
-                        key="'name.OfficialRecord[0].component.$other[0]'"
+                        key="'name[OfficialRecord].component.value'"
+                        value-selector="'name.OfficialRecord[0].component.$other[0]'"
                         change-clear="{ 'scope': addr.component, values: [ 'City', 'Precinct' ], resetTo: [] }"
                         filter="{ 'classConcept': '6eefee7d-dff5-46d3-a6a7-171ef93879c7', 'address[PhysicalVisit].component[State].value': addr.component.State[0], 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
@@ -166,7 +168,8 @@
                     <entity-search ng-required="isRequired &amp;&amp; $index == 0 &amp;&amp; !$root.system.config.application.setting['optional.patient.address.city']" type="'Place'"
                         group-by="['address.PhysicalVisit[0].component.County[0]','address.Direct[0].component.County[0]']" name="{{::controlPrefix}}address{{$index}}city"
                         ng-model="addr.component.City[0]" search-field="'name.component.value'" 
-                        key="'name.OfficialRecord[0].component.$other[0]'"
+                        key="'name[OfficialRecord].component.value'"
+                        value-selector="'name.OfficialRecord[0].component.$other[0]'"
                         style="width:100%"
                         change-clear="{ 'scope': addr.component, values: [ 'Precinct' ], resetTo: [] }"
                         copy-nulls="{ 'to': addr.component, from: 'address.PhysicalVisit.component', values: ['State', 'County'] }"
@@ -193,7 +196,8 @@
                         group-by="['address.PhysicalVisit[0].component.City[0]','address.Direct[0].component.City[0]']" name="{{::controlPrefix}}address{{$index}}precinct"
                         ng-model="addr.component.Precinct[0]" search-field="'name.component.value'" 
                         style="width:100%"
-                        key="'name.OfficialRecord[0].component.$other[0]'"
+                        key="'name[OfficialRecord].component.value'"
+                        value-selector="'name.OfficialRecord[0].component.$other[0]'"
                         copy-nulls="{ 'to': addr.component, from: 'address.PhysicalVisit.component', values: ['State', 'County', 'City'] }"
                         filter="{ 'classConcept': 'ACAFE0F2-E209-43BB-8633-3665FD7C90BA', 'address[PhysicalVisit].component[State].value': addr.component.State, 'address[PhysicalVisit].component[County].value': addr.component.County, 'address[PhysicalVisit].component[City].value': addr.component.City, 'statusConcept': 'c8064cbd-fa06-4530-b430-1a52f1530c27' }" />
                 </div>
