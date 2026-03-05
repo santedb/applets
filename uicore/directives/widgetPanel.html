@@ -39,7 +39,8 @@
                                 <i class="fa fa-times"></i>
                                 <span class="d-none d-lg-inline">{{ 'ui.action.cancel' | i18n }}</span>
                             </button>
-                            <button class="btn btn-sm btn-info" type="button" ng-click="setView(panel, 'Edit')"
+                            <button class="btn btn-sm btn-info" type="button" ng-click="setView(panel, 'Edit')" 
+                                ng-disabled="scopedObject._readonly"
                                 id="pnl{{panel.id}}Edit"
                                 ng-if="panel.view != 'Edit' &amp;&amp; !altView &amp;&amp; hasView(panel, 'Edit')"
                                 ng-init="::disableView(panel, 'Edit')">
@@ -52,6 +53,7 @@
                                 <span class="d-none d-lg-inline">{{ 'ui.action.save' | i18n }}</span>
                             </button>
                             <button class="btn btn-dark" type="button" ng-init="disableView(panel, 'Settings')"
+                                ng-disabled="scopedObject._readonly"
                                 ng-click="setView(panel, 'Settings')" id="pnl{{panel.id}}Setting"
                                 ng-if="panel.view != 'Settings' &amp;&amp; hasView(panel, 'Settings') &amp;&amp; !altView">
                                 <i class="fa fa-cog"></i>

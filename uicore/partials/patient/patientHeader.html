@@ -60,6 +60,7 @@
                                         'ui.action.print.vrp' | i18n }}</span>
                                 </button>
                                 <button ng-if="startVisit" class="btn btn-sm btn-outline-success"
+                                    ng-disabled="patient._readonly"
                                     ng-click="startVisit()">
                                     <i class="fas fa-fw fas fa-heart-circle-bolt"></i> <span
                                         class="d-none d-md-inline">{{ 'ui.action.check-in' | i18n }}</span>
