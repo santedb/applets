@@ -33,7 +33,8 @@ angular.module("santedb").controller("LoginController", ['$scope', '$rootScope',
         try {
 
             // Facility?
-            if(SanteDB.configuration.getAssignedFacilityId() !== EmptyGuid) {
+            if(SanteDB.configuration.getAssignedFacilityId() !== EmptyGuid
+                && "{{ $host_type }}" !== "Gateway") {
                 $scope.login.claim = $scope.login.claim || {};
                 $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] = $scope.login.claim['urn:oasis:names:tc:xspa:1.0:subject:facility'] || SanteDB.configuration.getAssignedFacilityId();
             }
