@@ -3401,6 +3401,18 @@ function SanteDBWrapper() {
             resource: "Procedure",
             api: _hdsi
         });
+
+        /**
+         * @type {ResourceWrapper}
+         * @memberof SanteDBWrapper.ResourceApi
+         * @summary Resource wrapper implementation for Narrative documents
+         */
+        this.narrative = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "Narrative",
+            api: _hdsi
+        });
+
         /**
             * @type {ResourceWrapper}
             * @memberof SanteDBWrapper.ResourceApi
