@@ -573,7 +573,7 @@
       <string name="ui.config.network.advanced.title">Advanced Configuration</string>
       <string name="ui.config.network.proxy.title">Proxy Configuration</string>
       <string name="ui.config.network.optimize.requests">Compress data submitted to the server</string> 
-      <string name="ui.config.network.proxyAddress.label">Address</string>
+      <string name="ui.config.network.proxyAddress.label">Proxy Address</string>
       <string name="ui.config.network.proxyAddress.help">Use this setting to configure the address of your HTTP proxy</string>
       <string name="ui.config.other.title">Other Settings</string>
       <string name="ui.config.other.description">SanteDB allows you to set additional settings on this page to further control the behavior of this instance</string>

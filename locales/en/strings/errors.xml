@@ -360,7 +360,7 @@
       <string name="error.signing.cert.duplicate">Signing certificate is already assigned to another device</string>
       <string name="error.session.facility.required">Please select the facility in which you are working for this session</string>
       <string name="error.session.facility.notAssigned">This service requires your account to be registered to a recognized facility. Please contact your administrator - ERR_NO_FACILITIES</string>
-      <string name="error.session.facility.mismatch">This service could not issue a because your account is not assigned to a permitted facility on this device. You are assigned to {assigned} however you need to be registered to {allowed}. Please contact your administrator - ERR_FACILITY_MISMATCH</string>
+      <string name="error.session.facility.mismatch">This service could not issue a session because your account is not assigned to a permitted facility on this device. You are assigned to {assigned} however you need to be registered to {allowed}. Please contact your administrator - ERR_FACILITY_MISMATCH</string>
       <string name="error.data.notFound">{type} with ID {id} was not found</string>
 
       <!-- Generic Observation -->
