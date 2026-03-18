@@ -785,4 +785,14 @@
       </property>
     </property>
   </type>
+
+  <type type="MailMessage" all="true">
+    <property name="body" behavior="never" />
+    <property name="rcptModel" behavior="never" />
+    <property name="fromModel" behavior="always" />
+  </type>
+
+  <type type="MailboxMailMessage" all="true">
+    <property name="messageModel" behavior="always" />
+  </type>
 </ViewModel>

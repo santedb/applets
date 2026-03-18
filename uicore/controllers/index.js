@@ -482,7 +482,7 @@ var santedbApp = angular.module('santedb', ['ngSanitize', 'ui.router', 'oc.lazyL
                 today: moment(new Date()).format('YYYY-MM-DD')
             };
 
-            $interval(ivlFn, 15000);
+            $interval(ivlFn, 10000);
 
 
 

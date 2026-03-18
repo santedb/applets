@@ -1,0 +1,38 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+
+    <div ng-controller="DeviceMailboxController">
+        <div ng-if="!deviceMailbox" class="text-center">
+            <i class="fas fa-fw fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+        </div>
+        <div ng-if="deviceMailbox.totalResults === 0" class="alert alert-info">
+            <i class="fas fa-fw fa-info-circle"></i> {{ 'ui.mail.device.noMessages' | i18n }}
+        </div>
+        <ul ng-if="deviceMailbox.totalResults &gt; 0" class="list-group" style="max-height:50vh; overflow-y: auto">
+            <li ng-repeat="msg in deviceMailbox.resource track by $index" class="list-group-item">
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-between">
+                        <h4 class="flex-grow-1 m-0">{{ msg.messageModel.subject }}
+                            <i ng-if="msg.messageModel.flags &gt; 0" class="fas fa-fw"
+                                ng-class="{ 'fa-exclamation-triangle text-danger' : msg.messageModel.flags == 1, 'fa-arraw-down text-primary' : msg.messageModel.flags == 2, 'fa-arrow-up text-danger' : msg.messageModel.flags == 4 }"></i>
+                        </h4>
+                        <small class="my-1 font-weight-bold text-muted mx-2">
+                            {{ msg.time | extDate: 'M' }}
+                        </small>
+                        <button type="button" class="btn btn-danger mx-1" ng-click="deleteMessage(msg.message)">
+                            <i class="fas fa-fw fa-trash"></i> {{ 'ui.action.delete' | i18n }}
+                        </button>
+                    </div>
+                    <div class="d-flex justify-content-start my-1">
+                        <strong class="mr-1">{{ 'ui.mail.from' | i18n }}</strong>
+                        <span class="ml-1"><i class="fas fa-fw fa-user"></i> {{ msg.messageModel.fromModel.userName
+                            }}</span>
+                    </div>
+                    <hr class="my-1" />
+                    <div ng-bind-html="msg.messageModel.html">
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

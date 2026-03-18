@@ -32,6 +32,9 @@
   </errors>
 
 
+  <viewModel key="mail">
+    <definition>/org.santedb.core/model/mail.xml</definition>
+  </viewModel>
   <viewModel key="base">
     <definition>/org.santedb.core/model/base.xml</definition>
   </viewModel>

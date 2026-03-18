@@ -436,7 +436,7 @@ table.dataTable tbody > tr > td {
 }
 
 .dt-layout-table {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 .wrap-anywhere {
@@ -479,6 +479,8 @@ table.dataTable tbody > tr > td {
 .bg-danger.bg-lighten-75 {
     background-color: #f6ccd0 !important;
 }
+
+
 .table-striped {
     background-color: white;
 }
@@ -523,4 +525,22 @@ table.dataTable tbody > tr > td {
     color: #909496;
     border: dashed 0.5rem #909496;
     border-radius: 1.5em;
+}
+
+.message-view {
+    border: solid 1px #a6a9ac ;
+    padding-top: 0.5rem;
+    margin: 0.5rem 0rem
+}
+
+.message-view .message-body {
+    border-top: solid 1px var(--secondary);
+    max-height: 25vh;
+    overflow: auto;
+    padding: 0.5rem;    
+}
+
+.message-body a {
+    text-decoration: underline;
+    color: var(--primary);
 }

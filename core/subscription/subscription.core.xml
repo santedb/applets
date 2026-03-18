@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
  - Copyright 2021-2025 SanteSuite Contributors (See NOTICE.md for full copyright notices)
  - Portions Copyright (C) 2019 - 2021, Fyfe Software Inc. and the SanteSuite Contributors
@@ -16,76 +16,125 @@
  - License for the specific language governing permissions and limitations under 
  - the License.
  -->
-<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.core" uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="IdentifiedData" order="-1000">
+<SubscriptionDefinition xmlns="http://santedb.org/subscription" name="ui.subscription.core"
+  uuid="a3f5d2a4-c3ef-4349-9dec-bdd6389a7037" resource="IdentifiedData" order="-1000">
   <client>
     <!-- All Code Systems Should be Downloaded -->
-    <definition resource="CodeSystem" name="ui.subscription.codeSystem.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="CodeSystem" name="ui.subscription.codeSystem.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Reference Terms Should be Downloaded -->
-    <definition resource="ReferenceTerm" name="ui.subscription.referenceTerm.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="ReferenceTerm" name="ui.subscription.referenceTerm.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concept Sets be Downloaded -->
-    <definition resource="ConceptSet" name="ui.subscription.conceptSet.all" mode="*" ignoreModifiedOn="false" trigger="on-start"/>
-    <definition resource="CarePathwayDefinition" name="ui.subscription.carePathway.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="ConceptSet" name="ui.subscription.conceptSet.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="CarePathwayDefinition" name="ui.subscription.carePathway.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- All Concepts Terms Should be Downloaded -->
-    <definition resource="Concept" name="ui.subscription.concept.all" mode="*" ignoreModifiedOn="false" trigger="on-start">
+    <definition resource="Concept" name="ui.subscription.concept.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All Code Systems Should be Downloaded -->
-    <definition resource="Protocol" name="ui.subscription.protocol.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="Protocol" name="ui.subscription.protocol.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start on-x-net" />
 
     <!-- All Validation Rules -->
-    <definition resource="RelationshipValidationRule" name="ui.relationship.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="RelationshipValidationRule" name="ui.relationship.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start on-x-net" />
     <!-- Ensure all relationships are synchronized -->
-    <definition resource="RelationshipValidationRule" name="ui.subscription.validation.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="RelationshipValidationRule" name="ui.subscription.validation.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Identity Domains Should be Downloaded -->
-    <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Template Definitions Should be Downloaded -->
-    <definition resource="TemplateDefinition" name="ui.subscription.templateDefinition.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="TemplateDefinition" name="ui.subscription.templateDefinition.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Extension Type Registrations Should be Downloaded -->
-    <definition resource="ExtensionType" name="ui.subscription.extensionType.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="ExtensionType" name="ui.subscription.extensionType.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Concept Classes Should be Downloaded -->
-    <definition resource="ConceptClass" name="ui.subscription.conceptClass.all" mode="*" ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="ConceptClass" name="ui.subscription.conceptClass.all" mode="*"
+      ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Organizations Should be Downloaded -->
-    <definition resource="Organization" name="ui.subscription.organization.all" mode="subscription" ignoreModifiedOn="false" trigger="on-start on-x-net">
+    <definition resource="Organization" name="ui.subscription.organization.all" mode="subscription"
+      ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All MAterials Should be Downloaded -->
-    <definition resource="Material" name="ui.subscription.material.all" mode="subscription" ignoreModifiedOn="false" trigger="always">
+    <definition resource="Material" name="ui.subscription.material.all" mode="subscription"
+      ignoreModifiedOn="false" trigger="always">
       <filters>
-        <add>classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+        <add>
+          classConcept=D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All Manufactured Materials Should be Downloaded (for ordering and stock transfer purposes) -->
-    <definition resource="ManufacturedMaterial" name="ui.subscription.manufacturedMaterial.all" mode="subscription" ignoreModifiedOn="false" trigger="always">
+    <definition resource="ManufacturedMaterial" name="ui.subscription.manufacturedMaterial.all"
+      mode="subscription" ignoreModifiedOn="false" trigger="always">
       <filters>
-        <add>classConcept=!D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
+        <add>
+          classConcept=!D39073BE-0F8F-440E-B8C8-7034CC138A95&amp;statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All User Entities Should be Downloaded (for authoriship purposes) -->
-    <definition resource="UserEntity" name="ui.subscription.userEntity.all" mode="subscription" ignoreModifiedOn="false" trigger="on-start on-x-net">
+    <definition resource="UserEntity" name="ui.subscription.userEntity.all" mode="subscription"
+      ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
     <!-- All Providers Should be Downloaded -->
-    <definition resource="Provider" name="ui.subscription.provider.all" mode="subscription" ignoreModifiedOn="false" trigger="on-start on-x-net">
+    <definition resource="Provider" name="ui.subscription.provider.all" mode="subscription"
+      ignoreModifiedOn="false" trigger="on-start on-x-net">
       <filters>
         <add>statusConcept=!CD4AA3C4-02D5-4CC9-9088-EF8F31E321C5</add>
       </filters>
     </definition>
 
     <!-- For full replication only -->
-    <definition resource="Entity" name="ui.subscription.entity.all" mode="all" ignoreModifiedOn="false" trigger="always">
+    <definition resource="Entity" name="ui.subscription.entity.all" mode="all"
+      ignoreModifiedOn="false" trigger="always">
       <filters>
         <add>_include=relationship.target</add>
       </filters>
     </definition>
-    <definition resource="Act" name="ui.subscription.act.all" mode="all" ignoreModifiedOn="false" trigger="always">
+    <definition resource="Act" name="ui.subscription.act.all" mode="all" ignoreModifiedOn="false"
+      trigger="always">
       <filters>
         <add>_include=relationship.target&amp;_include=participation.player</add>
+      </filters>
+    </definition>
+
+    <!-- Mailboxes for any assigned user -->
+    <definition resource="Mailbox" name="ui.subscription.mailbox" mode="*" ignoreModifiedOn="false"
+      trigger="always">
+      <filters>
+        <add>owner@SecurityUser.userEntity.relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id</add>
+        <add>owner@SecurityDevice.name=$device</add>
+      </filters>
+    </definition>
+
+    <!-- Mail <> Mailbox created since last sync -->
+    <definition resource="MailboxMailMessage" name="ui.subscription.mailboxMailMessage" mode="*"
+      ignoreModifiedOn="false" trigger="always">
+      <filters>
+        <add>source.owner@SecurityUser.userEntity.relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id</add>
+        <add>source.owner@SecurityDevice.name=$device</add>
+      </filters>
+    </definition>
+    
+    <!-- Mail Messages created since last sync -->
+    <definition resource="MailMessage" name="ui.subscription.mailmessage" mode="*"
+      ignoreModifiedOn="false" trigger="always">
+      <filters>
+        <add>mailbox.source.owner@SecurityUser.userEntity.relationship[DedicatedServiceDeliveryLocation].target=$subscribed.id</add>
+        <add>mailbox.source.owner@SecurityDevice.name=$device</add>
       </filters>
     </definition>
 

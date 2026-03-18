@@ -1,0 +1,368 @@
+<div xmlns="http://www.w3.org/1999/xhtml" xmlns:sdb="http://santedb.org/applet">
+    <sdb:script static="true">~/controllers/mail.js</sdb:script>
+    <sdb:script static="true">~/lib/marked.min.js</sdb:script>
+    <h1 class="my-1">
+        {{ 'ui.mail.all' | i18n }}
+    </h1>
+    <hr class="my-1" />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 d-lg-3 col-sm-12 col-xl-2">
+                <div ng-if="!mailboxes" class="text-center">
+                    <i class="fas fa-fw fa-spin fa-circle-notch"></i> {{ 'ui.wait' | i18n }}
+                </div>
+                <ul class="nav nav-pills d-none d-md-block flex-column nav-fill">
+                    <li ng-repeat="mbox in mailboxes.ngOrderBy('name') track by $index" class="nav-item d-flex align-content-start"
+                        style="min-height: 2.5em">
+                        <a ng-class="{ 'active' : mbox.id == activeMailbox.id }"
+                            ui-sref=".({ mbx : mbox.id, mid : null })" class="nav-link text-left flex-grow-1"> <i class="fas fa-fw"
+                                ng-class="{ 'fa-inbox' : mbox.name == 'Inbox', 'fa-paper-plane' : mbox.name == 'Sent', 'fa-trash' : mbox.name == 'Deleted', 'fa-folder' : !['Inbox','Sent','Deleted'].includes(mbox.name) }"></i>
+                            {{ mbox.name }}
+                        </a>
+                        <button type="button" class="btn btn-sm btn-danger m-0"
+                            ng-click="deleteMailbox(mbox)" ng-if="!['Inbox', 'Sent', 'Deleted'].includes(mbox.name)">
+                            <i class="fas fa-fw fa-times-circle"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link text-left" ng-click="addFolder()" type="button" ng-if="!newFolder">
+                            <i class="fas fas-fw fa-plus-circle"></i> {{ 'ui.mail.action.newFolder' | i18n }}
+                        </button>
+                        <form novalidate="novalidate" ng-submit="saveNewFolder(folderForm)" name="folderForm"
+                            ng-if="newFolder">
+                            <div class="input-group">
+                                <input type="text" required="required" class="form-control"
+                                    ng-class="{ 'border-danger' : folderForm.folderName.$error }" name="folderName"
+                                    placeholder="NewFolder" ng-model="newFolder.name" minlength="2" maxlength="30" />
+                                <div class="input-group-append">
+                                    <button type="submit" name="btn btn-primary btn-sm"
+                                        ng-disabled="folderForm.$invalid">
+                                        <i class="fas fa-fw fa-plus-circle"></i> {{ 'ui.action.add' | i18n }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <div class="nav nav-tabs d-flex justify-content-between d-md-none nav-fill">
+                    <a ng-repeat="mbox in mailboxes track by $index"
+                        ng-class="{ 'active' :  mbox.id == activeMailbox.id }"
+                        ui-sref=".({ mbx : mbox.name, mid : null })" class="nav-link text-left"> <i class="fas fa-fw"
+                            ng-class="{ 'fa-inbox' : mbox.name == 'Inbox', 'fa-paper-plane' : mbox.name == 'Sent', 'fa-trash' : mbox.name == 'Deleted', 'fa-folder' : !['Inbox','Sent','Deleted'].includes(mbox.name) }"></i>
+                        {{ mbox.name }}</a>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-8 col-xl-10 col-sm-12 d-flex flex-column mx-0 mt-2">
+                <h4>
+                    <i class="fas fa-fw mr-1"
+                        ng-class="{ 'fa-inbox' : activeMailbox.name == 'Inbox', 'fa-paper-plane' : activeMailbox.name == 'Sent', 'fa-trash' : activeMailbox.name == 'Deleted', 'fa-folder' : !['Inbox','Sent','Deleted'].includes(mbox.name) }"></i>
+                    {{ activeMailbox.name }}
+                </h4>
+                <div ng-if="!$root.system.serviceState.hdsi" class="alert alert-info">
+                    <i class="fas fa-fw fa-info-circle"></i> {{ 'ui.mail.onlineOnly' | i18n}}
+                </div>
+                <div class="border-bottom-solid">
+                    <table id="mailMessageTable" class="table">
+                        <thead>
+                            <tr>
+                                <th class="d-none">id</th>
+                                <th>{{ 'ui.mail.from' | i18n }}</th>
+                                <th>{{ 'ui.mail.subject' | i18n }}</th>
+                                <th>{{ 'ui.mail.time' | i18n }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-grow-1">
+                    <div ng-if="!selectedMessage">
+                        <div class="jumbotron" ng-if="activeMailbox.name === 'Inbox'">
+                            <h1 class="display-4"><i class="fas fa-fw fa-inbox"></i> {{ 'ui.mail.noMessage.inbox.header'
+                                | i18n }}</h1>
+                            <p class="lead">{{ 'ui.mail.noMessage.inbox.lead' | i18n }}</p>
+                        </div>
+                        <div class="jumbotron" ng-if="activeMailbox.name === 'Sent'">
+                            <h1 class="display-4"><i class="fas fa-fw fa-paper-plane"></i> {{
+                                'ui.mail.noMessage.sent.header' | i18n }}</h1>
+                            <p class="lead">{{ 'ui.mail.noMessage.sent.lead' | i18n }}</p>
+                        </div>
+                        <div class="jumbotron" ng-if="activeMailbox.name === 'Deleted'">
+                            <h1 class="display-4"><i class="fas fa-fw fa-trash"></i> {{
+                                'ui.mail.noMessage.deleted.header' | i18n }}</h1>
+                            <p class="lead">{{ 'ui.mail.noMessage.deleted.lead' | i18n }}</p>
+                        </div>
+                    </div>
+                    <div ng-if="selectedMessage != null &amp;&amp; !selectedMessage.id">
+                        <i class="fas fa-circle-notch fa-spin fa-fw"></i> {{ 'ui.wait' | i18n}}
+                    </div>
+                    <div ng-if="selectedMessage.id" class="mt-1">
+                        <div class="btn-group w-100">
+                            <button type="button" id="btnReply"
+                                ng-disabled="isComposing || selectedMessage.messageModel.fromInfo === 'SYSTEM'"
+                                class="btn btn-sm btn-info mr-1" ng-click="composeMessage('reply', selectedMessage)">
+                                <i class="fas fa-fw fa-reply"></i> {{ 'ui.mail.action.reply' | i18n }}
+                            </button>
+                            <button type="button" id="btnReplyAll"
+                                ng-disabled="isComposing || selectedMessage.messageModel.fromInfo === 'SYSTEM'"
+                                class="btn btn-sm btn-primary mr-1"
+                                ng-click="composeMessage('reply-all', selectedMessage)">
+                                <i class="fas fa-fw fa-reply-all"></i> {{ 'ui.mail.action.replyAll' | i18n }}
+                            </button>
+                            <button type="button" id="btnForward" ng-disabled="isComposing"
+                                class="btn btn-sm btn-primary mr-2"
+                                ng-click="composeMessage('forward', selectedMessage)">
+                                <i class="fas fa-fw fa-share"></i> {{ 'ui.mail.action.forward' | i18n }}
+                            </button>
+                            <button type="button" id="btnFlag" ng-disabled="selectedMessage.flags === 2"
+                                class="btn btn-sm btn-warning ml-2 mr-1" ng-click="flagMessage(selectedMessage, 2)">
+                                <i class="fas fa-fw fa-flag"></i> {{ 'ui.mail.action.flag' | i18n }}
+                            </button>
+                            <button type="button" id="btnComplete" ng-disabled="selectedMessage.flags === 4"
+                                class="btn btn-sm btn-success mr-1" ng-click="flagMessage(selectedMessage, 4)">
+                                <i class="fas fa-fw fa-check-circle"></i> {{ 'ui.mail.action.complete' | i18n }}
+                            </button>
+                            <button type="button" id="btnMarkUnread" class="btn btn-sm btn-dark mr-2"
+                                ng-click="flagMessage(selectedMessage, 0)">
+                                <i class="fas fa-fw fa-envelope"></i> {{ 'ui.mail.action.unread' | i18n }}
+                            </button>
+                            <button type="button" id="btnDelete" class="btn btn-sm btn-danger ml-2 mr-1"
+                                ng-click="deleteMessage(selectedMessage)">
+                                <i class="fas fa-fw fa-trash"></i> {{ 'ui.mail.action.delete' | i18n }}
+                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                    type="button">
+                                    <i class="fas fa-fw fa-folder"></i>
+                                    {{ 'ui.mail.action.move' | i18n }}
+                                </button>
+
+                                <div class="dropdown-menu" data-display="static">
+                                    <button class="dropdown-item" type="button"
+                                        ng-click="moveMessage(selectedMessage, mbox.id)"
+                                        ng-disabled="mbox.id === activeMailbox.id"
+                                        ng-if="!['Deleted', 'Sent'].includes(mbox.name)"
+                                        ng-repeat="mbox in mailboxes track by $index">
+                                        <i class="fas fa-fw"
+                                            ng-class="{ 'fa-inbox' : mbox.name == 'Inbox', 'fa-paper-plane' : mbox.name == 'Sent', 'fa-trash' : mbox.name == 'Deleted', 'fa-folder' : !['Inbox','Sent','Deleted'].includes(mbox.name) }"></i>
+                                        {{ mbox.name }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="message-view d-flex flex-column">
+                            <h5><i class="fas fa-fw"
+                                    ng-class="{ 'fa-envelope' : selectedMessage.flags == 0, 'fa-envelope-open' : selectedMessage.flags == 1, 'fa-flag text-danger' : selectedMessage.flags == 2, 'fa-check text-success' : selectedMessage.flags == 4 }"></i>
+                                {{ selectedMessage.messageModel.subject }}
+                                <i ng-if="selectedMessage.messageModel.flags &gt; 0" class="fas fa-fw"
+                                    ng-class="{ 'fa-exclamation-triangle text-danger' : selectedMessage.messageModel.flags == 1, 'fa-arraw-down text-primary' : selectedMessage.messageModel.flags == 2, 'fa-arrow-up text-danger' : selectedMessage.messageModel.flags == 4 }"></i>
+                            </h5>
+                            <div class="d-flex mb-1">
+                                <strong class="mx-2 text-right d-block" style="width:5em">
+                                    {{ 'ui.mail.from' | i18n}}:
+                                </strong>
+                                <span><i class="fas fa-fw fa-user"></i> {{
+                                    selectedMessage.messageModel.fromInfo
+                                    }}
+                                </span>
+                            </div>
+                            <div class="d-flex mb-1">
+                                <strong class="mx-2 text-right d-block" style="width:5em">
+                                    {{ 'ui.mail.to' | i18n}}:
+                                </strong>
+                                <div class="d-flex align-content-start"
+                                    ng-if="selectedMessage.messageModel.rcptModel.length == selectedMessage.messageModel.rcpt.length">
+                                    <div class="mr-2"
+                                        ng-repeat="usr in selectedMessage.messageModel.rcptModel track by $index">
+                                        <i class="fas fa-fw" ng-class="{
+                                                'fa-user' : usr.$type === 'SecurityUser',
+                                                'fa-tablet' : usr.$type === 'SecurityDevice',
+                                                'fa-users' : usr.$type === 'SecurityRole'
+                                            }"></i> {{ usr.userName || usr.name }}
+                                    </div>
+                                </div>
+                                <div class="d-flex align-content-start"
+                                    ng-if="selectedMessage.messageModel.rcptModel.length != selectedMessage.messageModel.rcpt.length">
+                                    <div class="mr-2"
+                                        ng-repeat="rc in selectedMessage.messageModel.toInfo.split(';') track by $index">
+                                        <i class="fas fa-fw fa-circle"></i> {{ rc }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-body" ng-bind-html="selectedMessage.html">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="composeMessageModal" data-backdrop="static" role="dialog"
+        aria-labelledby="composeMessageModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="composeMessageModalTitle">
+                        <i class="fas fa-pencil"></i> {{ 'ui.mail.compose.title' | i18n }}
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </button>
+                </div>
+                <form novalidate="novalidate" class="form" ng-submit="sendMessage(composeMessageForm)"
+                    name="composeMessageForm" autocomplete="off">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 required">
+                                    {{ 'ui.mail.from' | i18n }}
+                                </label>
+                                <div class="col-xs-12 col-md-9">
+                                    <entity-search type="'SecurityUser'" ng-model="draftMessage.from"
+                                        selector="'entity'" required="required" upstream="true" readonly="readonly"
+                                        disabled="disabled" search-field="'userName'"
+                                        filter="{ obsoletionTime: 'null' }" class="form-control w-100"
+                                        name="draftFrom" />
+                                    <div class="text-danger" ng-if="composeMessageForm.draftFrom.$error.required">
+                                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 required">
+                                    {{ 'ui.mail.to' | i18n }}
+                                </label>
+                                <div class="col-xs-12 col-md-9">
+                                    <entity-search type="'Mail'" child-resource="'_recipientDirectory'"
+                                        multiple="multiple" ng-model="draftMessage.rcpt" search-field="'name'"
+                                        required="required" id="mailTo" upstream="$root.system.serviceState.hdsi"
+                                        class="form-control w-100" name="draftTo" />
+                                    <div class="text-info" ng-if="!$root.system.serviceState.hdsi">
+                                        <i class="fas fa-fw fa-info-circle"></i> {{ 'ui.mail.to.offline' | i18n }}
+                                    </div>
+                                    <div class="text-danger" ng-if="composeMessageForm.draftTo.$error.required">
+                                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xs-12 col-md-3 required">
+                                    {{ 'ui.mail.subject' | i18n }}
+                                </label>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="input-group">
+                                        <input type="text" minlength="2" required="required" name="draftSubject"
+                                            ng-model="draftMessage.subject" maxlength="128" class="form-control" />
+                                        <div class="input-group-append">
+                                            <div class="btn-group">
+                                                <button class="btn btn-secondary btn-outline dropdown-toggle"
+                                                    data-toggle="dropdown" type="button">
+                                                    <i class="fas fa-fw" ng-class="{
+                                                            'fa-arrow-up text-danger' : draftMessage.flags == 4,
+                                                            'fa-arrow-down text-info' : draftMessage.flags == 2,
+                                                            'fa-exclamation-triangle text-danger' : draftMessage.flags == 1,
+                                                            'fa-equals text-primary' : draftMessage.flags == 0 || !draftMessage.flags
+                                                        }"></i>
+                                                </button>
+
+                                                <div class="dropdown-menu" data-display="static">
+                                                    <button class="dropdown-item" type="button" data-dismiss="dropdown"
+                                                        ng-click="draftMessage.flags = 0">
+                                                        <i class="fas fa-fw fa-equals text-primary"></i>
+                                                        {{ 'ui.mail.flags.None' | i18n }}
+                                                    </button>
+                                                    <button class="dropdown-item" type="button" data-dismiss="dropdown"
+                                                        ng-click="draftMessage.flags = 1">
+                                                        <i class="fas fa-fw fa-exclamation-triangle text-danger"></i>
+                                                        {{ 'ui.mail.flags.Alert' | i18n }}
+                                                    </button>
+                                                    <button class="dropdown-item" type="button" data-dismiss="dropdown"
+                                                        ng-click="draftMessage.flags = 2">
+                                                        <i class="fas fa-fw fa-arrow-down text-info"></i>
+                                                        {{ 'ui.mail.flags.LowPriority' | i18n }}
+                                                    </button>
+                                                    <button class="dropdown-item" type="button" data-dismiss="dropdown"
+                                                        ng-click="draftMessage.flags = 4">
+                                                        <i class="fas fa-fw fa-arrow-up text-danger"></i>
+                                                        {{ 'ui.mail.flags.HighPriority' | i18n }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-danger" ng-if="composeMessageForm.subject.$error.required">
+                                        <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <button type="button" data-toggle="tab" data-target="#composeTab"
+                                                class="nav-link active">
+                                                <i class="fas fa-fw fa-pencil"></i> {{ 'ui.mail.body' | i18n }}
+                                                <hint-popover hint-title="ui.mail.body"></hint-popover>
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" ng-click="renderPreview()" data-toggle="tab"
+                                                data-target="#previewTab" class="nav-link">
+                                                <i class="fas fa-fw fa-eye"></i> {{ 'ui.mail.preview' | i18n }}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12">
+                                    <div class="tab-content">
+                                        <div class="tab-pane show active" id="composeTab">
+                                            <textarea rows="6" name="draftBody" ng-model="draftMessage.body"
+                                                minlength="1" maxlength="16836" required="required"
+                                                class="form-control"></textarea>
+                                            <div class="text-danger"
+                                                ng-if="composeMessageForm.draftBody.$error.required">
+                                                <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required'
+                                                | i18n
+                                                }}
+                                            </div>
+                                            <div class="text-danger"
+                                                ng-if="composeMessageForm.draftBody.$error.maxLength">
+                                                <i class="fas fa-fw fa-exclamation-triangle"></i> {{
+                                                'ui.error.maxLength' |
+                                                i18n: {length: 16836} }}
+                                            </div>
+                                            <div ng-if="composeMessageForm.draftBody.$valid">
+                                                {{ 16836 - composeMessageForm.draftBody.$viewValue.length }} {{
+                                                'ui.common.charsRemain' | i18n
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="previewTab">
+                                            <div ng-bind-html="draftMessage.html"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal" data-toggle="none">
+                            <i class="fa fa-times"></i> {{ 'ui.action.cancel' | i18n }}</button>
+                        <button type="submit" class="btn btn-primary" id="btnSendMessage"
+                            ng-disabled="composeMessageForm.$invalid">
+                            <i class="fa fa-paper-plane"></i> {{ 'ui.mail.action.send' | i18n }} </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
