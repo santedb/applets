@@ -35,7 +35,7 @@
             </label>
             <div class="w-100 container-fluid" ng-if="dqLibrary._mode == 'upload'">
                 <form novalidate="novalidate" name="uploadForm" id="uploadForm"
-                    ng-submit="uploadDataQualityRules(uploadForm)">
+                    ng-submit="uploadDataQualityRules(uploadForm)" autocomplete="off">
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-3 control-label">
                             {{ 'ui.admin.dataQuality.create.upload.file' | i18n }}

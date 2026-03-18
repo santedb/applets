@@ -42,14 +42,12 @@
       ignoreModifiedOn="false" trigger="on-start on-x-net" />
 
     <!-- All Validation Rules -->
-    <definition resource="RelationshipValidationRule" name="ui.relationship.all" mode="*"
-      ignoreModifiedOn="false" trigger="on-start on-x-net" />
+    <definition resource="RelationshipValidationRule" name="ui.relationship.all" mode="*" ignoreModifiedOn="false" trigger="on-start on-x-net always" />
     <!-- Ensure all relationships are synchronized -->
     <definition resource="RelationshipValidationRule" name="ui.subscription.validation.all" mode="*"
       ignoreModifiedOn="false" trigger="on-start" />
     <!-- All Identity Domains Should be Downloaded -->
-    <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*"
-      ignoreModifiedOn="false" trigger="on-start" />
+    <definition resource="IdentityDomain" name="ui.subscription.identityDomain.all" mode="*" ignoreModifiedOn="false" trigger="on-start always" />
     <!-- All Template Definitions Should be Downloaded -->
     <definition resource="TemplateDefinition" name="ui.subscription.templateDefinition.all" mode="*"
       ignoreModifiedOn="false" trigger="on-start" />

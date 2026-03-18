@@ -293,7 +293,7 @@
                                     <div ng-if="editEntry.$editIndex === $index">
                                         <form name="ownerForm" ng-submit="saveAmendment(ownerForm)"
                                             novalidate="novalidate" ng-init="act = editEntry"
-                                            class="d-flex flex-column">
+                                            class="d-flex flex-column" autocomplete="off">
                                             <ng-include
                                                 src="::resolveTemplate(comp.targetModel.templateModel.mnemonic)"></ng-include>
                                             <div class="d-flex justify-content-end">
