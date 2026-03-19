@@ -19,6 +19,7 @@
  */
 angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootScope", "$state", "$templateCache", "$interval", "$timeout", function ($scope, $rootScope, $state, $templateCache, $interval, $timeout) {
 
+    var _oldNewAlerts = 0;
     var _lastTickle = null;
     initializeSideNavTriggers();
 
