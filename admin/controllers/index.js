@@ -82,20 +82,46 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     if ($rootScope.session)
         loadMenus();
 
+   
     // Check for new mail
-    var checkMail = async function () {
-        try {
-            var mailMessages = await SanteDB.resources.mail.findAssociatedAsync("Inbox", "Message", { flags: 0 });
-            await Promise.all(mailMessages.resource.map(async function (mb) {
-                mb.targetModel = await SanteDB.resources.mail.getAssociatedAsync("Inbox", "Message", mb.target);
-            }));
-            $timeout(() => $scope.mailbox = mailMessages.resource);
-        }
-        catch (e) {
-            toastr.warning(SanteDB.locale.getString("ui.admin.mailError"));
+    async function checkMail() {
+        if ($rootScope.system?.online && $rootScope.session?.authType === "OAUTH") {
+            try {
+                var mailboxes = await SanteDB.resources.mail.findAsync({}, "noModelProperties");
+                var inbox = mailboxes.resource.find(o=>o.name == "Inbox");
+                var mailMessages = await SanteDB.resources.mail.findAssociatedAsync(inbox.id, "MailMessage", { flags: 0, _count: 5, _orderBy: "time:desc" }, "mail");
+                $timeout(() => {
+                    $rootScope.mail = {
+                        inbox: inbox.id,
+                        mailboxes: mailboxes.resource
+                    };
+                    $scope.mail = {
+                        newAlerts: mailMessages.resource
+                    }; 
+
+                    if(mailMessages.resource?.length > _oldNewAlerts) {
+                        toastr.info(SanteDB.locale.getString("ui.mail.new.alert"), null, {
+                            preventDuplicates: true,
+                            onclick: () => {
+                                $state.go("santedb-emr.user.mail", { mbx: inbox.id, mid: null});
+                            }
+                        });
+                    }
+                    _oldNewAlerts = mailMessages.resource?.length || 0;
+                });
+            }
+            catch (e) {
+                toastr.warning(SanteDB.locale.getString("ui.emr.mailError"));
+            }
         }
     };
 
+    $rootScope.$watch("system.online", function(n, o) {
+        if(n && !o) {
+            checkMail();
+        }
+    })
+    
     // Check for new tickles
     var checkTickles = async function () {
         try {
@@ -187,9 +213,9 @@ angular.module('santedb').controller('AdminLayoutController', ["$scope", "$rootS
     var refreshInterval = $interval(function () {
         checkTickles();
         checkConflicts();
-    }, 60000);
+    }, 30000);
 
-    var mailInterval = $interval(checkMail, 600000);
+    var mailInterval = $interval(checkMail, 120000);
 
     $scope.$on('$destroy', function () {
         if (refreshInterval)

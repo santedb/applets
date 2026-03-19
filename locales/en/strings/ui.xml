@@ -651,11 +651,55 @@
 
       
       <!-- Mail -->
+       <string name="ui.mail.new.alert"><![CDATA[<i class="fas fa-fw fa-envelope"></i> You have received new messages!]]></string>
       <string name="ui.mail.search">Search Messages</string>
+      <string name="ui.mail.action.send">Send Message</string>
+      <string name="ui.mail.action.reply">Reply</string>
+      <string name="ui.mail.action.replyAll">Reply-All</string>
+      <string name="ui.mail.action.forward">Forward</string>
+      <string name="ui.mail.action.flag">Flag</string>
+      <string name="ui.mail.action.newFolder">New Folder</string>
+      <string name="ui.mail.body">Message Body</string>
+      <string name="ui.mail.device.noMessages">There are no system alerts available</string>
+      <string name="ui.mail.body.hint"><![CDATA[
+         Type the body of the message (that the recipients will receive). You can use Markdown for this message, some hints:
+         <ul>
+            <li><code># Heading</code> - This will create a large heading</li>
+            <li><code>* italic *</code> - This will create <em>italic text</em></li>
+            <li><code>** bold **</code> - This will create <strong>bold text</em></li>
+            <li><code>[text](http://link.com)</code> - This will create a link to another webpage or website</li>
+            <li><code>![text](http://link.com/image.jpg)</code> - This will create an inline image in your message</li>
+         </ul>   
+      ]]></string>
+      <string name="ui.mail.compose.title">Write New Message</string>
+      <string name="ui.mail.action.deleteFolder.confirm">Are you sure you want to delete the folder {folder} and all of the mail in it? This action cannot be undone!</string>
+      <string name="ui.mail.action.deleteFolder.success">Folder {folder} has been deleted successfully</string>
+      <string name="ui.mail.action.flag.success">Message has been flagged</string>
+      <string name="ui.mail.action.delete.confirmPurge">Deleting a message from the deleted folder will PURGE the message - it will no longer be available. Are you sure?</string>
+      <string name="ui.mail.action.delete.confirm">Are you sure you want to delete the selected message?</string>
+      <string name="ui.mail.action.complete">Mark Complete</string>
+      <string name="ui.mail.action.unread">Mark Unread</string>
+      <string name="ui.mail.action.move">Move Message</string>
+      <string name="ui.mail.action.move.success">Message has been moved successfully</string>
+      <string name="ui.mail.action.delete">Delete</string>
+      <string name="ui.mail.action.delete.confirmDevice">Are you sure you want to delete this device mail message? It will no longer appear on your alerts panel</string>
+      <string name="ui.mail.action.delete.success">Message deleted successfully</string>
+      <string name="ui.mail.noMessage.inbox.header">Welcome to Messages</string>
+      <string name="ui.mail.noMessage.inbox.lead">Your inbox shows all incoming messages for your account. Select a message to see its contents</string>
+      <string name="ui.mail.noMessage.sent.header">Sent Message Box</string>
+      <string name="ui.mail.noMessage.sent.lead">This message box shows all of the messages you have sent</string>
+      <string name="ui.mail.noMessage.deleted.header">Deleted Messages</string>
+      <string name="ui.mail.noMessage.deleted.lead">This message box shows all the messages you've deleted</string>
+      <string name="ui.mail.preview">Preview</string>
+      <string name="ui.mail.compose">Compose</string>
+      <string name="ui.mail.sent">Your message has been sent to the recipients successfully</string>
       <string name="ui.mail.from">From</string>
       <string name="ui.mail.to">To</string>
-      <string name="ui.mail.time">Sent</string>
-      <string name="ui.mail.all">My Mailbox</string>
+      <string name="ui.mail.to.offline">Your device is offline - you will only be able to route mail to users which have logged into your device</string>
+      <string name="ui.mail.time">Received/Sent</string>
+      <string name="ui.mail.status">Status</string>
+      <string name="ui.mail.subject">Subject</string>
+      <string name="ui.mail.all">My Messages</string>
       <string name="ui.mail.archive">Archive</string>
       <string name="ui.mail.acknowledge">Acknowledge</string>
       <string name="ui.mail.reply">Reply</string>
@@ -663,8 +707,12 @@
       <string name="ui.mail.flags.None">New Message</string>
       <string name="ui.mail.flags.Acknowledged">Acknowledged</string>
       <string name="ui.mail.flags.HighPriority">High Importance</string>
+      <string name="ui.mail.flags.LowPriority">Low Importance</string>
+      <string name="ui.mail.flags.Alert">Alert (Immediate Action)</string>
+      <string name="ui.mail.flags.None">Regular Message</string>
       <string name="ui.mail.flags.Archived">Archived</string>
-      <string name="ui.mail.flags.Alert">Flagged Alert</string>
+      <string name="ui.mail.onlineOnly">Your device appears to be offline. My Messgaes functionality is restricted while the device is offline (it may take up to 30 seconds for a network change to be detected)</string>
+      <string name="ui.mail.authWrong">Only accounts registered with the central system can send and receive mail. Try logging out and logging back in - if this does not work contact support</string>
 
       <!-- Security Challenges -->
       <string name="security.challenge.text1">Your favorite pet\'s name</string>

@@ -45,7 +45,7 @@
         </entity-table>
 
         <div id="assignManagerDiv">
-            <form name="assignManagerForm" novalidate="novalidate" ng-submit="assignManager(assignManagerForm)">
+            <form name="assignManagerForm" novalidate="novalidate" ng-submit="assignManager(assignManagerForm)" autocomplete="off">
                 <div class="input-group">
                     <div class="h-100">
                     <entity-search type="'UserEntity'" ng-model="assignUser.id" search-field="'securityUser.userName'" filter="{ 'relationship[DedicatedServiceDeliveryLocation|ServiceDeliveryLocation].target' : scopedObject.id, 'relationship[MaintainedEntity].target' : '!' + scopedObject.id }"

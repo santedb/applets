@@ -318,4 +318,17 @@
         <property name="doseUnitModel" behavior="never" />
         <property name="siteModel" behavior="never" />
     </type>
+
+    <type type="Mailbox" all="true">
+        <property name="ownerModel" behavior="never" />
+        <property name="messages" behavior="never" />
+        <property name="creationTimeModel" behavior="never" />
+    </type>
+
+    <type type="MailMessage" all="true">
+        <property name="fromModel" behavior="never" />
+        <property name="rcptModel" behavior="never" />
+        <property name="creationTimeModel" behavior="never" />
+        <property name="timeModel" behavior="never"/>
+    </type>
 </ViewModel>

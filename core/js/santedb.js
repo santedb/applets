@@ -1539,14 +1539,14 @@ function ResourceWrapper(_config) {
      * }
      * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
-    this.findAssociatedAsync = function (id, property, query, viewModel, upstream, state) {
+    this.findAssociatedAsync = function (id, property, query, viewModel, upstream, headers, state) {
 
         if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
 
-        var headers = {
-            Accept: _config.accept
-        };
+        var headers = headers || {};
+        headers.Accept = _config.accept;
+
         if (_config.viewModel)
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
         else if (viewModel)
@@ -1679,10 +1679,9 @@ function ResourceWrapper(_config) {
      * @see ResourceWrapper.findAssociatedAsync
      * @see https://help.santesuite.org/developers/service-apis/health-data-service-interface-hdsi/http-request-verbs#associated-resources
      */
-    this.getAssociatedAsync = function (id, property, associatedId, query, upstream, state) {
-        if (!id)
-            throw new Exception("ArgumentNullException", "Missing scoping identifier");
-        else if (!property)
+    this.getAssociatedAsync = function (id, property, associatedId, query, upstream, viewModel, state) {
+        
+        if (!property)
             throw new Exception("ArgumentNullException", "Missing scoping property");
         else if (!associatedId)
             throw new Exception("ArgumentNullException", "Missing associated object id");
@@ -1690,12 +1689,17 @@ function ResourceWrapper(_config) {
         var headers = {
             Accept: _config.accept
         };
-        if (_config.viewModel)
+        if (_config.viewModel) {
             headers["X-SanteDB-ViewModel"] = _config.viewModel;
-
+        }
+        else if(viewModel) {
+            headers["X-SanteDB-ViewModel"] = viewModel;
+        }
         // Prepare path
         var url = null;
-        if (id.id)
+        if(!id)
+            url = `${_config.resource}/${property}`;
+        else if (id.id)
             url = `${_config.resource}/${id.id}/${property}`;
         else
             url = `${_config.resource}/${id}/${property}`;
@@ -1992,6 +1996,11 @@ function SanteDBWrapper() {
         var _idClassifiers = {};
         var _templateCache = undefined;
         var _identifierValidator = {};
+        const _deviceMailboxApi = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "DeviceMailbox",
+            api: _hdsi
+        });
 
         /**
          * @summary Attempts to parse te JWS data contained in a scanned barcode into logical identifier structure
@@ -2168,6 +2177,23 @@ function SanteDBWrapper() {
             }).flat();
             await Promise.all(promises);
             return collection;
+        }
+
+        /**
+         * @summary Gets the mailbox for the device
+         * @returns {Array} An array of mailmessage objects for the device
+         */
+        this.getDeviceMail = async function (query) {
+            return await _deviceMailboxApi.findAsync(query, "mail");
+        }
+
+        /**
+         * @summary Deletes a mailbox message/marks as ack
+         * @param {string} messageId The message identifier
+         * @returns The deleted mail message
+         */
+        this.acknowledgeDeviceMail = async function(messageId) {
+            return await _deviceMailboxApi.deleteAsync(messageId, null, null, true);
         }
 
         /**
@@ -3623,7 +3649,7 @@ function SanteDBWrapper() {
         this.mail = new ResourceWrapper({
             accept: _viewModelJsonMime,
             resource: "Mailbox",
-            api: _ami
+            api: _hdsi
         });
         /**
             * @type {ResourceWrapper}
@@ -3644,6 +3670,16 @@ function SanteDBWrapper() {
             accept: _viewModelJsonMime,
             resource: "Locale",
             api: _app
+        });
+        /**
+         * @type {ResourceWrapper}
+         * @memberOf SanteDBWrapper.resources
+         * @summary Wrapper for Security USers
+         */
+        this.securityEntity = new ResourceWrapper({
+            accept: _viewModelJsonMime,
+            resource: "SecurityEntity",
+            api: _ami
         });
         /**
          * @type {ResourceWrapper}

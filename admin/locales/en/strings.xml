@@ -933,4 +933,6 @@
     <string name="ui.admin.notifications.instance.trigger.hint">When the notification should be run. Enter an expression that determines when to run this notification.</string>
     <string name="ui.admin.notifications.instance.target.hint">How to notify the subject of the notification. Enter an expression that resolves into a valid contact point for the subject.</string>
 
+    <!-- Device Mail -->
+     <string name="org.santedb.widget.admin.dashboard.deviceMail">System-Wide Alerts &amp; Messages</string>
 </resources>

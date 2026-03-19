@@ -70,7 +70,7 @@ angular.module('santedb-lib')
 
         function renderObject(selection, minRender) {
 
-            
+
             // Clearing text breaks  grouping display - ensure that there are no children before clearing text
             // Also need to preserve placeholder and preserve the loading 
             if (!selection.children &&
@@ -124,6 +124,9 @@ angular.module('santedb-lib')
                 case "SanteDB.Core.Model.AMI.Auth.SecurityUserInfo, SanteDB.Core.Model.AMI":
                     retVal += "<i class='fa fa-fw fa-user'></i>";
                     break;
+                case "SecurityDevice":
+                    retVal += "<i class='fa fa-fw fa-tablet'></i>";
+                    break;
                 case "Concept":
                 case "CodeSystem":
                     retVal += "<i class='fa fa-fw fa-book-medical'></i>";
@@ -169,9 +172,8 @@ angular.module('santedb-lib')
             else if (selection.text)
                 retVal += selection.text;
 
-            if (selection.expiryDate && selection.expiryDate.getYear() > 0) 
-            {
-                if(selection.expiryDate > new Date()) {
+            if (selection.expiryDate && selection.expiryDate.getYear() > 0) {
+                if (selection.expiryDate > new Date()) {
                     retVal += ` <span class="badge badge-primary">EXP: ${moment(selection.expiryDate).format("YYYY-MM-DD")}</span>`;
                 }
                 else {
@@ -228,7 +230,7 @@ angular.module('santedb-lib')
                 withRelationshipSourceClass: '=', // The class concept of the source object
                 withRelationshipTargetClass: '=', // The class concept of the target object
                 jsFilter: '<',
-                upstream: '<',
+                upstream: '=',
                 viewModel: "<"
             },
             restrict: 'E',
@@ -327,7 +329,7 @@ angular.module('santedb-lib')
                                                 if (displayString) {
                                                     text = $scope.$eval(displayString, { item: obj, display: SanteDB.display });
                                                 }
-                                                else if (obj.name !== undefined) {
+                                                else if (obj.name !== undefined || obj.id !== undefined) {
                                                     text = renderObject(obj, $scope.minRender);
                                                 }
 
@@ -443,6 +445,11 @@ angular.module('santedb-lib')
 
                     // Does the drop-down exist in a modal? If so - set the parent
                     var dropDownParent = $(element).parents('.modal-body');
+                    const _headerObject = {
+                        "Accept": "application/x.santedb.rim.viewModel+json", // "application/json+sdb-viewmodel",
+                        "X-SanteDB-ViewModel": scope.viewModel || "dropdown"
+                    };
+
                     // Bind select 2 search
                     var select2 = $(element).select2({
                         language: {
@@ -461,10 +468,7 @@ angular.module('santedb-lib')
                             dataType: 'json',
                             delay: 500,
                             method: "GET",
-                            headers: {
-                                "Accept": "application/x.santedb.rim.viewModel+json", // "application/json+sdb-viewmodel",
-                                "X-SDB-ViewModel": scope.viewModel || "dropdown"
-                            },
+                            headers: _headerObject,
                             data: function (params) {
 
                                 // Remove previous filters 
@@ -481,10 +485,7 @@ angular.module('santedb-lib')
                                 filter["_count"] = 25;
                                 filter["_offset"] = params.page ? params.page * 10 : 0;
                                 filter["_viewModel"] = scope.viewModel || "dropdown";
-
-                                if (scope.upstream) {
-                                    filter["_upstream"] = true;
-                                }
+                                filter["_upstream"] = scope.upstream;
                                 return filter;
                             },
                             processResults: function (data, params) {
@@ -592,6 +593,7 @@ angular.module('santedb-lib')
                         allowClear: true
                     });
 
+                 
                     // On change
                     element.on('change', function (e) {
                         var val = $(element).select2("val");
