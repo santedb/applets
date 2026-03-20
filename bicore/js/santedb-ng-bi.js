@@ -41,7 +41,8 @@ angular.module('santedb-lib')
             scope: {
                 parameter: "<",
                 display: "<",
-                values: "="
+                values: "=",
+                ownerForm: '='
             },
             restrict: "E",
             replace: true,

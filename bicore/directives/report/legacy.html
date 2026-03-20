@@ -27,7 +27,7 @@
                 <div class="container-fluid">
                     <div ng-repeat="parm in ::report.parameterDefinitions track by $index">
                         <div>
-                            <report-parameter  class="form-group row" values="parameterValues" display="{
+                            <report-parameter owner-form="reportFilterForm"  class="form-group row" values="parameterValues" display="{
                                 label: 'control-label col-sm-12 col-md-4',
                                 input: 'col-sm-12 col-md-8'
                             }" parameter="parm" />
@@ -41,10 +41,10 @@
             </form>
         </div>
         <div ng-class="{ 'active show' : !report.parameterDefinitions.length }"
-            class="tab-pane report-view-container p-2" ng-repeat="viewDefinition in report.views"
+            class="tab-pane report-view-container p-2" ng-repeat="viewDefinition in report.views track by $index"
             id="{{htmlId}}_{{viewDefinition.name}}">
             <div class="d-flex flex-column">
-                <div id="{{htmlId}}_{{viewDefinition.name}}view">
+                <div id="{{viewDefinition.htmlId}}view">
                     <i class="fas fa-circle-notch fa-spin"></i> {{ 'ui.wait' | i18n }}
                 </div>
                 <div class="m-2 p-2">

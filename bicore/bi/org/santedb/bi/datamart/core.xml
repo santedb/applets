@@ -313,6 +313,9 @@
       <column type="ref" name="REGISTRATION_FACILITY">
         <otherTable ref="PLC_TBL" />
       </column>
+        <column type="ref" name="ASSIGNED_FACILITY">
+        <otherTable ref="PLC_TBL" />
+      </column>
       <column type="ref" name="BIRTHPLACE">
         <otherTable ref="PLC_TBL" />
       </column>
@@ -328,6 +331,7 @@
       <column type="ref" name="SCOPER">
         <otherTable ref="ORG_TBL" />
       </column>
+      <column type="date" name="REG_DATE" />
       <parent ref="PSN_TBL" />
     </table>
 

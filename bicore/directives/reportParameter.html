@@ -30,6 +30,15 @@
         <select ng-switch-when="Uuid" ng-required="parameter.required == 'true'" ng-model="values[parameter.name]" class="form-control">
             <option ng-repeat="val in (parameter.values.list || refreshValueList())" value="{{val.id}}">{{ val.val || val.value | i18n }}</option>
         </select>
+        <div class="text-danger" ng-if="ownerForm[parameter.name].$error.required">
+            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.required' | i18n}}
+        </div>
+        <div class="text-danger" ng-if="ownerForm[parameter.name].$error.min">
+            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.minValue' | i18n: { min: values[parameter.min] } }}
+        </div>
+        <div class="text-danger" ng-if="ownerForm[parameter.name].$error.max">
+            <i class="fas fa-fw fa-exclamation-triangle"></i> {{ 'ui.error.maxValue' | i18n: { min: values[parameter.min] } }}
+        </div>
     </div>
     
 </div>
